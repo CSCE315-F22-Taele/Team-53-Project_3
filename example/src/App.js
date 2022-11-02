@@ -24,7 +24,7 @@ const App = () =>{
       
       <div class="header"> 
         <div class="imgLogo">
-          <img src={pomHoney}  class="pomHoneyLogo"/> 
+          <img src={pomHoney}  class="pomHoneyLogo" alt="Pom and Honey Logo"/> 
         </div>
 
         <div class="title">
@@ -63,13 +63,13 @@ const App = () =>{
   );
 }
 
-{/* { name ? (
+/* { name ? (
         <>
         test
         </>
       ):(
         <h1>test</h1>
       )
-      } */}
+      } */
       
 export default App;
