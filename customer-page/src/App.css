@@ -15,7 +15,34 @@ div{
   left: 2.5%;
 }
 
+.pomHoneyLogo{
+  width: 20%;
+  
+  justify-content: left;
+  margin-left: 0;
+  margin-right: auto;
+  height: auto;
+  padding: 1%; 
+  
+}
 
+.header{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 200%;
+  display:flex;
+  justify-content: center;
+}
+
+.title{
+  flex:auto;
+  font-size: 150%;
+  margin: auto;
+  font-weight: bold;
+}
+
+.imgLogo{
+  display:contents;
+}
 /* @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
