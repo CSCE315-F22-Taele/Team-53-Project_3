@@ -4,6 +4,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { indigo } from '@mui/material/colors';
+import {useState} from 'react';
 
 const theme = createTheme({
   palette: {
@@ -14,56 +15,84 @@ const theme = createTheme({
   },
 });
 
-const Order = () =>{
-
+const Order = () =>{  
+    const [showCustom, setIsShown] = useState(false);
     const name ='Pom and Honey at Texas A&M MSC';
+
+    const handleClick = event =>{
+      setIsShown(current => !current);
+      
+    }
+
     return (
-      <div>
-      <h1 class="orderingTitle"> Ordering from Pom and Honey at Texas A&M MSC</h1>
+      <div class="pageOrder">
 
-      <h2> Item</h2>
-      <div class="buttons">
-      <Button  variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}>
-        Hello</Button>
+    <div class="orderingSection">
+        <h1 class="orderingTitle"> Ordering from Pom and Honey at Texas A&M MSC</h1>
 
-      </div>
+        <h2> Item</h2>
+        <ThemeProvider theme={theme}>
+        <div class="buttons">
+        
+        <Button  variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}
+          onClick={handleClick}>
+          Gyro</Button>
 
-      <h2> Base</h2>
-      <div class="buttons">
-      <Button  variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}>
-        Hello</Button>
+          <Button  variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}>
+          Drink</Button>
+        </div>
 
-      </div>
+        {showCustom && (
+        <div>
+        <h2> Base</h2>
+        <div class="buttons">
+        <Button  variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}>
+          Rice</Button>
+        </div>
+      
 
-      <h2> Protein</h2>
-      <div class="buttons">
-      <Button  variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}>
-        Chicken</Button>
+        <h2> Protein</h2>
+        <div class="buttons">
+        <Button  variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}>
+          Chicken</Button>
+        </div>
 
-      </div>
 
+        <h2> Toppings</h2>
+        <div class="buttons">
+        <Button  variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}>
+          Lettuce</Button>
+        </div>
 
-      <h2> Toppings</h2>
-      <div class="buttons">
-      <Button  variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}>
-        Lettuce</Button>
+        <h2> Dressing</h2>
+        <div class="buttons">
+        <Button  variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}>
+          Harissa</Button>
+        </div>
+        
+      
+        <h2> Extras</h2>
+        <div class="buttons">
+        <Button  variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}>
+          Drinks</Button>
+        </div>
+      
 
-      </div>
+        </div>
+        
+        )}
+      </ThemeProvider>
+    </div> {/*   To divide the section */}
+   
 
-      <h2> Dressing</h2>
-      <div class="buttons">
-      <Button  variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}>
-        Harissa</Button>
+    <div class="currentOrder">
+      <h1> Current Order</h1>
+    </div>
 
-      </div>
+      
+    </div>
+      
 
-      <h2> Extras</h2>
-      <div class="buttons">
-      <Button  variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}>
-        Drinks</Button>
-
-      </div>
-      </div>
     );
 
   }

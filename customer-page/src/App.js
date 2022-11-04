@@ -12,14 +12,6 @@ import Home from "./pages/Home"
 // import { Switch } from '@mui/material';
 // import { BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#283593',
-    },
-    secondary: indigo,
-  },
-});
 
 
 
@@ -32,32 +24,11 @@ const App = () =>{
     
       <Navbar />
   
-      {/* <>
-        <Routes>
-          
-          <Route exact path="/" element={Home} />
-
-          <Route path="/Order" element={Order} />
-        
-        </Routes>
-    </> */}
-      
 
 
       
-      
-      {/* <h1>  */}
-
-      
-
-      {/* <Nav>
-      <Bars />
-      <NavBtn>
-          <NavBtnLink to='/Orders'>Sign In</NavBtnLink>
-      </NavBtn>
-      </Nav>
-     
-      
+    
+{/*       
       { <Stack spacing={5} direction="row" justifyContent="center" >
         <ThemeProvider theme={theme}>
          
@@ -86,7 +57,7 @@ const App = () =>{
       </footer> */}
 
 
-    </div>
+    </div> 
   );
 }
 

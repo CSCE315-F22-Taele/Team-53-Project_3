@@ -2,7 +2,7 @@ import * as React from 'react';
 import './Home.css';
 
 const Home = () =>{
-
+    
     const name ='Pom and Honey at Texas A&M MSC';
     return(
         <div class="header"> 
