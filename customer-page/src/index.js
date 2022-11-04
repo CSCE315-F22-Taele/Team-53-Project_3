@@ -18,7 +18,7 @@ root.render(
 
        <Routes>
           <Route exact path='/' element={<Home />}/>
-          <Route path='/Order' component={< Order />}/>
+          <Route path='/Order' element={< Order />}/>
        </Routes>
     </Router>
    

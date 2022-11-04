@@ -1,0 +1,16 @@
+.orderingTitle{
+    
+    color:black;
+    justify-content: center;
+    text-align: center;
+}
+
+body{
+    justify-content: center;
+    text-align: center;
+}
+
+.buttons{
+    padding: 1%;
+}
+
