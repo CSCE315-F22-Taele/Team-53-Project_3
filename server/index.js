@@ -1,13 +1,22 @@
 const express = require("express");
+require("dotenv").config();
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
+
+const PORT = process.env.SERVER_PORT || 5000;
 
 // middleware
 app.use(cors());
 app.use(express.json()); // req.body
 
 // routes
+app.get("/api/test", (req, res) => {
+    res.json({
+        message: "Hello from Test API route!",
+    });
+});
+
 app.post("/todos", async (req, res) => {
     try {
         const { description } = req.body;
@@ -73,6 +82,6 @@ app.delete("/todos/:id", async (req, res) => {
     }
 });
 
-app.listen(5000, () => {
-    console.log("Server has started on port 5000");
+app.listen(PORT, () => {
+    console.log(`Server has started on port ${PORT}`);
 });
