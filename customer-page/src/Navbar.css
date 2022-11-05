@@ -1,0 +1,32 @@
+nav{
+    background: #283593 ;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    justify-content: space-between;
+    padding: 0 2rem;
+    font-size: 150%;
+}
+
+a{
+    color:white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 1rem;
+}
+
+a:hover{
+    background-color:#d0cdd4;
+}
+
+ul{
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.logoNav{
+    width: 120px;
+    margin: 0;
+    padding: none;
+}

@@ -1,43 +1,40 @@
 import './App.css';
 import * as React from 'react';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+// import Stack from '@mui/material/Stack';
+// import Button from '@mui/material/Button';
 import pomHoney from './pomAndHoney.png';
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { indigo } from '@mui/material/colors';
+import Navbar from "./Navbar"
+import Order from "./pages/Order"
+import Home from "./pages/Home"
+// import { Switch } from '@mui/material';
+// import { BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#283593',
-    },
-    secondary: indigo,
-  },
-});
+
 
 
 const App = () =>{
 
-  const name ='Pom and Honey Manager Tools';
+
   return (
     <div className="App">
-      
-      <div class="header"> 
-        <div class="imgLogo">
-          <img src={pomHoney}  class="pomHoneyLogo"/> 
-        </div>
+    
+    
+      <Navbar />
+  
 
-        <div class="title">
-          {name}
-        </div> 
-      </div>
 
-      <h1> 
       
-      <Stack spacing={5} direction="row" justifyContent="center" >
+    
+{/*       
+      { <Stack spacing={5} direction="row" justifyContent="center" >
         <ThemeProvider theme={theme}>
+         
           <Button variant="contained" color="primary" sx={{ width: 300, height:300, padding: 1, marginLeft: 2 }}
-            >Excess Report</Button>
+            >Order Now!</Button>
+          
           <Button variant="contained" sx={{ width: 300, height:300, padding: 1, marginLeft: 2 }}
             >Sales Report</Button>
           <Button variant="contained" sx={{ width:300, height:300, padding: 1, marginLeft: 2 }}
@@ -45,7 +42,8 @@ const App = () =>{
           <Button variant="contained" sx={{ width: 300, height:300, padding: 1, marginLeft: 2 }}
             >Menu Customization</Button> 
         </ThemeProvider>
-      </Stack>
+      </Stack> }
+
 
       </h1>
 
@@ -56,20 +54,20 @@ const App = () =>{
         <Button variant="contained" size="large">Logout</Button>
       </ThemeProvider>
         </Stack>
-      </footer>
+      </footer> */}
 
 
-    </div>
+    </div> 
   );
 }
 
-{/* { name ? (
+/* { name ? (
         <>
         test
         </>
       ):(
         <h1>test</h1>
       )
-      } */}
-
+      } */
+      
 export default App;
