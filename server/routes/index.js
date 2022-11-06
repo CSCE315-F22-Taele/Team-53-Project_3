@@ -2,12 +2,17 @@ const express = require("express");
 const app = express.Router();
 const pool = require("../db");
 
+/*
+To test:
+    http://localhost:3500/api/index
+ */
 app.get("/", (req, res) => {
     res.json({
         message: "Hello from Test API route!",
     });
 });
 
+// Will delete later.
 app.post("/todos", async (req, res) => {
     try {
         const { description } = req.body;
