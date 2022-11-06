@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express.Router();
+const pool = require("../db");
 
 app.get("/", (req, res) => {
     res.json({
