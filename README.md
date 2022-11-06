@@ -14,3 +14,7 @@
 1. Run command `npm run client`
 2. Go to http://localhost:3000 or given port.
 
+### If you run into errors:
+1. download all packages
+2. reinstall npm (npm install)
+3. npm -i 
