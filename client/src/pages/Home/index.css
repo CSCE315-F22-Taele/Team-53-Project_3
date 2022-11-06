@@ -22,7 +22,7 @@ div {
     align-content: center;
     flex-direction: column;
     height: 100vh;
-    /* background-image: url("/food.jpg"); */
+    background-image: url("./food.jpg"); 
     opacity: 0.95;
 }
 

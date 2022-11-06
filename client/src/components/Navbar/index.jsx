@@ -18,7 +18,7 @@ export default function Navbar() {
                 {" "}
                 <img src={pomHoney} class="logoNav" alt="Pom and Honey Logo" />
             </Link>
-            <ul className="nav__list">
+            <ul className="nav__list" >
                 <li>
                     <Link className="nav__link" to="/">
                         {" "}
