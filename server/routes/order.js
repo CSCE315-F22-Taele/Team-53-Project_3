@@ -2,6 +2,16 @@ const express = require("express");
 const app = express.Router();
 const db = require("../db");
 
+/*
+For order page:
+    Inital loading page:
+        - API calls to orderid, inventory, and menucost tables
+
+    Submit button:
+        - TODO: API call to update ordering table
+        - TODO: Possibly update amount in inventory table?? Best idea atm
+*/
+
 /* Get orderid for a new order 
 To call in frontend: http://localhost:5000/api/order/getOrderId
 */
@@ -47,6 +57,20 @@ app.get("/getInventory", async (req, res) => {
         const todo = await db.query("SELECT * FROM inventory ORDER BY itemid");
 
         // console.log(todo.rows);
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+/* Get menucost table
+To call in frontend: http://localhost:5000/api/order/getMenu
+*/
+app.get("/getMenu", async (req, res) => {
+    try {
+        const todo = await db.query("SELECT * FROM menucost ORDER BY id");
+
+        console.log(todo.rows);
         res.json(todo.rows);
     } catch (err) {
         console.error(err.message);
