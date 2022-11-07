@@ -9,7 +9,7 @@ For order page:
 
     Submit button:
         - TODO: API call to update ordering table
-        - TODO: Possibly update amount in inventory table?? Best idea atm
+        - TODO: Possibly update amount in inventory table?? 
 */
 
 /* Get orderid for a new order 
@@ -72,6 +72,25 @@ app.get("/getMenu", async (req, res) => {
 
         console.log(todo.rows);
         res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+/* Submit order to ordering table 
+To call: http://localhost:3500/api/order/postOrder
+*/
+app.post("/postOrder", async (req, res) => {
+    try {
+        const { orderid, timeoforder, amount, ordereditems, inventory } =
+            req.body;
+        const todo = await db.query(
+            "INSERT INTO ordering (orderid, timeoforder, amount, ordereditems, inventory) VALUES ($1, $2, $3, $4, $5)",
+            [orderid, timeoforder, amount, ordereditems, inventory]
+        );
+
+        console.log(req.body);
+        // res.json(todo.rows);
     } catch (err) {
         console.error(err.message);
     }
