@@ -34,15 +34,20 @@ app.get("/getOrderId", async (req, res) => {
             "SELECT orderid FROM ordering ORDER BY orderid DESC LIMIT 1"
         );
 
+        // Convert QueryList<val> into integer
+        var lastOrderId = JSON.stringify(todo.rows[0]);
+        var lastOrderId_int = parseInt(
+            lastOrderId.substring(11, lastOrderId.length - 1)
+        );
+
         var currOrderId;
-        if (todo.rows > date_int) {
-            currOrderId = todo.rows + 1;
+        if (lastOrderId_int > date_int) {
+            currOrderId = lastOrderId_int + 1;
         } else {
             currOrderId = date_int;
         }
 
-        console.log(currOrderId);
-
+        // console.log(currOrderId);
         res.json(currOrderId);
     } catch (err) {
         console.error(err.message);
@@ -56,7 +61,6 @@ app.get("/getInventory", async (req, res) => {
     try {
         const todo = await db.query("SELECT * FROM inventory ORDER BY itemid");
 
-        // console.log(todo.rows);
         res.json(todo.rows);
     } catch (err) {
         console.error(err.message);
@@ -70,7 +74,6 @@ app.get("/getMenu", async (req, res) => {
     try {
         const todo = await db.query("SELECT * FROM menucost ORDER BY id");
 
-        console.log(todo.rows);
         res.json(todo.rows);
     } catch (err) {
         console.error(err.message);
