@@ -80,7 +80,7 @@ const Order = () => {
             for( var key in jsonVals){
                
             
-               console.log(jsonVals[key]);
+               // (jsonVals[key]);
                 if (jsonVals[key].is_selling == true){
                     if (jsonVals[key].is_customize == true){
                        var menuCustom = [];
@@ -123,7 +123,6 @@ const Order = () => {
             
             
         } catch (err) {
-            console.log("error");
             console.error(err.message);
         }
 
@@ -215,15 +214,43 @@ const Order = () => {
             
             //console.log(jsonData[0]);
             //setMenuCustom(jsonData);
-
+            console.log("fetched inventory");
         } catch (err) {
-            console.log("error");
+            // console.log("error");
             console.error(err.message);
         }
     };
 
-    const sendtoDb = () => {
+    /*FIX ME: Data is send back correctly, so maybe issue is in ./server/routes/order.js */
+    const sendtoDb = async () => {
         console.log("FIX ME");
+        try {
+            var date=new Date();
+            // const current = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + "." + date.getMilliseconds();
+            
+            var current = date.getHours() + ':';
+
+            if (date.getMinutes() < 10) {
+                current += "0" + date.getMinutes();
+            }
+            else {
+                current += date.getMinutes();
+            }
+            
+            current += ':' + date.getSeconds() + "." + date.getMilliseconds();
+
+            const body = {orderid, current, totalCost, listOrdered, inventoryUsed};
+            const response = fetch ("http://localhost:3500/api/order/postOrder", 
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                }
+            );
+            console.log(response);
+        } catch (err) {
+            console.error(err.message);
+        }
     }
 
     useEffect( () => {
@@ -239,7 +266,7 @@ const Order = () => {
         let newCart = listOrdered;
         newCart[index] += 1;
         setListOrdered(newCart);
-        console.log(newCart);
+        // console.log(newCart);
 
         if( custom === true){
             setIsShown(showCustom => true);
@@ -248,7 +275,7 @@ const Order = () => {
         let namesCart = listOrderedNames;
         namesCart.push([val, '$' + cost]);
         setListOrderedNames(namesCart);
-        console.log(listOrderedNames);
+        // console.log(listOrderedNames);
 
         
         let costCurr = totalCost;
@@ -279,7 +306,7 @@ const Order = () => {
     const addItem = () => {
         setIsShown(showCustom => false);
 
-        console.log(listOrderedNames);
+        // console.log(listOrderedNames);
     }
 
 
