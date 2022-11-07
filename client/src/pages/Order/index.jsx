@@ -114,7 +114,7 @@ const Order = () => {
             }
             
            
-            var length = menuNames.length + menuNamesCustom.length + 1;
+            var length = menuNames.length + menuNamesCustom.length;
             var value = [];
             for( let i =0; i< length; i++){
                 value.push(0);
@@ -204,7 +204,7 @@ const Order = () => {
 
             
             }
-            var length = realInventory0.length + realInventory1.length +  realInventory2.length + realInventory3.length + realInventory4.length +2; 
+            var length = realInventory0.length + realInventory1.length +  realInventory2.length + realInventory3.length + realInventory4.length +1; 
             var value = [];
             
             for( let i =0; i< length; i++){
@@ -223,7 +223,7 @@ const Order = () => {
     };
 
     const sendtoDb = async () => {
-        console.log("FIX ME");
+        
         try {
             var date=new Date();
             var current = date.getHours() + ':';
@@ -245,6 +245,10 @@ const Order = () => {
                     body: JSON.stringify(body)
                 }
             );
+
+            //CALL CHECKOUT CODE 
+            
+
         } catch (err) {
             console.error(err.message);
         }
@@ -261,7 +265,7 @@ const Order = () => {
         setlistOrderedInv([]);
 
         let newCart = listOrdered;
-        newCart[index] += 1;
+        newCart[index-1] += 1;
         setListOrdered(newCart);
         // console.log(newCart);
 
@@ -279,6 +283,8 @@ const Order = () => {
         costCurr += parseFloat(cost);
         setCost(costCurr);
 
+        console.log(listOrdered);
+
 
     }
 
@@ -286,7 +292,7 @@ const Order = () => {
     const pushInv = (index, val) => {
         let inv = inventoryUsed;
         
-        inv[index] += 1;
+        inv[index-1] += 1;
         setInventoryUsed(inv);
         
         
@@ -298,18 +304,11 @@ const Order = () => {
         countVal  +=1;
         setCount(countVal);
         
+        console.log(inventoryUsed);
     }
 
     const clearOrder = () => {
         setOrderid(0);
-        setMenuNamesCustom([]);
-        setMenuNames([]);
-        
-        setInventory0([]);
-        setInventory1([]);
-        setInventory2([]);
-        setInventory3([]);
-        setInventory4([]);
     
         setListOrdered([]);
         setListOrderedNames([]);
