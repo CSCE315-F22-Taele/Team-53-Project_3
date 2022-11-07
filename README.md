@@ -17,7 +17,7 @@
 #### If you run into errors:
 1. Download all packages.
 2. Reinstall npm (`npm install`)
-3. `npm -i` 
+3. `npm i` 
 
 #### To change port:
 1. package.json change  ` "proxy": "http://localhost:XX00" `
