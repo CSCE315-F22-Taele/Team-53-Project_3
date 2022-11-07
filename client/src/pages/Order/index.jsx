@@ -35,6 +35,8 @@ const Order = () => {
     const [realInventory4, setInventory4] = useState([]);
 
     const [listOrdered, setListOrdered] = useState([]);
+    const [listOrderedNames, setListOrderedNames] = useState([]);
+    const [listOrderedInv, setlistOrderedInv] = useState([]);
     const [inventoryUsed, setInventoryUsed]= useState([]);
     const [showCustom, setIsShown] = useState(false);
     const name = "Pom and Honey at Texas A&M MSC";
@@ -201,7 +203,7 @@ const Order = () => {
             }
             var length = realInventory0.length + realInventory1.length +  realInventory2.length + realInventory3.length + realInventory4.length +2; 
             var value = [];
-            console.log(length);
+            
             for( let i =0; i< length; i++){
                 value.push(0);
             }
@@ -223,17 +225,9 @@ const Order = () => {
         inventoryGet();
     }, [])
 
-    const pushItemCustom = (index) => {
-        
-        let newCart = listOrdered;
-        newCart[index] += 1;
-        //1 or 10
-        setListOrdered(newCart);
-        setIsShown(showCustom => true);
+    const pushItemCustom = (index, val, cost) => {
+        addItemName(val, cost);
 
-    }
-
-    const pushItem = (index) => {
         let newCart = listOrdered;
         newCart[index] += 1;
         setListOrdered(newCart);
@@ -241,22 +235,42 @@ const Order = () => {
         console.log(listOrdered);
     }
 
+   const addItemName = (val, cost) =>{
+    let namesCart = listOrderedNames;
+    namesCart.push([val, cost]);
+    setListOrderedNames(namesCart);
+    console.log(listOrderedNames);
+   }
 
-    const pushInv = (index) => {
+    const pushItem = (index, val, cost) => {
+
+        addItemName(val,cost);
+
+        let newCart = listOrdered;
+        newCart[index] += 1;
+        setListOrdered(newCart);
+      
+        console.log(listOrdered);
+    }
+
+
+    const pushInv = (index, val) => {
         let inv = inventoryUsed;
         
         inv[index] += 1;
         setInventoryUsed(inv);
         console.log(inventoryUsed);
-    
+        
+        let namesCart = listOrderedInv;
+        namesCart.push(val);
+        setlistOrderedInv(namesCart);
+       
     }
     
-    
-    console.log("menu", menuNamesCustom);
-    console.log(listOrdered);
-    console.log("inv", realInventory0);
-    console.log(inventoryUsed);
-    
+    const addItem = () => {
+        setIsShown(showCustom => false);
+    }
+
 
     return (
         <div class="order__pageOrder">
@@ -269,22 +283,19 @@ const Order = () => {
             { menuNamesCustom.map( (item) =>
             (
                 <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                onClick= { () => { pushItemCustom(item[2])  }}>
+                onClick= { () => { pushItemCustom(item[2], item[0], item[1])  }}>
                 {item[0]}</Button>
             ) )}     
 
             { menuNames.map( (item) =>
             (
                 <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                onClick= { () => { pushItem(item[2]) }}>
+                onClick= { () => { pushItem(item[2], item[0], item[1]) }}>
                 {item[0]}</Button>
             ) )}     
 
 
             </div>
-
-
-
 
             {showCustom && (
                 <div>
@@ -294,7 +305,7 @@ const Order = () => {
                     { realInventory0.map( (item) =>
                     (
                         <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                        onClick= { () => { pushInv(item[1])  }}>
+                        onClick= { () => { pushInv(item[1], item[0])  }}>
                         {item[0]}</Button>
                     ) )}     
                 </div>
@@ -304,7 +315,7 @@ const Order = () => {
                     { realInventory1.map( (item) =>
                     (
                         <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                        onClick= { () => { pushInv(item[1])  }}>
+                        onClick= { () => { pushInv(item[1], item[0])  }}>
                         {item[0]}</Button>
                     ) )}                                  
                 </div>
@@ -314,7 +325,7 @@ const Order = () => {
                     { realInventory2.map( (item) =>
                     (
                         <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                        onClick= { () => { pushInv(item[1])  }}>
+                        onClick= { () => { pushInv(item[1], item[0])  }}>
                         {item[0]}</Button>
                     ) )}                 
                 </div>
@@ -324,20 +335,38 @@ const Order = () => {
                     { realInventory3.map( (item) =>
                     (
                         <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                        onClick= { () => { pushInv(item[1])  }}>
+                        onClick= { () => { pushInv(item[1], item[0])  }}>
                         {item[0]}</Button>
-                    ) )}     
+                    )  )}
                 </div>
 
                             
              </div>
             )}
+
             </ThemeProvider>
-            </div>{" "}
+            <div class="addItems">
+                <Button variant="contained" sx={{ width:150, height:50, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                onClick= { () => { addItem() } } >
+                Add more items</Button>
+            </div>
+
+            
+            </div>
+
             {/*   To divide the section */}
             <div class="order__currentOrder">
                 <h1> Current Order</h1>
+                
+                { listOrderedNames.map( (item) =>
+                    <p> {item[0]} {item[1]}</p>
+                )}   
             </div>
+
+            {/* add a submit order button */}
+            {/* add a ADD more items button */}
+            {/* add a include this order*/}
+
         </div>
     );
 };

@@ -27,3 +27,9 @@ body {
     float: left;
     width: 25%;
 }
+
+.addItems{
+    bottom: 5%;
+    right: 2.5%;
+    margin: 5%;
+}
