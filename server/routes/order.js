@@ -41,7 +41,7 @@ app.get("/getOrderId", async (req, res) => {
             currOrderId = date_int;
         }
 
-        // console.log(currOrderId);
+        console.log(currOrderId);
 
         res.json(currOrderId);
     } catch (err) {
