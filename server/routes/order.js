@@ -13,7 +13,7 @@ For order page:
 */
 
 /* Get orderid for a new order 
-To call in frontend: http://localhost:5000/api/order/getOrderId
+To call in frontend: http://localhost:3500/api/order/getOrderId
 */
 app.get("/getOrderId", async (req, res) => {
     try {
@@ -50,7 +50,7 @@ app.get("/getOrderId", async (req, res) => {
 });
 
 /* Get inventory table
-To call in frontend: http://localhost:5000/api/order/getInventory
+To call in frontend: http://localhost:3500/api/order/getInventory
 */
 app.get("/getInventory", async (req, res) => {
     try {
@@ -64,7 +64,7 @@ app.get("/getInventory", async (req, res) => {
 });
 
 /* Get menucost table
-To call in frontend: http://localhost:5000/api/order/getMenu
+To call in frontend: http://localhost:3500/api/order/getMenu
 */
 app.get("/getMenu", async (req, res) => {
     try {
