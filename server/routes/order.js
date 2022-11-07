@@ -8,8 +8,7 @@ For order page:
         - API calls to orderid, inventory, and menucost tables
 
     Submit button:
-        - TODO: API call to update ordering table
-        - TODO: Possibly update amount in inventory table?? 
+        - API call to update ordering table
 */
 
 /* Get orderid for a new order 
