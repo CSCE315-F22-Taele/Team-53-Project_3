@@ -1,0 +1,101 @@
+
+* {
+    box-sizing: border-box;
+  }
+  
+  body{
+    background-color: #b3aed4;
+    color:black;
+    justify-content: center;
+    text-align: center;
+  }
+  .MainLayout {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  div{
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .backButtons{
+    position:absolute;
+    bottom: 5%;
+    left: 2.5%;
+  }
+  
+  .pomHoneyLogo{
+    width: 15%;
+    
+    justify-content: left;
+    margin-left: 0;
+    margin-right: auto;
+    height: auto;
+    padding: 1%; 
+    
+  }
+  
+  .header{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 200%;
+    display:flex;
+    justify-content: center;
+  }
+  
+  .title{
+    flex:auto;
+    font-size: 150%;
+    margin: auto;
+    font-weight: bold;
+  }
+  
+  .imgLogo{
+    display:contents;
+  }
+
+.container {
+    display: grid;
+    grid-template-columns: auto 350px;
+    height: 100%;
+}
+
+.pay-method{
+    display: grid;
+    grid-template-columns: auto auto;
+    margin-left: 10vh;
+    margin-right: 10vh;
+    justify-items: center;
+}
+
+.btn {
+    height: 20vh;
+    width: 50vh;
+    font-size: large;
+    background-color: #52588b;
+    color:rgb(204, 203, 208);
+    font-size: larger;
+}
+
+.receipt{
+    background-color: #7c76c3;    
+    text-align: center;
+    margin-left: 6px;
+    position: relative;
+    /* display: flex; */
+}
+
+.cancel-btn{
+    position:absolute;
+} 
+
+.checkoutBtn{
+    position:absolute;
+    bottom: 3vh;
+    left: 16vh;
+    height: 40px;
+    width: 100px;
+    background-color: #283593;
+    color:rgb(204, 203, 208);
+    border-radius: 8px;
+    border: none;
+  }
