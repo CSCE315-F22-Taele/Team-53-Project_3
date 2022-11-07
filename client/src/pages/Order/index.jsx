@@ -39,6 +39,7 @@ const Order = () => {
     const [listOrderedInv, setlistOrderedInv] = useState([]);
     const [inventoryUsed, setInventoryUsed]= useState([]);
     const [showCustom, setIsShown] = useState(false);
+    const [totalCost, setCost] = useState(0);
     const name = "Pom and Honey at Texas A&M MSC";
    
 
@@ -77,7 +78,7 @@ const Order = () => {
 
             for( var key in jsonVals){
                
-               
+               console.log(jsonVals[key]);
                 if (jsonVals[key].is_selling == true){
                     if (jsonVals[key].is_customize == true){
                        var menuCustom = [];
@@ -89,7 +90,7 @@ const Order = () => {
                        menuVals.push(menuCustom);
                      
                        setMenuNamesCustom(menuVals);
-
+                    
                     }
 
                     else{
@@ -118,7 +119,7 @@ const Order = () => {
             
             setListOrdered(value);
             
-
+            
         } catch (err) {
             console.log("error");
             console.error(err.message);
@@ -225,32 +226,28 @@ const Order = () => {
         inventoryGet();
     }, [])
 
-    const pushItemCustom = (index, val, cost) => {
-        addItemName(val, cost);
-
+    const pushItem = (index, val, cost, custom) => {
+    
         let newCart = listOrdered;
         newCart[index] += 1;
         setListOrdered(newCart);
-        setIsShown(showCustom => true);
-        console.log(listOrdered);
-    }
+        console.log(newCart);
 
-   const addItemName = (val, cost) =>{
-    let namesCart = listOrderedNames;
-    namesCart.push([val, cost]);
-    setListOrderedNames(namesCart);
-    console.log(listOrderedNames);
-   }
+        if( custom === true){
+            setIsShown(showCustom => true);
+        }
+       
+        let namesCart = listOrderedNames;
+        namesCart.push([val, '$' + cost]);
+        setListOrderedNames(namesCart);
+        console.log(listOrderedNames);
 
-    const pushItem = (index, val, cost) => {
+        
+        let costCurr = totalCost;
+        costCurr += parseFloat(cost);
+        setCost(costCurr);
 
-        addItemName(val,cost);
 
-        let newCart = listOrdered;
-        newCart[index] += 1;
-        setListOrdered(newCart);
-      
-        console.log(listOrdered);
     }
 
 
@@ -259,16 +256,19 @@ const Order = () => {
         
         inv[index] += 1;
         setInventoryUsed(inv);
-        console.log(inventoryUsed);
+        
         
         let namesCart = listOrderedInv;
         namesCart.push(val);
         setlistOrderedInv(namesCart);
-       
+        
+        
     }
     
     const addItem = () => {
         setIsShown(showCustom => false);
+
+        console.log(listOrderedNames);
     }
 
 
@@ -283,17 +283,19 @@ const Order = () => {
             { menuNamesCustom.map( (item) =>
             (
                 <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                onClick= { () => { pushItemCustom(item[2], item[0], item[1])  }}>
+                onClick= { () => { pushItem(item[2], item[0], item[1], true)  }}>
                 {item[0]}</Button>
             ) )}     
-
             { menuNames.map( (item) =>
             (
                 <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                onClick= { () => { pushItem(item[2], item[0], item[1]) }}>
+                onClick= { () => { pushItem(item[2], item[0], item[1], false) }}>
                 {item[0]}</Button>
             ) )}     
+            
 
+            
+            
 
             </div>
 
@@ -348,19 +350,26 @@ const Order = () => {
             <div class="addItems">
                 <Button variant="contained" sx={{ width:150, height:50, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                 onClick= { () => { addItem() } } >
-                Add more items</Button>
+                Add more items</Button> 
+
+                { listOrderedNames.map( (item) =>
+                    <p> {item[0]} {item[1]}</p>
+                )}   
+           
             </div>
 
             
             </div>
 
-            {/*   To divide the section */}
+           
             <div class="order__currentOrder">
                 <h1> Current Order</h1>
                 
                 { listOrderedNames.map( (item) =>
                     <p> {item[0]} {item[1]}</p>
                 )}   
+
+                <h1> Cost: ${totalCost} </h1>
             </div>
 
             {/* add a submit order button */}
