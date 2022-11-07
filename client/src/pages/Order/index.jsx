@@ -5,6 +5,7 @@ import "./index.css";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { indigo } from "@mui/material/colors";
+import Stack from '@mui/material/Stack';
 import e from "cors";
 // import { json } from "express";
 
@@ -298,6 +299,26 @@ const Order = () => {
         setCount(countVal);
         
     }
+
+    const clearOrder = () => {
+        setOrderid(0);
+        setMenuNamesCustom([]);
+        setMenuNames([]);
+        
+        setInventory0([]);
+        setInventory1([]);
+        setInventory2([]);
+        setInventory3([]);
+        setInventory4([]);
+    
+        setListOrdered([]);
+        setListOrderedNames([]);
+        setlistOrderedInv([]);
+        setInventoryUsed([]);
+        setIsShown(false);
+        setCost(0);
+        setCount(0);
+    }
     
     const addItem = () => {
         setIsShown(showCustom => false);
@@ -423,8 +444,12 @@ const Order = () => {
             </div>
 
                 <h1> Cost: ${totalCost} </h1>
+                <Stack spacing = {2}>
+                    <Button  variant="contained" size="large" onClick= { () => {sendtoDb()}}>Submit Order</Button>
+                    <Button  variant="contained" size="large" onClick= { () => {clearOrder()}}>Clear Order</Button>
+                </Stack>
 
-                <Button  variant="contained" size="large" onClick= { () => {sendtoDb()}}>Submit Order</Button>
+
             </div>
 
             {/* add a submit order button */}
