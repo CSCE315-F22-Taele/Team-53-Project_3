@@ -42,6 +42,13 @@ const Order = () => {
     const [showCustom, setIsShown] = useState(false);
     const [totalCost, setCost] = useState(0);
     const [count, setCount] = useState(0);
+
+    const [ cat0click, setAllowClickCat0] = useState(true);
+    const [ cat1click, setAllowClickCat1] = useState(true);
+    const [ cat2click, setAllowClickCat2] = useState(true);
+    const [ cat3click, setAllowClickCat3] = useState(true);
+    const [countToppings, setCountToppings] = useState(0);
+    
     const name = "Pom and Honey at Texas A&M MSC";
    
 
@@ -50,8 +57,7 @@ const Order = () => {
     }; 
 
     const orderIdVal = async () => {
-        //e.preventDefault(); //prevent refresh
-        /* Reference to make API calls */
+        
         try {
             
             const response = await fetch("http://localhost:3500/api/order/getOrderid");
@@ -68,8 +74,7 @@ const Order = () => {
     };
 
     const menuGet = async () => {
-        //event.preventDefault();
-        /* Reference to make API calls */
+
         setMenuNames([]);
         setMenuNamesCustom([]);
         try {
@@ -81,14 +86,14 @@ const Order = () => {
             for( var key in jsonVals){
                
             
-               // (jsonVals[key]);
+     
                 if (jsonVals[key].is_selling == true){
                     if (jsonVals[key].is_customize == true){
                        var menuCustom = [];
                        menuCustom.push( jsonVals[key].menuitem);
                        menuCustom.push( jsonVals[key].cost);
                        menuCustom.push( jsonVals[key].id);
-                      
+                       menuCustom.push( jsonVals[key].default_inventory);
                        var menuVals = menuNamesCustom;
                        menuVals.push(menuCustom);
                      
@@ -101,11 +106,11 @@ const Order = () => {
                          menu.push( jsonVals[key].menuitem);
                          menu.push( jsonVals[key].cost);
                          menu.push( jsonVals[key].id);
+                         menu.push( jsonVals[key].default_inventory);
                         
                          var menuVals = menuNames;
                          menuVals.push(menu);
-                         // menuVals.push(menuId);
-                         // menuVals.push(menuPrice);
+                        
              
                          
                          setMenuNames(menuVals);
@@ -133,8 +138,7 @@ const Order = () => {
     };
     
     const inventoryGet = async () => {
-        //event.preventDefault();
-        /* Reference to make API calls */
+        
         
         try {
     
@@ -204,7 +208,7 @@ const Order = () => {
 
             
             }
-            var length = realInventory0.length + realInventory1.length +  realInventory2.length + realInventory3.length + realInventory4.length +1; 
+            var length = realInventory0.length + realInventory1.length +  realInventory2.length + realInventory3.length + realInventory4.length; 
             var value = [];
             
             for( let i =0; i< length; i++){
@@ -213,11 +217,9 @@ const Order = () => {
             
             setInventoryUsed(value);
             
-            //console.log(jsonData[0]);
-            //setMenuCustom(jsonData);
-            console.log("fetched inventory");
+           
         } catch (err) {
-            // console.log("error");
+            
             console.error(err.message);
         }
     };
@@ -260,24 +262,32 @@ const Order = () => {
         inventoryGet();
     }, [])
 
-    const pushItem = (index, val, cost, custom) => {
+    const pushItem = (index, val, cost, inventory_default, custom) => {
         
         setlistOrderedInv([]);
 
         let newCart = listOrdered;
         newCart[index-1] += 1;
         setListOrdered(newCart);
-        // console.log(newCart);
+     
 
         if( custom === true){
             setIsShown(showCustom => true);
         }
-       
+        
+        let inv = inventoryUsed;
+        
+        for( var i=0; i< inv.length; i++){
+            inv[i] += inventory_default[i];
+        }
+        
+        setInventoryUsed(inv);
+        console.log(inv);
+
         let namesCart = listOrderedNames;
         namesCart.push([val, '$' + cost]);
         setListOrderedNames(namesCart);
-        // console.log(listOrderedNames);
-
+    
         
         let costCurr = totalCost;
         costCurr += parseFloat(cost);
@@ -289,7 +299,7 @@ const Order = () => {
     }
 
 
-    const pushInv = (index, val) => {
+    const pushInv = (index, val, category) => {
         let inv = inventoryUsed;
         
         inv[index-1] += 1;
@@ -304,7 +314,25 @@ const Order = () => {
         countVal  +=1;
         setCount(countVal);
         
-        console.log(inventoryUsed);
+        
+
+        if (category ==0){
+            setAllowClickCat0(false);
+        }
+        else if (category == 1){
+            setAllowClickCat1(false);
+        }
+        else if (countToppings < 10){
+            let countCurr = countToppings +1; 
+            setCountToppings(countCurr);
+        }
+        else if( category == 2){
+            setAllowClickCat2(false);
+        }
+        else if (category == 3){
+            setAllowClickCat3(false);
+        }
+
     }
 
     const clearOrder = () => {
@@ -317,12 +345,21 @@ const Order = () => {
         setIsShown(false);
         setCost(0);
         setCount(0);
+        setAllowClickCat0(true);
+        setAllowClickCat1(true);
+        setAllowClickCat2(true);
+        setAllowClickCat3(true);
+        setCountToppings(0);
     }
     
     const addItem = () => {
         setIsShown(showCustom => false);
-
-        // console.log(listOrderedNames);
+        setAllowClickCat0(true);
+        setAllowClickCat1(true);
+        setAllowClickCat2(true);
+        setAllowClickCat3(true);
+        setCountToppings(0);
+        
     }
 
 
@@ -341,13 +378,13 @@ const Order = () => {
             { menuNamesCustom.map( (item) =>
             (
                 <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                onClick= { () => { pushItem(item[2], item[0], item[1], true)  }}>
+                onClick= { () => { pushItem(item[2], item[0], item[1],item[3], true)  }}>
                 {item[0]}</Button>
             ) )}     
             { menuNames.map( (item) =>
             (
                 <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                onClick= { () => { pushItem(item[2], item[0], item[1], false) }}>
+                onClick= { () => { pushItem(item[2], item[0], item[1],item[3], false) }}>
                 {item[0]}</Button>
             ) )}     
             
@@ -360,46 +397,71 @@ const Order = () => {
             {showCustom && (
                 <div>
                 
-                 <h2> Base</h2>
-                <div class="buttons base">
-                    { realInventory0.map( (item) =>
-                    (
-                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                        onClick= { () => { pushInv(item[1], item[0])  }}>
-                        {item[0]}</Button>
-                    ) )}     
-                </div>
+                
 
+                    {cat0click && (
+                    <div class="buttons base">
+                    <h2> Base</h2>
+                    { realInventory0.map( (item) =>
+                    (   
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                        onClick= { () => { pushInv(item[1], item[0], 0)  }}>
+                        {item[0]}</Button>
+                    ) )}  
+                    </div>   
+                    )
+                    }
+                    {!cat0click &&
+                        (
+                            <div>
+                            <h2> Items chosen:</h2>
+                            
+                                   { listOrderedInv.map( (item) =>
+                                        <p> {item}</p>
+                                    )}   
+                            </div>
+                        )
+                    }
+                
+                {cat1click && (
+                 <div class="buttons protein">
                 <h2> Protein</h2>
-                <div class="buttons protein">
+
+               
                     { realInventory1.map( (item) =>
                     (
                         <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                        onClick= { () => { pushInv(item[1], item[0])  }}>
+                        onClick= { () => { pushInv(item[1], item[0], 1)  }}>
                         {item[0]}</Button>
                     ) )}                                  
                 </div>
+                )}
 
-                <h2> Toppings</h2>
+                {cat2click && (
+                
                 <div class="buttons toppings">
+                <h2> Toppings</h2>
                     { realInventory2.map( (item) =>
                     (
                         <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                        onClick= { () => { pushInv(item[1], item[0])  }}>
+                        onClick= { () => { pushInv(item[1], item[0], 2)  }}>
                         {item[0]}</Button>
                     ) )}                 
                 </div>
-
-                <h2> Dressing</h2>
-                <div class="buttons">
+                )}
+                
+                {cat3click && (
+                
+                <div class="buttons dressing">
+                    <h2> Dressing</h2>
                     { realInventory3.map( (item) =>
                     (
                         <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                        onClick= { () => { pushInv(item[1], item[0])  }}>
+                        onClick= { () => { pushInv(item[1], item[0], 3)  }}>
                         {item[0]}</Button>
                     )  )}
                 </div>
-
+                )}
                             
              </div>
             )}
@@ -451,9 +513,7 @@ const Order = () => {
 
             </div>
 
-            {/* add a submit order button */}
-            {/* add a ADD more items button */}
-            {/* add a include this order*/}
+        
 
         </div>
     );
