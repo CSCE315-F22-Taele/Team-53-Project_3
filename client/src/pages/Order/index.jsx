@@ -40,6 +40,7 @@ const Order = () => {
     const [inventoryUsed, setInventoryUsed]= useState([]);
     const [showCustom, setIsShown] = useState(false);
     const [totalCost, setCost] = useState(0);
+    const [count, setCount] = useState(0);
     const name = "Pom and Honey at Texas A&M MSC";
    
 
@@ -78,6 +79,7 @@ const Order = () => {
 
             for( var key in jsonVals){
                
+            
                console.log(jsonVals[key]);
                 if (jsonVals[key].is_selling == true){
                     if (jsonVals[key].is_customize == true){
@@ -220,6 +222,10 @@ const Order = () => {
         }
     };
 
+    const sendtoDb = () => {
+        console.log("FIX ME");
+    }
+
     useEffect( () => {
         orderIdVal();
         menuGet();
@@ -227,7 +233,9 @@ const Order = () => {
     }, [])
 
     const pushItem = (index, val, cost, custom) => {
-    
+        
+        setlistOrderedInv([]);
+
         let newCart = listOrdered;
         newCart[index] += 1;
         setListOrdered(newCart);
@@ -261,7 +269,10 @@ const Order = () => {
         let namesCart = listOrderedInv;
         namesCart.push(val);
         setlistOrderedInv(namesCart);
-        
+
+        let countVal = count;
+        countVal  +=1;
+        setCount(countVal);
         
     }
     
@@ -275,8 +286,12 @@ const Order = () => {
     return (
         <div class="order__pageOrder">
         <div class="order__orderingSection">
-            <h1 class="order__orderingTitle">  Ordering from Pom and Honey at Texas A&M MSC </h1>
+            <br></br>
 
+            <h1 class="order__orderingTitle">  Ordering from Pom and Honey at Texas A&M MSC </h1>
+            <br></br>
+            <br></br>
+            <br></br>
             <h2> Item</h2>
             <ThemeProvider theme={theme}>
             <div class="order__buttons">
@@ -346,15 +361,16 @@ const Order = () => {
              </div>
             )}
 
+            
             </ThemeProvider>
             <div class="addItems">
+
+
                 <Button variant="contained" sx={{ width:150, height:50, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                 onClick= { () => { addItem() } } >
                 Add more items</Button> 
 
-                { listOrderedNames.map( (item) =>
-                    <p> {item[0]} {item[1]}</p>
-                )}   
+                        
            
             </div>
 
@@ -369,7 +385,23 @@ const Order = () => {
                     <p> {item[0]} {item[1]}</p>
                 )}   
 
+            <br></br>
+            <br></br>
+            <br></br>
+            <div>
+                <h5>Added Items to Gyro/Bowl:</h5>
+                { listOrderedInv.map( (item) =>
+                    <p> {item}</p>
+                )}   
+
+            <br></br>
+            <br></br>
+            <br></br>
+            </div>
+
                 <h1> Cost: ${totalCost} </h1>
+
+                <Button  variant="contained" size="large" onClick= { () => {sendtoDb()}}>Submit Order</Button>
             </div>
 
             {/* add a submit order button */}
