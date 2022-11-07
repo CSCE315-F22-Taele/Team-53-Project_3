@@ -221,13 +221,10 @@ const Order = () => {
         }
     };
 
-    /*FIX ME: Data is send back correctly, so maybe issue is in ./server/routes/order.js */
     const sendtoDb = async () => {
         console.log("FIX ME");
         try {
             var date=new Date();
-            // const current = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds() + "." + date.getMilliseconds();
-            
             var current = date.getHours() + ':';
 
             if (date.getMinutes() < 10) {
@@ -247,7 +244,6 @@ const Order = () => {
                     body: JSON.stringify(body)
                 }
             );
-            console.log(response);
         } catch (err) {
             console.error(err.message);
         }

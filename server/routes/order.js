@@ -82,19 +82,18 @@ app.get("/getMenu", async (req, res) => {
 
 /* Submit order to ordering table 
 To call: http://localhost:3500/api/order/postOrder
+
+Note: Make sure variables in req.body is the same as the ones passed in!
 */
-/* FIX ME */
 app.post("/postOrder", async (req, res) => {
     try {
-        const { orderid, timeoforder, amount, ordereditems, inventory } =
+        const { orderid, current, totalCost, listOrdered, inventoryUsed } =
             req.body;
 
         const todo = await db.query(
             "INSERT INTO ordering (orderid, timeoforder, amount, ordereditems, inventory) VALUES ($1, $2, $3, $4, $5)",
-            [orderid, timeoforder, amount, ordereditems, inventory]
+            [orderid, current, totalCost, listOrdered, inventoryUsed]
         );
-
-        console.log("in /postOrder");
 
         // res.json(todo.rows);
     } catch (err) {
