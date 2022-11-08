@@ -161,8 +161,8 @@ export default function CheckoutPage(props) {
               </ThemeProvider>
           </div>
           <div className='receipt'>
-                <h2> Current Order</h2>
- 
+                <h2> Receipt </h2>
+
             <br></br>
             <br></br>
             <br></br>
