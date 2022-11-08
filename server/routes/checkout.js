@@ -13,17 +13,12 @@ For checkout page:
         - TODO: Update amount in inventory table 
 */
 
-/*
-Get ordering information for specific order 
-To call: http://localhost:3500/api/checkout/getOrder
+/* Get menucost table
+To call in frontend: http://localhost:3500/api/checkout/getMenu
 */
-app.get("/getOrder", async (req, res) => {
+app.get("/getMenu", async (req, res) => {
     try {
-        const { orderid } = req.body;
-        const todo = await db.query(
-            "SELECT * FROM ordering WHERE orderid = $1",
-            [orderid]
-        );
+        const todo = await db.query("SELECT * FROM menucost ORDER BY id");
 
         res.json(todo.rows);
     } catch (err) {
