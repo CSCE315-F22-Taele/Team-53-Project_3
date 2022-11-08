@@ -34,34 +34,58 @@ export default function CheckoutPage(props) {
  
   const handleClickOpen_Card = () => {
     setCard(true);
+    setPaymentMethod(2);
   };
  
   const handleClose_Card = () => {
     setCard(false);
   };
- 
-  const handleClickOpen_UIN = () => {
+
+  const handleClose_Card_Submitted = () => {
+    setCard(false);
+    alert("Please click checkout to submit your order.")
+  }
+
+  const handleClickOpen_UIN_Dining = () => {
     setUIN(true);
+    setPaymentMethod(0);
+  };
+
+  const handleClickOpen_UIN_MealSwipe = () => {
+    setUIN(true);
+    setPaymentMethod(1);
+
   };
  
   const handleClose_UIN = () => {
     setUIN(false);
   };
  
- 
- 
-  // FIXME
+  const selectCash = async () => {
+    setPaymentMethod(3);
+    alert("Please submit order and head to the cashier to make payment.");
+  }
+
   const postCheckout = async () => {
     try {
- 
-      // const body = {checkoutid, paymentmethod, amount, cardnumber,employeeid, orderid};
+      const cardnumber = cardNumber;
+      const paymentmethod = paymentMethod;
+      const amount = location.state.totalCost;
+      const orderid = location.state.orderid;
+
+      // console.log(cardnumber);
+      // console.log(paymentmethod);
+      // console.log(amount);
+      // console.log(orderid);
+      const body = {paymentmethod, amount, cardnumber, orderid};
             const response = fetch ("http://localhost:3500/api/checkout/postCheckout",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    //body: JSON.stringify(body)
+                    body: JSON.stringify(body)
                 }
             )
+      alert("Please wait for your order to be called: " + orderid);
     } catch (err) {
       console.error(err.message);
     }
@@ -70,24 +94,30 @@ export default function CheckoutPage(props) {
   useEffect( () => {
 }, [])
 
+  // Used to receive data from order page
   const location = useLocation();
-  console.log(props, " props");
-  console.log (location, " useLocation Hook");
 
+  // Used to store value of customer input
+  const [paymentMethod, setPaymentMethod] = useState(3);
+  const [cardNumber, setCardNumber] = useState("");
+
+  const handleCardNumber = async (e) => {
+    setCardNumber(e.target.value);
+  }
 
   return (
       <div className="App">
           <div className='container'>
             <div className='pay-method'>
               <ThemeProvider theme={theme}>
-                  <Button className='btn' sx={{m: 2, color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} >Cash</Button>
+                  <Button className='btn' sx={{m: 2, color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={selectCash} >Cash</Button>
                   <Button className='btn'  variant='contained' sx={{m: 2, color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_Card}>Credit/Debit</Button>
                  
                 <Dialog open={open_card} onClose={handleClose_Card}>
                     <DialogTitle>Card Information</DialogTitle>
                       <DialogContent>
                         <DialogContentText>
-                          Please fill the information of your card
+                          Please fill in your card information:
                         </DialogContentText>
                           <TextField
                             required
@@ -106,6 +136,8 @@ export default function CheckoutPage(props) {
                             type="text"
                             fullWidth
                             variant="standard"
+                            value = { cardNumber } 
+                            onChange = { handleCardNumber }
                           />
                           <TextField
                             required
@@ -129,17 +161,17 @@ export default function CheckoutPage(props) {
  
                         <DialogActions>
                           <Button onClick={handleClose_Card}>Cancel</Button>
-                          <Button onClick={handleClose_Card}>Save</Button>
+                          <Button onClick={handleClose_Card_Submitted}>Save</Button>
                         </DialogActions>
                 </Dialog>
  
-                <Button className='btn'  variant='contained' sx={{color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_UIN}>Dining Dollars</Button>
+                <Button className='btn'  variant='contained' sx={{color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_UIN_Dining}>Dining Dollars</Button>
                
                 <Dialog open={open_uin} onClose={handleClose_UIN}>
                     <DialogTitle>Student Information</DialogTitle>
                     <DialogContent>
                       <DialogContentText>
-                        Please fill your UIN
+                        Please fill in your UIN:
                       </DialogContentText>
                       <TextField
                         required
@@ -149,15 +181,17 @@ export default function CheckoutPage(props) {
                         type="text"
                         fullWidth
                         variant="standard"
+                        value = { cardNumber }
+                        onChange = { handleCardNumber }
                       />
                     </DialogContent>
  
                     <DialogActions>
                       <Button onClick={handleClose_UIN}>Cancel</Button>
-                      <Button onClick={handleClose_UIN}>Save</Button>
+                      <Button onClick={handleClose_Card_Submitted}>Save</Button>
                     </DialogActions>
                 </Dialog>
-                <Button className='btn' variant='contained'  sx={{color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_UIN}>Meal Swipe</Button>
+                <Button className='btn' variant='contained'  sx={{color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_UIN_MealSwipe}>Meal Swipe</Button>
               </ThemeProvider>
           </div>
           <div className='receipt'>
@@ -176,9 +210,10 @@ export default function CheckoutPage(props) {
                 <h2> Cost: ${location.state.totalCost} </h2>
                 <Stack spacing = {2}>
                     <br></br>
-                    <Button  variant="contained" size="large">Check out</Button>
+                    <Link to="/">
+                      <Button  variant="contained" size="large" onClick={() => postCheckout()}>Check out</Button>
+                    </Link>
                 </Stack>
- 
  
             </div>
           </div>

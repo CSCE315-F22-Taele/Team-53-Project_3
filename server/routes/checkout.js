@@ -37,20 +37,14 @@ To call: http://localhost:3500/api/checkout/postCheckout
 */
 app.post("/postCheckout", async (req, res) => {
     try {
-        const {
-            checkoutid,
-            paymentmethod,
-            amount,
-            cardnumber,
-            employeeid,
-            orderid,
-        } = req.body;
+        const { paymentmethod, amount, cardnumber, orderid } = req.body;
 
         const todo = await db.query(
-            "INSERT INTO public.checkout(checkoutid, paymentmethod, amount, cardnumber, employeeid, orderid) VALUES ($1, $2, $3, $4, $5, $6)",
-            [checkoutid, paymentmethod, amount, cardnumber, employeeid, orderid]
+            "INSERT INTO public.checkout(paymentmethod, amount, cardnumber, orderid) VALUES ($1, $2, $3, $4)",
+            [paymentmethod, amount, cardnumber, orderid]
         );
 
+        console.log(todo.rows);
         // res.json(todo.rows);
     } catch (err) {
         console.error(err.message);
