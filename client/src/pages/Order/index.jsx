@@ -507,6 +507,7 @@ const Order = () => {
 
                 <h1> Cost: ${totalCost} </h1>
                 <Stack spacing = {2}>
+                    {/* FIXEME: Why are the buttons not the same size? */}
                     <Link to="/checkout">
                         <Button  variant="contained" size="large" onClick= { () => {sendtoDb()}}>Submit Order</Button>
                     </Link>

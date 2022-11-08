@@ -15,6 +15,7 @@ import pomHoney from '../../pomAndHoney.png';
 import Hidden from '@mui/material/Hidden';
 // import Box from '@mui/material/Box';
 import Navbar from "../../components/Navbar/index";
+import {BrowserRouter as Router, Link} from 'react-router-dom';
 
 
 export default function CheckoutPage() {
@@ -172,8 +173,9 @@ export default function CheckoutPage() {
             {/* <Button variant="contained" size="large" >Logout</Button>
             <Button variant="contained" size="large" >Edit Order</Button> */}
             </Hidden>
-            <Button variant="contained" size="large" >Cancel Order</Button>
-            
+            <Link to="/">
+              <Button variant="contained" size="large" >Cancel Order</Button>
+            </Link>
           </ThemeProvider>
           </Stack>
         </footer>
