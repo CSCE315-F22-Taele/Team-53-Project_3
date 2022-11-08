@@ -7,7 +7,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { indigo } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
 import e from "cors";
-import {BrowserRouter as Router, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 // import { json } from "express";
 
 
@@ -25,7 +25,8 @@ const theme = createTheme({
 
 
 
-const Order = () => {
+// const Order = () => {
+function Order () {
     const [orderid, setOrderid] = useState(0);
     const [menuNamesCustom, setMenuNamesCustom] = useState([]);
     const [menuNames, setMenuNames] = useState([]);
@@ -363,6 +364,20 @@ const Order = () => {
         
     }
 
+    //const [data, setData] = useState ({
+    //    totalCost: totalCost
+    //});
+    const Peoplestates = () => {
+        const navigate = useNavigate();
+        const openprofile = (totalCost) => {
+            navigate ("/checkout", {
+                state: {
+                    totalCost: totalCost
+                }
+            });
+        }
+    }
+    // console.log(orderid);
 
     return (
         <div class="order__pageOrder">
@@ -507,9 +522,23 @@ const Order = () => {
 
                 <h1> Cost: ${totalCost} </h1>
                 <Stack spacing = {2}>
-                    {/* FIXEME: Why are the buttons not the same size? */}
-                    <Link to="/checkout">
-                        <Button  variant="contained" size="large" onClick= { () => {sendtoDb()}}>Submit Order</Button>
+                    {/* FIXEME: Why are the buttons not the same size? *
+
+                    
+                    <Link to={{
+                        pathname: "/checkout",
+                        state: {data : data}
+                        }}>*/}
+
+                    <Link to="/checkout" 
+                    state= {{
+                        orderid : orderid,
+                        totalCost : totalCost,
+                        listOrdered : listOrdered
+                    }}
+                    >
+
+                        <Button  variant="contained" size="large" onClick= { (openprofile) => {sendtoDb()}}>Submit Order</Button>
                     </Link>
                     <Button  variant="contained" size="large" onClick= { () => {clearOrder()}}>Clear Order</Button>
                 </Stack>

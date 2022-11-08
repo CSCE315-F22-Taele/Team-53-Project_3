@@ -40,7 +40,7 @@ app.get("/getOrderId", async (req, res) => {
         );
 
         var currOrderId;
-        if (lastOrderId_int > date_int) {
+        if (lastOrderId_int >= date_int) {
             currOrderId = lastOrderId_int + 1;
         } else {
             currOrderId = date_int;
