@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap");
+
+/* .App {
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+} */
+
+div {
+    font-family: "Montserrat", sans-serif;
+}
+
+.backButtons {
+    position: absolute;
+    bottom: 5%;
+    left: 2.5%;
+}
+
+.home__header {
+    font-family: "Montserrat", sans-serif;
+    justify-content: center;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    height: 100vh;
+    background-image: url("./food.jpg"); 
+    opacity: 0.95;
+}
+
+.home__title {
+    vertical-align: middle;
+    font-size: 500%;
+    margin: auto;
+    font-weight: bold;
+    font-family: "Abril Fatface", cursive;
+}
+
+.home__subtitle {
+    vertical-align: middle;
+    margin: auto;
+    font-weight: bold;
+    color: white;
+}
+
+/* body {
+    margin: 0;
+} */

@@ -1,0 +1,40 @@
+.order__buttons {
+    padding: 2%;
+}
+
+body {
+    background-color: #b3aed4;
+    color: black;
+    justify-content: center;
+    text-align: center;
+}
+
+.order__pageOrder {
+    height: 100%;
+}
+.order__orderingSection {
+    /* display: inline-block; */
+    width: 75%;
+    background: #e7e3fc;
+    float: left;
+    height: 100%;
+}
+
+.order__currentOrder {
+    /* display: inline-block; */
+
+    background-color: #b3aed4;
+    float: left;
+    width: 25%;
+}
+
+.addItems{
+    bottom: 5%;
+    right: 2.5%;
+    margin: 5%;
+}
+
+.h1{
+    font-weight: bold;
+    font-size: 30%;
+}

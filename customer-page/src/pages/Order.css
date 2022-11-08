@@ -1,0 +1,31 @@
+.buttons{
+    padding: 2%;
+}
+
+body{
+    background-color: #b3aed4;
+    color:black;
+    justify-content: center;
+    text-align: center;
+}
+
+.pageOrder{
+    height:100%;
+}
+.orderingSection{
+    /* display: inline-block; */
+    width: 75%;
+    background: #e7e3fc;
+    float: left;
+    height:100%;
+    
+    
+}
+
+.currentOrder{
+    /* display: inline-block; */
+  
+    background-color: #b3aed4;
+    float:left;
+    width: 25%;
+}
