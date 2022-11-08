@@ -15,22 +15,23 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Order from "./pages/Order";
 import Home from "./pages/Home";
-import { BrowserRouter as Link} from "react-router-dom";
-import pomHoney from './pomAndHoney.png';
+import Checkout from "./pages/Checkout";
+import { BrowserRouter as Link } from "react-router-dom";
+import pomHoney from "./pomAndHoney.png";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     // <React.StrictMode>
-        <BrowserRouter>
-            
-            <Routes>
-                <Route path="/" element={<Layout />}>
+    <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path="/order" element={<Order />} />
-                </Route>
-            </Routes> 
-        </BrowserRouter>
-//    </React.StrictMode>
+                <Route path="/checkout" element={<Checkout />} />
+            </Route>
+        </Routes>
+    </BrowserRouter>
+    //    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

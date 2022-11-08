@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { indigo } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
 import e from "cors";
+import {BrowserRouter as Router, Link} from 'react-router-dom';
 // import { json } from "express";
 
 
@@ -506,7 +507,9 @@ const Order = () => {
 
                 <h1> Cost: ${totalCost} </h1>
                 <Stack spacing = {2}>
-                    <Button  variant="contained" size="large" onClick= { () => {sendtoDb()}}>Submit Order</Button>
+                    <Link to="/checkout">
+                        <Button  variant="contained" size="large" onClick= { () => {sendtoDb()}}>Submit Order</Button>
+                    </Link>
                     <Button  variant="contained" size="large" onClick= { () => {clearOrder()}}>Clear Order</Button>
                 </Stack>
 
