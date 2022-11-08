@@ -11,9 +11,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { TextField } from '@mui/material';
 // import './main.css';
 import Stack from '@mui/material/Stack';
-// import pomHoney from './pomAndHoney.png';
+import pomHoney from '../../pomAndHoney.png';
 import Hidden from '@mui/material/Hidden';
 // import Box from '@mui/material/Box';
+import Navbar from "../../components/Navbar/index";
+
 
 export default function CheckoutPage() {
 
@@ -47,125 +49,121 @@ export default function CheckoutPage() {
 
   return (
       <div className="App">
-        
-        <div class="header"> 
+        {/* <div class="header"> 
           <div class="imgLogo">
-            {/* <img src={pomHoney}  class="pomHoneyLogo" alt="Pom and Honey Logo"/>  */}
+            <img src={pomHoney}  class="pomHoneyLogo" alt="Pom and Honey Logo"/> 
           </div>
   
           <div class="title">
             <h3>Pom and Honey Checkout Page</h3>
-          </div> 
-        </div>
+          </div>  
+        </div> */}
 
-        <div>
-        <div>
-      <div className='container'>
-        <div className='pay-method'>
-            <ThemeProvider theme={theme}>
-            <Button className='btn' sx={{m: 2, color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} >Cash</Button>
-            <Button className='btn'  variant='contained' sx={{m: 2, color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_Card}>Credit/Debit</Button>
-            <Dialog open={open_card} onClose={handleClose_Card}>
-                <DialogTitle>Card Information</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Please fill the information of your card
-                  </DialogContentText>
-                  <TextField
-                    required
-                    margin="dense"
-                    id="outlined-required"
-                    label="Name"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                  />
-                   <TextField
-                    required
-                    margin="dense"
-                    id="outlined-required"
-                    label="Card Number"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                  />
-                   <TextField
-                    required
-                    margin="dense"
-                    id="outlined-required"
-                    label="Expiration Date"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                  />
-                   <TextField
-                    required
-                    margin="dense"
-                    id="outlined-required"
-                    label="Security Code"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                  />                 
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose_Card}>Cancel</Button>
-                  <Button onClick={handleClose_Card}>Save</Button>
-                </DialogActions>
-            </Dialog>
+          <div className='container'>
+            <div className='pay-method'>
+              <ThemeProvider theme={theme}>
+                  <Button className='btn' sx={{m: 2, color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} >Cash</Button>
+                  <Button className='btn'  variant='contained' sx={{m: 2, color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_Card}>Credit/Debit</Button>
+                  
+                <Dialog open={open_card} onClose={handleClose_Card}>
+                    <DialogTitle>Card Information</DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          Please fill the information of your card
+                        </DialogContentText>
+                          <TextField
+                            required
+                            margin="dense"
+                            id="outlined-required"
+                            label="Name"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                          />
+                          <TextField
+                            required
+                            margin="dense"
+                            id="outlined-required"
+                            label="Card Number"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                          />
+                          <TextField
+                            required
+                            margin="dense"
+                            id="outlined-required"
+                            label="Expiration Date"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                          />
+                          <TextField
+                            required
+                            margin="dense"
+                            id="outlined-required"
+                            label="Security Code"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                          />                 
+                        </DialogContent>
 
-            <Button className='btn'  variant='contained' sx={{color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_UIN}>Dining Dollars</Button>
-            <Dialog open={open_uin} onClose={handleClose_UIN}>
-                <DialogTitle>Student Information</DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Please fill your UIN
-                  </DialogContentText>
-                  <TextField
-                    required
-                    margin="dense"
-                    id="outlined-required"
-                    label="UIN"
-                    type="text"
-                    fullWidth
-                    variant="standard"
-                  />
-                  </DialogContent>
-                  <DialogActions>
-                  <Button onClick={handleClose_UIN}>Cancel</Button>
-                  <Button onClick={handleClose_UIN}>Save</Button>
-                </DialogActions>
-            </Dialog>
-            <Button className='btn' variant='contained'  sx={{color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_UIN}>Meal Swipe</Button>
-            </ThemeProvider>
-        </div>
-        <div className='receipt'>
-            <h2>Receipt</h2>
-          {/* <ThemeProvider theme={theme}>
-            <Button variant="contained" size="large" className='checkoutBtn'>Check Out</Button>
-          </ThemeProvider> */}
-           
-            {/* <Box 
-            justifyContent="flex-end"
-            alignContent="flex-end"
-            >
-              <Button
-                id="new-sumbit"
-                type="submit"
-                color="primary"
-                variant="contained"
-                autoFocus>
-                Check Out
-              </Button>
-            </Box> */}
-          <button className='checkoutBtn'>Checkout</button>
-        </div>
+                        <DialogActions>
+                          <Button onClick={handleClose_Card}>Cancel</Button>
+                          <Button onClick={handleClose_Card}>Save</Button>
+                        </DialogActions>
+                </Dialog>
+
+                <Button className='btn'  variant='contained' sx={{color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_UIN}>Dining Dollars</Button>
+                
+                <Dialog open={open_uin} onClose={handleClose_UIN}>
+                    <DialogTitle>Student Information</DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        Please fill your UIN
+                      </DialogContentText>
+                      <TextField
+                        required
+                        margin="dense"
+                        id="outlined-required"
+                        label="UIN"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                      />
+                    </DialogContent>
+
+                    <DialogActions>
+                      <Button onClick={handleClose_UIN}>Cancel</Button>
+                      <Button onClick={handleClose_UIN}>Save</Button>
+                    </DialogActions>
+                </Dialog>
+                <Button className='btn' variant='contained'  sx={{color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_UIN}>Meal Swipe</Button>
+              </ThemeProvider>
+          </div>
+          <div className='receipt'>
+                <h2> Current Order</h2>
+
+            <br></br>
+            <br></br>
+            <br></br>
+            <div>
+
+            <br></br>
+            <br></br>
+            <br></br>
+            </div>
+
+                <h2> Cost: </h2>
+                <Stack spacing = {2}>
+                    <br></br>
+                    <Button  variant="contained" size="large">Check out</Button>
+                </Stack>
 
 
-      </div>
-
-    </div>
-        </div>
+            </div>
+          </div>
         
         <footer class="backButtons">
           <Stack spacing={2} direction="row" justifyContent="center" >
