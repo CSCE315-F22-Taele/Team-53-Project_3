@@ -15,8 +15,7 @@
 3. To test if properly ran: http://localhost:3500/api/index
 
 ##### If you run into errors:
-1. Download all packages.
-2. `npm i`
+1. To install all dependencies specified in package.json: `npm i`
 
 ## To run build:
 1. `npm run build-client`
