@@ -23,3 +23,6 @@
 1. package.json change  ` "proxy": "http://localhost:XX00" `
 2. inputTodo.js change `const response = await fetch("http://localhost:XX00/todos", { `
 3. Change server/index.js `const PORT = process.env.SERVER_PORT || XX00;`
+
+#### SITE LINK:
+http://ec2-3-16-11-179.us-east-2.compute.amazonaws.com:3000/
