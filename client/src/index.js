@@ -1,28 +1,18 @@
-// import React from "react";
-// import ReactDOM from "react-dom";
-// import "./index.css";
-// import App from "./App";
-
-// ReactDOM.render(<App />, document.getElementById("root"));
-
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-// import "./Navbar.css";
-// import App from "./App.jsx";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Order from "./pages/Order";
 import Home from "./pages/Home";
 import Checkout from "./pages/Checkout";
-import { BrowserRouter as Link } from "react-router-dom";
 import pomHoney from "./pomAndHoney.png";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     // <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
@@ -30,8 +20,8 @@ root.render(
                 <Route path="/checkout" element={<Checkout />} />
             </Route>
         </Routes>
-    </BrowserRouter>
-    //    </React.StrictMode>
+    </HashRouter>
+    // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

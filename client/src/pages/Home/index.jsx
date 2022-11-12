@@ -4,8 +4,9 @@ import "./index.css";
 
 const Home = () => {
     const name = "Pom and Honey at Texas A&M MSC";
+    console.log("This is the home page");
     return (
-        <div class="home__header" background="./food">
+        <div class="home__header">
             <div class="home__title">{name}</div>
             <div class="home__subtitle">
                 <h2>
