@@ -150,57 +150,57 @@ function Order () {
             
             for( var key in jsonVals){
                 
-                var inventoryCat0 = [];
-                var inventoryCat1 = [];
-                var inventoryCat2 = [];
-                var inventoryCat3 = [];
-                var inventoryCat4 = [];
+                let inventoryCat0 = [];
+                let inventoryCat1 = [];
+                let inventoryCat2 = [];
+                let inventoryCat3 = [];
+                let inventoryCat4 = [];
 
-                
+ 
 
                 // if (jsonVals[key] == true){
-                if (jsonVals[key].classify == 0){
+                if (jsonVals[key].classify === 0){
                     inventoryCat0.push(jsonVals[key].itemname);
                     inventoryCat0.push(jsonVals[key].itemid);
                     
 
-                    var inventory0 = realInventory0;
+                    let inventory0 = realInventory0;
                     inventory0.push(inventoryCat0);
-                  
+                 
                     setInventory0(inventory0);
                 }
-                else if (jsonVals[key].classify == 1){
+                else if (jsonVals[key].classify === 1){
                     inventoryCat1.push(jsonVals[key].itemname);
                     inventoryCat1.push(jsonVals[key].itemid);
 
-                    var inventory = realInventory1;
+                    let inventory = realInventory1;
                     inventory.push(inventoryCat1);
                   
                     setInventory1(inventory);
                 }
-                else if (jsonVals[key].classify == 2){
+                else if (jsonVals[key].classify === 2){
                     inventoryCat2.push(jsonVals[key].itemname);
                     inventoryCat2.push(jsonVals[key].itemid);
 
-                    var inventory = realInventory2;
+                    let inventory = realInventory2;
                     inventory.push(inventoryCat2);
                   
                     setInventory2(inventory);
                 }
-                else if (jsonVals[key].classify == 3){
+                else if (jsonVals[key].classify === 3){
                     inventoryCat3.push(jsonVals[key].itemname);
                     inventoryCat3.push(jsonVals[key].itemid);
 
-                    var inventory = realInventory3;
+                    let inventory = realInventory3;
                     inventory.push(inventoryCat3);
                   
                     setInventory3(inventory);
                 }
-                else if (jsonVals[key].classify == 4){
+                else if (jsonVals[key].classify === 4){
                     inventoryCat4.push(jsonVals[key].itemname);
                     inventoryCat4.push(jsonVals[key].itemid);
 
-                    var inventory = realInventory4;
+                    let inventory = realInventory4;
                     inventory.push(inventoryCat4);
                   
                     setInventory4(inventory);
@@ -295,7 +295,7 @@ function Order () {
         costCurr += parseFloat(cost);
         setCost(costCurr);
 
-        console.log(listOrdered);
+        //console.log(listOrdered);
 
 
     }
@@ -318,20 +318,20 @@ function Order () {
         
         
 
-        if (category ==0){
+        if (category === 0){
             setAllowClickCat0(false);
         }
-        else if (category == 1){
+        else if (category === 1){
             setAllowClickCat1(false);
         }
         else if (countToppings < 10){
             let countCurr = countToppings +1; 
             setCountToppings(countCurr);
         }
-        else if( category == 2){
+        else if( category === 2){
             setAllowClickCat2(false);
         }
-        else if (category == 3){
+        else if (category === 3){
             setAllowClickCat3(false);
         }
 
