@@ -13,7 +13,9 @@
     "client": "npm start --prefix client",
     "build-client": "npm run build --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "serve": "node server/index.js"
+    "serve": "node server/index.js",
+    "install-deps": "npm i && npm i --prefix client",
+    "clean-build": "npm run install-deps && npm run build-client"
   },
   "repository": {
     "type": "git",
