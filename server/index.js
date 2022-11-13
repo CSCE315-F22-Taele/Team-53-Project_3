@@ -19,11 +19,9 @@ app.use(express.json()); // req.body
 app.use("/api/index", indexRoute); // Test Routes
 app.use("/api/order", orderRoute);
 app.use("/api/checkout", checkoutRoute);
-app.use(express.static(path.join(__dirname, "../client/build")));
 
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
-    console.log(__dirname);
     res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));
 });
 
