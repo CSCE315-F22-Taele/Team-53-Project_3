@@ -20,6 +20,12 @@ app.use("/api/index", indexRoute); // Test Routes
 app.use("/api/order", orderRoute);
 app.use("/api/checkout", checkoutRoute);
 
+app.use(
+    cors({
+        origin: ["http://localhost:3000/", "https://pomandhoney.onrender.com/"],
+    })
+);
+
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/build", "index.html"));

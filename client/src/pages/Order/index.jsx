@@ -61,8 +61,10 @@ function Order () {
     const orderIdVal = async () => {
         
         try {
-            
-            const response = await fetch("http://localhost:3500/api/order/getOrderid");
+            // Local:
+            // const response = await fetch("http://localhost:3500/api/order/getOrderid");
+            // Production: 
+            const response = await fetch("https://pom-and-honey-bhf5.onrender.com/api/order/getOrderid");
     
             const data = await response.json();
             setOrderid(data);
@@ -81,7 +83,8 @@ function Order () {
         setMenuNamesCustom([]);
         try {
     
-            const response = await fetch("http://localhost:3500/api/order/getMenu");
+            // const response = await fetch("http://localhost:3500/api/order/getMenu");
+            const response = await fetch("https://pom-and-honey-bhf5.onrender.com/api/order/getMenu");
             const jsonVals = await response.json();
             
 
@@ -144,7 +147,8 @@ function Order () {
         
         try {
     
-            const response = await fetch("http://localhost:3500/api/order/getInventory");
+            // const response = await fetch("http://localhost:3500/api/order/getInventory");
+            const response = await fetch("https://pom-and-honey-bhf5.onrender.com/api/order/getInventory");
             const jsonVals = await response.json();
 
             
@@ -242,8 +246,9 @@ function Order () {
             current += ':' + date.getSeconds() + "." + date.getMilliseconds();
 
             const body = {orderid, current, totalCost, listOrdered, inventoryUsed};
-            const response = fetch ("http://localhost:3500/api/order/postOrder", 
-                {
+            // const response = fetch ("http://localhost:3500/api/order/postOrder", 
+            const response = fetch ("https://pom-and-honey-bhf5.onrender.com/api/order/postOrder", 
+            {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body)
