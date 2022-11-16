@@ -17,7 +17,12 @@ import Hidden from '@mui/material/Hidden';
 import Navbar from "../../components/Navbar/index";
 import {BrowserRouter as Router, json, Link, useLocation} from 'react-router-dom';
  
+// For local testing:
+const conn = "http://localhost:3500/";
+// For production:
+// const conn = "https://pom-and-honey-bhf5.onrender.com/";
  
+
 export default function CheckoutPage(props) {
  
   const theme = createTheme({
@@ -78,8 +83,7 @@ export default function CheckoutPage(props) {
       // console.log(amount);
       // console.log(orderid);
       const body = {paymentmethod, amount, cardnumber, orderid};
-            //const response = fetch ("http://localhost:3500/api/checkout/postCheckout",
-            const response = fetch ("https://pom-and-honey-bhf5.onrender.com/api/checkout/postCheckout",
+            const response = fetch (conn + "api/checkout/postCheckout",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
