@@ -10,7 +10,10 @@ import e from "cors";
 import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 // import { json } from "express";
 
-
+// For local testing: (comment out)
+const conn = "http://localhost:3500/";
+// For production:
+// const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
 const theme = createTheme({
     palette: {
@@ -61,8 +64,7 @@ function Order () {
     const orderIdVal = async () => {
         
         try {
-            
-            const response = await fetch("http://localhost:3500/api/order/getOrderid");
+            const response = await fetch(conn + "api/order/getOrderid");
     
             const data = await response.json();
             setOrderid(data);
@@ -81,14 +83,11 @@ function Order () {
         setMenuNamesCustom([]);
         try {
     
-            const response = await fetch("http://localhost:3500/api/order/getMenu");
+            const response = await fetch(conn + "api/order/getMenu");
             const jsonVals = await response.json();
             
-
-            for( var key in jsonVals){
-               
-            
-     
+            for( var key in jsonVals) { 
+                 
                 if (jsonVals[key].is_selling == true){
                     if (jsonVals[key].is_customize == true){
                        var menuCustom = [];
@@ -144,7 +143,7 @@ function Order () {
         
         try {
     
-            const response = await fetch("http://localhost:3500/api/order/getInventory");
+            const response = await fetch(conn + "api/order/getInventory");
             const jsonVals = await response.json();
 
             
@@ -242,8 +241,8 @@ function Order () {
             current += ':' + date.getSeconds() + "." + date.getMilliseconds();
 
             const body = {orderid, current, totalCost, listOrdered, inventoryUsed};
-            const response = fetch ("http://localhost:3500/api/order/postOrder", 
-                {
+            const response = fetch (conn + "api/order/postOrder", 
+            {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body)
@@ -294,9 +293,6 @@ function Order () {
         let costCurr = totalCost;
         costCurr += parseFloat(cost);
         setCost(costCurr);
-
-        //console.log(listOrdered);
-
 
     }
 

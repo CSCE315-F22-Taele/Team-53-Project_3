@@ -36,6 +36,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "node-modules": "^1.0.1",
+    "path": "^0.12.7",
     "pg": "^8.8.0",
     "react-router-dom": "^6.4.3",
     "react-scripts": "^2.1.3"

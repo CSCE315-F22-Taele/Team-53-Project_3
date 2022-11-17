@@ -3,6 +3,7 @@ require("dotenv").config();
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
+const path = require("path");
 
 const PORT = process.env.SERVER_PORT || 3500;
 
@@ -18,6 +19,12 @@ app.use(express.json()); // req.body
 app.use("/api/index", indexRoute); // Test Routes
 app.use("/api/order", orderRoute);
 app.use("/api/checkout", checkoutRoute);
+
+app.use(
+    cors({
+        origin: ["http://localhost:3000/", "https://pomandhoney.onrender.com/"],
+    })
+);
 
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
