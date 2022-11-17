@@ -1,4 +1,5 @@
 # Pom & Honey Ordering Site
+https://pomandhoney.onrender.com/
 
 ## To run full application:
 
@@ -17,9 +18,7 @@
 ##### If you run into errors:
 1. To install all dependencies specified in package.json: `npm i`
 
-## To run build:
+## To run full build:
 1. `npm run build-client`
 2. `npm run serve`
 
-#### SITE LINK:
-http://ec2-3-16-11-179.us-east-2.compute.amazonaws.com:3000/
