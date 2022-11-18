@@ -1,0 +1,33 @@
+.inventory_page{
+    height: 100%;
+}
+
+.inventory_item-section{
+    height: 100%;
+    width: 75%;
+    background: #e7e3fc;
+    float: left;
+}
+
+.inventory_receipt-section{
+    background-color: #b3aed4;
+    float: left;
+    width: 25%;
+}
+
+.inventory-btn{
+    padding: 2%;
+}
+
+.footer-btn{
+    position:absolute;
+    bottom: 5%;
+    width: 75%;
+}
+.back-btn{
+    left:-10px;
+}
+.add-btn{
+    right:0;
+}
+
