@@ -3,7 +3,7 @@
 }
 
 body {
-    background-color: #b3aed4;
+    
     color: black;
     justify-content: center;
     text-align: center;
@@ -11,19 +11,21 @@ body {
 
 .order__pageOrder {
     height: 100%;
+    background: whitesmoke;
 }
 .order__orderingSection {
     /* display: inline-block; */
     width: 75%;
-    background: #e7e3fc;
+    background: whitesmoke;
     float: left;
     height: 100%;
+    border-right: 2px solid black;
 }
 
 .order__currentOrder {
     /* display: inline-block; */
-
-    background-color: #b3aed4;
+    
+    background-color: whitesmoke;
     float: left;
     width: 25%;
 }

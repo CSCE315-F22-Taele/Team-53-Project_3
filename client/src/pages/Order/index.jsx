@@ -14,7 +14,6 @@ import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 const conn = "http://localhost:3500/";
 // For production:
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
-
 const theme = createTheme({
     palette: {
         primary: {

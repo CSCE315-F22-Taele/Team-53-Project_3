@@ -6,6 +6,7 @@ import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Order from "./pages/Order";
 import Home from "./pages/Home";
+import Login from "./pages/Login"
 import Checkout from "./pages/Checkout";
 import pomHoney from "./pomAndHoney.png";
 
@@ -18,6 +19,7 @@ root.render(
                 <Route index element={<Home />} />
                 <Route path="/order" element={<Order />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/login" element={<Login />} />
             </Route>
         </Routes>
     </HashRouter>
