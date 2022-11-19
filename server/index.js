@@ -16,11 +16,13 @@ const indexRoute = require("./routes/index"); // Test routes
 const orderRoute = require("./routes/order");
 const checkoutRoute = require("./routes/checkout");
 const inventoryRoute = require("./routes/inventory");
+const menuRoute = require("./routes/menu");
 
 app.use("/api/index", indexRoute); // Test Routes
 app.use("/api/order", orderRoute);
 app.use("/api/checkout", checkoutRoute);
 app.use("/api/inventory", inventoryRoute);
+app.use("/api/menu", menuRoute);
 
 app.use(
     cors({
