@@ -46,4 +46,37 @@ app.post("/postCheckout", async (req, res) => {
     }
 });
 
+/*
+Get current invetory amount to decrement
+*/
+app.get("/getInventory", async (req, res) => {
+    try {
+        const todo = await db.query(
+            "SELECT amount FROM inventory ORDER BY itemid;"
+        );
+
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+/*
+Update inventory amount accordingly
+*/
+app.post("/postInventory", async (req, res) => {
+    try {
+        const { amount, itemid } = req.body;
+
+        const todo = await db.query(
+            "UPDATE inventory SET amount=$1 WHERE itemid = $2",
+            [amount, itemid]
+        );
+
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 module.exports = app;
