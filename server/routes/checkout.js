@@ -2,17 +2,6 @@ const express = require("express");
 const app = express.Router();
 const db = require("../db");
 
-/*
-For checkout page:
-    Inital loading page:
-        - Need orderid passed in
-        - Pass back ordering entity 
-
-    Submit button:
-        - TODO: Insert into checkout        
-        - TODO: Update amount in inventory table 
-*/
-
 /* Get menucost table
 To call in frontend: http://localhost:3500/api/checkout/getMenu
 */
@@ -35,7 +24,7 @@ app.post("/postCheckout", async (req, res) => {
         const { paymentmethod, amount, cardnumber, orderid } = req.body;
 
         const todo = await db.query(
-            "INSERT INTO public.checkout(paymentmethod, amount, cardnumber, orderid) VALUES ($1, $2, $3, $4)",
+            "INSERT INTO checkout(paymentmethod, amount, cardnumber, orderid) VALUES ($1, $2, $3, $4)",
             [paymentmethod, amount, cardnumber, orderid]
         );
 

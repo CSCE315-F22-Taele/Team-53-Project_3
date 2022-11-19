@@ -91,9 +91,7 @@ export default function CheckoutPage(props) {
     }
   }
 
-  const postInventory = async () => {
-    setCurrInventory(location.state.inventoryUsed);
-    
+  const postInventory = async () => {    
     for (var i = 0; i < totalInventory.length; i++) {
       var tmp = JSON.stringify(totalInventory[i]);
       var tmp_int = parseInt(tmp.substring(10, tmp.length-1));
@@ -126,7 +124,6 @@ export default function CheckoutPage(props) {
   const [paymentMethod, setPaymentMethod] = useState(3);
   const [cardNumber, setCardNumber] = useState("");
   const [totalInventory, setInventory] = useState([]);
-  const [currInventory, setCurrInventory] = useState([]);
 
   const handleCardNumber = async (e) => {
     setCardNumber(e.target.value);
@@ -138,7 +135,6 @@ export default function CheckoutPage(props) {
       const response = await fetch(conn + "api/checkout/getInventory");
       const data = await response.json();
       setInventory(data);
-      //console.log(totalInventory);
     } catch (err) {
       console.log(err.message);
     }
@@ -147,7 +143,6 @@ export default function CheckoutPage(props) {
   useEffect( () => {
     getInventory();
 }, [])
-
 
 
   return (
