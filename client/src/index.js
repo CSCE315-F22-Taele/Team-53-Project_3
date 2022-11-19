@@ -17,9 +17,10 @@ root.render(
     <HashRouter>
         <Routes>
             <Route path="/" element={<Layout />}>
-                <Route index element={<Inventory />} />
-                {/* <Route index element={<Menu />} /> */}
-
+                <Route index element={<Home />} />
+                <Route path="/menu" element={<Menu />} />
+                <Route path="/order" element={<Order />} />
+                <Route path="/checkout" element={<Checkout />} />
             </Route>
         </Routes>
     </HashRouter>
