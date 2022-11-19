@@ -9,19 +9,18 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { TextField } from '@mui/material';
-// import './main.css';
 import Stack from '@mui/material/Stack';
-import pomHoney from '../../pomAndHoney.png';
 import Hidden from '@mui/material/Hidden';
-// import Box from '@mui/material/Box';
-import Navbar from "../../components/Navbar/index";
-import {BrowserRouter as Router, json, Link, useLocation} from 'react-router-dom';
+import {BrowserRouter as Routes, Link, useLocation} from 'react-router-dom';
  
 // For local testing:
 const conn = "http://localhost:3500/";
 // For production:
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
  
+/* FIXME:
+  - Make page responsive to screen size
+*/
 
 export default function CheckoutPage(props) {
  
@@ -34,8 +33,8 @@ export default function CheckoutPage(props) {
     },
   });
  
-  const [open_card, setCard] = React.useState(false);
-  const [open_uin, setUIN] = React.useState(false);
+  const [open_card, setCard] = useState(false);
+  const [open_uin, setUIN] = useState(false);
  
   const handleClickOpen_Card = () => {
     setCard(true);
@@ -48,7 +47,7 @@ export default function CheckoutPage(props) {
 
   const handleClose_Card_Submitted = () => {
     setCard(false);
-    alert("Please click checkout to submit your order.")
+    // alert("Please click checkout to submit your order.")
   }
 
   const handleClickOpen_UIN_Dining = () => {
@@ -78,12 +77,8 @@ export default function CheckoutPage(props) {
       const amount = location.state.totalCost;
       const orderid = location.state.orderid;
 
-      // console.log(cardnumber);
-      // console.log(paymentmethod);
-      // console.log(amount);
-      // console.log(orderid);
       const body = {paymentmethod, amount, cardnumber, orderid};
-            const response = fetch (conn + "api/checkout/postCheckout",
+            fetch (conn + "api/checkout/postCheckout",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -95,9 +90,32 @@ export default function CheckoutPage(props) {
       console.error(err.message);
     }
   }
- 
-  useEffect( () => {
-}, [])
+
+  const postInventory = async () => {    
+    for (var i = 0; i < totalInventory.length; i++) {
+      var tmp = JSON.stringify(totalInventory[i]);
+      var tmp_int = parseInt(tmp.substring(10, tmp.length-1));
+      var amount = tmp_int - parseInt(location.state.inventoryUsed[i]);
+      var itemid = i + 1;
+      
+      try {
+        const body = {amount, itemid};
+        fetch (conn + "api/checkout/postInventory",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+          }
+      )} catch (err) {
+        console.error(err.message);
+      }
+    }
+  }
+
+  const submitCheckout = async () => {
+    postCheckout();
+    postInventory();
+  }
 
   // Used to receive data from order page
   const location = useLocation();
@@ -105,10 +123,27 @@ export default function CheckoutPage(props) {
   // Used to store value of customer input
   const [paymentMethod, setPaymentMethod] = useState(3);
   const [cardNumber, setCardNumber] = useState("");
+  const [totalInventory, setInventory] = useState([]);
 
   const handleCardNumber = async (e) => {
     setCardNumber(e.target.value);
   }
+
+  const getInventory = async () => {
+    setInventory([]);
+    try {
+      const response = await fetch(conn + "api/checkout/getInventory");
+      const data = await response.json();
+      setInventory(data);
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  useEffect( () => {
+    getInventory();
+}, [])
+
 
   return (
       <div className="App">
@@ -216,7 +251,7 @@ export default function CheckoutPage(props) {
                 <Stack spacing = {2}>
                     <br></br>
                     <Link to="/">
-                      <Button  variant="contained" size="large" onClick={() => postCheckout()}>Check out</Button>
+                      <Button  variant="contained" size="large" onClick={() => submitCheckout()}>Check out</Button>
                     </Link>
                 </Stack>
  
