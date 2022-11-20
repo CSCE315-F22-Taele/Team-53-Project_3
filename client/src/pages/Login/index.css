@@ -6,7 +6,7 @@ body{
 
 .borderArea{
     font-family: 'Indie Flower', cursive;
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
     margin-right: -50%;
@@ -14,10 +14,10 @@ body{
     justify-content: center;
     align-items: center;
     text-align: center;
-    
-    display: flex;
-    height: 70%;
+   
+    height: 80%;
     width: 85%;
+
 }   
 
 
@@ -32,11 +32,11 @@ body{
     float: left;
     height: inherit;
     border: 2px solid black;
-    
+
     justify-content: center;
     align-items: center;
     text-align: center;
-
+   
     
 }
 
@@ -53,4 +53,20 @@ body{
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+
+.submit{
+    margin: 0;
+}
+
+.googleLogin{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white; 
+}
+
+.googleImg{
+    margin-right: 6px;
 }

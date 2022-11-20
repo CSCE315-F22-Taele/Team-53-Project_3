@@ -9,10 +9,13 @@ import Home from "./pages/Home";
 import Login from "./pages/Login"
 import Checkout from "./pages/Checkout";
 import pomHoney from "./pomAndHoney.png";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     // <React.StrictMode>
+    <GoogleOAuthProvider clientId="603210015113-816enf77hq16jp4qpbql6an52fktugnu.apps.googleusercontent.com">
+
     <HashRouter>
         <Routes>
             <Route path="/" element={<Layout />}>
@@ -23,6 +26,8 @@ root.render(
             </Route>
         </Routes>
     </HashRouter>
+    
+    </GoogleOAuthProvider>
     // </React.StrictMode>
 );
 
