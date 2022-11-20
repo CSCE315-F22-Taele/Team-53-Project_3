@@ -45,4 +45,27 @@ app.post("/update", async (req, res) => {
     }
 });
 
+app.post("/insert", async (req, res) => {
+    try {
+        const {
+            itemname,
+            amount,
+            cost,
+            expirationdate,
+            vendor,
+            is_using,
+            classify,
+        } = req.body;
+
+        const todo = await db.query(
+            "INSERT INTO inventory(itemname, amount, cost, expirationdate, vendor, is_using, classify) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+            [itemname, amount, cost, expirationdate, vendor, is_using, classify]
+        );
+
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 module.exports = app;

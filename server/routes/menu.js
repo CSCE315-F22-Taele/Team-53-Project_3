@@ -34,4 +34,25 @@ app.post("/update", async (req, res) => {
     }
 });
 
+app.post("/insert", async (req, res) => {
+    try {
+        const {
+            menuitem,
+            cost,
+            is_selling,
+            is_customize,
+            default_inventory,
+        } = req.body;
+
+        const todo = await db.query(
+            "INSERT INTO menucost(menuitem, cost, is_selling, is_customize, default_inventory) VALUES ($1, $2, $3, $4, $5);",
+            [menuitem, cost, is_selling, is_customize, default_inventory]
+        );
+
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 module.exports = app;
