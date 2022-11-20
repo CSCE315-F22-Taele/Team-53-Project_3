@@ -11,6 +11,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { TextField } from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+
 
 
 
@@ -26,12 +32,14 @@ function Inventory(){
         },
     });
 
+
+
     const [open_edit, set_edit] = React.useState(false);
 
-    // ask id 
-    const [open_id_edit, set_id_edit] = React.useState(false);
-    const [open_id_deactivate, set_id_deactivate] = React.useState(false);
-    const [open_id_activate, set_id_activate] = React.useState(false);
+    // ask name 
+    const [open_name_edit, set_name_edit] = React.useState(false);
+    const [open_name_deactivate, set_name_deactivate] = React.useState(false);
+    const [open_name_activate, set_name_activate] = React.useState(false);
 
     const [open_deactivate, set_deactivate] = React.useState(false);
     const [open_activate, set_activate] = React.useState(false);
@@ -39,14 +47,14 @@ function Inventory(){
     const handleClickOpen_edit = () => {
         set_edit(true);
     };
-    const handleClickOpen_id_edit = () => {
-        set_id_edit(true);
+    const handleClickOpen_name_edit = () => {
+        set_name_edit(true);
     };
-    const handleClickOpen_id_deactivate = () => {
-        set_id_deactivate(true);
+    const handleClickOpen_name_deactivate = () => {
+        set_name_deactivate(true);
     };
-    const handleClickOpen_id_activate = () => {
-        set_id_activate(true);
+    const handleClickOpen_name_activate = () => {
+        set_name_activate(true);
     };
     const handleClickOpen_deactivate = () => {
         set_deactivate(true);
@@ -58,15 +66,16 @@ function Inventory(){
     const handleClose_edit = () => {
         set_edit(false);
     };
-    const handleClose_id_edit = () => {
-        set_id_edit(false);
+    const handleClose_name_edit = () => {
+        set_name_edit(false);
     };
-    const handleClose_id_deactivate = () => {
-        set_id_deactivate(false);
+    const handleClose_name_deactivate = () => {
+        set_name_deactivate(false);
     };
-    const handleClose_id_activate = () => {
-        set_id_activate(false);
+    const handleClose_name_activate = () => {
+        set_name_activate(false);
     };
+
 
     const handleClose_deactivate = () => {
         set_deactivate(false);
@@ -75,6 +84,11 @@ function Inventory(){
         set_activate(false);
     };
 
+    const [classifications, setClass] = React.useState('');
+
+    const handleChange_class = (event) => {
+      setClass(event.target.value);
+    };
 
     return(
         <div className="inventory_page=">
@@ -83,103 +97,185 @@ function Inventory(){
 
                 {/* FIXME: HARDCODE */}
                 <div className="inventory-btn">
-                <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                    Item1
-                </Button>
-                <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                    Item2
-                </Button>
-                <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                    Item3
-                </Button>                
-                <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                    Item4
-                </Button>
+                    <div className="bass">
+                        <h3>Bass</h3>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item1
+                        </Button>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item2
+                        </Button>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item3
+                        </Button>                
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item4
+                        </Button>
+                    </div>
+
+                    <div className="protein">
+                        <h3>Protein</h3>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item1
+                        </Button>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item2
+                        </Button>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item3
+                        </Button>                
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item4
+                        </Button>
+                    </div>
+
+                    <div className="toppings">
+                        <h3>Toppings</h3>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item1
+                        </Button>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item2
+                        </Button>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item3
+                        </Button>                
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item4
+                        </Button>
+                    </div>
+
+                    <div className="dressing">
+                        <h3>Dressing</h3>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item1
+                        </Button>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item2
+                        </Button>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item3
+                        </Button>                
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item4
+                        </Button>
+                    </div>
+
+                    <div className="misc">
+                        <h3>Miscellaneous</h3>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item1
+                        </Button>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item2
+                        </Button>
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item3
+                        </Button>                
+                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                            Item4
+                        </Button>
+                    </div>
+
+                    <div className="inventory_footer">
+                        <ThemeProvider theme={theme}>
+                            <Stack
+                                justifyContent= "space-around"
+                                alignItems="center"
+                                direction="row"
+                                component="span"
+                            >
+                                <Button variant="contained" size="large" className="inventory_back-btn" >Back</Button>
+                                <Button variant="contained" size="large" className="inventory_add-btn" onClick={handleClickOpen_edit}>Add Item</Button>
+                                    <Dialog open={open_edit} onClose={handleClose_edit}>
+                                        <DialogTitle>Edit</DialogTitle>
+                                        <DialogContent>
+                                            <TextField
+                                                required
+                                                margin="dense"
+                                                id="outlined-required"
+                                                defaultValue="Some Text"
+                                                helperText="Item Name"
+                                                type="text"
+                                                fullWidth
+                                                variant="standard"
+                                            />
+                                            <TextField
+                                                required
+                                                margin="dense"
+                                                id="outlined-required"
+                                                defaultValue="Some Text"
+                                                helperText="Quantity"
+                                                type="text"
+                                                fullWidth
+                                                variant="standard"                           
+                                            />
+                                            <TextField
+                                                required
+                                                margin="dense"
+                                                id="outlined-required"
+                                                defaultValue="Some Text"
+                                                helperText="Cost"
+                                                type="text"
+                                                fullWidth
+                                                variant="standard"
+                                            /> 
+
+                                            <TextField
+                                                required
+                                                margin="dense"
+                                                id="outlined-required"
+                                                defaultValue="Some Text"
+                                                helperText="Expiration Date"
+                                                type="text"
+                                                fullWidth
+
+                                                variant="standard"
+                                            />
+
+                                            <TextField
+                                                required
+                                                margin="dense"
+                                                id="outlined-required"
+                                                defaultValue="Some Text"
+                                                helperText="Vendor"
+                                                type="text"
+                                                fullWidth
+
+                                                variant="standard"
+                                            />
+
+                                            <FormControl fullWidth>
+                                                    <InputLabel name="demo-simple-select-label">Classifications</InputLabel>
+                                                    <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    value={classifications}
+                                                    label="Classifications"
+                                                    onChange={handleChange_class}
+                                                    >
+                                                    <MenuItem value={0}>Bass</MenuItem>
+                                                    <MenuItem value={1}>Protein</MenuItem>
+                                                    <MenuItem value={2}>Toppings</MenuItem>
+                                                    <MenuItem value={3}>Dressing</MenuItem>
+                                                    <MenuItem value={4}>Miscellaneous</MenuItem>
+                                                    </Select>
+                                            </FormControl>
+
+                                            </DialogContent>
+                    
+                                            <DialogActions>
+                                                {/* FIXME: ONCE BACKEND IS DONE */}
+                                            <Button onClick={handleClose_edit}>Cancel</Button>
+                                            <Button onClick={handleClose_edit}>Save</Button>
+                                            </DialogActions>
+                                    </Dialog>                            
+                            </Stack>
+                        </ThemeProvider>
+                    </div>
+
                 </div>
 
-                {/* Back and Add btn */}
-                <footer className="footer-btn">
-                <ThemeProvider theme={theme}>
-                    <Stack 
-                    justifyContent= "space-around" 
-                    alignItems="center"
-                    direction="row"
-                    component="span"
-                    >
-                        {/* Back Btn */}
-                        <Button variant="contained" size="large" className="back1-btn" >Back</Button>
-
-                        {/* Add Btn */}
-                        <Button variant="contained" size="large" className="add-btn" onClick={handleClickOpen_edit}>Add Item</Button>
-                            <Dialog open={open_edit} onClose={handleClose_edit}>
-                                <DialogTitle>Edit</DialogTitle>
-                                <DialogContent>
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Item Name"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Quantity"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"                           
-                                    />
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Cost"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    /> 
-
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Expiration Date"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />
-
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Vendor"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />
-               
-                                    </DialogContent>
-            
-                                    <DialogActions>
-                                        {/* FIXME: ONCE BACKEND IS DONE */}
-                                    <Button onClick={handleClose_edit}>Cancel</Button>
-                                    <Button onClick={handleClose_edit}>Save</Button>
-                                    </DialogActions>
-                            </Dialog>
-
-                    </Stack>
-
-                </ThemeProvider>
-                </footer>
             </div>
         
 
@@ -195,212 +291,235 @@ function Inventory(){
                     sx={{m:10}}
                 >
                     {/* Update Btn */}
-                    <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_id_edit}>Update</Button>
-                            <Dialog open={open_id_edit} onClose={handleClose_id_edit}>
-                            <DialogTitle>What is the item's id?</DialogTitle>
-                                <DialogContent>
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        label="Item ID"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />              
-                                </DialogContent>
-            
-                                <DialogActions>
-                                    {/* FIXME: ONCE BACKEND IS DONE */}
-                                    <Button onClick={handleClose_id_edit}>Cancel</Button>
-                                    <Button onClick={() => {
-                                            handleClickOpen_edit();
-                                            handleClose_id_edit();
-                                    }}>Save</Button>
-                                </DialogActions>                                
-                            </Dialog>
+                    <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_name_edit}>Update</Button>
+                        <Dialog open={open_name_edit} onClose={handleClose_name_edit}>
+                            <DialogTitle>What is the item's name?</DialogTitle>
+                            <DialogContent>
+                                <TextField
+                                    required
+                                    margin="dense"
+                                    id="outlined-required"
+                                    label="Item name"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                />              
+                            </DialogContent>
+        
+                            <DialogActions>
+                                {/* FIXME: ONCE BACKEND IS DONE */}
+                                <Button onClick={handleClose_name_edit}>Cancel</Button>
+                                <Button onClick={() => {
+                                    handleClickOpen_edit();
+                                    handleClose_name_edit();
+                                }}>Save</Button>
+                            </DialogActions>                                
+                        </Dialog>
                     
                     {/* Deactivate Btn */}
-                    <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_id_deactivate} >Deactivate</Button>
-                    <Dialog open={open_id_deactivate} onClose={handleClose_id_deactivate}>
-                                <DialogTitle>What is the item's id?</DialogTitle>
-                                <DialogContent>
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        label="Item ID"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />              
-                                </DialogContent>
+                    <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_name_deactivate} >Deactivate</Button>
+                    <Dialog open={open_name_deactivate} onClose={handleClose_name_deactivate}>
+                        <DialogTitle>What is the item's name?</DialogTitle>
+                        <DialogContent>
+                            <TextField
+                                required
+                                margin="dense"
+                                id="outlined-required"
+                                label="Item name"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            />              
+                        </DialogContent>
             
-                                <DialogActions>
-                                    {/* FIXME: ONCE BACKEND IS DONE */}
-                                    <Button onClick={handleClose_id_deactivate}>Cancel</Button>
-                                    <Button onClick={() => {
-                                            handleClickOpen_deactivate();
-                                            handleClose_id_deactivate();
-                                    }}>Deactivate</Button>
-                                </DialogActions>
+                        <DialogActions>
+                            {/* FIXME: ONCE BACKEND IS DONE */}
+                            <Button onClick={handleClose_name_deactivate}>Cancel</Button>
+                            <Button onClick={() => {
+                                handleClickOpen_deactivate();
+                                handleClose_name_deactivate();
+                            }}>Deactivate</Button>
+                        </DialogActions>
                     </Dialog>
+
                     <Dialog open={open_deactivate} onClose={handleClose_deactivate}>
-                                <DialogTitle>Do you want deactivate?</DialogTitle>
-                                <DialogContent>
-                                <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Item name"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />
-                                    <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Quantity"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"                           
-                                    />
-                                    <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Cost"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    /> 
+                        <DialogTitle>Do you want deactivate?</DialogTitle>
+                        <DialogContent>
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue="Some Text"
+                                helperText="Item name"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            />
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue="Some Text"
+                                helperText="Quantity"
+                                type="text"
+                                fullWidth
+                                variant="standard"                           
+                            />
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue="Some Text"
+                                helperText="Cost"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            /> 
 
-                                    <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Expiration Date"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue="Some Text"
+                                helperText="Expiration Date"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            />
 
-                                    <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Vendor"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />             
-                                </DialogContent>
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue="Some Text"
+                                helperText="Vendor"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            />    
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue="Some Text"
+                                helperText="Classification"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            />           
+                        </DialogContent>
             
-                                <DialogActions>
-                                    {/* FIXME: ONCE BACKEND IS DONE */}
-                                    <Button onClick={handleClose_deactivate}>Cancel</Button>
-                                    <Button onClick={() => {
-                                            handleClose_deactivate();
-                                    }}>Deactivate</Button>
-                                </DialogActions>
+                        <DialogActions>
+                            {/* FIXME: ONCE BACKEND IS DONE */}
+                            <Button onClick={handleClose_deactivate}>Cancel</Button>
+                            <Button onClick={() => {
+                                    handleClose_deactivate();
+                            }}>Deactivate</Button>
+                        </DialogActions>
                     </Dialog>
 
                     {/* Activate Btn */}
-                    <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_id_activate} >Activate</Button>
-                    <Dialog open={open_id_activate} onClose={handleClose_id_activate}>
-                                <DialogTitle>What is the item's id?</DialogTitle>
-                                <DialogContent>
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        label="Item ID"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />              
-                                </DialogContent>
-            
-                                <DialogActions>
-                                    {/* FIXME: ONCE BACKEND IS DONE */}
-                                    <Button onClick={handleClose_id_activate}>Cancel</Button>
-                                    <Button onClick={() => {
-                                            handleClickOpen_activate();
-                                            handleClose_id_activate();
-                                    }}>Action</Button>
-                                </DialogActions>
+                    <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_name_activate} >Activate</Button>
+                    <Dialog open={open_name_activate} onClose={handleClose_name_activate}>
+                        <DialogTitle>What is the item's name?</DialogTitle>
+                        <DialogContent>
+                            <TextField
+                                required
+                                margin="dense"
+                                id="outlined-required"
+                                label="Item name"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            />              
+                        </DialogContent>
+    
+                        <DialogActions>
+                            {/* FIXME: ONCE BACKEND IS DONE */}
+                            <Button onClick={handleClose_name_activate}>Cancel</Button>
+                            <Button onClick={() => {
+                                    handleClickOpen_activate();
+                                    handleClose_name_activate();
+                            }}>Action</Button>
+                        </DialogActions>
                     </Dialog>
+
                     <Dialog open={open_activate} onClose={handleClose_activate}>
-                                <DialogTitle>Do you want activate?</DialogTitle>
-                                <DialogContent>
-                                <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Item name"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />
-                                    <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Quantity"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"                           
-                                    />
-                                    <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Cost"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    /> 
+                        <DialogTitle>Do you want activate?</DialogTitle>
+                        <DialogContent>
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue="Some Text"
+                                helperText="Item name"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            />
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue="Some Text"
+                                helperText="Quantity"
+                                type="text"
+                                fullWidth
+                                variant="standard"                           
+                            />
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue="Some Text"
+                                helperText="Cost"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            /> 
 
-                                    <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Expiration Date"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue="Some Text"
+                                helperText="Expiration Date"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            />
 
-                                    <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Vendor"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />             
-                                </DialogContent>
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue="Some Text"
+                                helperText="Vendor"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            />    
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue="Some Text"
+                                helperText="Classification"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            />          
+                        </DialogContent>
             
-                                <DialogActions>
-                                    {/* FIXME: ONCE BACKEND IS DONE */}
-                                    <Button onClick={handleClose_activate}>Cancel</Button>
-                                    <Button onClick={() => {
-                                            handleClose_id_activate();
-                                            handleClose_activate();
-                                    }}>Activate</Button>
-                                </DialogActions>
+                        <DialogActions>
+                            {/* FIXME: ONCE BACKEND IS DONE */}
+                            <Button onClick={handleClose_activate}>Cancel</Button>
+                            <Button onClick={() => {
+                                    handleClose_name_activate();
+                                    handleClose_activate();
+                            }}>Activate</Button>
+                        </DialogActions>
+                        
                     </Dialog>
                 </Stack>
             </div>

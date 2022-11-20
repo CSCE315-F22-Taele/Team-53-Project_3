@@ -28,10 +28,10 @@ function Menu(){
 
     const [open_edit, set_edit] = React.useState(false);
 
-    // ask id 
-    const [open_id_edit, set_id_edit] = React.useState(false);
-    const [open_id_deactivate, set_id_deactivate] = React.useState(false);
-    const [open_id_activate, set_id_activate] = React.useState(false);
+    // ask name
+    const [open_name_edit, set_name_edit] = React.useState(false);
+    const [open_name_deactivate, set_name_deactivate] = React.useState(false);
+    const [open_name_activate, set_name_activate] = React.useState(false);
 
     const [open_deactivate, set_deactivate] = React.useState(false);
     const [open_activate, set_activate] = React.useState(false);
@@ -40,13 +40,13 @@ function Menu(){
         set_edit(true);
     };
     const handleClickOpen_id_edit = () => {
-        set_id_edit(true);
+        set_name_edit(true);
     };
     const handleClickOpen_id_deactivate = () => {
-        set_id_deactivate(true);
+        set_name_deactivate(true);
     };
     const handleClickOpen_id_activate = () => {
-        set_id_activate(true);
+        set_name_activate(true);
     };
     const handleClickOpen_deactivate = () => {
         set_deactivate(true);
@@ -59,13 +59,13 @@ function Menu(){
         set_edit(false);
     };
     const handleClose_id_edit = () => {
-        set_id_edit(false);
+        set_name_edit(false);
     };
     const handleClose_id_deactivate = () => {
-        set_id_deactivate(false);
+        set_name_deactivate(false);
     };
     const handleClose_id_activate = () => {
-        set_id_activate(false);
+        set_name_activate(false);
     };
 
     const handleClose_deactivate = () => {
@@ -98,89 +98,74 @@ function Menu(){
                 </div>
 
                 {/* Back and Add btn */}
-                <footer className="footer-btn">
-                <ThemeProvider theme={theme}>
-                    <Stack 
-                    justifyContent= "space-around" 
-                    alignItems="center"
-                    direction="row"
-                    component="span"
-                    >
-                        {/* Back Btn */}
-                        <Button variant="contained" size="large" className="back1-btn" >Back</Button>
+                <div className="menu_footer">
+                        <ThemeProvider theme={theme}>
+                            <Stack
+                                justifyContent= "space-around"
+                                alignItems="center"
+                                direction="row"
+                                component="span"
+                            >
+                                <Button variant="contained" size="large" className="menu_back-btn" >Back</Button>
+                                <Button variant="contained" size="large" className="menu_add-btn" onClick={handleClickOpen_edit}>Add Item</Button>
+                                    <Dialog open={open_edit} onClose={handleClose_edit}>
+                                        <DialogTitle>Edit</DialogTitle>
+                                        <DialogContent>
+                                            <TextField
+                                                required
+                                                margin="dense"
+                                                id="outlined-required"
+                                                defaultValue="Some Text"
+                                                helperText="Item Name"
+                                                type="text"
+                                                fullWidth
+                                                variant="standard"
+                                            />
+                                            <TextField
+                                                required
+                                                margin="dense"
+                                                id="outlined-required"
+                                                defaultValue="Some Text"
+                                                helperText="Quantity"
+                                                type="text"
+                                                fullWidth
+                                                variant="standard"                           
+                                            />
+                                            <TextField
+                                                required
+                                                margin="dense"
+                                                id="outlined-required"
+                                                defaultValue="Some Text"
+                                                helperText="Cost"
+                                                type="text"
+                                                fullWidth
+                                                variant="standard"
+                                            /> 
 
-                        {/* Add Btn */}
-                        <Button variant="contained" size="large" className="add-btn" onClick={handleClickOpen_edit}>Add Item</Button>
-                            <Dialog open={open_edit} onClose={handleClose_edit}>
-                                <DialogTitle>Edit</DialogTitle>
-                                <DialogContent>
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Item Name"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Quantity"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"                           
-                                    />
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Cost"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    /> 
+                                            <TextField
+                                                required
+                                                margin="dense"
+                                                id="outlined-required"
+                                                defaultValue="Some Text"
+                                                helperText="Expiration Date"
+                                                type="text"
+                                                fullWidth
 
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Expiration Date"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />
+                                                variant="standard"
+                                            />
 
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Vendor"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />
-               
-                                    </DialogContent>
-            
-                                    <DialogActions>
-                                        {/* FIXME: ONCE BACKEND IS DONE */}
-                                    <Button onClick={handleClose_edit}>Cancel</Button>
-                                    <Button onClick={handleClose_edit}>Save</Button>
-                                    </DialogActions>
-                            </Dialog>
-
-                    </Stack>
-
-                </ThemeProvider>
-                </footer>
-            </div>
+                                            </DialogContent>
+                    
+                                            <DialogActions>
+                                                {/* FIXME: ONCE BACKEND IS DONE */}
+                                            <Button onClick={handleClose_edit}>Cancel</Button>
+                                            <Button onClick={handleClose_edit}>Save</Button>
+                                            </DialogActions>
+                                    </Dialog>                            
+                            </Stack>
+                        </ThemeProvider>
+                    </div>
+                </div>
         
 
             <div className="menu_receipt-section">
@@ -196,14 +181,14 @@ function Menu(){
                 >
                     {/* Update Btn */}
                     <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_id_edit}>Update</Button>
-                            <Dialog open={open_id_edit} onClose={handleClose_id_edit}>
-                            <DialogTitle>What is the item's id?</DialogTitle>
+                            <Dialog open={open_name_edit} onClose={handleClose_id_edit}>
+                            <DialogTitle>What is the item's name?</DialogTitle>
                                 <DialogContent>
                                     <TextField
                                         required
                                         margin="dense"
                                         id="outlined-required"
-                                        label="Item ID"
+                                        label="Item Name"
                                         type="text"
                                         fullWidth
                                         variant="standard"
@@ -222,14 +207,14 @@ function Menu(){
                     
                     {/* Deactivate Btn */}
                     <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_id_deactivate} >Deactivate</Button>
-                    <Dialog open={open_id_deactivate} onClose={handleClose_id_deactivate}>
-                                <DialogTitle>What is the item's id?</DialogTitle>
+                    <Dialog open={open_name_deactivate} onClose={handleClose_id_deactivate}>
+                                <DialogTitle>What is the item's name?</DialogTitle>
                                 <DialogContent>
                                     <TextField
                                         required
                                         margin="dense"
                                         id="outlined-required"
-                                        label="Item ID"
+                                        label="Item Name"
                                         type="text"
                                         fullWidth
                                         variant="standard"
@@ -289,17 +274,7 @@ function Menu(){
                                         fullWidth
                                         variant="standard"
                                     />
-
-                                    <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Vendor"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />             
+            
                                 </DialogContent>
             
                                 <DialogActions>
@@ -313,14 +288,14 @@ function Menu(){
 
                     {/* Activate Btn */}
                     <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_id_activate} >Activate</Button>
-                    <Dialog open={open_id_activate} onClose={handleClose_id_activate}>
-                                <DialogTitle>What is the item's id?</DialogTitle>
+                    <Dialog open={open_name_activate} onClose={handleClose_id_activate}>
+                                <DialogTitle>What is the item's name?</DialogTitle>
                                 <DialogContent>
                                     <TextField
                                         required
                                         margin="dense"
                                         id="outlined-required"
-                                        label="Item ID"
+                                        label="Item Name"
                                         type="text"
                                         fullWidth
                                         variant="standard"
@@ -380,17 +355,7 @@ function Menu(){
                                         fullWidth
                                         variant="standard"
                                     />
-
-                                    <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Vendor"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />             
+           
                                 </DialogContent>
             
                                 <DialogActions>
