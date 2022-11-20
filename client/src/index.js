@@ -10,6 +10,7 @@ import Login from "./pages/Login"
 import Checkout from "./pages/Checkout";
 import pomHoney from "./pomAndHoney.png";
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import Cashier from "./pages/Cashier";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -23,6 +24,7 @@ root.render(
                 <Route path="/order" element={<Order />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/cashier" element={<Cashier />} />
             </Route>
         </Routes>
     </HashRouter>

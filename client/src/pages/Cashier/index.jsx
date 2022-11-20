@@ -7,9 +7,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { indigo } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
 import e from "cors";
-import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 // import { json } from "express";
-
+import {BrowserRouter as Router, json, Link, useNavigate, useLocation} from 'react-router-dom';
 // For local testing: (comment out)
 const conn = "http://localhost:3500/";
 // For production:
@@ -24,11 +23,8 @@ const theme = createTheme({
 });
 
 
-
-
-
 // const Order = () => {
-function Order () {
+function Cashier () {
     const [orderid, setOrderid] = useState(0);
     const [menuNamesCustom, setMenuNamesCustom] = useState([]);
     const [menuNames, setMenuNames] = useState([]);
@@ -377,7 +373,7 @@ function Order () {
         <div class="order__pageOrder">
         <div class="order__orderingSection">
             <br></br>
-
+            <h3> location.state.userName </h3>
             <h1 class="order__orderingTitle">  Ordering from Pom and Honey at Texas A&M MSC </h1>
             <br></br>
             <br></br>
@@ -546,5 +542,5 @@ function Order () {
     );
 };
 
-export default Order;
+export default Cashier;
 

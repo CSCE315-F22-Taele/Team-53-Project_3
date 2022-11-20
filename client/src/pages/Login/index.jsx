@@ -14,7 +14,6 @@ import {useGoogleLogin } from '@react-oauth/google';
 import axios from "axios";
 
 
-
   
 const theme = createTheme({
     palette: {
@@ -29,16 +28,18 @@ const theme = createTheme({
 
 
 function Login () {
+    const [userName, setUserName] = useState("");
 
     const Peoplestates = () => {
         const navigate = useNavigate();
-        const openprofile = () => {
-            navigate ("/order", {
-            state:{} 
-        });
+        const openprofile = (userName) => {
+            navigate ("/cashier", {
+                state: {
+                    userName: userName
+                }
+            });
         }
     }
-
     const userLogin = () => {
         alert("Logged In")
     };
@@ -53,13 +54,17 @@ function Login () {
                     }
                 })
 
-                console.log(res.data)
+                console.log(res.data);
+                setUserName(res.data.name);
+                
             } catch (err) {
                 console.log(err)
 
             }
 
         }
+
+       
     });
 
 
@@ -104,8 +109,8 @@ function Login () {
                 <TextField id="password" label="Password" variant="outlined" required fullWidth/>
                 <Stack>
 
-                <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={userLogin}> Sign In</Button>
-                <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={login}> 
+                <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()}}> Sign In</Button>
+                <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={(openprofile) => {login()}}> 
                 <img width="20px" class="googleImg" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />     Sign In with Google
                 </Button> 
              
