@@ -11,15 +11,13 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { TextField } from '@mui/material';
-import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 
-
-
-
+const conn = "http://localhost:3500/";
+// const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
 function Inventory(){
 
@@ -32,17 +30,91 @@ function Inventory(){
         },
     });
 
+    // This will fetch entire inventory table. Need to parse through to determine specific information.
+    const getInventory = async () => {
+        try {
+            const response = await fetch(conn + "api/inventory/get");
+            // FIXME: Need to split into array to display. Reference Order page. 'data' contains all of inventory table.
+            const data = await response.json();
 
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
 
-    const [open_edit, set_edit] = React.useState(false);
+    // Will update current inventory item.
+    const updateInventory = async () => {
+        try {
+            // FIXME: Need to update w/ input before inserting.
+            var itemname = "";
+            var amount = 0;
+            var cost = 0;
+            var expirationdate = "";
+            var vendor = "";
+            var is_using = true;
+            var classify = 0;
+            var itemid = 0;
+
+            const body = {itemname,
+                amount,
+                cost,
+                expirationdate,
+                vendor,
+                is_using,
+                classify,
+                itemid};
+            fetch (conn + "api/inventory/update",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                }
+            )
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
+    // Will insert a new item into inventory.
+    const insertInventory = async () => {
+        try {
+            // FIXME: Need to update w/ input before inserting.
+            var itemname = "";
+            var amount = 0;
+            var cost = 0;
+            var expirationdate = "";
+            var vendor = "";
+            var is_using = true; // Do not change
+            var classify = 0;
+            const body = {itemname,
+                amount,
+                cost,
+                expirationdate,
+                vendor,
+                is_using,
+                classify};
+            fetch (conn + "api/inventory/insert",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                }
+            )
+            
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
+    const [open_edit, set_edit] = useState(false);
 
     // ask name 
-    const [open_name_edit, set_name_edit] = React.useState(false);
-    const [open_name_deactivate, set_name_deactivate] = React.useState(false);
-    const [open_name_activate, set_name_activate] = React.useState(false);
+    const [open_name_edit, set_name_edit] = useState(false);
+    const [open_name_deactivate, set_name_deactivate] = useState(false);
+    const [open_name_activate, set_name_activate] = useState(false);
 
-    const [open_deactivate, set_deactivate] = React.useState(false);
-    const [open_activate, set_activate] = React.useState(false);
+    const [open_deactivate, set_deactivate] = useState(false);
+    const [open_activate, set_activate] = useState(false);
 
     const handleClickOpen_edit = () => {
         set_edit(true);
