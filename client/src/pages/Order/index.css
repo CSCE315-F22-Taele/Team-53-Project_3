@@ -40,3 +40,22 @@ body {
     font-weight: bold;
     font-size: 30%;
 }
+
+table{
+
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+.delete{
+    width:45%;
+}
+
+.item{
+    width: 35%;
+}
+
+.price{
+    width: 20%;
+}

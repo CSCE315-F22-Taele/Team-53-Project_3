@@ -52,7 +52,7 @@ function Order () {
     const [ cat2click, setAllowClickCat2] = useState(true);
     const [ cat3click, setAllowClickCat3] = useState(true);
     const [countToppings, setCountToppings] = useState(0);
-    
+
     const name = "Pom and Honey at Texas A&M MSC";
    
 
@@ -285,9 +285,9 @@ function Order () {
         console.log(inv);
 
         let namesCart = listOrderedNames;
-        namesCart.push([val, '$' + cost]);
+        namesCart.push([val, cost]);
         setListOrderedNames(namesCart);
-    
+        
         
         let costCurr = totalCost;
         costCurr += parseFloat(cost);
@@ -296,15 +296,26 @@ function Order () {
     }
 
     const pushInv = (index, val, category) => {
-        let inv = inventoryUsed;
-        
-        inv[index-1] += 1;
-        setInventoryUsed(inv);
+
         
         
         let namesCart = listOrderedInv;
-        namesCart.push(val);
-        setlistOrderedInv(namesCart);
+
+        let x = namesCart.includes(val);
+        console.log(x);
+        if( x === false){
+            namesCart.push(val);
+            setlistOrderedInv(namesCart);
+        }
+        else{
+            namesCart.pop(val);
+            setlistOrderedInv(namesCart);
+        }
+        
+
+        let inv = inventoryUsed;
+        inv[index-1] += 1;
+        setInventoryUsed(inv);
 
         let countVal = count;
         countVal  +=1;
@@ -356,6 +367,20 @@ function Order () {
         setAllowClickCat3(true);
         setCountToppings(0);
         
+    }
+
+    const deleteItem = (item) => {
+        
+        let namesCart = listOrderedNames;
+        console.log("before", namesCart[0]);
+        namesCart.pop(item);
+        setListOrderedNames(namesCart);
+    
+        console.log("deleted", listOrderedNames[0]);
+
+        let newCost = totalCost - item[1];
+
+        setCost(newCost);
     }
 
     //const [data, setData] = useState ({
@@ -496,13 +521,36 @@ function Order () {
             <div class="order__currentOrder">
                 <h1> Current Order</h1>
                 
+                <table>
+                    <tr>
+                    <th class="item">Item</th>
+                    <th class="price">Price</th>
+                    <th class="delete">Delete Item</th>
+                    </tr>
+                
+                </table>
+                <table> 
+
                 { listOrderedNames.map( (item) =>
-                    <p> {item[0]} {item[1]}</p>
+                    <tr> 
+                        <td class="item">{item[0]} </td> 
+                        <td class="price"> ${item[1]} </td>
+                        <td class="delete">  
+                            <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => {deleteItem(item)} } > 
+                        Delete Item
+                        </Button> 
+                        </td> 
+
+                    </tr>
                 )}   
+
+                </table>
 
             <br></br>
             <br></br>
             <br></br>
+
+             
             <div>
                 <h5>Added Items to Gyro/Bowl:</h5>
                 { listOrderedInv.map( (item) =>
