@@ -14,6 +14,7 @@ export default function Manager(props) {
     
     const [startDate, setStartDate] = useState((0));
     const [endDate, setEndDate] = useState((0));
+    const [dates, setDates] = useState({start:-2, end:-2});
     const [salesReport, setSalesReport] = useState([]);
     const [salesShown, setSalesShown] = useState(false);
 
@@ -23,9 +24,10 @@ export default function Manager(props) {
         
         try {
             setSalesReport([]);
-            const start = JSON.stringify(startDate);
-            const end = JSON.stringify(endDate);
-
+            const start = JSON.stringify(dates.start);
+            const end = JSON.stringify(dates.end);
+            console.log("start", start);
+            console.log("end", end);
             const response = await fetch (conn + "api/manager/getSaleReport", 
             {
                     method: "GET",
@@ -57,27 +59,25 @@ export default function Manager(props) {
     };
 
     useEffect( () => {
+        if (dates.start > 0 && dates.end > 0){
+            salesGet();
+        }
         
-    }, [])
+        // setSalesShown(true);
+    }, [dates])
 
     // set start date and end date from text entry
     const handleSubmit = event => {
-        event.preventDefault();
+        event.preventDefault(); // idk what this does
 
         const startDate = event.target.startDate.value;
         const endDate = event.target.endDate.value;
 
-        setStartDate(startDate);
-        setEndDate(endDate);
-
-        
+        setDates({start: startDate, end: endDate});
         console.log("start", startDate);
         console.log("end", endDate);
 
-        salesGet();
-        setSalesShown(true);
-
-        event.target.reset();
+        event.target.reset(); // idk what this does
     }
 
     return (
@@ -128,7 +128,7 @@ export default function Manager(props) {
 
                 {/* )} */}
 
-                <h5>Sales from {startDate} to {endDate}:</h5>
+                <h5>Sales from {dates.start} to {dates.end}:</h5>
                     {salesReport.map( (item) =>
                         <li> {item.name}</li>
                     )}
