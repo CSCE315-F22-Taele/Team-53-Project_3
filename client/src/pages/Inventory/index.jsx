@@ -55,8 +55,6 @@ function Inventory(){
     const vendor_input = useRef('');
     const classify_input = useRef('');
     
-
-
     // This will fetch entire inventory table. Need to parse through to determine specific information.
     const getInventory = async () => {
         try {
@@ -158,16 +156,18 @@ function Inventory(){
     const updateInventory =(_itemname, _amount, _cost, _expirationdate, _vendor,_classify, _id, _useChecking) => {
         try {
             // FIXME: Need to update w/ input before inserting.
-            var itemname = _itemname
+            //console.log(_useChecking);
+            var itemname = _itemname;
             var amount = _amount;
             var cost = _cost;
-            var expirationdate = _expirationdate
+            var expirationdate = _expirationdate;
             var vendor = _vendor;
             var is_using = _useChecking;
+            console.log(is_using);
             var classify = _classify;
             var itemid = _id;
 
-            console.log(is_using);
+            
 
             const body = {itemname,
                 amount,
@@ -787,10 +787,8 @@ function Inventory(){
                             {/* FIXME */}
                             <Button onClick={handleClose_deactivate}>Cancel</Button>
                             <Button onClick={() => {
-                                    var check = false; 
-
-                                    updateInventory(name_display, amount_display, cost_display, vendor_display, 
-                                        classify_display, id, check);
+                                    updateInventory(name_display, amount_display, cost_display, expirationdate_display, vendor_display, 
+                                        classify_display, id, false);
                                     handleClose_deactivate();
                             }}>Deactivate</Button>
                         </DialogActions>
