@@ -25,7 +25,10 @@ const theme = createTheme({
 
 
 
-
+function rounding(number, precision){
+    var newnumber = new Number(number+'').toFixed(parseInt(precision));
+    return parseFloat(newnumber); 
+}
 
 // const Order = () => {
 function Order () {
@@ -282,17 +285,19 @@ function Order () {
         }
         
         setInventoryUsed(inv);
-        console.log(inv);
+        // console.log(inv);
 
         let namesCart = listOrderedNames;
-        namesCart.push([val, cost]);
+        namesCart.push([val, cost, index, inventory_default]);
         setListOrderedNames(namesCart);
         
         
         let costCurr = totalCost;
-        costCurr += parseFloat(cost);
+        costCurr = rounding(costCurr + parseFloat(cost), 2);
         setCost(costCurr);
 
+        console.log(listOrdered);
+        console.log(inventoryUsed);
     }
 
     const pushInv = (index, val, category) => {
@@ -302,7 +307,7 @@ function Order () {
         let namesCart = listOrderedInv;
 
         let x = namesCart.includes(val);
-        console.log(x);
+        
         if( x === false){
             namesCart.push(val);
             setlistOrderedInv(namesCart);
@@ -372,15 +377,29 @@ function Order () {
     const deleteItem = (item) => {
         
         let namesCart = listOrderedNames;
-        console.log("before", namesCart[0]);
+       
         namesCart.pop(item);
         setListOrderedNames(namesCart);
+        
     
-        console.log("deleted", listOrderedNames[0]);
+        let newCart = listOrdered;
+       
+        newCart[item[2]-1] -= 1;
+        setListOrdered(newCart);
 
-        let newCost = totalCost - item[1];
+        let inv = inventoryUsed;
+        let listItems = item[3]
+        for( var i=0; i< inv.length; i++){
+            inv[i] -= listItems[i];
+        }
+        setInventoryUsed(inv);
 
+        let newCost = rounding(totalCost - item[1], 2);
+        newCost.toFixed(2);
         setCost(newCost);
+
+        console.log(listOrdered);
+        console.log(inventoryUsed);
     }
 
     //const [data, setData] = useState ({
