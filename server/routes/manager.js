@@ -8,11 +8,8 @@ Get sale report
     - Return menu item name & total sold object in decreasing order.
 */
 app.get("/getSaleReport/:start/:end", async (req, res) => {
-    console.log("req param:", req.params);
     const start = req.params.start;
     const end = req.params.end;
-    console.log("start:", start);
-    console.log("end:", end);
 
     try {
         // Initalize array of menu item size
@@ -66,8 +63,11 @@ Get excess report
     - Pass in two dates in orderid format & threshold percentage.
     - Return inventory item name & total inventory item used in decreasing order.
 */
-app.get("/getExcessReport", async (req, res) => {
-    const { start, end, threshold } = req.body;
+app.get("/getExcessReport/:start/:end/:threshold", async (req, res) => {
+    const start = req.params.start;
+    const end = req.params.end;
+    const threshold = req.params.threshold;
+
     try {
         // Initalize array of inventory item size
         const inventory = await db.query(
