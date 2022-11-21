@@ -66,6 +66,9 @@ export default function Manager(props) {
 
     // set start date and end date from text entry
     const handleSubmit = event => {
+
+        // FIXME: clear salesReport before each submission
+        
         event.preventDefault(); // idk what this does
 
         const startDate = event.target.startDate.value;
