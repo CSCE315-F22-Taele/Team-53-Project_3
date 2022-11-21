@@ -8,6 +8,7 @@ import Order from "./pages/Order";
 import Home from "./pages/Home";
 import Checkout from "./pages/Checkout";
 import pomHoney from "./pomAndHoney.png";
+import Manager from "./pages/Manager";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,6 +19,7 @@ root.render(
                 <Route index element={<Home />} />
                 <Route path="/order" element={<Order />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/manager" element={<Manager />} />
             </Route>
         </Routes>
     </HashRouter>

@@ -31,6 +31,12 @@ export default function Navbar() {
                         Order Now
                     </Link>
                 </li>
+                <li>
+                <Link className="nav__link" to="/manager">
+                        {" "}
+                        Manager
+                    </Link>
+                </li>
             </ul>
 
             {/* <Switch>
