@@ -12,24 +12,25 @@ import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 
 export default function Manager(props) {
     
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
+    const [startDate, setStartDate] = useState((0));
+    const [endDate, setEndDate] = useState((0));
     const [salesReport, setSalesReport] = useState([]);
+    const [salesShown, setSalesShown] = useState(false);
 
     const conn = "http://localhost:3500/"; // for testing
-
 
     const salesGet = async () => {
         
         try {
             setSalesReport([]);
-            const parameter = {startDate, endDate};
+            const start = JSON.stringify(startDate);
+            const end = JSON.stringify(endDate);
 
             const response = await fetch (conn + "api/manager/getSaleReport", 
             {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
-                    params: {parameter}
+                    params: {start, end}
                 }
             );
 
@@ -38,9 +39,9 @@ export default function Manager(props) {
             
             for(var key in data){
                 var reportCustom = [];
-                reportCustom.push(data[key]);
+                // reportCustom.push(data[key]);
                 var reportVals = salesReport;
-                reportVals.push(reportCustom);
+                reportVals.push(data[key]);
                 setSalesReport(reportVals);
             }
 
@@ -55,14 +56,13 @@ export default function Manager(props) {
 
     };
 
-
     useEffect( () => {
         
     }, [])
 
     // set start date and end date from text entry
     const handleSubmit = event => {
-        // event.preventDefault();
+        event.preventDefault();
 
         const startDate = event.target.startDate.value;
         const endDate = event.target.endDate.value;
@@ -70,7 +70,12 @@ export default function Manager(props) {
         setStartDate(startDate);
         setEndDate(endDate);
 
+        
+        console.log("start", startDate);
+        console.log("end", endDate);
+
         salesGet();
+        setSalesShown(true);
 
         event.target.reset();
     }
@@ -118,11 +123,16 @@ export default function Manager(props) {
                     <br />
                     <br />
                 </form>
+{/* 
+                { salesShown ( */}
+
+                {/* )} */}
 
                 <h5>Sales from {startDate} to {endDate}:</h5>
-                    {/* {salesReport.map( (item) =>
-                        <p> {item}</p>
-                    )}  */}
+                    {salesReport.map( (item) =>
+                        <li> {item.name}</li>
+                    )}
+
             </div>
 
         </div>
