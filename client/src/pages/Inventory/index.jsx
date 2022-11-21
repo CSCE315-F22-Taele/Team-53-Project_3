@@ -243,83 +243,20 @@ function Inventory(){
     }
 
     const sendValue = () => {
-        var check = false;
-        for(let key in inventory0){
-            console.log(inventory0[key][0]);
-            if(inventory0[key][0] === inputName.current.value){
-                set_nameDisplay(inventory0[key][0]);
-                set_amountDisplay(inventory0[key][1]);
-                set_costDisplay(inventory0[key][2]);
-                set_dateDisplay(inventory0[key][3]);
-                set_vendorDisplay(inventory0[key][4]);
-                set_classifyDisplay(inventory0[key][5]);
-                setId(inventory0[key][6]);
-                check = true;
+        for(let key in inventory){
+            console.log(inventory[key][0]);
+            if(inventory[key][0] === inputName.current.value){
+                set_nameDisplay(inventory[key][0]);
+                set_amountDisplay(inventory[key][1]);
+                set_costDisplay(inventory[key][2]);
+                set_dateDisplay(inventory[key][3]);
+                set_vendorDisplay(inventory[key][4]);
+                set_classifyDisplay(inventory[key][5]);
+                setId(inventory[key][6]);
                 break;
             } 
         }
 
-        if(!check){
-            for(let key in inventory1){
-                if(inventory1[key][0] === inputName.current.value){
-                    set_nameDisplay(inventory1[key][0]);
-                    set_amountDisplay(inventory1[key][1]);
-                    set_costDisplay(inventory1[key][2]);
-                    set_dateDisplay(inventory1[key][3]);
-                    set_vendorDisplay(inventory1[key][4]);
-                    set_classifyDisplay(inventory1[key][5]);
-                    setId(inventory1[key][6]);
-                    check = true;
-                    break;
-                }
-            }
-        }
-        if(!check){
-            for(let key in inventory2){
-                if(inventory2[key][0] === inputName.current.value){
-                    set_nameDisplay(inventory2[key][0]);
-                    set_amountDisplay(inventory2[key][1]);
-                    set_costDisplay(inventory2[key][2]);
-                    set_dateDisplay(inventory2[key][3]);
-                    set_vendorDisplay(inventory2[key][4]);
-                    set_classifyDisplay(inventory2[key][5]);
-                    setId(inventory2[key][6]);
-                    check = true;
-                    break;
-                }
-            }            
-        }
-
-        if(!check){
-            for(let key in inventory3){
-                if(inventory3[key][0] === inputName.current.value){
-                    set_nameDisplay(inventory3[key][0]);
-                    set_amountDisplay(inventory3[key][1]);
-                    set_costDisplay(inventory3[key][2]);
-                    set_dateDisplay(inventory3[key][3]);
-                    set_vendorDisplay(inventory3[key][4]);
-                    set_classifyDisplay(inventory3[key][5]);
-                    setId(inventory3[key][6]);
-                    check = true;
-                    break;
-                } 
-            }            
-        }
-
-        if(!check){
-            for(let key in inventory4){
-                if(inventory4[key][0] === inputName.current.value){
-                    set_nameDisplay(inventory4[key][0]);
-                    set_amountDisplay(inventory4[key][1]);
-                    set_costDisplay(inventory4[key][2]);
-                    set_dateDisplay(inventory4[key][3]);
-                    set_vendorDisplay(inventory4[key][4]);
-                    set_classifyDisplay(inventory4[key][5]);
-                    setId(inventory4[key][6]);
-                    break;
-                } 
-            }            
-        }
 
         
     }
@@ -816,16 +753,22 @@ function Inventory(){
                                 fullWidth
                                 variant="standard"
                             />    
-                            <TextField
-                                inputProps={{ readOnly: true }}
-                                margin="dense"
-                                id="outlined-required"
-                                defaultValue={classify_display}
-                                helperText="Classification"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                            />           
+                            <FormControl fullWidth>
+                                <InputLabel name="demo-simple-select-label">Classifications</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={classify_display}
+                                    onChange={handleChange_class}
+                                    inputRef={classify_input}
+                                    >
+                                    <MenuItem value={0}>Bass</MenuItem>
+                                    <MenuItem value={1}>Protein</MenuItem>
+                                    <MenuItem value={2}>Toppings</MenuItem>
+                                    <MenuItem value={3}>Dressing</MenuItem>
+                                    <MenuItem value={4}>Miscellaneous</MenuItem>
+                                </Select>
+                            </FormControl>           
                         </DialogContent>
             
                         <DialogActions>
@@ -923,16 +866,22 @@ function Inventory(){
                                 fullWidth
                                 variant="standard"
                             />    
-                            <TextField
-                                inputProps={{ readOnly: true }}
-                                margin="dense"
-                                id="outlined-required"
-                                defaultValue={classify_display}
-                                helperText="Classification"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                            />           
+                            <FormControl fullWidth>
+                                <InputLabel name="demo-simple-select-label">Classifications</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={classify_display}
+                                    onChange={handleChange_class}
+                                    inputRef={classify_input}
+                                    >
+                                    <MenuItem value={0}>Bass</MenuItem>
+                                    <MenuItem value={1}>Protein</MenuItem>
+                                    <MenuItem value={2}>Toppings</MenuItem>
+                                    <MenuItem value={3}>Dressing</MenuItem>
+                                    <MenuItem value={4}>Miscellaneous</MenuItem>
+                                </Select>
+                            </FormControl>           
                         </DialogContent>
             
                         <DialogActions>
@@ -948,7 +897,7 @@ function Inventory(){
                         
                     </Dialog>
 
-                    {/* <Button onClick={refreshPage} variant="contained" size="large" className="back1-btn"  >Reload Page</Button> */}
+                    <Button onClick={refreshPage} variant="contained" size="large" className="back1-btn"  >Reload Page</Button>
                     
                 </Stack>
             </div>
