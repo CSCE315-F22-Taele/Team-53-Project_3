@@ -12,8 +12,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { TextField } from '@mui/material';
 
-
-
+const conn = "http://localhost:3500/";
+// const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
 function Menu(){
 
@@ -26,15 +26,15 @@ function Menu(){
         },
     });
 
-    const [open_edit, set_edit] = React.useState(false);
+    const [open_edit, set_edit] = useState(false);
 
     // ask name
-    const [open_name_edit, set_name_edit] = React.useState(false);
-    const [open_name_deactivate, set_name_deactivate] = React.useState(false);
-    const [open_name_activate, set_name_activate] = React.useState(false);
+    const [open_name_edit, set_name_edit] = useState(false);
+    const [open_name_deactivate, set_name_deactivate] = useState(false);
+    const [open_name_activate, set_name_activate] = useState(false);
 
-    const [open_deactivate, set_deactivate] = React.useState(false);
-    const [open_activate, set_activate] = React.useState(false);
+    const [open_deactivate, set_deactivate] = useState(false);
+    const [open_activate, set_activate] = useState(false);
 
     const handleClickOpen_edit = () => {
         set_edit(true);
@@ -74,6 +74,80 @@ function Menu(){
     const handleClose_activate = () => {
         set_activate(false);
     };
+
+    
+    // This function will retrieve all of the inventory to reference w/ default_inventory used in menu.
+    const getInventory = async () => {
+        try {
+            const response = await fetch(conn + "api/menu/getInventory");
+            // FIXME: Need to split into array to display. Reference Order page. 'data' contains inventory itemnames and classification.
+            const data = await response.json();
+        }
+        catch (err) {
+            console.error(err.message);
+        }
+    }
+
+    const getMenu = async () => {
+        try {
+            const response = await fetch(conn + "api/menu/get");
+            // FIXME: Need to split into array to display. Reference Order page. 'data' contains all attributes of menu table (menuitem, cost, id, is_selling, is_customize, default_inventory).
+            const data = await response.json();
+        }
+        catch (err) {
+            console.error(err.message);
+        }
+    }
+
+    // Will update current menu item.
+    const updateMenu =(_menuitem, _cost, _is_selling, _is_customize, _default_inventory, _id) => {
+        try {
+            // FIXME: Need to update w/ input before updating.
+            var menuitem = _menuitem;
+            var cost = _cost;
+            var is_selling = _is_selling;
+            var is_customize = _is_customize;
+            var default_inventory = _default_inventory;
+            var id = _id;
+
+            const body = {menuitem, cost, is_selling, is_customize, default_inventory, id};
+            fetch (conn + "api/menu/update",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                }
+            )
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+    
+    // Will insert a new menu item into menu.
+    const insertMenu = (_menuitem, _cost, _is_customize, _default_inventory, _id) => {
+        try {
+            // FIXME: Need to update w/ input before inserting.
+            var menuitem = _menuitem;
+            var cost = _cost;
+            var is_selling = true; // Do not change
+            var is_customize = _is_customize;
+            var default_inventory = _default_inventory;
+            var id = _id;
+
+            const body = {menuitem, cost, is_selling, is_customize, default_inventory, id};
+
+            fetch (conn + "api/menu/insert",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                }
+            )
+            
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
 
 
     return(
