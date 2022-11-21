@@ -33,14 +33,17 @@ export default function Manager(props) {
                 }
             );
 
-
-            // const response = fetch (conn + "api/manager/getSaleReport");
-
             const data = await response.json();
             console.log(data);
             
+            for(var key in data){
+                var reportCustom = [];
+                reportCustom.push(data[key]);
+                var reportVals = salesReport;
+                reportVals.push(reportCustom);
+                setSalesReport(reportVals);
+            }
 
-            setSalesReport(data);
             console.log("SALESREPORT");
             console.log(salesReport);
            
