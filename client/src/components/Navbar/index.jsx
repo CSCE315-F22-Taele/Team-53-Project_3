@@ -20,19 +20,19 @@ export default function Navbar() {
             </Link>
             <ul className="nav__list" >
                 <li>
-                    <Link className="nav__link" to="/">
+                    <Link class="nav__link" to="/">
                         {" "}
                         Home
                     </Link>
                 </li>
                 <li>
-                    <Link className="nav__link" to="/order">
+                    <Link class="nav__link" to="/order">
                         {" "}
                         Order Now
                     </Link>
                 </li>
                 <li>
-                    <Link className="nav__link" to="/login">
+                    <Link class="nav__link" to="/login">
                         {" "}
                         Login
                     </Link>

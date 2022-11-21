@@ -42,18 +42,18 @@ body {
 }
 
 table{
-
     margin-left: 10px;
     margin-right: 10px;
+    width: 100%;
 }
 
 
 .delete{
-    width:45%;
+    width:35%;
 }
 
 .item{
-    width: 35%;
+    width: 45%;
 }
 
 .price{

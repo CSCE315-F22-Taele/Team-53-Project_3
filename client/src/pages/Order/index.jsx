@@ -389,6 +389,8 @@ function Order () {
 
         let inv = inventoryUsed;
         let listItems = item[3]
+
+        //FIX ME: ONLY REMOVING DEFAULT INVENTORY NOT CUSTOM. 
         for( var i=0; i< inv.length; i++){
             inv[i] -= listItems[i];
         }
@@ -398,8 +400,7 @@ function Order () {
         newCost.toFixed(2);
         setCost(newCost);
 
-        console.log(listOrdered);
-        console.log(inventoryUsed);
+        
     }
 
     //const [data, setData] = useState ({
@@ -555,8 +556,8 @@ function Order () {
                         <td class="item">{item[0]} </td> 
                         <td class="price"> ${item[1]} </td>
                         <td class="delete">  
-                            <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => {deleteItem(item)} } > 
-                        Delete Item
+                            <Button  variant="contained" sx={{color:'red', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => {deleteItem(item)} } > 
+                        X
                         </Button> 
                         </td> 
 
@@ -570,7 +571,7 @@ function Order () {
             <br></br>
 
              
-            <div>
+            {/* <div>
                 <h5>Added Items to Gyro/Bowl:</h5>
                 { listOrderedInv.map( (item) =>
                     <p> {item}</p>
@@ -579,17 +580,10 @@ function Order () {
             <br></br>
             <br></br>
             <br></br>
-            </div>
+            </div> */}
 
                 <h1> Cost: ${totalCost} </h1>
-                <Stack spacing = {2}>
-                    {/* FIXEME: Why are the buttons not the same size? *
-
-                    
-                    <Link to={{
-                        pathname: "/checkout",
-                        state: {data : data}
-                        }}>*/}
+              
 
                     <Link to="/checkout" 
                     state= {{
@@ -599,10 +593,10 @@ function Order () {
                     }}
                     >
 
-                        <Button  variant="contained" size="large" onClick= { (openprofile) => {sendtoDb()}}>Submit Order</Button>
+                        <Button  variant="contained" size="large" sx={{mt: 3 , mb:2 }}onClick= { (openprofile) => {sendtoDb()}}>Submit Order</Button>
                     </Link>
-                    <Button  variant="contained" size="large" onClick= { () => {clearOrder()}}>Clear Order</Button>
-                </Stack>
+                    <Button  variant="contained" size="large" sx={{mt: 3 , mb:2 }} onClick= { () => {clearOrder()}}>Clear Order</Button>
+            
 
 
             </div>

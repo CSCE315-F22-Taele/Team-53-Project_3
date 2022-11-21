@@ -18,7 +18,9 @@ nav {
 }
 
 .nav__link:hover {
-    background-color: #283593;
+    background-color:#283593;
+    color:white;
+    text-decoration: none;
 }
 
 .nav__list {
@@ -34,7 +36,7 @@ nav {
     margin: 0;
     padding: none;
 }
-
+/* 
 a{
     color:black;
     text-decoration: none;
@@ -46,6 +48,6 @@ a:hover{
     background-color:#283593;
     color:white;
     text-decoration: none;
-}
+} */
 
 
