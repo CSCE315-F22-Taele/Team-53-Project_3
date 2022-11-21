@@ -7,8 +7,13 @@ Get sale report
     - Pass in two dates in orderid format
     - Return menu item name & total sold object in decreasing order.
 */
-app.get("/getSaleReport", async (req, res) => {
-    const { start, end } = req.body;
+app.get("/getSaleReport/:start/:end", async (req, res) => {
+    console.log("req param:", req.params);
+    const start = req.params.start;
+    const end = req.params.end;
+    console.log("start:", start);
+    console.log("end:", end);
+
     try {
         // Initalize array of menu item size
         const menu = await db.query(

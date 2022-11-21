@@ -24,29 +24,27 @@ export default function Manager(props) {
         
         try {
             setSalesReport([]);
-            const start = JSON.stringify(dates.start);
-            const end = JSON.stringify(dates.end);
+            const start = (dates.start);
+            const end = (dates.end);
             console.log("start", start);
             console.log("end", end);
-            const response = await fetch (conn + "api/manager/getSaleReport", 
+            const response = await fetch (conn + `api/manager/getSaleReport/${start}/${end}`, 
             {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
-                    params: {start, end}
                 }
             );
 
             const data = await response.json();
             console.log(data);
             
-            for(var key in data){
-                var reportCustom = [];
-                // reportCustom.push(data[key]);
-                var reportVals = salesReport;
-                reportVals.push(data[key]);
-                setSalesReport(reportVals);
-            }
-
+            // for(var key in data){
+            //     var reportVals = salesReport;
+            //     reportVals.push(data[key]);
+            //     setSalesReport(reportVals);
+            // }
+            
+            setSalesReport(data);
             console.log("SALESREPORT");
             console.log(salesReport);
            
@@ -73,7 +71,7 @@ export default function Manager(props) {
         const startDate = event.target.startDate.value;
         const endDate = event.target.endDate.value;
 
-        setDates({start: startDate, end: endDate});
+        setDates({start: parseInt(startDate), end: parseInt(endDate)});
         console.log("start", startDate);
         console.log("end", endDate);
 
@@ -130,7 +128,7 @@ export default function Manager(props) {
 
                 <h5>Sales from {dates.start} to {dates.end}:</h5>
                     {salesReport.map( (item) =>
-                        <li> {item.name}</li>
+                        <li> {item.name} : {item.sold}</li>
                     )}
 
             </div>
