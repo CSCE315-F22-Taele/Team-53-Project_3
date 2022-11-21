@@ -9,26 +9,38 @@ body {
     text-align: center;
 }
 
-.order__pageOrder {
+.cashier__pageOrder {
     height: 100%;
     background: whitesmoke;
 }
-.order__orderingSection {
-    /* display: inline-block; */
-    width: 75%;
+
+.cashier__mobileorders{
+    width: 25%;
     background: whitesmoke;
     float: left;
     height: 100%;
+    
+}
+
+.cashier__orderingSection {
+    /* display: inline-block; */
+    width: 50%;
+    background: whitesmoke;
+    float: left;
+    height: 100%;
+    border-left: 2px solid black;
     border-right: 2px solid black;
 }
 
-.order__currentOrder {
+.cashier__currentOrder {
     /* display: inline-block; */
     
     background-color: whitesmoke;
     float: left;
     width: 25%;
+    height: 100%;
 }
+
 
 .addItems{
     bottom: 5%;
@@ -40,3 +52,27 @@ body {
     font-weight: bold;
     font-size: 30%;
 }
+
+table{
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+}
+
+
+.delete{
+    width:35%;
+}
+
+.item{
+    width: 45%;
+}
+
+.price{
+    width: 20%;
+}
+
+/* .buttonDone{
+    margin-top: 10px;
+    margin-bottom: 0px;
+} */

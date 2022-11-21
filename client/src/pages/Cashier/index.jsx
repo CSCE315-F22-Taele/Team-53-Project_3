@@ -1,18 +1,17 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import "./index.css";
-// import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { indigo } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
-import e from "cors";
-// import { json } from "express";
-import {BrowserRouter as Router, json, Link, useNavigate, useLocation} from 'react-router-dom';
+import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
+
 // For local testing: (comment out)
 const conn = "http://localhost:3500/";
 // For production:
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
+
 const theme = createTheme({
     palette: {
         primary: {
@@ -23,7 +22,12 @@ const theme = createTheme({
 });
 
 
-// const Order = () => {
+
+function rounding(number, precision){
+    var newnumber = new Number(number+'').toFixed(parseInt(precision));
+    return parseFloat(newnumber); 
+}
+
 function Cashier () {
     const [orderid, setOrderid] = useState(0);
     const [menuNamesCustom, setMenuNamesCustom] = useState([]);
@@ -35,11 +39,13 @@ function Cashier () {
     const [realInventory3, setInventory3] = useState([]);
     const [realInventory4, setInventory4] = useState([]);
 
-    const [listOrdered, setListOrdered] = useState([]);
+
+    const [listOrdered, setListOrdered] = useState([]); //push to db
     const [listOrderedNames, setListOrderedNames] = useState([]);
-    const [listOrderedInv, setlistOrderedInv] = useState([]);
-    const [inventoryUsed, setInventoryUsed]= useState([]);
-    const [showCustom, setIsShown] = useState(false);
+    
+    const [listOrderedInv, setlistOrderedInv] = useState([]);  
+    const [inventoryUsed, setInventoryUsed]= useState([]); //global amount of inventory used (push to db)
+    const [showCustom, setIsShown] = useState(false); 
     const [totalCost, setCost] = useState(0);
     const [count, setCount] = useState(0);
 
@@ -49,6 +55,7 @@ function Cashier () {
     const [ cat3click, setAllowClickCat3] = useState(true);
     const [countToppings, setCountToppings] = useState(0);
     
+
     const name = "Pom and Honey at Texas A&M MSC";
    
 
@@ -213,6 +220,7 @@ function Cashier () {
             
             setInventoryUsed(value);
             
+            
            
         } catch (err) {
             
@@ -244,8 +252,7 @@ function Cashier () {
                 }
             );
 
-            //CALL CHECKOUT CODE 
-            
+           
 
         } catch (err) {
             console.error(err.message);
@@ -278,29 +285,72 @@ function Cashier () {
         }
         
         setInventoryUsed(inv);
-        console.log(inv);
+        // console.log(inv);
 
         let namesCart = listOrderedNames;
-        namesCart.push([val, '$' + cost]);
+        namesCart.push([val, cost, index, inventory_default, custom]);
         setListOrderedNames(namesCart);
-    
+        
         
         let costCurr = totalCost;
-        costCurr += parseFloat(cost);
+        costCurr = rounding(costCurr + parseFloat(cost), 2);
         setCost(costCurr);
 
+        console.log(listOrdered);
+        console.log(inventoryUsed);
+       
     }
 
     const pushInv = (index, val, category) => {
-        let inv = inventoryUsed;
-        
-        inv[index-1] += 1;
-        setInventoryUsed(inv);
+
         
         
         let namesCart = listOrderedInv;
-        namesCart.push(val);
-        setlistOrderedInv(namesCart);
+        let x = false;
+        
+        let addition = [val, index, category];
+        
+
+        if ( namesCart.length === 0){
+            x=false;
+        }
+
+        for (var i = 0; i < namesCart.length; ++i) {
+           
+
+            var localTrue = true;
+            for (var j = 0; j < namesCart[i].length; ++j) {
+                
+                if( addition[j] !== namesCart[i][j]){
+                    
+                    localTrue = false;
+                }
+
+            }
+
+            if (localTrue==true){
+                x=true;
+            }
+        }
+        
+
+        
+        if( x === false){
+            namesCart.push([val, index, category]);
+            setlistOrderedInv(namesCart);
+        }
+        else{
+            namesCart.pop([val, index, category]);
+            setlistOrderedInv(namesCart);
+        }
+        
+       
+
+        let inv = inventoryUsed;
+        inv[index-1] += 1;
+        setInventoryUsed(inv);
+
+        
 
         let countVal = count;
         countVal  +=1;
@@ -351,9 +401,101 @@ function Cashier () {
         setAllowClickCat2(true);
         setAllowClickCat3(true);
         setCountToppings(0);
+        setCountToppings([]);
         
     }
 
+    const deleteItem = (item) => {
+        
+        let namesCart = listOrderedNames;
+       
+        namesCart.pop(item);
+        setListOrderedNames(namesCart);
+        
+    
+        let newCart = listOrdered;
+       
+        newCart[item[2]-1] -= 1;
+        setListOrdered(newCart);
+
+        let inv = inventoryUsed;
+        let listItems = item[3]
+
+        if( item[4] === true){
+            setIsShown(false);
+            setAllowClickCat0(true);
+            setAllowClickCat1(true);
+            setAllowClickCat2(true);
+            setAllowClickCat3(true);
+
+            
+            let inv = inventoryUsed;
+
+            for( var i=0; i< listOrderedInv.length; i++){
+                inv[listOrderedInv[i][1] -1] -= 1;
+            }
+            
+            setInventoryUsed(inv);
+
+            setlistOrderedInv([]);
+        }
+
+        //FIX ME: ONLY REMOVING DEFAULT INVENTORY NOT CUSTOM. 
+        for( var i=0; i< inv.length; i++){
+            inv[i] -= listItems[i];
+        }
+        setInventoryUsed(inv);
+
+        
+        let newCost = rounding(totalCost - item[1], 2);
+        newCost.toFixed(2);
+        setCost(newCost);
+
+        console.log(inventoryUsed);
+        
+    }
+
+    const deleteCustom = (item) => {
+
+        let currInv = listOrderedInv;
+        currInv.pop(item);
+        setlistOrderedInv(currInv);
+
+
+        let inv = inventoryUsed;
+        console.log(inv[item[1]-1], item[1]-1);
+       
+        inv[item[1]-1] -= 1;
+        
+        setInventoryUsed(inv);
+
+        console.log(inventoryUsed);
+        
+
+        let category = item[2];
+
+        if (category === 0){
+            setAllowClickCat0(true);
+        }
+        else if (category === 1){
+            setAllowClickCat1(true);
+        }
+        else if (countToppings <= 10){
+            let countCurr = countToppings -1; 
+            setCountToppings(countCurr);
+        }
+        else if( category === 2){
+            setAllowClickCat2(true);
+        }
+        else if (category === 3){
+            setAllowClickCat3(true);
+        }
+
+        let newCost = rounding(totalCost, 2);
+        newCost.toFixed(2);
+        setCost(newCost);
+
+    }
     //const [data, setData] = useState ({
     //    totalCost: totalCost
     //});
@@ -370,10 +512,22 @@ function Cashier () {
     // console.log(orderid);
 
     return (
-        <div class="order__pageOrder">
-        <div class="order__orderingSection">
+        <div class="cashier__pageOrder">
+        <div class="cashier__mobileorders">
+            <br />
+            <h1>Mobile Orders</h1>
+            <br />
+            <h3> New Orders</h3>
+            <br />
+            <h3> Awaiting Pickup</h3>
+
+            
+
+        </div>
+
+        <div class="cashier__orderingSection">
             <br></br>
-            <h3> location.state.userName </h3>
+
             <h1 class="order__orderingTitle">  Ordering from Pom and Honey at Texas A&M MSC </h1>
             <br></br>
             <br></br>
@@ -417,15 +571,27 @@ function Cashier () {
                     </div>   
                     )
                     }
-                    {!cat0click &&
+                    { (!cat0click) &&
                         (
-                            <div>
-                            <h2> Items chosen:</h2>
-                            
-                                   { listOrderedInv.map( (item) =>
-                                        <p> {item}</p>
-                                    )}   
-                            </div>
+                        <div>
+                        <h5>Added Items to Gyro/Bowl:</h5>
+                        <table>
+                        { listOrderedInv.map( (item) =>
+                        <tr>
+                            <td> {item[0]}</td>
+                            <td> 
+                                <Button  variant="contained" sx={{color:'red', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => {deleteCustom(item)} } > 
+                                X
+                                </Button> 
+                            </td>
+                        </tr>
+                        )}   
+                        </table>
+
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    </div>
                         )
                     }
                 
@@ -468,7 +634,13 @@ function Cashier () {
                     )  )}
                 </div>
                 )}
-                            
+
+                <br>
+                </br>
+                <Button variant="contained" sx={{ backgroundColor:"black", width:150, height:50, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                onClick= { () => { addItem() } } >
+                Finish Item Customization</Button>   
+
              </div>
             )}
 
@@ -477,49 +649,62 @@ function Cashier () {
             <div class="addItems">
 
 
-                <Button variant="contained" sx={{ width:150, height:50, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                onClick= { () => { addItem() } } >
-                Add more items</Button> 
+                
 
                         
            
             </div>
 
             
-            </div>
+        </div>
 
            
-            <div class="order__currentOrder">
+        <div class="cashier__currentOrder">
+                <br />
                 <h1> Current Order</h1>
                 
+                <br />
+                <table>
+                    <tr>
+                    <th class="item">Item</th>
+                    <th class="price">Price</th>
+                    <th class="delete">Delete Item</th>
+                    </tr>
+                
+                </table>
+                <table> 
+
                 { listOrderedNames.map( (item) =>
-                    <p> {item[0]} {item[1]}</p>
-                )}   
-
-            <br></br>
-            <br></br>
-            <br></br>
-            <div>
-                <h5>Added Items to Gyro/Bowl:</h5>
-                { listOrderedInv.map( (item) =>
-                    <p> {item}</p>
-                )}   
-
-            <br></br>
-            <br></br>
-            <br></br>
-            </div>
-
-                <h1> Cost: ${totalCost} </h1>
-                <Stack spacing = {2}>
-                    {/* FIXEME: Why are the buttons not the same size? *
+                    <tr> 
+                        <td class="item">{item[0]} </td> 
+                        <td class="price"> ${item[1]} </td>
+                        <td class="delete">  
+                            <Button  variant="contained" sx={{color:'red', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => {deleteItem(item)} } > 
+                        X
+                        </Button> 
+                        </td> 
+                     
+                    </tr>
+                    
+                        
 
                     
-                    <Link to={{
-                        pathname: "/checkout",
-                        state: {data : data}
-                        }}>*/}
 
+                    
+                )}   
+
+                </table>
+
+            <br></br>
+            <br></br>
+            <br></br>
+
+             
+            
+
+                <h1> Cost: ${totalCost} </h1>
+              
+                <Stack spacing = {2}>
                     <Link to="/checkout" 
                     state= {{
                         orderid : orderid,
@@ -528,13 +713,21 @@ function Cashier () {
                     }}
                     >
 
-                        <Button  variant="contained" size="large" onClick= { (openprofile) => {sendtoDb()}}>Submit Order</Button>
-                    </Link>
-                    <Button  variant="contained" size="large" onClick= { () => {clearOrder()}}>Clear Order</Button>
-                </Stack>
+                  
+                    <Button variant="contained" size="large" sx={{mt: 3, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick= { (openprofile) => {sendtoDb()}}>Submit Order</Button>
+                        
+                    
+                        </Link>
+                        <Link>
+                        <Button variant="contained" size="large" sx={{ mb:2, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick= { () => {clearOrder()}}>Clear Order</Button>
+                        </Link>
+                        
+                    
+                    
+                    </Stack>
 
 
-            </div>
+        </div>
 
         
 

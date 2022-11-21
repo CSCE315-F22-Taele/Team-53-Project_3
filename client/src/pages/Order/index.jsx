@@ -4,7 +4,7 @@ import "./index.css";
 // import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { indigo } from "@mui/material/colors";
+import { indigo, white } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
 import e from "cors";
 import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
@@ -17,7 +17,7 @@ const conn = "http://localhost:3500/";
 const theme = createTheme({
     palette: {
         primary: {
-            main: "#283593",
+            main: '#283593',
         },
         secondary: indigo,
     },
@@ -30,7 +30,7 @@ function rounding(number, precision){
     return parseFloat(newnumber); 
 }
 
-// const Order = () => {
+// const = () => {
 function Order () {
     const [orderid, setOrderid] = useState(0);
     const [menuNamesCustom, setMenuNamesCustom] = useState([]);
@@ -626,28 +626,31 @@ function Order () {
                     )  )}
                 </div>
                 )}
-                            
-             </div>
-            )}
 
-            
-            </ThemeProvider>
-            <div class="addItems">
+                <div class="addItems">
 
-
-                <Button variant="contained" sx={{ width:150, height:50, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                <br />
+                <Button variant="contained" sx={{ backgroundColor:"black", width:150, height:50, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                 onClick= { () => { addItem() } } >
                 Finish Item Customization</Button> 
 
                         
            
-            </div>
+                </div>
+
+             </div>
+            )}
+
+            
+            </ThemeProvider>
+            
 
             
             </div>
 
            
             <div class="order__currentOrder">
+                <br />
                 <h1> Current Order</h1>
                 
                 <table>
@@ -690,7 +693,7 @@ function Order () {
 
                 <h1> Cost: ${totalCost} </h1>
               
-
+                <Stack spacing = {2}>
                     <Link to="/checkout" 
                     state= {{
                         orderid : orderid,
@@ -699,10 +702,16 @@ function Order () {
                     }}
                     >
 
-                        <Button  variant="contained" size="large" sx={{mt: 3 , mb:2 }}onClick= { (openprofile) => {sendtoDb()}}>Submit Order</Button>
-                    </Link>
-                    <Button  variant="contained" size="large" sx={{mt: 3 , mb:2 }} onClick= { () => {clearOrder()}}>Clear Order</Button>
-            
+                    <Button variant="contained" size="large" sx={{mt: 3, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick= { (openprofile) => {sendtoDb()}}>Submit Order</Button>
+                        
+                    
+                        </Link>
+                        <Link>
+                        <Button variant="contained" size="large" sx={{ mb:2, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick= { () => {clearOrder()}}>Clear Order</Button>
+                        </Link>
+                        
+                        
+                </Stack>
 
 
             </div>
