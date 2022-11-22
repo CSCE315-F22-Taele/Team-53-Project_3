@@ -8,8 +8,8 @@ import Order from "./pages/Order";
 import Home from "./pages/Home";
 import Checkout from "./pages/Checkout";
 import pomHoney from "./pomAndHoney.png";
-import Inventory from "./pages/Inventory"
-import Menu from "./pages/Menu"
+import Inventory from "./pages/Inventory";
+import Menu from "./pages/Menu";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,7 +18,6 @@ root.render(
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
-                <Route path="/menu" element={<Menu />} />
                 <Route path="/order" element={<Order />} />
                 <Route path="/checkout" element={<Checkout />} />
             </Route>

@@ -179,7 +179,6 @@ function Inventory(){
     const updateInventory =(_itemname, _amount, _cost, _expirationdate, _vendor,_classify, _id, _useChecking) => {
         try {
             // FIXME: Need to update w/ input before inserting.
-            //console.log(_useChecking);
             var itemname = _itemname;
             var amount = _amount;
             var cost = _cost;
@@ -244,7 +243,6 @@ function Inventory(){
 
     const sendValue = () => {
         for(let key in inventory){
-            console.log(inventory[key][0]);
             if(inventory[key][0] === inputName.current.value){
                 set_nameDisplay(inventory[key][0]);
                 set_amountDisplay(inventory[key][1]);
@@ -341,7 +339,7 @@ function Inventory(){
 
     return(
         
-        <div className="inventory_page=">
+        <div className="inventory_page">
                         <Dialog open={welcome_open} onClose={handleClose_welcome}>
                             <DialogTitle>Welcome to Inventory Page</DialogTitle>
 
@@ -359,7 +357,7 @@ function Inventory(){
                 <div className="inventory-btn">
                     <ThemeProvider theme={theme}>
                     <div className="bass">
-                        <h3>Bass</h3>
+                        <h3>Base</h3>
                         
                         { inventory0.map((item) =>
                                
@@ -503,7 +501,6 @@ function Inventory(){
                                             />
 
                                             <FormControl fullWidth>
-                                                    <InputLabel name="demo-simple-select-label">Classifications</InputLabel>
                                                     <Select
                                                     labelId="demo-simple-select-label"
                                                     id="demo-simple-select"
@@ -511,7 +508,7 @@ function Inventory(){
                                                     onChange={handleChange_class}
                                                     inputRef={classify_input}
                                                     >
-                                                    <MenuItem value={0}>Bass</MenuItem>
+                                                    <MenuItem value={0}>Base</MenuItem>
                                                     <MenuItem value={1}>Protein</MenuItem>
                                                     <MenuItem value={2}>Toppings</MenuItem>
                                                     <MenuItem value={3}>Dressing</MenuItem>
@@ -554,7 +551,7 @@ function Inventory(){
                     {/* Update Btn */}
                     <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_name_update}>Update</Button>
                         <Dialog open={open_name_update} onClose={handleClose_name_update}>
-                            <DialogTitle>What is the item's name?</DialogTitle>
+                            <DialogTitle>Enter item name:</DialogTitle>
                             <DialogContent>
                                 <TextField
                                     required
@@ -641,7 +638,6 @@ function Inventory(){
                             />
 
                             <FormControl fullWidth>
-                                <InputLabel name="demo-simple-select-label">Classifications</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
@@ -649,7 +645,7 @@ function Inventory(){
                                     onChange={handleChange_class}
                                     inputRef={classify_input}
                                     >
-                                    <MenuItem value={0}>Bass</MenuItem>
+                                    <MenuItem value={0}>Base</MenuItem>
                                     <MenuItem value={1}>Protein</MenuItem>
                                     <MenuItem value={2}>Toppings</MenuItem>
                                     <MenuItem value={3}>Dressing</MenuItem>
@@ -667,13 +663,14 @@ function Inventory(){
                             updateInventory(name_input.current.value, amount_input.current.value, 
                                 cost_input.current.value, date_input.current.value, vendor_input.current.value, 
                                 classify_input.current.value, id, true);
+                                refreshPage();
                         }}>Update</Button>
                         </DialogActions>
                     </Dialog>  
                     {/* Deactivate Btn */}
                     <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_name_deactivate} >Deactivate</Button>
                     <Dialog open={open_name_deactivate} onClose={handleClose_name_deactivate}>
-                        <DialogTitle>What is the item's name?</DialogTitle>
+                        <DialogTitle>Enter item name:</DialogTitle>
                         <DialogContent>
                             <TextField
                                 required
@@ -699,7 +696,7 @@ function Inventory(){
                     </Dialog>
  
                     <Dialog open={open_deactivate} onClose={handleClose_deactivate}>
-                        <DialogTitle>Do you want deactivate?</DialogTitle>
+                        <DialogTitle>Do you want to deactivate?</DialogTitle>
                         <DialogContent>
                             <TextField
                                 inputProps={{ readOnly: true }}
@@ -754,7 +751,6 @@ function Inventory(){
                                 variant="standard"
                             />    
                             <FormControl fullWidth>
-                                <InputLabel name="demo-simple-select-label">Classifications</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
@@ -762,7 +758,7 @@ function Inventory(){
                                     onChange={handleChange_class}
                                     inputRef={classify_input}
                                     >
-                                    <MenuItem value={0}>Bass</MenuItem>
+                                    <MenuItem value={0}>Base</MenuItem>
                                     <MenuItem value={1}>Protein</MenuItem>
                                     <MenuItem value={2}>Toppings</MenuItem>
                                     <MenuItem value={3}>Dressing</MenuItem>
@@ -778,6 +774,7 @@ function Inventory(){
                                     updateInventory(name_display, amount_display, cost_display, expirationdate_display, vendor_display, 
                                         classify_display, id, false);
                                     handleClose_deactivate();
+                                    refreshPage();
                             }}>Deactivate</Button>
                         </DialogActions>
                     </Dialog>
@@ -785,7 +782,7 @@ function Inventory(){
                     {/* Activate Btn */}
                     <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_name_activate} >Activate</Button>
                     <Dialog open={open_name_activate} onClose={handleClose_name_activate}>
-                        <DialogTitle>What is the item's name?</DialogTitle>
+                        <DialogTitle>Enter item name:</DialogTitle>
                         <DialogContent>
                             <TextField
                                 required
@@ -812,7 +809,7 @@ function Inventory(){
                     </Dialog>
 
                     <Dialog open={open_activate} onClose={handleClose_activate}>
-                        <DialogTitle>Do you want activate?</DialogTitle>
+                        <DialogTitle>Do you want to reactivate?</DialogTitle>
                         <DialogContent>
                             <TextField
                                 inputProps={{ readOnly: true }}
@@ -867,7 +864,6 @@ function Inventory(){
                                 variant="standard"
                             />    
                             <FormControl fullWidth>
-                                <InputLabel name="demo-simple-select-label">Classifications</InputLabel>
                                 <Select
                                     labelId="demo-simple-select-label"
                                     id="demo-simple-select"
@@ -875,13 +871,13 @@ function Inventory(){
                                     onChange={handleChange_class}
                                     inputRef={classify_input}
                                     >
-                                    <MenuItem value={0}>Bass</MenuItem>
+                                    <MenuItem value={0}>Base</MenuItem>
                                     <MenuItem value={1}>Protein</MenuItem>
                                     <MenuItem value={2}>Toppings</MenuItem>
                                     <MenuItem value={3}>Dressing</MenuItem>
                                     <MenuItem value={4}>Miscellaneous</MenuItem>
                                 </Select>
-                            </FormControl>           
+                            </FormControl>
                         </DialogContent>
             
                         <DialogActions>
@@ -892,13 +888,12 @@ function Inventory(){
                                         classify_display, id, true);
                                     handleClose_name_activate();
                                     handleClose_activate();
+                                    refreshPage();
                             }}>Activate</Button>
                         </DialogActions>
                         
                     </Dialog>
 
-                    <Button onClick={refreshPage} variant="contained" size="large" className="back1-btn"  >Reload Page</Button>
-                    
                 </Stack>
             </div>
         </div>
