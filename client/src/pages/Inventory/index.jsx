@@ -950,6 +950,7 @@ function Inventory(){
                 <h1> Deactivate</h1> 
                 <ThemeProvider theme={theme}>
                     <div className="bass">
+                        <br></br>
                         <h3>Base</h3>
                         { deac_inventory0.map((item) =>
                                
