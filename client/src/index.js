@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login"
 import Checkout from "./pages/Checkout";
 import pomHoney from "./pomAndHoney.png";
+import Manager from "./pages/Manager";
 import Inventory from "./pages/Inventory";
 import Menu from "./pages/Menu";
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -27,6 +28,8 @@ root.render(
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/cashier" element={<Cashier />} />
+                <Route path="/manager" element={<Manager />} />
+                <Route path="/inventory" element={<Inventory />} />
             </Route>
         </Routes>
     </HashRouter>
