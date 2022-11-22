@@ -1,23 +1,21 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import "./index.css";
-// import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { indigo, white } from "@mui/material/colors";
+import { indigo } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
-import e from "cors";
 import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
-// import { json } from "express";
 
 // For local testing: (comment out)
 const conn = "http://localhost:3500/";
 // For production:
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
+
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#283593',
+            main: "#283593",
         },
         secondary: indigo,
     },
@@ -30,8 +28,7 @@ function rounding(number, precision){
     return parseFloat(newnumber); 
 }
 
-// const = () => {
-function Order () {
+function Cashier () {
     const [orderid, setOrderid] = useState(0);
     const [menuNamesCustom, setMenuNamesCustom] = useState([]);
     const [menuNames, setMenuNames] = useState([]);
@@ -531,10 +528,20 @@ function Order () {
     
 
     return (
-        <div class="order__pageOrder">
-        
+        <div class="cashier__pageOrder">
+        <div class="cashier__mobileorders">
+            <br />
+            <h1>Mobile Orders</h1>
+            <br />
+            <h3> New Orders</h3>
+            <br />
+            <h3> Awaiting Pickup</h3>
 
-        <div class="order__orderingSection">
+            
+
+        </div>
+
+        <div class="cashier__orderingSection">
             <br></br>
 
             <h1 class="order__orderingTitle">  Ordering from Pom and Honey at Texas A&M MSC </h1>
@@ -668,7 +675,7 @@ function Order () {
         </div>
 
            
-        <div class="order__currentOrder">
+        <div class="cashier__currentOrder">
                 <br />
                 <h1> Current Order</h1>
                 
@@ -744,5 +751,5 @@ function Order () {
     );
 };
 
-export default Order;
+export default Cashier;
 
