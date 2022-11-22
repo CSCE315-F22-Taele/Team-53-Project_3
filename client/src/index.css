@@ -5,6 +5,7 @@ body {
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
 }
 
 code {
@@ -17,10 +18,11 @@ a{
     text-decoration: none;
     font-weight: bold;
     padding: 1rem;
+
 }
 
-a:hover{
-    background-color:#d0cdd4;
+ a:hover{
+    text-decoration: none;
 }
 
 

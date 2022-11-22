@@ -6,21 +6,30 @@ import { BrowserRouter, HashRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Order from "./pages/Order";
 import Home from "./pages/Home";
+import Login from "./pages/Login"
 import Checkout from "./pages/Checkout";
 import pomHoney from "./pomAndHoney.png";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import Cashier from "./pages/Cashier";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     // <React.StrictMode>
+    <GoogleOAuthProvider clientId="603210015113-816enf77hq16jp4qpbql6an52fktugnu.apps.googleusercontent.com">
+
     <HashRouter>
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path="/order" element={<Order />} />
                 <Route path="/checkout" element={<Checkout />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/cashier" element={<Cashier />} />
             </Route>
         </Routes>
     </HashRouter>
+    
+    </GoogleOAuthProvider>
     // </React.StrictMode>
 );
 
