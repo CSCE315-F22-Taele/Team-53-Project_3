@@ -55,7 +55,7 @@ function Manager_Route(props) {
                         userName: userName
             }}>     
           <Button variant="contained" color="primary" sx={{width:200, height:150, padding: 1, marginLeft: 2,mt:2,  mb:2}}
-            >Excess Report</Button>
+            >Cashier</Button>
             </Link>
             
             <Link to="/manager" 
@@ -64,7 +64,7 @@ function Manager_Route(props) {
             }}>    
         
           <Button variant="contained" sx={{width:200, height:150, padding: 1, marginLeft: 2,mt:2,   mb:2}}
-            >Sales Report</Button>
+            >Reports</Button>
             </Link>
             
             </ThemeProvider>
@@ -92,13 +92,7 @@ function Manager_Route(props) {
             >Menu Customization</Button> 
             </Link>
 
-            <Link to="/cashier" 
-                    state= {{
-                        userName: userName
-            }}>     
-          <Button variant="contained" color="primary" sx={{width:200, height:150, padding: 1, marginLeft: 2,mt:2,  mb:2}}
-            >Cashier</Button>
-            </Link>
+            
            
         </ThemeProvider>
         </div>
