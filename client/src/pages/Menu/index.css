@@ -1,0 +1,33 @@
+.menu_page{
+    height: 100%;
+}
+
+.menu_item-section{
+    height: 100%;
+    width: 75%;
+    background: #e7e3fc;
+    float: left;
+}
+
+.menu_receipt-section{
+    background-color:whitesmoke;
+    float: left;
+    width: 25%;
+}
+
+.menu-btn{
+    padding: 2%;
+}
+
+.footer-btn{
+    position:absolute;
+    bottom: 5%;
+    width: 75%;
+}
+.back-btn{
+    left:-10px;
+}
+.add-btn{
+    right:0;
+}
+

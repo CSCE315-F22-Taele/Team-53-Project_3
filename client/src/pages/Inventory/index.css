@@ -1,0 +1,53 @@
+.inventory_page{
+    height: 100%;
+}
+
+.inventory_activate-section{
+    height: 100%;
+    width: 50%;
+    float: left;
+    border-left: 2px solid black;
+}
+
+.inventory_deactivate-section{
+    height: 100%;
+    width: 50%;
+    float: left;
+}
+
+.back-btn{
+    display: flex;
+    align-items:center;
+    float: left;
+    vertical-align: middle;
+    margin-top: 25px;
+    margin-left: 20px;
+}
+
+.edit-btn{
+    display: flex;
+    align-items:center;
+    float: right;
+    vertical-align: middle;
+    margin-top: 25px;
+    margin-right: 20px;
+}
+
+
+.inventory_item-btn{
+    pointer-events: none;
+}
+
+.inventory_receipt-section{
+    width: 100%;
+    height: 80px;
+    vertical-align: middle;
+    border-bottom: 2px solid black;
+}
+
+.inventory-btn{
+    padding: 2%;
+}
+
+
+

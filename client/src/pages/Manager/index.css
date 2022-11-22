@@ -1,0 +1,24 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body{
+    background-color:whitesmoke;
+    color:black;
+    justify-content: center;
+    text-align: center;
+  }
+
+  div{
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .backButtons{
+    position:absolute;
+    bottom: 5%;
+    left: 2.5%;
+  }
+  
+  .imgLogo{
+    display:contents;
+  }

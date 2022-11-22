@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+
+body{
+    background-color: white;
+}
+
+.borderArea{
+    font-family: 'Indie Flower', cursive;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+   
+    height: 80%;
+    width: 85%;
+
+}   
+
+
+
+.newPerson {
+    /* display: inline-block; */
+    width:40%;
+    margin: 0 auto;
+    padding: 10px;
+    
+    background-color: #f3f2f7;
+    float: left;
+    height: inherit;
+    border: 2px solid black;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+   
+    
+}
+
+.loginOld {
+    /* display: inline-block; */
+    background-color: #f3f2f7;
+    float: left;
+    width: 60%;
+    border: 2px solid black;
+    height: inherit;
+    
+    margin: 0 auto;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.submit{
+    margin: 0;
+}
+
+.googleLogin{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white; 
+}
+
+.googleImg{
+    margin-right: 6px;
+}
+
+.success{
+    justify-content: center;
+    
+}
