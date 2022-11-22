@@ -61,7 +61,7 @@ function Login () {
     
             const jsonVals = await response.json();
             
-            console.log(jsonVals);
+            //console.log(jsonVals);
            
             setIsEmployee(jsonVals);
             
@@ -75,8 +75,7 @@ function Login () {
     
             const jsonVals2 = await response2.json();
             
-            console.log(jsonVals2);
-           
+            //console.log(jsonVals2);
             setIsManager(jsonVals2);
 
 
@@ -92,6 +91,14 @@ function Login () {
         const navigate = useNavigate();
         const openprofile = (userName) => {
             navigate ("/cashier", {
+                state: {
+                    userName: userName
+                }
+            });
+        }
+
+        const openmanager = (userName) => {
+            navigate ("/manager", {
                 state: {
                     userName: userName
                 }
@@ -214,9 +221,12 @@ function Login () {
                 
                 {/* FIX ME: ROUTE TO MANAGER PAGE */}
                 {isManager && (
-                    <Link to="/manager" 
-                    >     
-                        <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()} }> Go to Manager Page</Button>
+                    <Link to="/manager"
+                    state= {{
+                        userName: userName
+                }}>     
+                {/* What is the button type supposed to be? What's cashier? */}
+                        <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openmanager) => {userLogin()} }> Go to Manager Page</Button>
                     </Link> 
                 )
 
