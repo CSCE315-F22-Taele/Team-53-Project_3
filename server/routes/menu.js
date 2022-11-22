@@ -55,4 +55,16 @@ app.post("/insert", async (req, res) => {
     }
 });
 
+app.get("/getInventory", async (req, res) => {
+    try {
+        const todo = await db.query(
+            "SELECT itemname, classify FROM inventory ORDER BY itemid"
+        );
+
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 module.exports = app;

@@ -9,6 +9,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login"
 import Checkout from "./pages/Checkout";
 import pomHoney from "./pomAndHoney.png";
+import Inventory from "./pages/Inventory";
+import Menu from "./pages/Menu";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Cashier from "./pages/Cashier";
 
