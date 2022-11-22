@@ -1,22 +1,22 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import "./index.css";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 // import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { indigo } from "@mui/material/colors";
-import Stack from '@mui/material/Stack';
-import e from "cors";
-import TextField from '@mui/material/TextField';
 import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 
 export default function Manager(props) {
-    
-    const [startDate, setStartDate] = useState((0));
-    const [endDate, setEndDate] = useState((0));
-    const [dates, setDates] = useState({start:-2, end:-2});
+
+    const [dates, setDates] = useState({start:-2, end:-2}); // default start
     const [salesReport, setSalesReport] = useState([]);
-    const [salesShown, setSalesShown] = useState(false);
+    const [salesShown, setSalesShown] = useState(false); // show text after submit
+    const [excessReport, setExcessReport] = useState([]);
+    const [excessParams, setExcessParams] = useState({start:0, end:0, threshold:0});
+    const [excessShown, setExcessShown] = useState(false); // show text after submit
+    const [alignment, setAlignment] = React.useState('left'); // for toggle
+    const [toggle, setToggle] = React.useState(true);
+    
 
     const conn = "http://localhost:3500/"; // for testing
 
@@ -56,8 +56,33 @@ export default function Manager(props) {
 
     };
 
+    const excessGet = async () => {
+        try {
+            setExcessReport([]);
+            const start = (excessParams.start);
+            const end = (excessParams.end);
+            const threshold = (excessParams.threshold);
+
+            const response = await fetch (conn + `api/manager/getExcessReport/${start}/${end}/${threshold}`, 
+            {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
+
+            const data = await response.json();
+            console.log(data);
+
+            setExcessReport(data);
+            
+        } catch (err) {
+    
+            console.error(err.message);
+        }
+    };
+
     // set start date and end date from text entry
-    const handleSubmit = event => {
+    const handleSaleSubmit = event => {
 
         setSalesReport([]); // clear sales report between each request
 
@@ -73,6 +98,35 @@ export default function Manager(props) {
         setSalesShown(true);
 
         event.target.reset(); // idk what this does
+    };
+
+    // set parameters for excess report
+    const handleExcessSubmit = event => {
+        setExcessReport([]);
+
+        event.preventDefault();
+
+        const startDate = event.target.startDate.value;
+        const endDate = event.target.endDate.value;
+        const thresh = event.target.thresholdVal.value;
+
+        setExcessParams({start: parseInt(startDate), end: parseInt(endDate), threshold: parseInt(thresh)});
+        setExcessShown(true);
+
+        event.target.reset(); // idk what this does
+    }
+
+    // for toggle
+    const handleAlignment = (event, newAlignment) => {
+        setAlignment(newAlignment);
+    };
+
+    const handleSalesClick = event => {
+        setToggle(true);
+    }
+
+    const handleExcessClick = event => {
+        setToggle(false);
     }
 
 
@@ -81,63 +135,118 @@ export default function Manager(props) {
             salesGet();
         }
         
-        // setSalesShown(true);
-    }, [dates])
+        if (excessParams.start > 0){
+            excessGet();
+        }
+        
+    }, [dates, excessParams])
 
     return (
 
         <div>
 
-            
-            {/* <div class="options">
-                    <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                    Excess Report</Button>
-
-                    <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                    Inventory Report</Button>
-
-            </div> */}
-
-            <br />
-            <h1>Sales Report</h1>
-            <br />
-
-            <div class="salesReport">
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        id="startDate"
-                        name="startDate"
-                        placeholder="Start Date: YYMMDD000"
-                    />
-
-                    <br />
-                    <br />
-
-                    <input
-                        type="text"
-                        id="endDate"
-                        name="endDate"
-                        placeholder="End Date: YYMMDD000"
-                    />
-
-                    <br />
-                    <br />
-
-                    <button type="submit">Submit</button>
-
-                    <br />
-                    <br />
-
-                    {salesShown && <h5>Sales from {dates.start} to {dates.end}:</h5>}
-
-                </form>
-
-                {salesReport.map( (item) =>
-                    <li> {item.name} : {item.sold}</li>
-                )}
-
+            <div class="options">
+                <ToggleButtonGroup color="primary" value={alignment} exclusiveonchange={handleAlignment}>
+                    <ToggleButton onClick={(handleSalesClick)}>Sales Report</ToggleButton>
+                    <ToggleButton onClick={(handleExcessClick)}>Excess Report</ToggleButton>
+                </ToggleButtonGroup>
             </div>
+
+            {
+                toggle? // if toggle=true display sales report
+
+                <div class="salesReport">
+                    <br />
+                    <h1>Sales Report</h1>
+                    <br />
+                    <form onSubmit={handleSaleSubmit}>
+                        <input
+                            type="text"
+                            id="startDate"
+                            name="startDate"
+                            placeholder="Start Date: YYMMDD000"
+                        />
+
+                        <br />
+                        <br />
+
+                        <input
+                            type="text"
+                            id="endDate"
+                            name="endDate"
+                            placeholder="End Date: YYMMDD000"
+                        />
+
+                        <br />
+                        <br />
+
+                        <button type="submit">Submit</button>
+
+                        <br />
+                        <br />
+
+                        {salesShown && <h5>Sales from {dates.start} to {dates.end}:</h5>}
+
+                    </form>
+
+                    {salesReport.map( (item) =>
+                        <li> {item.name} : {item.sold}</li>
+                    )}
+
+                </div>
+
+                : // if toggle=false
+
+                <div class="excessReport">
+                    <br />
+                    <h1>Excess Report</h1>
+                    <br />
+                    <form onSubmit={handleExcessSubmit}>
+                        <input
+                            type="text"
+                            id="startDate"
+                            name="startDate"
+                            placeholder="Start Date: YYMMDD000"
+                        />
+
+                        <br />
+                        <br />
+
+                        <input
+                            type="text"
+                            id="endDate"
+                            name="endDate"
+                            placeholder="End Date: YYMMDD000"
+                        />
+
+                        <br />
+                        <br />
+
+                        <input
+                            type="text"
+                            id="thresholdVal"
+                            name="thresholdVal"
+                            placeholder="Threshold "
+                        />
+
+                        <br />
+                        <br />
+
+                        <button type="submit">Submit</button>
+
+                        <br />
+                        <br />
+
+                    </form>
+
+                    {excessShown && <h5>Excess Report from {excessParams.start} to {excessParams.end} with {excessParams.threshold} threshold:</h5>}
+
+                    {excessReport.map( (item) =>
+                        <li> {item.name} : {item.amouny}</li>
+                    )}
+
+                </div>
+            }
 
         </div>
 
