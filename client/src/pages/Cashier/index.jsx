@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { indigo } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
-import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
+import {BrowserRouter as Router, Link, useNavigate, useLocation} from 'react-router-dom';
 
 // For local testing: (comment out)
 const conn = "http://localhost:3500/";
@@ -28,7 +28,10 @@ function rounding(number, precision){
     return parseFloat(newnumber); 
 }
 
-function Cashier () {
+function Cashier (props) {
+    const location = useLocation();
+    const nameCashier = location.state.userName;
+
     const [orderid, setOrderid] = useState(0);
     const [menuNamesCustom, setMenuNamesCustom] = useState([]);
     const [menuNames, setMenuNames] = useState([]);
@@ -528,7 +531,11 @@ function Cashier () {
     
 
     return (
+
+        
+
         <div class="cashier__pageOrder">
+            <h4> Cashier: {nameCashier} </h4>
         <div class="cashier__mobileorders">
             <br />
             <h1>Mobile Orders</h1>
