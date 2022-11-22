@@ -98,7 +98,7 @@ function Login () {
         }
 
         const openmanager = (userName) => {
-            navigate ("/manager", {
+            navigate ("/manager_route", {
                 state: {
                     userName: userName
                 }
@@ -219,13 +219,12 @@ function Login () {
                     <Button type="cashier"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()} }> Go to Cashier Page</Button>
                 </Link> 
                 
-                {/* FIX ME: ROUTE TO MANAGER PAGE */}
+                
                 {isManager && (
-                    <Link to="/manager"
+                    <Link to="/manager_route"
                     state= {{
                         userName: userName
                 }}>     
-                {/* What is the button type supposed to be? What's cashier? */}
                         <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openmanager) => {userLogin()} }> Go to Manager Page</Button>
                     </Link> 
                 )

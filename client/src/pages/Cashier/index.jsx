@@ -524,6 +524,7 @@ function Cashier (props) {
             navigate ("/checkout", {
                 state: {
                     totalCost: totalCost
+                    
                 }
             });
         }
