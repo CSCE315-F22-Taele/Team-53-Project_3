@@ -315,6 +315,7 @@ function Cashier () {
             x=false;
         }
 
+        let indexNames=-1;
         for (var i = 0; i < namesCart.length; ++i) {
            
 
@@ -330,6 +331,7 @@ function Cashier () {
 
             if (localTrue==true){
                 x=true;
+                indexNames=i;
             }
         }
         
@@ -338,42 +340,58 @@ function Cashier () {
         if( x === false){
             namesCart.push([val, index, category]);
             setlistOrderedInv(namesCart);
+
+            let inv = inventoryUsed;
+            inv[index-1] += 1;
+            setInventoryUsed(inv);
+    
+            
+    
+            let countVal = count;
+            countVal +=1;
+            setCount(countVal);
+            console.log("added",countVal);
+
+            if (countToppings < 10 && category === 2){
+                let countCurr = countToppings +1; 
+                console.log("COUNT updated: ",countToppings);
+                setCountToppings(countCurr);
+            }
+
         }
         else{
-            namesCart.pop([val, index, category]);
+            namesCart.splice(indexNames, 1);
             setlistOrderedInv(namesCart);
+
+            
+            let countCurr = countToppings -1; 
+            setCountToppings(countCurr);
+            
+
+            let inv = inventoryUsed;
+            inv[index-1] -= 1;
+            setInventoryUsed(inv);
+
         }
-        
-       
 
-        let inv = inventoryUsed;
-        inv[index-1] += 1;
-        setInventoryUsed(inv);
-
-        
-
-        let countVal = count;
-        countVal  +=1;
-        setCount(countVal);
-        
-        
-
+        console.log("countToppings", countToppings);
         if (category === 0){
             setAllowClickCat0(false);
         }
         else if (category === 1){
             setAllowClickCat1(false);
         }
-        else if (countToppings < 10){
-            let countCurr = countToppings +1; 
-            setCountToppings(countCurr);
-        }
-        else if( category === 2){
+        else if( category === 2 && countToppings >= 10){
             setAllowClickCat2(false);
         }
         else if (category === 3){
             setAllowClickCat3(false);
         }
+
+      
+        console.log(inventoryUsed);
+
+        
 
     }
 
@@ -409,7 +427,9 @@ function Cashier () {
         
         let namesCart = listOrderedNames;
        
-        namesCart.pop(item);
+        let x= namesCart.indexOf(item);
+        namesCart.splice(x, 1);
+
         setListOrderedNames(namesCart);
         
     
@@ -440,7 +460,7 @@ function Cashier () {
             setlistOrderedInv([]);
         }
 
-        //FIX ME: ONLY REMOVING DEFAULT INVENTORY NOT CUSTOM. 
+
         for( var i=0; i< inv.length; i++){
             inv[i] -= listItems[i];
         }
@@ -458,18 +478,15 @@ function Cashier () {
     const deleteCustom = (item) => {
 
         let currInv = listOrderedInv;
-        currInv.pop(item);
-        setlistOrderedInv(currInv);
+        let x= currInv.indexOf(item);
+        currInv.splice(x, 1);
 
+        setlistOrderedInv(currInv);
+        console.log("deleted");
 
         let inv = inventoryUsed;
-        console.log(inv[item[1]-1], item[1]-1);
-       
         inv[item[1]-1] -= 1;
-        
         setInventoryUsed(inv);
-
-        console.log(inventoryUsed);
         
 
         let category = item[2];
@@ -483,6 +500,7 @@ function Cashier () {
         else if (countToppings <= 10){
             let countCurr = countToppings -1; 
             setCountToppings(countCurr);
+            console.log("delete button: ",countCurr);
         }
         else if( category === 2){
             setAllowClickCat2(true);
@@ -496,9 +514,7 @@ function Cashier () {
         setCost(newCost);
 
     }
-    //const [data, setData] = useState ({
-    //    totalCost: totalCost
-    //});
+    
     const Peoplestates = () => {
         const navigate = useNavigate();
         const openprofile = (totalCost) => {
@@ -509,7 +525,7 @@ function Cashier () {
             });
         }
     }
-    // console.log(orderid);
+    
 
     return (
         <div class="cashier__pageOrder">
