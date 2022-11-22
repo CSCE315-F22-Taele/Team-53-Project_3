@@ -56,19 +56,11 @@ export default function Manager(props) {
 
     };
 
-    useEffect( () => {
-        if (dates.start > 0 && dates.end > 0){
-            salesGet();
-        }
-        
-        // setSalesShown(true);
-    }, [dates])
-
     // set start date and end date from text entry
     const handleSubmit = event => {
 
-        // FIXME: clear salesReport before each submission
-        
+        setSalesReport([]); // clear sales report between each request
+
         event.preventDefault(); // idk what this does
 
         const startDate = event.target.startDate.value;
@@ -78,8 +70,19 @@ export default function Manager(props) {
         console.log("start", startDate);
         console.log("end", endDate);
 
+        setSalesShown(true);
+
         event.target.reset(); // idk what this does
     }
+
+
+    useEffect( () => {
+        if (dates.start > 0 && dates.end > 0){
+            salesGet();
+        }
+        
+        // setSalesShown(true);
+    }, [dates])
 
     return (
 
@@ -95,7 +98,9 @@ export default function Manager(props) {
 
             </div> */}
 
+            <br />
             <h1>Sales Report</h1>
+            <br />
 
             <div class="salesReport">
                 <form onSubmit={handleSubmit}>
@@ -103,7 +108,7 @@ export default function Manager(props) {
                         type="text"
                         id="startDate"
                         name="startDate"
-                        placeholder="Start Date"
+                        placeholder="Start Date: YYMMDD000"
                     />
 
                     <br />
@@ -113,7 +118,7 @@ export default function Manager(props) {
                         type="text"
                         id="endDate"
                         name="endDate"
-                        placeholder="End Date"
+                        placeholder="End Date: YYMMDD000"
                     />
 
                     <br />
@@ -123,16 +128,14 @@ export default function Manager(props) {
 
                     <br />
                     <br />
+
+                    {salesShown && <h5>Sales from {dates.start} to {dates.end}:</h5>}
+
                 </form>
-{/* 
-                { salesShown ( */}
 
-                {/* )} */}
-
-                <h5>Sales from {dates.start} to {dates.end}:</h5>
-                    {salesReport.map( (item) =>
-                        <li> {item.name} : {item.sold}</li>
-                    )}
+                {salesReport.map( (item) =>
+                    <li> {item.name} : {item.sold}</li>
+                )}
 
             </div>
 
