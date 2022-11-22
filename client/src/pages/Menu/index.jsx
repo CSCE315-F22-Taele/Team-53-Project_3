@@ -315,7 +315,7 @@ function Menu(){
     }
     
     // Will insert a new menu item into menu.
-    const insertMenu = (_menuitem, _cost, _is_customize, _default_inventory, _id) => {
+    const insertMenu = (_menuitem, _cost, _is_customize, _default_inventory) => {
         try {
             // FIXME: Need to update w/ input before inserting.
             var menuitem = _menuitem;
@@ -323,9 +323,8 @@ function Menu(){
             var is_selling = true; // Do not change
             var is_customize = _is_customize;
             var default_inventory = _default_inventory;
-            var id = _id;
 
-            const body = {menuitem, cost, is_selling, is_customize, default_inventory, id};
+            const body = {menuitem, cost, is_selling, is_customize, default_inventory};
 
             fetch (conn + "api/menu/insert",
                 {
