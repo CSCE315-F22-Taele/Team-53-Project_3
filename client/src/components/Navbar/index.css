@@ -1,22 +1,26 @@
 nav {
-    background: #283593;
+    background: white;
     display: flex;
     align-items: center;
     gap: 2rem;
     justify-content: space-between;
     padding: 0 2rem;
     font-size: 150%;
+    border-bottom: 3px solid black;
 }
 
 .nav__link {
-    color: white;
+    color: black;
     text-decoration: none;
     font-weight: bold;
     padding: 1rem;
+    vertical-align: auto;
 }
 
 .nav__link:hover {
-    background-color: #d0cdd4;
+    background-color:#283593;
+    color:white;
+    text-decoration: none;
 }
 
 .nav__list {
@@ -24,6 +28,7 @@ nav {
     display: flex;
     gap: 2rem;
     text-decoration: none;
+    margin: 0;
 }
 
 .logoNav {
@@ -31,17 +36,18 @@ nav {
     margin: 0;
     padding: none;
 }
-
+/* 
 a{
-    color:white;
+    color:black;
     text-decoration: none;
     font-weight: bold;
     padding: 1rem;
 }
 
 a:hover{
-    background-color:#d0cdd4;
+    background-color:#283593;
+    color:white;
     text-decoration: none;
-}
+} */
 
 
