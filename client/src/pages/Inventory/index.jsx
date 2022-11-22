@@ -14,6 +14,10 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
+
 
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
@@ -25,7 +29,21 @@ function Inventory(){
             primary: {
                 main: "#283593",
             },
+            deactive: {
+                main:"#9d222e",
+            },
             secondary: indigo,
+        },
+    });
+
+    const deactivate_theme = createTheme({
+        palette: {
+            primary: {
+                main: "#9d222e",
+            },
+            secondary:{
+                main:"#b94b56",
+            },
         },
     });
 
@@ -435,171 +453,137 @@ function Inventory(){
     return(
         
         <div className="inventory_page">
-                        <Dialog open={welcome_open} onClose={handleClose_welcome}>
-                            <DialogTitle>Welcome to Inventory Page</DialogTitle>
 
-                            <DialogActions>
-                                <Button>Back</Button>
-                                <Button onClick={() => {
-                                    handleClose_welcome();
-                                }}>Start</Button>
-                            </DialogActions>                                
-                        </Dialog>
-            <div className='inventory_deactivate-section'>
-                <h1> Deactivate</h1> 
-                <ThemeProvider theme={theme}>
-                    <div className="bass">
-                        <h3>Base</h3>
-                        
-                        { deac_inventory0.map((item) =>
-                               
-                                (                                               
-                                    <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                                    {item[0]}</Button>
-                                    
-                                )                                  
-                            )
-                        }
-                        
-                    </div>
+            <Dialog open={welcome_open} onClose={handleClose_welcome}>
+                <DialogTitle>Welcome to Inventory Page</DialogTitle>
 
-                    <div className="protein">
-                        <h3>Protein</h3>
-                        { deac_inventory1.map( (item) =>
-                                (     
-                                    <Button variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                                    {item[0]}</Button>
-                                )                                  
-                            )
-                        }
-                    </div>
-
-                    <div className="toppings">
-                        <h3>Toppings</h3>
-                        { deac_inventory2.map( (item) =>
-                                (
-                                    <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                                    {item[0]}</Button>
-                                ) 
-                            )
-                        }
-
-                    </div>
-
-                    <div className="dressing">
-                        <h3>Dressing</h3>
-                        { deac_inventory3.map( (item) =>
-                                (
-                                    <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                                    {item[0]}</Button>
-                                ) 
-                            )
-                        }
-
-                    </div>
-
-                    <div className="misc">
-                        <h3>Miscellaneous</h3>
-                        { deac_inventory4.map( (item) =>
-                                (
-                                    <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                                    {item[0]}</Button>
-                                ) 
-                            )
-                        }
-                    </div>
-                    </ThemeProvider>
-                                    
-            </div>         
-
-
-
-
-
-
-            <div className="inventory_activate-section">
-                <h1>Inventory Items</h1>
-
-                <div className="inventory-btn">
-                    <ThemeProvider theme={theme}>
-                    <div className="bass">
-                        <h3>Base</h3>
-                        
-                        { inventory0.map((item) =>
-                               
-                                (                                               
-                                    <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                                    {item[0]}</Button>
-                                    
-                                )                                  
-                            )
-                        }
-                        
-                    </div>
-
-                    <div className="protein">
-                        <h3>Protein</h3>
-                        { inventory1.map( (item) =>
-                                (     
-                                    <Button variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                                    {item[0]}</Button>
-                                )                                  
-                            )
-                        }
-                    </div>
-
-                    <div className="toppings">
-                        <h3>Toppings</h3>
-                        { inventory2.map( (item) =>
-                                (
-                                    <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                                    {item[0]}</Button>
-                                ) 
-                            )
-                        }
-
-                    </div>
-
-                    <div className="dressing">
-                        <h3>Dressing</h3>
-                        { inventory3.map( (item) =>
-                                (
-                                    <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                                    {item[0]}</Button>
-                                ) 
-                            )
-                        }
-
-                    </div>
-
-                    <div className="misc">
-                        <h3>Miscellaneous</h3>
-                        { inventory4.map( (item) =>
-                                (
-                                    <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
-                                    {item[0]}</Button>
-                                ) 
-                            )
-                        }
-                    </div>
-                    </ThemeProvider>
-
-
-                </div>
-
-            </div>
+                <DialogActions>
+                    <Button>Back</Button>
+                    <Button onClick={() => {
+                        handleClose_welcome();
+                    }}>Start</Button>
+                </DialogActions>                                
+            </Dialog>
 
             <div className="inventory_receipt-section">
-                <h1>Edit</h1>
+                <span className='back-btn'>
+                    <Button size="small" variant="contained" className="inventory_back-btn" >Back</Button>                  
+                </span>
+            
+                <span className='edit-btn' >
+                     
+                    <Stack
+                        direction="row"
+                        spacing={5}
+                    >
+                    
+                    <Button size="small" variant="contained"  className="inventory_add-btn" 
+                        onClick={() => {
+                            handleClickOpen_add();
 
-                {/* Update, Deactivate, and Activate Btn */}
-                <Stack 
-                    direction="column"
-                    spacing={5}
-                    sx={{m:10}}
-                >
-                    {/* Update Btn */}
-                    <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_name_update}>Update</Button>
+                            set_nameDisplay('');
+                            set_amountDisplay('');
+                            set_costDisplay('');
+                            set_dateDisplay('');
+                            set_vendorDisplay('');
+                            set_classifyDisplay('');
+                        }}>Add Item</Button>
+
+                        <Dialog open={open_add} onClose={handleClose_add}>
+                            <DialogTitle>Add</DialogTitle>
+                            <DialogContent>
+
+                                <TextField
+                                    required
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={name_display}
+                                    helperText="Item Name"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                    inputRef={name_input}
+                                />
+                                <TextField
+                                    required
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={amount_display}
+                                    helperText="Quantity"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"   
+                                    inputRef={amount_input}                        
+                                />
+                                <TextField
+                                    required
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={cost_display}
+                                    helperText="Cost"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                    inputRef={cost_input}
+                                /> 
+
+                                <TextField
+                                    required
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={expirationdate_display}
+                                    helperText="Expiration Date"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                    inputRef={date_input}
+                                />
+
+                                <TextField
+                                    required
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={vendor_display}
+                                    helperText="Vendor"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                    inputRef={vendor_input}
+                                />
+
+                                <FormControl fullWidth>
+                                        <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        label="Classifications"
+                                        onChange={handleChange_class}
+                                        inputRef={classify_input}
+                                        >
+                                        <MenuItem value={0}>Base</MenuItem>
+                                        <MenuItem value={1}>Protein</MenuItem>
+                                        <MenuItem value={2}>Toppings</MenuItem>
+                                        <MenuItem value={3}>Dressing</MenuItem>
+                                        <MenuItem value={4}>Miscellaneous</MenuItem>
+                                        </Select>
+                                </FormControl>
+
+                            </DialogContent>
+        
+                            <DialogActions>
+                                {/* FIXME: ONCE BACKEND IS DONE */}
+                            <Button onClick={handleClose_add}>Cancel</Button>
+                            <Button onClick={() => {
+                                handleClose_add();
+            
+                                insertInventory(name_input.current.value, amount_input.current.value, 
+                                    cost_input.current.value, date_input.current.value, vendor_input.current.value, 
+                                    classify_input.current.value);
+                            }}>Add</Button>
+                            </DialogActions>
+                        </Dialog> 
+
+                    <Button size="small" variant="contained" className="back1-btn" onClick={handleClickOpen_name_update}>Update</Button>
+                        
                         <Dialog open={open_name_update} onClose={handleClose_name_update}>
                             <DialogTitle>Enter item name:</DialogTitle>
                             <DialogContent>
@@ -625,6 +609,7 @@ function Inventory(){
                                 }}>Search</Button>
                             </DialogActions>                                
                         </Dialog>
+                        
                         <Dialog open={open_update} onClose={handleClose_update}>
                         <DialogTitle>Update</DialogTitle>
                         <DialogContent>
@@ -716,157 +701,162 @@ function Inventory(){
                                 refreshPage();
                         }}>Update</Button>
                         </DialogActions>
-                    </Dialog>  
-                    {/* Deactivate Btn */}
-                    <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_name_deactivate} >Deactivate</Button>
-                    <Dialog open={open_name_deactivate} onClose={handleClose_name_deactivate}>
-                        <DialogTitle>Enter item name:</DialogTitle>
-                        <DialogContent>
-                            <TextField
-                                required
-                                margin="dense"
-                                id="outlined-required"
-                                label="Item name"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                inputRef={inputName}
-                            />              
-                        </DialogContent>
-            
-                        <DialogActions>
-                            {/* FIXME: ONCE BACKEND IS DONE */}
-                            <Button onClick={handleClose_name_deactivate}>Cancel</Button>
-                            <Button onClick={() => {
-                                sendValue();
-                                handleClickOpen_deactivate();
-                                handleClose_name_deactivate();
-                            }}>Search</Button>
-                        </DialogActions>
-                    </Dialog>
- 
-                    <Dialog PaperProps={{       
-                        style: {
-                            backgroundColor: "#cf8f8f",
-                        },}} 
-                        open={open_deactivate}  onClose={handleClose_deactivate}>
-                        <DialogTitle>Do you want to deactivate?</DialogTitle>
-                        <DialogContent>
-                            <TextField
-                                inputProps={{ readOnly: true }}
-                                margin="dense"
-                                id="outlined-required"
-                                defaultValue={name_display}
-                                helperText="Item name"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                            />
-                            <TextField
-                                inputProps={{ readOnly: true }}
-                                margin="dense"
-                                id="outlined-required"
-                                defaultValue={amount_display}
-                                helperText="Quantity"
-                                type="text"
-                                fullWidth
-                                variant="standard"                           
-                            />
-                            <TextField
-                                inputProps={{ readOnly: true }}
-                                margin="dense"
-                                id="outlined-required"
-                                defaultValue={cost_display}
-                                helperText="Cost"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                            /> 
+                        </Dialog>  
 
-                            <TextField
-                                inputProps={{ readOnly: true }}
-                                margin="dense"
-                                id="outlined-required"
-                                defaultValue={expirationdate_display}
-                                helperText="Expiration Date"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                            />
+                    <ThemeProvider theme={deactivate_theme}>                    
+                    <Button color="primary" size="small" variant="contained" className="back1-btn" onClick={handleClickOpen_name_deactivate} >Deactivate</Button>
+                    </ThemeProvider>
 
-                            <TextField
-                                inputProps={{ readOnly: true }}
-                                margin="dense"
-                                id="outlined-required"
-                                defaultValue={vendor_display}
-                                helperText="Vendor"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                            />    
-                            <FormControl fullWidth>
-                                <Select
-                                    inputProps={{ readOnly: true }}
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={classify_display}
-                                    onChange={handleChange_class}
-                                    inputRef={classify_input}
-                                    >
-                                    <MenuItem value={0}>Base</MenuItem>
-                                    <MenuItem value={1}>Protein</MenuItem>
-                                    <MenuItem value={2}>Toppings</MenuItem>
-                                    <MenuItem value={3}>Dressing</MenuItem>
-                                    <MenuItem value={4}>Miscellaneous</MenuItem>
-                                </Select>
-                            </FormControl>           
-                        </DialogContent>
-            
-                        <DialogActions>
-                            {/* FIXME */}
-                            <Button onClick={handleClose_deactivate}>Cancel</Button>
-                            <Button onClick={() => {
-                                    updateInventory(name_display, amount_display, cost_display, expirationdate_display, vendor_display, 
-                                        classify_display, id, false);
-                                    handleClose_deactivate();
-                                    refreshPage();
-                            }}>Deactivate</Button>
-                        </DialogActions>
-                    </Dialog>
-
-                    {/* Activate Btn */}
-                    <Button variant="contained" size="large" className="back1-btn" onClick={handleClickOpen_name_activate} >Activate</Button>
-                    <Dialog open={open_name_activate} onClose={handleClose_name_activate}>
-                        <DialogTitle>Enter item name:</DialogTitle>
-                        <DialogContent>
-                            <TextField
-                                required
-                                margin="dense"
-                                id="outlined-required"
-                                label="Item name"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                inputRef={inputName}
-                            />              
-                        </DialogContent>
-    
-                        <DialogActions>
-                            {/* FIXME: ONCE BACKEND IS DONE */}
-                            <Button onClick={handleClose_name_activate}>Cancel</Button>
-                            <Button onClick={() => {
+                        <Dialog open={open_name_deactivate} onClose={handleClose_name_deactivate}>
+                            <DialogTitle>Enter item name:</DialogTitle>
+                            <DialogContent>
+                                <TextField
+                                    required
+                                    margin="dense"
+                                    id="outlined-required"
+                                    label="Item name"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                    inputRef={inputName}
+                                />              
+                            </DialogContent>
+                
+                            <DialogActions>
+                                {/* FIXME: ONCE BACKEND IS DONE */}
+                                <Button onClick={handleClose_name_deactivate}>Cancel</Button>
+                                <Button onClick={() => {
                                     sendValue();
-                                    handleClickOpen_activate();
-                                    handleClose_name_activate();
-                            }}>Search</Button>
-                        </DialogActions>
-                    </Dialog>
+                                    handleClickOpen_deactivate();
+                                    handleClose_name_deactivate();
+                                }}>Search</Button>
+                            </DialogActions>
+                        </Dialog>
+    
+                        <Dialog PaperProps={{       
+                            style: {
+                                backgroundColor: "#cf8f8f",
+                            },}} 
+                            open={open_deactivate}  onClose={handleClose_deactivate}>
+                            <DialogTitle>Do you want to deactivate?</DialogTitle>
+                            <DialogContent>
+                                <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={name_display}
+                                    helperText="Item name"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                />
+                                <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={amount_display}
+                                    helperText="Quantity"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"                           
+                                />
+                                <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={cost_display}
+                                    helperText="Cost"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                /> 
+
+                                <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={expirationdate_display}
+                                    helperText="Expiration Date"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                />
+
+                                <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={vendor_display}
+                                    helperText="Vendor"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                />    
+                                <FormControl fullWidth>
+                                    <Select
+                                        inputProps={{ readOnly: true }}
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={classify_display}
+                                        onChange={handleChange_class}
+                                        inputRef={classify_input}
+                                        >
+                                        <MenuItem value={0}>Base</MenuItem>
+                                        <MenuItem value={1}>Protein</MenuItem>
+                                        <MenuItem value={2}>Toppings</MenuItem>
+                                        <MenuItem value={3}>Dressing</MenuItem>
+                                        <MenuItem value={4}>Miscellaneous</MenuItem>
+                                    </Select>
+                                </FormControl>           
+                            </DialogContent>
+                
+                            <DialogActions>
+                                {/* FIXME */}
+                                <Button onClick={handleClose_deactivate}>Cancel</Button>
+                                <Button onClick={() => {
+                                        updateInventory(name_display, amount_display, cost_display, expirationdate_display, vendor_display, 
+                                            classify_display, id, false);
+                                        handleClose_deactivate();
+                                        refreshPage();
+                                }}>Deactivate</Button>
+                            </DialogActions>
+                        </Dialog>
+
+                    <Button size="small" variant="contained" className="back1-btn" onClick={handleClickOpen_name_activate} >Activate</Button>
+                        <Dialog open={open_name_activate} onClose={handleClose_name_activate}>
+                            <DialogTitle>Enter item name:</DialogTitle>
+                            <DialogContent>
+                                <TextField
+                                    required
+                                    margin="dense"
+                                    id="outlined-required"
+                                    label="Item name"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                    inputRef={inputName}
+                                />              
+                            </DialogContent>
+        
+                            <DialogActions>
+                                {/* FIXME: ONCE BACKEND IS DONE */}
+                                <Button onClick={handleClose_name_activate}>Cancel</Button>
+                                <Button onClick={() => {
+                                        sendValue();
+                                        handleClickOpen_activate();
+                                        handleClose_name_activate();
+                                }}>Search</Button>
+                            </DialogActions>
+                        </Dialog>
 
                     <Dialog
-                    PaperProps={{       
+                        PaperProps={{       
                         style: {
                             backgroundColor: "#82cdad",
-                        },}}  open={open_activate} onClose={handleClose_activate}>
+                        },}}  
+                        open={open_activate} 
+                        onClose={handleClose_activate}>
+                        
                         <DialogTitle>Do you want to reactivate?</DialogTitle>
                         <DialogContent>
                             <TextField
@@ -943,133 +933,156 @@ function Inventory(){
                             {/* FIXME: ONCE BACKEND IS DONE */}
                             <Button onClick={handleClose_activate}>Cancel</Button>
                             <Button onClick={() => {
-                                    updateInventory(name_display, amount_display, cost_display, expirationdate_display, vendor_display, 
-                                        classify_display, id, true);
-                                    handleClose_name_activate();
-                                    handleClose_activate();
-                                    refreshPage();
+                                updateInventory(name_display, amount_display, cost_display, expirationdate_display, vendor_display, 
+                                    classify_display, id, true);
+                                handleClose_name_activate();
+                                handleClose_activate();
+                                refreshPage();
                             }}>Activate</Button>
                         </DialogActions>
                         
                     </Dialog>
+                    </Stack>
+                </span>
+            </div>
 
-                </Stack>
- 
-                <div className="inventory_footer">
-                        <ThemeProvider theme={theme}>
-                            <Stack
-                                justifyContent= "space-around"
-                                alignItems="center"
-                                direction="row"
-                                component="span"
-                            >
-                                <Button variant="contained" size="large" className="inventory_back-btn" >Back</Button>
-                                <Button variant="contained" size="large" className="inventory_add-btn" 
-                                onClick={() => {
-                                    handleClickOpen_add();
+            <div className='inventory_deactivate-section'>
+                <h1> Deactivate</h1> 
+                <ThemeProvider theme={theme}>
+                    <div className="bass">
+                        <h3>Base</h3>
+                        { deac_inventory0.map((item) =>
+                               
+                                (                                               
+                                    <Button className='inventory_item-btn' inventory_item-btn variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                                    {item[0]}</Button>
+                                    
+                                )                                  
+                            )
+                        }
+                        
+                    </div>
 
-                                    set_nameDisplay('');
-                                    set_amountDisplay('');
-                                    set_costDisplay('');
-                                    set_dateDisplay('');
-                                    set_vendorDisplay('');
-                                    set_classifyDisplay('');
-                                }}>Add Item</Button>
-                                    <Dialog open={open_add} onClose={handleClose_add}>
-                                        <DialogTitle>Add</DialogTitle>
-                                        <DialogContent>
+                    <div className="protein">
+                        <h3>Protein</h3>
+                        { deac_inventory1.map( (item) =>
+                                (     
+                                    <Button  className='inventory_item-btn' variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                                    {item[0]}</Button>
+                                )                                  
+                            )
+                        }
+                    </div>
 
-                                            <TextField
-                                                required
-                                                margin="dense"
-                                                id="outlined-required"
-                                                defaultValue={name_display}
-                                                helperText="Item Name"
-                                                type="text"
-                                                fullWidth
-                                                variant="standard"
-                                                inputRef={name_input}
-                                            />
-                                            <TextField
-                                                required
-                                                margin="dense"
-                                                id="outlined-required"
-                                                defaultValue={amount_display}
-                                                helperText="Quantity"
-                                                type="text"
-                                                fullWidth
-                                                variant="standard"   
-                                                inputRef={amount_input}                        
-                                            />
-                                            <TextField
-                                                required
-                                                margin="dense"
-                                                id="outlined-required"
-                                                defaultValue={cost_display}
-                                                helperText="Cost"
-                                                type="text"
-                                                fullWidth
-                                                variant="standard"
-                                                inputRef={cost_input}
-                                            /> 
+                    <div className="toppings">
+                        <h3>Toppings</h3>
+                        { deac_inventory2.map( (item) =>
+                                (
+                                    <Button  className='inventory_item-btn' variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                                    {item[0]}</Button>
+                                ) 
+                            )
+                        }
 
-                                            <TextField
-                                                required
-                                                margin="dense"
-                                                id="outlined-required"
-                                                defaultValue={expirationdate_display}
-                                                helperText="Expiration Date"
-                                                type="text"
-                                                fullWidth
-                                                variant="standard"
-                                                inputRef={date_input}
-                                            />
+                    </div>
 
-                                            <TextField
-                                                required
-                                                margin="dense"
-                                                id="outlined-required"
-                                                defaultValue={vendor_display}
-                                                helperText="Vendor"
-                                                type="text"
-                                                fullWidth
-                                                variant="standard"
-                                                inputRef={vendor_input}
-                                            />
+                    <div className="dressing">
+                        <h3>Dressing</h3>
+                        { deac_inventory3.map( (item) =>
+                                (
+                                    <Button className='inventory_item-btn' variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                                    {item[0]}</Button>
+                                ) 
+                            )
+                        }
 
-                                            <FormControl fullWidth>
-                                                    <Select
-                                                    labelId="demo-simple-select-label"
-                                                    id="demo-simple-select"
-                                                    label="Classifications"
-                                                    onChange={handleChange_class}
-                                                    inputRef={classify_input}
-                                                    >
-                                                    <MenuItem value={0}>Base</MenuItem>
-                                                    <MenuItem value={1}>Protein</MenuItem>
-                                                    <MenuItem value={2}>Toppings</MenuItem>
-                                                    <MenuItem value={3}>Dressing</MenuItem>
-                                                    <MenuItem value={4}>Miscellaneous</MenuItem>
-                                                    </Select>
-                                            </FormControl>
+                    </div>
 
-                                            </DialogContent>
-                    
-                                            <DialogActions>
-                                                {/* FIXME: ONCE BACKEND IS DONE */}
-                                            <Button onClick={handleClose_add}>Cancel</Button>
-                                            <Button onClick={() => {
-                                                handleClose_add();
-                            
-                                                insertInventory(name_input.current.value, amount_input.current.value, 
-                                                    cost_input.current.value, date_input.current.value, vendor_input.current.value, 
-                                                    classify_input.current.value);
-                                            }}>Add</Button>
-                                            </DialogActions>
-                                    </Dialog>                            
-                            </Stack>
-                        </ThemeProvider>
-                    </div>               
+                    <div className="misc">
+                        <h3>Miscellaneous</h3>
+                        { deac_inventory4.map( (item) =>
+                                (
+                                    <Button className='inventory_item-btn'  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                                    {item[0]}</Button>
+                                ) 
+                            )
+                        }
+                    </div>
+                    </ThemeProvider>
+                                    
+            </div>         
+
+            <div className="inventory_activate-section">
+                <h1>Inventory Items</h1>
+
+                <div className="inventory-btn">
+
+                    <ThemeProvider theme={theme}>
+                    <div className="bass">
+                        <h3>Base</h3>
+                        
+                        { inventory0.map((item) =>
+                               
+                                (                                               
+                                    <Button className="inventory_item-btn" variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                                    >
+                                    {item[0]}</Button>
+                                    
+                                )                                  
+                            )
+                        }
+                        
+                    </div>
+
+                    <div className="protein">
+                        <h3>Protein</h3>
+                        { inventory1.map( (item) =>
+                                (     
+                                    <Button className="inventory_item-btn" variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                                    {item[0]}</Button>
+                                )                                  
+                            )
+                        }
+                    </div>
+
+                    <div className="toppings">
+                        <h3>Toppings</h3>
+                        { inventory2.map( (item) =>
+                                (
+                                    <Button className="inventory_item-btn"  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                                    {item[0]}</Button>
+                                ) 
+                            )
+                        }
+
+                    </div>
+
+                    <div className="dressing">
+                        <h3>Dressing</h3>
+                        { inventory3.map( (item) =>
+                                (
+                                    <Button className="inventory_item-btn" variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                                    {item[0]}</Button>
+                                ) 
+                            )
+                        }
+
+                    </div>
+
+                    <div className="misc">
+                        <h3>Miscellaneous</h3>
+                        { inventory4.map( (item) =>
+                                (
+                                    <Button className="inventory_item-btn" variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
+                                    {item[0]}</Button>
+                                ) 
+                            )
+                        }
+                    </div>
+                    </ThemeProvider>
+
+                </div>
+
             </div>
 
         </div>
