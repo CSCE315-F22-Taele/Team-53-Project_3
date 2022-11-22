@@ -8,9 +8,9 @@ import Stack from '@mui/material/Stack';
 import {BrowserRouter as Router, Link, useNavigate, useLocation} from 'react-router-dom';
 
 // For local testing: (comment out)
-const conn = "http://localhost:3500/";
+// const conn = "http://localhost:3500/";
 // For production:
-// const conn = "https://pom-and-honey-bhf5.onrender.com/";
+ const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
 const theme = createTheme({
     palette: {

@@ -11,9 +11,9 @@ import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 // import { json } from "express";
 
 // For local testing: (comment out)
-const conn = "http://localhost:3500/";
+// const conn = "http://localhost:3500/";
 // For production:
-// const conn = "https://pom-and-honey-bhf5.onrender.com/";
+const conn = "https://pom-and-honey-bhf5.onrender.com/";
 const theme = createTheme({
     palette: {
         primary: {
