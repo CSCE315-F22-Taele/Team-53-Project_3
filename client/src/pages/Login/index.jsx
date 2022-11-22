@@ -12,6 +12,7 @@ import e from "cors";
 import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 import {useGoogleLogin } from '@react-oauth/google';
 import axios from "axios";
+import { createBox } from "@mui/system";
 
 
   
@@ -29,6 +30,12 @@ const theme = createTheme({
 
 function Login () {
     const [userName, setUserName] = useState("");
+
+    const [loginData, setLoginData] = useState(
+        localStorage.getItem('loginData')
+        ? JSON.parse(localStorage.getItem('loginData') )
+        : null
+    );
 
     const Peoplestates = () => {
         const navigate = useNavigate();
@@ -55,6 +62,7 @@ function Login () {
                 })
 
                 console.log(res.data);
+                setLoginData(res);
                 setUserName(res.data.name);
                 
             } catch (err) {
@@ -63,6 +71,8 @@ function Login () {
             }
 
         }
+
+        
 
        
     });
@@ -116,14 +126,15 @@ function Login () {
                     <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()}}> Sign In</Button>
                 </Link>
 
-                <Link to="/cashier" 
+                {/* <Link to="/cashier" 
                     state= {{
                         userName: userName
-                }}>
-                <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={(openprofile) => {login()}}> 
+                }}> */}
+                
+                <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3 , mb:2 }}  onClick={ login} > 
                 <img width="20px" class="googleImg" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />     Sign In with Google
                 </Button> 
-                </Link>
+                {/* </Link> */}
              
                 {/* <GoogleLogin
                     onSuccess={credentialResponse => {
@@ -138,7 +149,6 @@ function Login () {
       
                 </Stack>
                 <br />
-                
                 <br />        
                 <br />        
 
