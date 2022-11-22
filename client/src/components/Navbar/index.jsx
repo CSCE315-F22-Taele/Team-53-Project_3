@@ -32,11 +32,6 @@ export default function Navbar() {
                     </Link>
                 </li>
                 <li>
-                <Link className="nav__link" to="/manager">
-                        {" "}
-                        Manager
-                    </Link>
-                </li>
                     <Link class="nav__link" to="/login">
                         {" "}
                         Login
