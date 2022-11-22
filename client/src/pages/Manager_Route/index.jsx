@@ -104,8 +104,17 @@ function Manager_Route(props) {
       <footer class="backButtons">
       <Stack spacing={2} direction="row" justifyContent="center" >
       <ThemeProvider theme={theme}>
+      <Link to="/cashier" 
+                    state= {{
+                        userName: userName
+        }}>     
         <Button variant="contained" size="large">Back to Cashier</Button>
+        </Link>
+
+        <Link to="/login" >     
         <Button variant="contained" size="large">Logout</Button>
+        </Link>
+
       </ThemeProvider>
         </Stack>
       </footer>
