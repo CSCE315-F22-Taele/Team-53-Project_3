@@ -117,7 +117,7 @@ app.get("/getExcessReport/:start/:end/:threshold", async (req, res) => {
             tmp = tmp * 100; // Why multiply 100 twice?
             if (tmp < parseFloat(threshold)) {
                 let inventory_and_name = {
-                    name: inventory_names[parseInt(a) - 1],
+                    name: inventory_names[a],
                     amount: total[a],
                 };
                 below_threshold.push(inventory_and_name);
