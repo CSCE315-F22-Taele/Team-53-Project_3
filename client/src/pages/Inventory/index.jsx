@@ -13,9 +13,7 @@ import { TextField } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+
 
 
 
@@ -195,7 +193,7 @@ function Inventory(){
                         let inventoryVals = deac_inventory0;
                         inventoryVals.push(deac_inventoryBase);
     
-                        setInventory0(inventoryVals);  
+                        set_deac_Inventory0(inventoryVals);  
                     }
                     else if(data[key].classify === 1){
                         deac_inventoryProteins.push(data[key].itemname);
@@ -210,7 +208,7 @@ function Inventory(){
                         let inventoryVals = deac_inventory1;
                         inventoryVals.push(deac_inventoryProteins);
     
-                        setInventory1(inventoryVals);
+                        set_deac_Inventory1(inventoryVals);
                     }
                     else if(data[key].classify === 2){
                         deac_inventoryToppings.push(data[key].itemname);
@@ -227,7 +225,7 @@ function Inventory(){
                         let inventoryVals = deac_inventory2;
                         inventoryVals.push(deac_inventoryToppings);
     
-                        setInventory2(inventoryVals);
+                        set_deac_Inventory2(inventoryVals);
                     }
                     else if(data[key].classify === 3){
                         deac_inventoryDressings.push(data[key].itemname);
@@ -243,7 +241,7 @@ function Inventory(){
                         let inventoryVals = deac_inventory3;
                         inventoryVals.push(deac_inventoryDressings);
     
-                        setInventory3(inventoryVals);
+                        set_deac_Inventory3(inventoryVals);
                     }
                     else if(data[key].classify === 4){
                         deac_inventoryMisc.push(data[key].itemname);
@@ -259,7 +257,7 @@ function Inventory(){
                         let inventoryVals = deac_inventory4;
                         inventoryVals.push(deac_inventoryMisc);
     
-                        setInventory4(inventoryVals);
+                        set_deac_Inventory4(inventoryVals);
                     }
                 }
                 inv.push(data[key].itemname);
