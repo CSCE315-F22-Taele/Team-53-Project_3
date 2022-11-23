@@ -242,7 +242,7 @@ export default function Manager(props) {
                     {excessShown && <h5>Excess Report from {excessParams.start} to {excessParams.end} with {excessParams.threshold} threshold:</h5>}
 
                     {excessReport.map( (item) =>
-                        <li> {item.name} : {item.amouny}</li>
+                        <li> {item.name} : {item.amount}</li>
                     )}
 
                 </div>
