@@ -576,6 +576,7 @@ function Inventory(){
                                 insertInventory(name_input.current.value, amount_input.current.value, 
                                     cost_input.current.value, date_input.current.value, vendor_input.current.value, 
                                     classify_input.current.value);
+                                refreshPage();
                             }}>Add</Button>
                             </DialogActions>
                         </Dialog> 
