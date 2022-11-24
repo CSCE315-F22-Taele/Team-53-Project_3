@@ -13,9 +13,7 @@ import { TextField } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
-
-
+import InputLabel from '@mui/material/InputLabel';
 
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
@@ -431,7 +429,7 @@ function Inventory(){
     
     const handleClose_welcome = () => {
         set_welcome(false);
-    }
+    };
 
     const [classifications, setClass] = React.useState('');
 
@@ -448,8 +446,7 @@ function Inventory(){
         window.location.reload(false);
     }
 
-    return(
-        
+    return (
         <div className="inventory_page">
 
             <Dialog open={welcome_open} onClose={handleClose_welcome}>
@@ -488,7 +485,7 @@ function Inventory(){
                         }}>Add Item</Button>
 
                         <Dialog open={open_add} onClose={handleClose_add}>
-                            <DialogTitle>Add</DialogTitle>
+                            <DialogTitle>Add New Item</DialogTitle>
                             <DialogContent>
 
                                 <TextField
@@ -548,8 +545,8 @@ function Inventory(){
                                     variant="standard"
                                     inputRef={vendor_input}
                                 />
-
                                 <FormControl fullWidth>
+                                        <InputLabel name="demo-simple-select-label">Item Classification</InputLabel>
                                         <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
@@ -610,7 +607,7 @@ function Inventory(){
                         </Dialog>
                         
                         <Dialog open={open_update} onClose={handleClose_update}>
-                        <DialogTitle>Update</DialogTitle>
+                        <DialogTitle>Update Item</DialogTitle>
                         <DialogContent>
 
                             <TextField
@@ -737,7 +734,7 @@ function Inventory(){
                                 backgroundColor: "#cf8f8f",
                             },}} 
                             open={open_deactivate}  onClose={handleClose_deactivate}>
-                            <DialogTitle>Do you want to deactivate?</DialogTitle>
+                            <DialogTitle>Do you want to deactivate item?</DialogTitle>
                             <DialogContent>
                                 <TextField
                                     inputProps={{ readOnly: true }}
@@ -856,7 +853,7 @@ function Inventory(){
                         open={open_activate} 
                         onClose={handleClose_activate}>
                         
-                        <DialogTitle>Do you want to reactivate?</DialogTitle>
+                        <DialogTitle>Do you want to reactivate item?</DialogTitle>
                         <DialogContent>
                             <TextField
                                 inputProps={{ readOnly: true }}
