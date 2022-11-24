@@ -68,4 +68,16 @@ app.post("/insert", async (req, res) => {
     }
 });
 
+app.get("/getRestock", async (req, res) => {
+    try {
+        const todo = await db.query(
+            "SELECT itemname, amount FROM inventory WHERE amount < 100 ORDER BY amount"
+        );
+
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 module.exports = app;

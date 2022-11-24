@@ -339,6 +339,18 @@ function Inventory(){
         }
     }
 
+    // Will get restock item names & amounts to be displayed
+    const getRestock = async () => {
+        try {
+            const response = await fetch(conn + "api/inventory/getRestock");
+            // FIXME: Parse through the two attributes (itemname & amount).
+            const data = await response.json();
+        }
+        catch (err) {
+            console.error(err.message);
+        }
+    }
+
     const sendValue = () => {
         set_nameDisplay("");
         set_amountDisplay("");
@@ -564,7 +576,7 @@ function Inventory(){
                             <Button onClick={handleClose_add}>Cancel</Button>
                             <Button onClick={() => {
                                 handleClose_add();
-            
+                                
                                 insertInventory(name_input.current.value, amount_input.current.value, 
                                     cost_input.current.value, date_input.current.value, vendor_input.current.value, 
                                     classify_input.current.value);
