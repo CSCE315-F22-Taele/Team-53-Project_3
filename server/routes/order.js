@@ -2,15 +2,6 @@ const express = require("express");
 const app = express.Router();
 const db = require("../db");
 
-/*
-For order page:
-    Inital loading page:
-        - API calls to orderid, inventory, and menucost tables
-
-    Submit button:
-        - API call to update ordering table
-*/
-
 /* Get orderid for a new order 
 To call in frontend: http://localhost:3500/api/order/getOrderId
 */
@@ -86,15 +77,55 @@ Note: Make sure variables in req.body is the same as the ones passed in!
 */
 app.post("/postOrder", async (req, res) => {
     try {
-        const { orderid, current, totalCost, listOrdered, inventoryUsed } =
-            req.body;
+        const {
+            orderid,
+            current,
+            totalCost,
+            listOrdered,
+            inventoryUsed,
+            mobile_order,
+        } = req.body;
 
         const todo = await db.query(
-            "INSERT INTO ordering (orderid, timeoforder, amount, ordereditems, inventory) VALUES ($1, $2, $3, $4, $5)",
-            [orderid, current, totalCost, listOrdered, inventoryUsed]
+            "INSERT INTO ordering (orderid, timeoforder, amount, ordereditems, inventory, mobile_order) VALUES ($1, $2, $3, $4, $5, $6)",
+            [
+                orderid,
+                current,
+                totalCost,
+                listOrdered,
+                inventoryUsed,
+                mobile_order,
+            ]
         );
 
-        // res.json(todo.rows);
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.post("/updateOrder", async (req, res) => {
+    try {
+        const { orderid, mobile_order } = req.body;
+
+        const todo = await db.query(
+            "UPDATE ordering SET mobile_order=$1 WHERE orderid=$2",
+            [mobile_order, orderid]
+        );
+
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.get("/getOrderStatus", async (req, res) => {
+    try {
+        const todo = await db.query(
+            "SELECT * FROM ordering WHERE mobile_order != 0 AND mobile_order != 3"
+        );
+
+        res.json(todo.rows);
     } catch (err) {
         console.error(err.message);
     }
