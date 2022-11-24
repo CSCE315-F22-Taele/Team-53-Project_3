@@ -18,9 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+
 
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
@@ -67,18 +65,15 @@ function Menu(){
     }
 
     function get_default_inventory(default_inventory){
-        let inv = [];
+        let inv = item;
         for(var key in inventory){
             if(default_inventory[key] === 1){
-                inv.push(inventory[key]);
                 console.log(inventory[key]);
-                let iVals = item;
-                iVals.push(inv);
-
-                setItem(iVals);
+                inv.push(inventory[key]);
             }
         }
-
+        setItem(inv);
+        console.log(item);
         return{inv};
     }
 
@@ -86,24 +81,158 @@ function Menu(){
         window.location.reload(false);
     }
 
-    const handleChange = (event) => {
+    function findIndex(itemlist){
+        var list = updateInv;
+        for(var key in inventory){
+            var b = false;
+            for(var i in itemlist){
+                if(inventory[key] === itemlist[i]){
+                    list.push(1);
+                    b = true;
+                    break;
+                }
+            }
+
+            if(!b){
+                list.push(0);
+            }
+        }
+        return list;
+    }
+
+    const update_default_inventory = () => {
+
+        var list  = updateInv;
+
+        console.log(select_item);
+        
+
+        if(select_item.length === 0){
+            list = findIndex(item);
+             
+        }else {
+            list = findIndex(select_item);
+        }
+        set_updateInv(list);
+        
+    }
+
+    const handleChange_isCustomize = (event) => {
+        if(event.target.value === 0){
+            set_is_customize(true);
+        } else {
+            set_is_customize(false);
+        }
+    };
+
+    const handleChange_isSelling = (event) => {
+        if(event.target.value === 0){
+            set_is_selling(true);
+        } else {
+            set_is_selling(false);
+        }
+    };
+
+    const handleChange_base = (event) => {
         const {
           target: { value },
         } = event;
-        set_selectItem(
+        set_selectItem_base(
           // On autofill we get a stringified value.
           typeof value === 'string' ? value.split(', ') : value,
         );
-      };
+    };
+
+    const handleChange_pro = (event) => {
+        const {
+          target: { value },
+        } = event;
+        set_selectItem_pro(
+          // On autofill we get a stringified value.
+          typeof value === 'string' ? value.split(', ') : value,
+        );
+    };
+
+    const handleChange_top = (event) => {
+        const {
+          target: { value },
+        } = event;
+        set_selectItem_top(
+          // On autofill we get a stringified value.
+          typeof value === 'string' ? value.split(', ') : value,
+        );
+    };
+
+    const handleChange_dress = (event) => {
+        const {
+          target: { value },
+        } = event;
+        set_selectItem_dress(
+          // On autofill we get a stringified value.
+          typeof value === 'string' ? value.split(', ') : value,
+        );
+    };
+    const handleChange_misc = (event) => {
+        const {
+          target: { value },
+        } = event;
+        set_selectItem_misc(
+          // On autofill we get a stringified value.
+          typeof value === 'string' ? value.split(', ') : value,
+        );
+    };
+
+    const getSelectItem = () => {
+        let itemList = select_item;
+
+
+            for(var key in select_item_base){
+                itemList.push(select_item_base[key][0])
+            }
+
+            for(var key in select_item_pro){
+                itemList.push(select_item_pro[key][0])
+            }
+
+            for(var key in select_item_top){
+                itemList.push(select_item_top[key][0])
+            }
+
+            for(var key in select_item_dress){
+                itemList.push(select_item_dress[key][0])
+            }
+
+            for(var key in select_item_misc){
+                itemList.push(select_item_misc[key][0])
+            }
+
+            set_selectItem(itemList);
+        
+
+
+    }
+
 
     const [inventory, setInventory] = useState([]);
+    const [inventory0, setInventory0] = useState([]);
+    const [inventory1, setInventory1] = useState([]);
+    const [inventory2, setInventory2] = useState([]);
+    const [inventory3, setInventory3] = useState([]);
+    const [inventory4, setInventory4] = useState([]); 
 
     const [menu, setMenu] = useState([]);
     const [activate_menu, set_activateMenu] = useState([]);
     const [deactivate_menu, set_deactivateMenu] = useState([]);
 
     const [select_item, set_selectItem] = useState([]);
+    const [select_item_base, set_selectItem_base] = useState([]);
+    const [select_item_pro, set_selectItem_pro] = useState([]);
+    const [select_item_top, set_selectItem_top] = useState([]);
+    const [select_item_dress, set_selectItem_dress] = useState([]);
+    const [select_item_misc, set_selectItem_misc] = useState([]);
+
     const [item, setItem] = useState([]);
+    const [updateInv, set_updateInv] = useState([]);
 
     const [open_add, set_add] = useState(false);
     const [open_update, set_update] = useState(false);
@@ -196,7 +325,14 @@ function Menu(){
     };
 
     const reset = () => {
-        select_item([]);
+        setItem([]);
+        set_selectItem([]);
+        set_selectItem_base([]);
+        set_selectItem_pro([]);
+        set_selectItem_top([]);
+        set_selectItem_dress([]);
+        set_selectItem_misc([]);
+        set_updateInv([]);
         set_is_selling(false);
         set_is_customize(false);
     }
@@ -204,20 +340,19 @@ function Menu(){
     const sendValue = () => {
         set_nameDisplay("");
         set_costDisplay("");
-        setItem([]);
+        set_selectItem([]);
         setId("");
         for(let key in inventory){
             if(menu[key][0] === inputName.current.value){
                 set_nameDisplay(menu[key][0]);
                 set_costDisplay(menu[key][1]);
-                setItem(get_default_inventory(menu[key][2]));
+                get_default_inventory(menu[key][2]);
                 set_is_selling(menu[key][3]);
                 set_is_customize(menu[key][4]);
                 setId(menu[key][5]);
                 break;
             } 
         }
-
         
     }
 
@@ -230,12 +365,59 @@ function Menu(){
             // FIXME: Need to split into array to display. Reference Order page. 'data' contains inventory itemnames and classification.
             const data = await response.json();
             for(var key in data){
-                let inv = [];
-                inv.push(data[key].itemname);
+                let inventoryBase = [];
+                let inventoryProteins = [];
+                let inventoryToppings = [];
+                let inventoryDressings = [];
+                let inventoryMisc = [];
+
+                    if (data[key].classify === 0){
+                        inventoryBase.push(data[key].itemname);
+
+                        let inventoryVals = inventory0;
+                        inventoryVals.push(inventoryBase);
+    
+                        setInventory0(inventoryVals);  
+                    }
+                    else if(data[key].classify === 1){
+                        inventoryProteins.push(data[key].itemname);
+
+                        let inventoryVals = inventory1;
+                        inventoryVals.push(inventoryProteins);
+    
+                        setInventory1(inventoryVals);
+                    }
+                    else if(data[key].classify === 2){
+                        inventoryToppings.push(data[key].itemname);
+
+                        let inventoryVals = inventory2;
+                        inventoryVals.push(inventoryToppings);
+    
+                        setInventory2(inventoryVals);
+                    }
+                    else if(data[key].classify === 3){
+                        inventoryDressings.push(data[key].itemname);
+
+                        let inventoryVals = inventory3;
+                        inventoryVals.push(inventoryDressings);
+    
+                        setInventory3(inventoryVals);
+                    }
+                    else if(data[key].classify === 4){
+                        inventoryMisc.push(data[key].itemname);
+
+                        let inventoryVals = inventory4;
+                        inventoryVals.push(inventoryMisc);
+    
+                        setInventory4(inventoryVals);
+                    }
+
+                let inv = data[key].itemname;
                 let inventoryVals = inventory;
                 inventoryVals.push(inv);
 
                 setInventory(inventoryVals);
+                
             }
         }
         catch (err) {
@@ -396,24 +578,33 @@ function Menu(){
                                     variant="standard"
                                     inputRef={cost_input}
                                 /> 
-                                <FormGroup row="true" sx={{ ml: 10, width: 300 }}>
 
-                                    <FormControlLabel control={<Checkbox  
-                                    onClick={handleChange_selling}
-                                    />} label="selling" />
-                                    <FormControlLabel control={<Checkbox  
-                                    onClick={handleChange_customize}
-                                    />} label="customize" />
 
-                                </FormGroup>                                
-                                <FormControl sx={{ m: 1, width: 300 }}>
-                                    <InputLabel id="demo-multiple-chip-label">Default Inventory</InputLabel>
+                                <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-multiple-chip-label">Allowed for customization?</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        onChange={handleChange_isCustomize}
+                                        >
+                                        <MenuItem value={0}>Yes</MenuItem>
+                                        <MenuItem value={1}>No</MenuItem>
+
+                                    </Select>
+                                </FormControl>
+
+                                <br />
+                                <br />
+                                <InputLabel align="left" >Default Inventory</InputLabel>
+                                
+                                <FormControl sx={{ m: 1, width: 500 }}>
+                                    <InputLabel id="demo-multiple-chip-label">Base</InputLabel>
                                     <Select
                                     labelId="demo-multiple-chip-label"
                                     id="demo-multiple-chip"
                                     multiple
-                                    value={select_item}
-                                    onChange={handleChange}
+                                    value={select_item_base}
+                                    onChange={handleChange_base}
                                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                                     renderValue={(selected) => (
                                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -424,11 +615,132 @@ function Menu(){
                                     )}
                                     MenuProps={MenuProps}
                                     >
-                                    {inventory.map((item) => (
+                                    {inventory0.map((item) => (
                                         <MenuItem
                                         key={item}
                                         value={item}
-                                        style={getStyles(item, select_item, theme)}
+                                        style={getStyles(item, select_item_base, theme)}
+                                        >
+                                        {item}
+                                        </MenuItem>
+                                    ))}
+                                    </Select>
+                                </FormControl>
+
+
+                                <FormControl sx={{ m: 1, width: 500 }}>
+                                    <InputLabel id="demo-multiple-chip-label">Protein</InputLabel>
+                                    <Select
+                                    labelId="demo-multiple-chip-label"
+                                    id="demo-multiple-chip"
+                                    multiple
+                                    value={select_item_pro}
+                                    onChange={handleChange_pro}
+                                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                    renderValue={(selected) => (
+                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                        {selected.map((value) => (
+                                            <Chip key={value} label={value} />
+                                        ))}
+                                        </Box>
+                                    )}
+                                    MenuProps={MenuProps}
+                                    >
+                                    {inventory1.map((item) => (
+                                        <MenuItem
+                                        key={item}
+                                        value={item}
+                                        style={getStyles(item, select_item_pro, theme)}
+                                        >
+                                        {item}
+                                        </MenuItem>
+                                    ))}
+                                    </Select>
+                                </FormControl>
+
+                                <FormControl sx={{ m: 1, width: 500 }}>
+                                    <InputLabel id="demo-multiple-chip-label">Toppings</InputLabel>
+                                    <Select
+                                    labelId="demo-multiple-chip-label"
+                                    id="demo-multiple-chip"
+                                    multiple
+                                    value={select_item_top}
+                                    onChange={handleChange_top}
+                                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                    renderValue={(selected) => (
+                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                        {selected.map((value) => (
+                                            <Chip key={value} label={value} />
+                                        ))}
+                                        </Box>
+                                    )}
+                                    MenuProps={MenuProps}
+                                    >
+                                    {inventory2.map((item) => (
+                                        <MenuItem
+                                        key={item}
+                                        value={item}
+                                        style={getStyles(item, select_item_top, theme)}
+                                        >
+                                        {item}
+                                        </MenuItem>
+                                    ))}
+                                    </Select>
+                                </FormControl>
+
+                                <FormControl sx={{ m: 1, width: 500 }}>
+                                    <InputLabel id="demo-multiple-chip-label">Dressings</InputLabel>
+                                    <Select
+                                    labelId="demo-multiple-chip-label"
+                                    id="demo-multiple-chip"
+                                    multiple
+                                    value={select_item_dress}
+                                    onChange={handleChange_dress}
+                                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                    renderValue={(selected) => (
+                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                        {selected.map((value) => (
+                                            <Chip key={value} label={value} />
+                                        ))}
+                                        </Box>
+                                    )}
+                                    MenuProps={MenuProps}
+                                    >
+                                    {inventory3.map((item) => (
+                                        <MenuItem
+                                        key={item}
+                                        value={item}
+                                        style={getStyles(item, select_item_dress, theme)}
+                                        >
+                                        {item}
+                                        </MenuItem>
+                                    ))}
+                                    </Select>
+                                </FormControl>
+
+                                <FormControl sx={{ m: 1, width: 500 }}>
+                                    <InputLabel id="demo-multiple-chip-label">Misc</InputLabel>
+                                    <Select
+                                    labelId="demo-multiple-chip-label"
+                                    id="demo-multiple-chip"
+                                    multiple
+                                    value={select_item_misc}
+                                    onChange={handleChange_misc}
+                                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                    renderValue={(selected) => (
+                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                        {selected.map((value) => (
+                                            <Chip key={value} label={value} />
+                                        ))}
+                                        </Box>
+                                    )}
+                                    MenuProps={MenuProps}
+                                    >
+                                    {inventory4.map((item) => (
+                                        <MenuItem
+                                        key={item}
+                                        value={item}
+                                        style={getStyles(item, select_item_misc, theme)}
                                         >
                                         {item}
                                         </MenuItem>
@@ -440,10 +752,15 @@ function Menu(){
         
                                 <DialogActions>
                                     {/* FIXME: ONCE BACKEND IS DONE */}
-                                <Button onClick={handleClose_add}>Cancel</Button>
+                                <Button onClick={() => {
+                                    handleClose_add()
+                                    reset();
+                                    }}>Cancel</Button>
                                 <Button onClick={() => {
                                     handleClose_add();
-                                    insertMenu(name_input.current.value, cost_input.current.value, isCustomize, select_item, id);
+                                    getSelectItem();
+                                    update_default_inventory();
+                                    // insertMenu(name_input.current.value, cost_input.current.value, isCustomize, select_item);
                                     reset();
                                     refreshPage();
                                 }}>Add</Button>
@@ -477,7 +794,6 @@ function Menu(){
                                     }}>Search</Button>
                                 </DialogActions>                                
                             </Dialog>
-                    {item.map((item_name, index) => (
                         <Dialog open={open_update} onClose={handleClose_update}>
                             <DialogTitle>Update</DialogTitle>
                             <DialogContent>
@@ -504,63 +820,219 @@ function Menu(){
                                 inputRef={cost_input}
                             /> 
                             
+                            <FormControl sx={{ m: 1, width: 250 }}>
+                                <InputLabel id="demo-multiple-chip-label">is selling?</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        onChange={handleChange_isSelling}
+                                        >
+                                        <MenuItem value={0}>Yes</MenuItem>
+                                        <MenuItem value={1}>No</MenuItem>
+
+                                    </Select>
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, width: 250 }}>
+                                <InputLabel id="demo-multiple-chip-label">Allowed for customization?</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        onChange={handleChange_isCustomize}
+                                        >
+                                        <MenuItem value={0}>Yes</MenuItem>
+                                        <MenuItem value={1}>No</MenuItem>
+
+                                    </Select>
+                                </FormControl>
+                            
                             <TextField
-                                required
+                                inputProps={{ readOnly: true }}
                                 margin="dense"
                                 id="outlined-required"
-                                defaultValue={item_name}
+                                defaultValue={item}
                                 helperText="Current Default Inventory"
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                                inputRef={cost_input}
                             /> 
 
-                                <FormControl sx={{ m: 1, width: 300 }}>
-                                    <InputLabel id="demo-multiple-chip-label">Update Inventory</InputLabel>
-                                    <Select
-                                    labelId="demo-multiple-chip-label"
-                                    id="demo-multiple-chip"
-                                    multiple
-                                    value={select_item}
-                                    onChange={handleChange}
-                                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                                    renderValue={(selected) => (
-                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                        {selected.map((value) => (
-                                            <Chip key={value} label={value} />
-                                        ))}
-                                        </Box>
-                                    )}
-                                    MenuProps={MenuProps}
-                                    >
-                                    {inventory.map((item) => (
-                                        <MenuItem
-                                        key={item}
-                                        value={item}
-                                        style={getStyles(item, select_item, theme)}
-                                        >
-                                        {item}
-                                        </MenuItem>
+                            <br />
+
+                            <InputLabel align="left" >Update Default Inventory</InputLabel>
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-multiple-chip-label">Base</InputLabel>
+                                <Select
+                                labelId="demo-multiple-chip-label"
+                                id="demo-multiple-chip"
+                                multiple
+                                value={select_item_base}
+                                onChange={handleChange_base}
+                                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
                                     ))}
-                                    </Select>
-                                </FormControl>
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory0.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_base, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-multiple-chip-label">Protein</InputLabel>
+                                <Select
+                                labelId="demo-multiple-chip-label"
+                                id="demo-multiple-chip"
+                                multiple
+                                value={select_item_pro}
+                                onChange={handleChange_pro}
+                                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory1.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_pro, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-multiple-chip-label">Toppings</InputLabel>
+                                <Select
+                                labelId="demo-multiple-chip-label"
+                                id="demo-multiple-chip"
+                                multiple
+                                value={select_item_top}
+                                onChange={handleChange_top}
+                                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory2.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_top, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-multiple-chip-label">Dressings</InputLabel>
+                                <Select
+                                labelId="demo-multiple-chip-label"
+                                id="demo-multiple-chip"
+                                multiple
+                                value={select_item_dress}
+                                onChange={handleChange_dress}
+                                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory3.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_dress, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-multiple-chip-label">Misc</InputLabel>
+                                <Select
+                                labelId="demo-multiple-chip-label"
+                                id="demo-multiple-chip"
+                                multiple
+                                value={select_item_misc}
+                                onChange={handleChange_misc}
+                                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory4.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_misc, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                            </FormControl>
+
+
 
                                 </DialogContent>
         
                                 <DialogActions>
                                     {/* FIXME: ONCE BACKEND IS DONE */}
-                                <Button onClick={handleClose_update}>Cancel</Button>
+                                    <Button onClick={() => {
+                                    handleClose_update()
+                                    reset();
+                                    }}>Cancel</Button>
                                 <Button onClick={() => {
                                     handleClose_update();
-                                    updateMenu(name_input.current.value, cost_input.current.value, isSelling, isCustomize, select_item, 
-                                        id);
+                                    // updateMenu(name_input.current.value, cost_input.current.value, isSelling, isCustomize, select_item, 
+                                    //     id);
+                                    getSelectItem();
+                                    update_default_inventory();
+                                    console.log(name_input.current.value, cost_input.current.value, isSelling, isCustomize, updateInv, 
+                                              id);
                                     reset();
                                     refreshPage();
                                 }}>Update</Button>
                                 </DialogActions>
                         </Dialog>  
-                    ))}
 
                     {/* Deactivate Btn */}
                     <ThemeProvider theme={deactivate_theme}>
@@ -577,77 +1049,70 @@ function Menu(){
                                 type="text"
                                 fullWidth
                                 variant="standard"
+                                inputRef={inputName}
                             />              
                         </DialogContent>
     
                         <DialogActions>
                             <Button onClick={handleClose_name_deactivate}>Cancel</Button>
                             <Button onClick={() => {
+                                    sendValue();
                                     handleClickOpen_deactivate();
                                     handleClose_name_deactivate();
-                            }}>Deactivate</Button>
+                                    
+                            }}>Search</Button>
                         </DialogActions>
                     </Dialog>
-
-                    <Dialog open={open_deactivate} onClose={handleClose_deactivate}>
-                        <DialogTitle>Do you want deactivate?</DialogTitle>
-                        <DialogContent>
-                        <TextField
-                                inputProps={{ readOnly: true }}
-                                margin="dense"
-                                id="outlined-required"
-                                defaultValue="Some Text"
-                                helperText="Item name"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                            />
+                        <Dialog open={open_deactivate} onClose={handleClose_deactivate}>
+                            <DialogTitle>Do you want deactivate?</DialogTitle>
+                            <DialogContent>
                             <TextField
-                                inputProps={{ readOnly: true }}
-                                margin="dense"
-                                id="outlined-required"
-                                defaultValue="Some Text"
-                                helperText="Quantity"
-                                type="text"
-                                fullWidth
-                                variant="standard"                           
-                            />
-                            <TextField
-                                inputProps={{ readOnly: true }}
-                                margin="dense"
-                                id="outlined-required"
-                                defaultValue="Some Text"
-                                helperText="Cost"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                            /> 
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={name_display}
+                                    helperText="Item Name"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                    inputRef={name_input}
+                                />
+                                <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={cost_display}
+                                    helperText="Cost"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                /> 
 
-                            <TextField
-                                inputProps={{ readOnly: true }}
-                                margin="dense"
-                                id="outlined-required"
-                                defaultValue="Some Text"
-                                helperText="Expiration Date"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                            />
-    
-                        </DialogContent>
-    
-                        <DialogActions>
-                            {/* FIXME: ONCE BACKEND IS DONE */}
-                            <Button onClick={handleClose_deactivate}>Cancel</Button>
-                            <Button onClick={() => {
-                                    handleClose_deactivate();
-                                    updateMenu(name_display, cost_display, false, isCustomize, item, id);
-                                    refreshPage();
-                            }}>Deactivate</Button>
-                            
-                        </DialogActions>
-                    </Dialog>
+                                <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={item}
+                                    helperText="Current Default Inventory"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                /> 
 
+                            </DialogContent>
+        
+                            <DialogActions>
+                                {/* FIXME: ONCE BACKEND IS DONE */}
+                                <Button onClick={handleClose_deactivate}>Cancel</Button>
+                                <Button onClick={() => {
+                                        handleClose_deactivate();
+                                        console.log(name_display, cost_display, false, isCustomize, item, id);
+                                        // updateMenu(name_display, cost_display, false, isCustomize, item, id);
+                                        refreshPage();
+                                }}>Deactivate</Button>
+                                
+                            </DialogActions>
+                        </Dialog>
                     {/* Activate Btn */}
                     <Button variant="contained" size="small"  className="back1-btn" onClick={handleClickOpen_name_activate} >Activate</Button>
                     <Dialog open={open_name_activate} onClose={handleClose_name_activate}>
@@ -673,64 +1138,57 @@ function Menu(){
                                     }}>Action</Button>
                                 </DialogActions>
                     </Dialog>
-                    <Dialog open={open_activate} onClose={handleClose_activate}>
-                                <DialogTitle>Do you want activate?</DialogTitle>
-                                <DialogContent>
+                    {item.map((item_name) => (
+                        <Dialog open={open_activate} onClose={handleClose_activate}>
+                            <DialogTitle>Do you want activate?</DialogTitle>
+                            <DialogContent>
+                            <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={name_display}
+                                    helperText="Item Name"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                    inputRef={name_input}
+                                />
                                 <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Item name"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />
-                                    <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Quantity"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"                           
-                                    />
-                                    <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Cost"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    /> 
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={cost_display}
+                                    helperText="Cost"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                /> 
 
-                                    <TextField
-                                        inputProps={{ readOnly: true }}
-                                        margin="dense"
-                                        id="outlined-required"
-                                        defaultValue="Some Text"
-                                        helperText="Expiration Date"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />
-           
-                                </DialogContent>
-            
-                                <DialogActions>
-                                    {/* FIXME: ONCE BACKEND IS DONE */}
-                                    <Button onClick={handleClose_activate}>Cancel</Button>
-                                    <Button onClick={() => {
-                                            handleClose_name_activate();
-                                            handleClose_activate();
-                                            updateMenu(name_display, cost_display, true, isCustomize, item, id);
-                                            refreshPage();
-                                    }}>Activate</Button>
-                                </DialogActions>
-                    </Dialog>
+                                <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={item_name}
+                                    helperText="Current Default Inventory"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                /> 
+
+                            </DialogContent>
+        
+                            <DialogActions>
+                                {/* FIXME: ONCE BACKEND IS DONE */}
+                                <Button onClick={handleClose_activate}>Cancel</Button>
+                                <Button onClick={() => {
+                                        handleClose_activate();
+                                        // updateMenu(name_display, cost_display, false, isCustomize, item, id);
+                                        refreshPage();
+                                }}>Activate</Button>
+                                
+                            </DialogActions>
+                        </Dialog>
+                    ))}
                 </Stack>
                 </span>
             </div>
@@ -776,9 +1234,6 @@ function Menu(){
                 </div>
 
             </div>
-        
-
-
         </div>
     );
 }
