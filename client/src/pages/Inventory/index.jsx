@@ -80,9 +80,7 @@ function Inventory(){
     const getInventory = async () => {
         try {
             const response = await fetch(conn + "api/inventory/get");
-            // FIXME: Need to split into array to display. Reference Order page. 'data' contains all of inventory table.
             const data = await response.json();
-            // setInventory0([]);
             for( var key in data) { 
                 let inventoryBase = [];
                 let inventoryProteins = [];
@@ -280,7 +278,7 @@ function Inventory(){
     // Will update current inventory item.
     const updateInventory =(_itemname, _amount, _cost, _expirationdate, _vendor,_classify, _id, _useChecking) => {
         try {
-            // FIXME: Need to update w/ input before inserting.
+            // Need to update w/ input before inserting.
             var itemname = _itemname;
             var amount = _amount;
             var cost = _cost;
@@ -289,8 +287,6 @@ function Inventory(){
             var is_using = _useChecking;
             var classify = _classify;
             var itemid = _id;
-
-            
 
             const body = {itemname,
                 amount,
@@ -315,7 +311,7 @@ function Inventory(){
     // Will insert a new item into inventory.
     const insertInventory = (_itemname, _amount, _cost, _expirationdate, _vendor,_classify) => {
         try {
-            // FIXME: Need to update w/ input before inserting.
+            // Need to update w/ input before inserting.
             var itemname = _itemname
             var amount = _amount;
             var cost = _cost;
@@ -565,7 +561,6 @@ function Inventory(){
                             </DialogContent>
         
                             <DialogActions>
-                                {/* FIXME: ONCE BACKEND IS DONE */}
                             <Button onClick={handleClose_add}>Cancel</Button>
                             <Button onClick={() => {
                                 handleClose_add();
@@ -687,7 +682,6 @@ function Inventory(){
                         </DialogContent>
 
                         <DialogActions>
-                            {/* FIXME: ONCE BACKEND IS DONE */}
                         <Button onClick={handleClose_update}>Cancel</Button>
                         <Button onClick={() => {
                             handleClose_update();
@@ -719,7 +713,6 @@ function Inventory(){
                             </DialogContent>
                 
                             <DialogActions>
-                                {/* FIXME: ONCE BACKEND IS DONE */}
                                 <Button onClick={handleClose_name_deactivate}>Cancel</Button>
                                 <Button onClick={() => {
                                     sendValue();
@@ -807,7 +800,6 @@ function Inventory(){
                             </DialogContent>
                 
                             <DialogActions>
-                                {/* FIXME */}
                                 <Button onClick={handleClose_deactivate}>Cancel</Button>
                                 <Button onClick={() => {
                                         updateInventory(name_display, amount_display, cost_display, expirationdate_display, vendor_display, 
@@ -835,7 +827,6 @@ function Inventory(){
                             </DialogContent>
         
                             <DialogActions>
-                                {/* FIXME: ONCE BACKEND IS DONE */}
                                 <Button onClick={handleClose_name_activate}>Cancel</Button>
                                 <Button onClick={() => {
                                         sendValue();
@@ -926,7 +917,6 @@ function Inventory(){
                         </DialogContent>
             
                         <DialogActions>
-                            {/* FIXME: ONCE BACKEND IS DONE */}
                             <Button onClick={handleClose_activate}>Cancel</Button>
                             <Button onClick={() => {
                                 updateInventory(name_display, amount_display, cost_display, expirationdate_display, vendor_display, 
@@ -943,9 +933,9 @@ function Inventory(){
             </div>
 
             <div className='inventory_deactivate-section'>
-                <h1> Deactivate</h1> 
+                <h1>Deactivated Items</h1> 
                 <ThemeProvider theme={theme}>
-                    <div className="bass">
+                    <div className="base">
                         <br></br>
                         <h3>Base</h3>
                         { deac_inventory0.map((item) =>
@@ -1015,7 +1005,7 @@ function Inventory(){
                 <div className="inventory-btn">
 
                     <ThemeProvider theme={theme}>
-                    <div className="bass">
+                    <div className="base">
                         <h3>Base</h3>
                         
                         { inventory0.map((item) =>
