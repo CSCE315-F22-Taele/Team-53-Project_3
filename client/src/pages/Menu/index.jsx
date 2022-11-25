@@ -342,6 +342,7 @@ function Menu(){
         set_costDisplay("");
         set_selectItem([]);
         setId("");
+        
         for(let key in inventory){
             if(menu[key][0] === inputName.current.value){
                 set_nameDisplay(menu[key][0]);
@@ -760,7 +761,7 @@ function Menu(){
                                     handleClose_add();
                                     getSelectItem();
                                     update_default_inventory();
-                                    // insertMenu(name_input.current.value, cost_input.current.value, isCustomize, select_item);
+                                    insertMenu(name_input.current.value, cost_input.current.value, isCustomize, updateInv);
                                     reset();
                                     refreshPage();
                                 }}>Add</Button>
@@ -1022,12 +1023,11 @@ function Menu(){
                                     }}>Cancel</Button>
                                 <Button onClick={() => {
                                     handleClose_update();
-                                    // updateMenu(name_input.current.value, cost_input.current.value, isSelling, isCustomize, select_item, 
-                                    //     id);
+
                                     getSelectItem();
                                     update_default_inventory();
-                                    console.log(name_input.current.value, cost_input.current.value, isSelling, isCustomize, updateInv, 
-                                              id);
+;                                   updateMenu(name_input.current.value, cost_input.current.value, isSelling, isCustomize, updateInv, 
+                                        id);
                                     reset();
                                     refreshPage();
                                 }}>Update</Button>
@@ -1106,8 +1106,9 @@ function Menu(){
                                 <Button onClick={handleClose_deactivate}>Cancel</Button>
                                 <Button onClick={() => {
                                         handleClose_deactivate();
-                                        console.log(name_display, cost_display, false, isCustomize, item, id);
-                                        // updateMenu(name_display, cost_display, false, isCustomize, item, id);
+                                        getSelectItem();
+                                        update_default_inventory();
+                                        updateMenu(name_display, cost_display, false, isCustomize, updateInv, id);
                                         refreshPage();
                                 }}>Deactivate</Button>
                                 
@@ -1115,30 +1116,36 @@ function Menu(){
                         </Dialog>
                     {/* Activate Btn */}
                     <Button variant="contained" size="small"  className="back1-btn" onClick={handleClickOpen_name_activate} >Activate</Button>
+                    
+                    
                     <Dialog open={open_name_activate} onClose={handleClose_name_activate}>
-                                <DialogTitle>What is the item's name?</DialogTitle>
-                                <DialogContent>
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        label="Item Name"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                    />              
-                                </DialogContent>
-            
-                                <DialogActions>
-                                    {/* FIXME: ONCE BACKEND IS DONE */}
-                                    <Button onClick={handleClose_name_activate}>Cancel</Button>
-                                    <Button onClick={() => {
-                                            handleClickOpen_activate();
-                                            handleClose_name_activate();
-                                    }}>Action</Button>
-                                </DialogActions>
+                        <DialogTitle>What is the item's name?</DialogTitle>
+                        <DialogContent>
+                            <TextField
+                                required
+                                margin="dense"
+                                id="outlined-required"
+                                label="Item Name"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                                inputRef={inputName}
+                            />              
+                        </DialogContent>
+    
+                        <DialogActions>
+                            <Button onClick={handleClose_name_activate}>Cancel</Button>
+                            <Button onClick={() => {
+                                    sendValue();
+                                    handleClickOpen_activate();
+                                    handleClose_name_activate();
+                                    
+                            }}>Search</Button>
+                        </DialogActions>
                     </Dialog>
-                    {item.map((item_name) => (
+
+
+
                         <Dialog open={open_activate} onClose={handleClose_activate}>
                             <DialogTitle>Do you want activate?</DialogTitle>
                             <DialogContent>
@@ -1168,7 +1175,7 @@ function Menu(){
                                     inputProps={{ readOnly: true }}
                                     margin="dense"
                                     id="outlined-required"
-                                    defaultValue={item_name}
+                                    defaultValue={item}
                                     helperText="Current Default Inventory"
                                     type="text"
                                     fullWidth
@@ -1182,13 +1189,14 @@ function Menu(){
                                 <Button onClick={handleClose_activate}>Cancel</Button>
                                 <Button onClick={() => {
                                         handleClose_activate();
-                                        // updateMenu(name_display, cost_display, false, isCustomize, item, id);
+                                        getSelectItem();
+                                        update_default_inventory();
+                                        updateMenu(name_display, cost_display, true, isCustomize, updateInv, id);
                                         refreshPage();
                                 }}>Activate</Button>
                                 
                             </DialogActions>
                         </Dialog>
-                    ))}
                 </Stack>
                 </span>
             </div>
