@@ -69,22 +69,31 @@ app.post("/insert", async (req, res) => {
 /*
 Check if email & password is valid combo in employee table.
 */
-app.get("/isEmployee/:email/:password", async (req, res) => {
+app.get("/isValidEmployee/:email/:password", async (req, res) => {
     try {
         const email = req.params.email;
         const password = req.params.password;
 
         const todo = await db.query(
-            "SELECT * FROM employee WHERE email=$1 AND password=$2",
+            "SELECT employeename FROM employee WHERE email=$1 AND password=$2",
             [email, password]
         );
 
+        var name = todo.rows[0];
         var isEmployee = false;
         if (todo.rowCount >= 1) {
             isEmployee = true;
+            name = JSON.stringify(name).substring(
+                17,
+                JSON.stringify(name).length - 2
+            );
         }
 
-        res.json(isEmployee);
+        let result = {
+            isEmployee: isEmployee,
+            employeename: name,
+        };
+        res.json(result);
     } catch (err) {
         console.error(err.message);
     }
