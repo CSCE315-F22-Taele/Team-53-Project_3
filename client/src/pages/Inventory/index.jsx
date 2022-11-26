@@ -14,6 +14,13 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
@@ -55,6 +62,9 @@ function Inventory(){
     const [deac_inventory3, set_deac_Inventory3] = useState([]);
     const [deac_inventory4, set_deac_Inventory4] = useState([]); 
 
+    const [restock, set_restock] = useState([]);
+
+
 
     const [inventory, setInventory] = useState([]); 
 
@@ -75,6 +85,12 @@ function Inventory(){
     const date_input = useRef('');
     const vendor_input = useRef('');
     const classify_input = useRef('');
+
+    function createData(name, amount) {
+        return { name, amount};
+    }
+
+
     
     // This will fetch entire inventory table. Need to parse through to determine specific information.
     const getInventory = async () => {
@@ -345,6 +361,14 @@ function Inventory(){
             const response = await fetch(conn + "api/inventory/getRestock");
             // FIXME: Parse through the two attributes (itemname & amount).
             const data = await response.json();
+            for(var key in data){
+                let list = [];
+                list.push(data[key].itemname);
+                list.push(data[key].amount);
+                let val = restock;
+                val.push(list);
+                set_restock(val);
+            }
         }
         catch (err) {
             console.error(err.message);
@@ -379,6 +403,7 @@ function Inventory(){
     const [welcome_open, set_welcome] = useState(true);
     const [open_add, set_add] = useState(false);
     const [open_update, set_update] = useState(false);
+    const [open_restock, set_openRestock] = useState(false);
     // ask name 
     const [open_name_update, set_name_update] = useState(false);
     const [open_name_deactivate, set_name_deactivate] = useState(false);
@@ -446,8 +471,17 @@ function Inventory(){
         setClass(event.target.value);
     };
 
+    const handleClickOpen_restock = () => {
+        set_openRestock(true);
+    }
+
+    const handleClose_restock = () => {
+        set_openRestock(false);
+    }
+
     useEffect( () => {
         getInventory();
+        getRestock();
     }, [])
 
     function refreshPage() {
@@ -939,6 +973,37 @@ function Inventory(){
                             }}>Activate</Button>
                         </DialogActions>
                         
+                    </Dialog>
+
+                    <Button size="small" variant="contained" className="back1-btn" onClick={handleClickOpen_restock} >Restock</Button>
+                    <Dialog open={open_restock} onClose={handleClose_restock}>
+                        <TableContainer component={Paper}>
+                        <Table sx={{ width: "max-content"}}  aria-label="simple table">
+                            <TableHead>
+                            <TableRow>
+                                <TableCell>Item Name</TableCell>
+                                <TableCell align="right">Amount</TableCell>
+
+                            </TableRow>
+                            </TableHead>
+                            <TableBody>
+                            {restock.map((item) => (
+                                <TableRow
+                                key={item[0]}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                <TableCell component="th" scope="row">
+                                    {item[0]}
+                                </TableCell>
+                                    <TableCell align="right">{item[1]}</TableCell>
+                                </TableRow>
+                            ))}
+                            </TableBody>
+                        </Table>
+                        </TableContainer>
+                        <DialogActions>
+                                <Button onClick={handleClose_restock}>Close</Button>
+                        </DialogActions>
                     </Dialog>
                     </Stack>
                 </span>
