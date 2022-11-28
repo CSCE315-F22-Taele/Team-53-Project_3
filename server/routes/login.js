@@ -50,14 +50,12 @@ Insert a new employee.
 app.post("/insert", async (req, res) => {
     try {
         const { employeename, email, password } = req.body;
-
-        const hoursworked = 0;
-        const salary = 12;
+        const salary = 10;
         const ismanager = false;
 
         const todo = await db.query(
-            "INSERT INTO employee (hoursworked, salary, employeename, ismanager, email, password) VALUES ($1, $2, $3, $4, $5, $6)",
-            [hoursworked, salary, employeename, ismanager, email, password]
+            "INSERT INTO employee(salary, employeename, ismanager, email, password) VALUES ($1, $2, $3, $4, $5)",
+            [salary, employeename, ismanager, email, password]
         );
 
         res.json(todo.rows);
