@@ -977,6 +977,7 @@ function Inventory(){
 
                     <Button size="small" variant="contained" className="back1-btn" onClick={handleClickOpen_restock} >Restock</Button>
                     <Dialog open={open_restock} onClose={handleClose_restock}>
+                        <p style={{color: 'red'}}>Please reorder items:</p>
                         <TableContainer component={Paper}>
                         <Table sx={{ width: "max-content"}}  aria-label="simple table">
                             <TableHead>
@@ -990,7 +991,8 @@ function Inventory(){
                             {restock.map((item) => (
                                 <TableRow
                                 key={item[0]}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0, color: 'red' },
+                            }}
                                 >
                                 <TableCell component="th" scope="row">
                                     {item[0]}
