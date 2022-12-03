@@ -484,8 +484,49 @@ function Inventory(){
         }
 
     };
-    const handleClose_update = () => {
+
+    const handleClose_update_cancel = () => {
         set_update(false);
+    }
+    const handleClose_update = () => {
+
+        if (/^[A-Za-z\s]*$/.test(name_input.current.value)) {
+            if (/^\d+$/.test(amount_input.current.value)) {
+
+                const today_date = new Date();
+                const input_date = new Date (date_input.current.value);
+
+                if (/^\d+\.\d{0,2}$/.test(cost_input.current.value)) {
+
+                    if (/^\d{4}-\d{2}-\d{2}$/.test(date_input.current.value) &&
+                    today_date < input_date
+                     ) {
+                        if (vendor_input.current.value !== "") {
+                            set_update(false);
+                            updateInventory(name_input.current.value.toLowerCase(), amount_input.current.value, 
+                                    cost_input.current.value, date_input.current.value, vendor_input.current.value, 
+                                    classify_input.current.value, id, true);
+                            refreshPage();
+                        }
+                        else {
+                            alert("Invalid vendor. Please enter a vendor name.")
+                        }
+                    }
+                    else {
+                        alert("Invalid expiration date. Please enter in YYYY-MM-DD format.")
+                    }
+                }
+                else {
+                    alert ("Invalid cost. Please enter in X.XX format.");
+                }
+            }
+            else {
+                alert ("Invalid amount. Please enter a whole number quantity.");
+            }
+        }
+        else {
+            alert("Invalid inventory name. Please retry.");
+        }
     };
 
     const handleClose_name_update = () => {
@@ -717,7 +758,7 @@ function Inventory(){
                                 margin="dense"
                                 id="outlined-required"
                                 defaultValue={cost_display}
-                                helperText="Cost"
+                                helperText="Cost (X.XX)"
                                 type="text"
                                 fullWidth
                                 variant="standard"
@@ -729,7 +770,7 @@ function Inventory(){
                                 margin="dense"
                                 id="outlined-required"
                                 defaultValue={expirationdate_display}
-                                helperText="Expiration Date"
+                                helperText="Expiration Date (YYYY-MM-DD)"
                                 type="text"
                                 fullWidth
                                 variant="standard"
@@ -767,13 +808,9 @@ function Inventory(){
                         </DialogContent>
 
                         <DialogActions>
-                        <Button onClick={handleClose_update}>Cancel</Button>
+                        <Button onClick={handleClose_update_cancel}>Cancel</Button>
                         <Button onClick={() => {
                             handleClose_update();
-                            updateInventory(name_input.current.value, amount_input.current.value, 
-                                cost_input.current.value, date_input.current.value, vendor_input.current.value, 
-                                classify_input.current.value, id, true);
-                                refreshPage();
                         }}>Update</Button>
                         </DialogActions>
                         </Dialog>  
@@ -931,6 +968,8 @@ function Inventory(){
                         onClose={handleClose_activate}>
                         
                         <DialogTitle>Do you want to reactivate item?</DialogTitle>
+                        <DialogContentText>This will activate an inventory item for current use.</DialogContentText>
+
                         <DialogContent>
                             <TextField
                                 inputProps={{ readOnly: true }}
