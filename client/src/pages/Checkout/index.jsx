@@ -86,7 +86,6 @@ export default function CheckoutPage(props) {
       setUIN(false);
     }
     else {
-      setCardNumber("");
       alert("Invalid UIN. Please retry.");
     }
   }
