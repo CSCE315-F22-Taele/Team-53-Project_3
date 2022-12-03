@@ -127,13 +127,18 @@ export default function CheckoutPage(props) {
     }
   }
 
-  const postInventory = async () => {    
+  const postInventory = async () => {   
     for (var i = 0; i < totalInventory.length; i++) {
+
       var tmp = JSON.stringify(totalInventory[i]);
       var tmp_int = parseInt(tmp.substring(10, tmp.length-1));
-      var amount = tmp_int - parseInt(location.state.inventoryUsed[i]);
+      var amount = tmp_int;
+    
+      if (parseInt(location.state.inventoryUsed[i]) > 0 && !isNaN(location.state.inventoryUsed[i])) {
+        amount = tmp_int - parseInt(location.state.inventoryUsed[i]);
+      }
       var itemid = i + 1;
-      
+
       try {
         const body = {amount, itemid};
         fetch (conn + "api/checkout/postInventory",

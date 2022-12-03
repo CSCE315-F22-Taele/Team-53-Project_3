@@ -718,6 +718,7 @@ function Order () {
                     state= {{
                         orderid : orderid,
                         totalCost : totalCost,
+                        inventoryUsed : inventoryUsed,
                         listOrderedNames : listOrderedNames
                     }}
                     >
