@@ -144,16 +144,25 @@ export default function CheckoutPage(props) {
     getInventory();
 }, [])
 
-
   return (
-      <div className="App">
-          <div className='container'>
-            <div className='pay-method'>
-              <ThemeProvider theme={theme}>
-                  <Button className='btn' sx={{m: 2, color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={selectCash} >Cash</Button>
-                  <Button className='btn'  variant='contained' sx={{m: 2, color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_Card}>Credit/Debit</Button>
-                 
-                <Dialog open={open_card} onClose={handleClose_Card}>
+      <div class="checkout__pageCheckout">
+        
+        <div class='checkout__options'>
+          <br></br>
+          <h1> Select a payment method: </h1>
+
+          <ThemeProvider theme={theme}>
+            <div class="checkout__buttons">
+              <Button class="btn" variant='contained' 
+              onClick={selectCash} >Cash</Button>
+
+              <Button class="btn" variant='contained' onClick={handleClickOpen_Card}>Credit/Debit</Button>
+
+              <Button class="btn" variant='contained' onClick={handleClickOpen_UIN_Dining}>Dining Dollars</Button>
+              
+              <Button class="btn" variant='contained' onClick={handleClickOpen_UIN_MealSwipe}>Retail Swipe</Button>
+
+              <Dialog open={open_card} onClose={handleClose_Card}>
                     <DialogTitle>Card Information</DialogTitle>
                       <DialogContent>
                         <DialogContentText>
@@ -176,7 +185,7 @@ export default function CheckoutPage(props) {
                             type="text"
                             fullWidth
                             variant="standard"
-                            value = { cardNumber } 
+                            value = { cardNumber }
                             onChange = { handleCardNumber }
                           />
                           <TextField
@@ -204,10 +213,8 @@ export default function CheckoutPage(props) {
                           <Button onClick={handleClose_Card_Submitted}>Save</Button>
                         </DialogActions>
                 </Dialog>
- 
-                <Button className='btn'  variant='contained' sx={{color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_UIN_Dining}>Dining Dollars</Button>
-               
-                <Dialog open={open_uin} onClose={handleClose_UIN}>
+
+              <Dialog open={open_uin} onClose={handleClose_UIN}>
                     <DialogTitle>Student Information</DialogTitle>
                     <DialogContent>
                       <DialogContentText>
@@ -231,13 +238,28 @@ export default function CheckoutPage(props) {
                       <Button onClick={handleClose_Card_Submitted}>Save</Button>
                     </DialogActions>
                 </Dialog>
-                <Button className='btn' variant='contained'  sx={{color: 'white'}} style={{backgroundColor: "#52588b", color:"white"}} onClick={handleClickOpen_UIN_MealSwipe}>Meal Swipe</Button>
-              </ThemeProvider>
-          </div>
-          <div className='receipt'>
-                <h2> Receipt </h2>
 
-            <br></br>
+            </div>
+          </ThemeProvider>
+
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          <br></br>
+          
+        </div>    
+
+        <div class="checkout__receipt">
+          <br></br>
+          <h2> Receipt </h2>
+          <br></br>
             <br></br>
             <br></br>
             <div>
@@ -246,33 +268,17 @@ export default function CheckoutPage(props) {
             <br></br>
             <br></br>
             </div>
-
-                <h2> Cost: ${location.state.totalCost} </h2>
-                <Stack spacing = {2}>
+            <h2> Cost: ${location.state.totalCost} </h2>
+                <Stack spacing = {0}>
                     <br></br>
                     <Link to="/">
-                      <Button  variant="contained" size="large" onClick={() => submitCheckout()}>Check out</Button>
+                      <Button  variant="contained" size="large" sx={{mt: 3, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick={() => submitCheckout()}>Check out</Button>
+                    </Link>
+                    <Link to="/">
+                      <Button  variant="contained" size="large" sx={{mt: 3, backgroundColor:"#9d222e", color:"white" }} fullWidth={true}>Cancel Order</Button>
                     </Link>
                 </Stack>
- 
-            </div>
-          </div>
-       
-        <footer class="backButtons">
-          <Stack spacing={2} direction="row" justifyContent="center" >
-          <ThemeProvider theme={theme}>
-            <Hidden>
-            {/* <Button variant="contained" size="large" >Logout</Button>
-            <Button variant="contained" size="large" >Edit Order</Button> */}
-            </Hidden>
-            <Link to="/">
-              <Button variant="contained" size="large" >Cancel Order</Button>
-            </Link>
-          </ThemeProvider>
-          </Stack>
-        </footer>
- 
-      </div>
- 
+        </div>
+      </div> 
   );
 }
