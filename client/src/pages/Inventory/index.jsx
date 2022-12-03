@@ -9,7 +9,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { TextField } from '@mui/material';
+import { DialogContentText, TextField } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -85,12 +85,6 @@ function Inventory(){
     const date_input = useRef('');
     const vendor_input = useRef('');
     const classify_input = useRef('');
-
-    function createData(name, amount) {
-        return { name, amount};
-    }
-
-
     
     // This will fetch entire inventory table. Need to parse through to determine specific information.
     const getInventory = async () => {
@@ -359,7 +353,7 @@ function Inventory(){
     const getRestock = async () => {
         try {
             const response = await fetch(conn + "api/inventory/getRestock");
-            // FIXME: Parse through the two attributes (itemname & amount).
+            // Parse through the two attributes (itemname & amount).
             const data = await response.json();
             for(var key in data){
                 let list = [];
@@ -435,8 +429,60 @@ function Inventory(){
         set_activate(true);
     };
 
-    const handleClose_add = () => {
+    const handleClose_add_cancel = () => {
+        name_input.current.value = '';
+        amount_input.current.value = '';
+        cost_input.current.value = '';
+        date_input.current.value = '';
+        vendor_input.current.value = '';
+        classify_input.current.value = '';
         set_add(false);
+    }
+
+    const handleClose_add = () => {
+        if (/^[A-Za-z\s]*$/.test(name_input.current.value)) {
+            if (/^\d+$/.test(amount_input.current.value)) {
+
+                const today_date = new Date();
+                const input_date = new Date (date_input.current.value);
+
+                if (/^\d+\.\d{0,2}$/.test(cost_input.current.value)) {
+
+                    if (/^\d{4}-\d{2}-\d{2}$/.test(date_input.current.value) &&
+                    today_date < input_date
+                     ) {
+                        if (vendor_input.current.value !== "") {
+                            if (parseInt(classify_input.current.value) >= 0) {
+                                set_add(false);
+                                insertInventory(name_input.current.value.toLowerCase(), amount_input.current.value, 
+                                    cost_input.current.value, date_input.current.value, vendor_input.current.value, 
+                                    classify_input.current.value);
+                                refreshPage();
+                            }
+                            else {
+                                alert("Please select a classification.");
+                            }
+                        }
+                        else {
+                            alert("Invalid vendor. Please enter a vendor name.")
+                        }
+                    }
+                    else {
+                        alert("Invalid expiration date. Please enter in YYYY-MM-DD format.")
+                    }
+                }
+                else {
+                    alert ("Invalid cost. Please enter in X.XX format.");
+                }
+            }
+            else {
+                alert ("Invalid amount. Please enter a whole number quantity.");
+            }
+        }
+        else {
+            alert("Invalid inventory name. Please retry.");
+        }
+
     };
     const handleClose_update = () => {
         set_update(false);
@@ -495,7 +541,6 @@ function Inventory(){
                 <DialogTitle>Welcome to Inventory Page</DialogTitle>
 
                 <DialogActions>
-                    <Button>Back</Button>
                     <Button onClick={() => {
                         handleClose_welcome();
                     }}>Start</Button>
@@ -557,7 +602,7 @@ function Inventory(){
                                     margin="dense"
                                     id="outlined-required"
                                     defaultValue={cost_display}
-                                    helperText="Cost"
+                                    helperText="Cost (X.XX)"
                                     type="text"
                                     fullWidth
                                     variant="standard"
@@ -569,7 +614,7 @@ function Inventory(){
                                     margin="dense"
                                     id="outlined-required"
                                     defaultValue={expirationdate_display}
-                                    helperText="Expiration Date"
+                                    helperText="Expiration Date (YYYY-MM-DD)"
                                     type="text"
                                     fullWidth
                                     variant="standard"
@@ -607,14 +652,9 @@ function Inventory(){
                             </DialogContent>
         
                             <DialogActions>
-                            <Button onClick={handleClose_add}>Cancel</Button>
+                            <Button onClick={handleClose_add_cancel}>Cancel</Button>
                             <Button onClick={() => {
                                 handleClose_add();
-                                
-                                insertInventory(name_input.current.value, amount_input.current.value, 
-                                    cost_input.current.value, date_input.current.value, vendor_input.current.value, 
-                                    classify_input.current.value);
-                                refreshPage();
                             }}>Add</Button>
                             </DialogActions>
                         </Dialog> 
@@ -637,7 +677,6 @@ function Inventory(){
                             </DialogContent>
         
                             <DialogActions>
-                                {/* FIXME: ONCE BACKEND IS DONE */}
                                 <Button onClick={handleClose_name_update}>Cancel</Button>
                                 <Button onClick={() => {
                                     sendValue();
@@ -774,6 +813,7 @@ function Inventory(){
                             },}} 
                             open={open_deactivate}  onClose={handleClose_deactivate}>
                             <DialogTitle>Do you want to deactivate item?</DialogTitle>
+                            <DialogContentText>This will remove an inventory item from current use.</DialogContentText>
                             <DialogContent>
                                 <TextField
                                     inputProps={{ readOnly: true }}
@@ -977,7 +1017,8 @@ function Inventory(){
 
                     <Button size="small" variant="contained" className="back1-btn" onClick={handleClickOpen_restock} >Restock</Button>
                     <Dialog open={open_restock} onClose={handleClose_restock}>
-                        <p style={{color: 'red'}}>Please reorder items:</p>
+                    <DialogContentText style={{color: 'red'}}>Please reorder items:</DialogContentText>
+
                         <TableContainer component={Paper}>
                         <Table sx={{ width: "max-content"}}  aria-label="simple table">
                             <TableHead>
