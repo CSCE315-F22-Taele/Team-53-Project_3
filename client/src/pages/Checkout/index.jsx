@@ -46,8 +46,7 @@ export default function CheckoutPage(props) {
   };
 
   const handleClose_Card_Submitted = () => {
-    setCard(false);
-    // alert("Please click checkout to submit your order.")
+    setUIN(false);
   }
 
   const handleClickOpen_UIN_Dining = () => {
@@ -260,8 +259,22 @@ export default function CheckoutPage(props) {
           <br></br>
           <h2> Receipt </h2>
           <br></br>
-            <br></br>
-            <br></br>
+          <table>
+            <tr>
+              <th class="item">Item</th>
+              <th class="price">Price</th>
+            </tr>
+          </table>
+          <table> 
+
+                { location.state.listOrderedNames.map( (item) =>
+                    <tr> 
+                        <td class="item">{item[0]} </td> 
+                        <td class="price"> ${item[1]} </td>
+                    </tr>
+                )}   
+
+                </table>
             <div>
  
             <br></br>

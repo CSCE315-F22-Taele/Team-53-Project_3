@@ -718,11 +718,10 @@ function Order () {
                     state= {{
                         orderid : orderid,
                         totalCost : totalCost,
-                        listOrdered : listOrdered
+                        listOrderedNames : listOrderedNames
                     }}
                     >
 
-                  
                     <Button variant="contained" size="large" sx={{mt: 3, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick= { (openprofile) => {sendtoDb()}}>Submit Order</Button>
                         
                     
