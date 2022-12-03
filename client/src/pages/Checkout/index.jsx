@@ -43,10 +43,27 @@ export default function CheckoutPage(props) {
  
   const handleClose_Card = () => {
     setCard(false);
+    setCreditName("");
+    setCreditCardNumber("");
+    setCreditExpirationDate("");
+    setCreditSecurityCode(""); 
   };
 
   const handleClose_Card_Submitted = () => {
-    setUIN(false);
+    if (1000000000000000 < parseInt(creditCardNumber) && 9999999999999999 >= parseInt(creditCardNumber) && 
+        /^[A-Za-z\s]*$/.test(creditName) &&
+        parseInt(creditExpirationDate.substring(0, 2)) > 0 &&
+        parseInt(creditExpirationDate.substring(0, 2)) <= 12 &&
+        creditExpirationDate.indexOf("/") > -1 &&
+        parseInt(creditExpirationDate.substring(3, 5)) > 0 &&
+        parseInt(creditExpirationDate.substring(3, 5)) <= 31 &&
+        100 < parseInt(creditSecurityCode) && 
+        999 >= parseInt(creditSecurityCode) ) {
+      setCard(false);
+    }
+    else {
+      alert("Invalid card information. Please retry.");     
+    }
   }
 
   const handleClickOpen_UIN_Dining = () => {
@@ -63,15 +80,36 @@ export default function CheckoutPage(props) {
   const handleClose_UIN = () => {
     setUIN(false);
   };
+
+  const handleClose_UIN_Submitted = () => {
+    if (100000000 < parseInt(cardNumber) && 999999999 > parseInt(cardNumber)) {
+      setUIN(false);
+    }
+    else {
+      setCardNumber("");
+      alert("Invalid UIN. Please retry.");
+    }
+  }
  
   const selectCash = async () => {
     setPaymentMethod(3);
     alert("Please submit order and head to the cashier to make payment.");
+    setCreditCardNumber("");
+    setCreditName("");
+    setCreditExpirationDate("");
+    setCreditSecurityCode("");
+    setCardNumber("");
   }
 
   const postCheckout = async () => {
     try {
-      const cardnumber = cardNumber;
+      // Determine type of card (UIN or credit/debit)
+      var cardnumber_ = cardNumber;
+      if (cardNumber === "") {
+        cardnumber_ = creditCardNumber;
+      }
+
+      const cardnumber = cardnumber_;
       const paymentmethod = paymentMethod;
       const amount = location.state.totalCost;
       const orderid = location.state.orderid;
@@ -123,9 +161,35 @@ export default function CheckoutPage(props) {
   const [paymentMethod, setPaymentMethod] = useState(3);
   const [cardNumber, setCardNumber] = useState("");
   const [totalInventory, setInventory] = useState([]);
+  const [creditCardNumber, setCreditCardNumber] = useState("");
+
+  // Used to error check credit card input
+  const [creditExpirationDate, setCreditExpirationDate] = useState("");
+  const [creditSecurityCode, setCreditSecurityCode] = useState("");
+  const [creditName, setCreditName] = useState("");
 
   const handleCardNumber = async (e) => {
     setCardNumber(e.target.value);
+    setCreditCardNumber("");
+    setCreditName("");
+    setCreditExpirationDate("");
+    setCreditSecurityCode("");
+  }
+
+  const handleCreditCardNumber = async (e) => {
+    setCreditCardNumber(e.target.value);
+    setCardNumber("");
+  }
+
+  // Error check expiration and security code input for credit card
+  const handleCreditExpirationDate = async (e) => {
+    setCreditExpirationDate(e.target.value);
+  }
+  const handleCreditSecurityCode = async (e) => {
+    setCreditSecurityCode(e.target.value);
+  }
+  const handleCreditName = async (e) => {
+    setCreditName(e.target.value);
   }
 
   const getInventory = async () => {
@@ -135,7 +199,7 @@ export default function CheckoutPage(props) {
       const data = await response.json();
       setInventory(data);
     } catch (err) {
-      console.log(err.message);
+      console.error(err.message);
     }
   }
 
@@ -171,10 +235,12 @@ export default function CheckoutPage(props) {
                             required
                             margin="dense"
                             id="outlined-required"
-                            label="Name"
+                            label="Full Name"
                             type="text"
                             fullWidth
                             variant="standard"
+                            value = { creditName }
+                            onChange = { handleCreditName }
                           />
                           <TextField
                             required
@@ -184,8 +250,8 @@ export default function CheckoutPage(props) {
                             type="text"
                             fullWidth
                             variant="standard"
-                            value = { cardNumber }
-                            onChange = { handleCardNumber }
+                            value = { creditCardNumber }
+                            onChange = { handleCreditCardNumber }
                           />
                           <TextField
                             required
@@ -195,6 +261,8 @@ export default function CheckoutPage(props) {
                             type="text"
                             fullWidth
                             variant="standard"
+                            value = { creditExpirationDate }
+                            onChange = { handleCreditExpirationDate }
                           />
                           <TextField
                             required
@@ -204,12 +272,15 @@ export default function CheckoutPage(props) {
                             type="text"
                             fullWidth
                             variant="standard"
+                            value = { creditSecurityCode }
+                            onChange = { handleCreditSecurityCode
+                            }
                           />                
                         </DialogContent>
  
                         <DialogActions>
                           <Button onClick={handleClose_Card}>Cancel</Button>
-                          <Button onClick={handleClose_Card_Submitted}>Save</Button>
+                          <Button onClick={handleClose_Card_Submitted}>Submit</Button>
                         </DialogActions>
                 </Dialog>
 
@@ -234,13 +305,13 @@ export default function CheckoutPage(props) {
  
                     <DialogActions>
                       <Button onClick={handleClose_UIN}>Cancel</Button>
-                      <Button onClick={handleClose_Card_Submitted}>Save</Button>
+                      <Button onClick={handleClose_UIN_Submitted}>Submit</Button>
                     </DialogActions>
                 </Dialog>
 
             </div>
           </ThemeProvider>
-
+          
           <br></br>
           <br></br>
           <br></br>
