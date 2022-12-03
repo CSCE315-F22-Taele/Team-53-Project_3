@@ -80,4 +80,30 @@ app.get("/getRestock", async (req, res) => {
     }
 });
 
+app.get("/getMenu", async (req, res) => {
+    try {
+        const todo = await db.query(
+            "SELECT default_inventory, id FROM menucost ORDER BY id"
+        );
+
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.post("/updateMenu", async (req, res) => {
+    const { default_inventory, id } = req.body;
+    try {
+        const todo = await db.query(
+            "UPDATE menucost SET default_inventory=$1 WHERE id=$2",
+            [default_inventory, id]
+        );
+
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 module.exports = app;

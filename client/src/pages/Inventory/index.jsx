@@ -322,10 +322,10 @@ function Inventory(){
     const insertInventory = (_itemname, _amount, _cost, _expirationdate, _vendor,_classify) => {
         try {
             // Need to update w/ input before inserting.
-            var itemname = _itemname
+            var itemname = _itemname;
             var amount = _amount;
             var cost = _cost;
-            var expirationdate = _expirationdate
+            var expirationdate = _expirationdate;
             var vendor = _vendor;
             var is_using = true; // Do not change
             var classify = _classify;
@@ -344,9 +344,20 @@ function Inventory(){
                 }
             )
             
+            var tmp_arr = [];
+            console.log(menu[0][1]);
+            for (let key in menu) {
+
+                tmp_arr = menu[key][1];
+                tmp_arr.push(0);
+                console.log(tmp_arr);
+                updateMenu(menu[key][0], tmp_arr);
+            }
+            
         } catch (err) {
             console.error(err.message);
         }
+
     }
 
     // Will get restock item names & amounts to be displayed
@@ -365,6 +376,45 @@ function Inventory(){
             }
         }
         catch (err) {
+            console.error(err.message);
+        }
+    }
+
+    const [menu, set_menu] = useState([]);
+
+    const getMenu = async () => {
+        try {
+            const response = await fetch(conn + "api/inventory/getMenu");
+            const data = await response.json();
+            for(var key in data) {
+                let list = [];
+                list.push(data[key].id);
+                list.push(data[key].default_inventory);
+                let val = menu;
+                val.push(list);
+                set_menu(val);
+            }
+            //console.log(menu);
+        }
+        catch (err) {
+            console.error(err.message);
+        }
+    }
+
+    const updateMenu = (_id, _default_inventory) => {
+        try {
+            var id = _id;
+            var default_inventory = _default_inventory;
+            const body = {default_inventory, id};
+            fetch (conn + "api/inventory/updateMenu",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                }
+            )
+            
+        } catch (err) {
             console.error(err.message);
         }
     }
@@ -569,6 +619,7 @@ function Inventory(){
     useEffect( () => {
         getInventory();
         getRestock();
+        getMenu();
     }, [])
 
     function refreshPage() {
