@@ -9,15 +9,18 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { TextField } from '@mui/material';
+import { DialogContentText, TextField } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-
-
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
@@ -59,6 +62,9 @@ function Inventory(){
     const [deac_inventory3, set_deac_Inventory3] = useState([]);
     const [deac_inventory4, set_deac_Inventory4] = useState([]); 
 
+    const [restock, set_restock] = useState([]);
+
+
 
     const [inventory, setInventory] = useState([]); 
 
@@ -84,9 +90,7 @@ function Inventory(){
     const getInventory = async () => {
         try {
             const response = await fetch(conn + "api/inventory/get");
-            // FIXME: Need to split into array to display. Reference Order page. 'data' contains all of inventory table.
             const data = await response.json();
-            // setInventory0([]);
             for( var key in data) { 
                 let inventoryBase = [];
                 let inventoryProteins = [];
@@ -195,7 +199,7 @@ function Inventory(){
                         let inventoryVals = deac_inventory0;
                         inventoryVals.push(deac_inventoryBase);
     
-                        setInventory0(inventoryVals);  
+                        set_deac_Inventory0(inventoryVals);  
                     }
                     else if(data[key].classify === 1){
                         deac_inventoryProteins.push(data[key].itemname);
@@ -210,7 +214,7 @@ function Inventory(){
                         let inventoryVals = deac_inventory1;
                         inventoryVals.push(deac_inventoryProteins);
     
-                        setInventory1(inventoryVals);
+                        set_deac_Inventory1(inventoryVals);
                     }
                     else if(data[key].classify === 2){
                         deac_inventoryToppings.push(data[key].itemname);
@@ -227,7 +231,7 @@ function Inventory(){
                         let inventoryVals = deac_inventory2;
                         inventoryVals.push(deac_inventoryToppings);
     
-                        setInventory2(inventoryVals);
+                        set_deac_Inventory2(inventoryVals);
                     }
                     else if(data[key].classify === 3){
                         deac_inventoryDressings.push(data[key].itemname);
@@ -243,7 +247,7 @@ function Inventory(){
                         let inventoryVals = deac_inventory3;
                         inventoryVals.push(deac_inventoryDressings);
     
-                        setInventory3(inventoryVals);
+                        set_deac_Inventory3(inventoryVals);
                     }
                     else if(data[key].classify === 4){
                         deac_inventoryMisc.push(data[key].itemname);
@@ -259,7 +263,7 @@ function Inventory(){
                         let inventoryVals = deac_inventory4;
                         inventoryVals.push(deac_inventoryMisc);
     
-                        setInventory4(inventoryVals);
+                        set_deac_Inventory4(inventoryVals);
                     }
                 }
                 inv.push(data[key].itemname);
@@ -284,7 +288,7 @@ function Inventory(){
     // Will update current inventory item.
     const updateInventory =(_itemname, _amount, _cost, _expirationdate, _vendor,_classify, _id, _useChecking) => {
         try {
-            // FIXME: Need to update w/ input before inserting.
+            // Need to update w/ input before inserting.
             var itemname = _itemname;
             var amount = _amount;
             var cost = _cost;
@@ -293,8 +297,6 @@ function Inventory(){
             var is_using = _useChecking;
             var classify = _classify;
             var itemid = _id;
-
-            
 
             const body = {itemname,
                 amount,
@@ -319,11 +321,11 @@ function Inventory(){
     // Will insert a new item into inventory.
     const insertInventory = (_itemname, _amount, _cost, _expirationdate, _vendor,_classify) => {
         try {
-            // FIXME: Need to update w/ input before inserting.
-            var itemname = _itemname
+            // Need to update w/ input before inserting.
+            var itemname = _itemname;
             var amount = _amount;
             var cost = _cost;
-            var expirationdate = _expirationdate
+            var expirationdate = _expirationdate;
             var vendor = _vendor;
             var is_using = true; // Do not change
             var classify = _classify;
@@ -335,6 +337,76 @@ function Inventory(){
                 is_using,
                 classify};
             fetch (conn + "api/inventory/insert",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                }
+            )
+            
+            var tmp_arr = [];
+            console.log(menu[0][1]);
+            for (let key in menu) {
+
+                tmp_arr = menu[key][1];
+                tmp_arr.push(0);
+                console.log(tmp_arr);
+                updateMenu(menu[key][0], tmp_arr);
+            }
+            
+        } catch (err) {
+            console.error(err.message);
+        }
+
+    }
+
+    // Will get restock item names & amounts to be displayed
+    const getRestock = async () => {
+        try {
+            const response = await fetch(conn + "api/inventory/getRestock");
+            // Parse through the two attributes (itemname & amount).
+            const data = await response.json();
+            for(var key in data){
+                let list = [];
+                list.push(data[key].itemname);
+                list.push(data[key].amount);
+                let val = restock;
+                val.push(list);
+                set_restock(val);
+            }
+        }
+        catch (err) {
+            console.error(err.message);
+        }
+    }
+
+    const [menu, set_menu] = useState([]);
+
+    const getMenu = async () => {
+        try {
+            const response = await fetch(conn + "api/inventory/getMenu");
+            const data = await response.json();
+            for(var key in data) {
+                let list = [];
+                list.push(data[key].id);
+                list.push(data[key].default_inventory);
+                let val = menu;
+                val.push(list);
+                set_menu(val);
+            }
+            //console.log(menu);
+        }
+        catch (err) {
+            console.error(err.message);
+        }
+    }
+
+    const updateMenu = (_id, _default_inventory) => {
+        try {
+            var id = _id;
+            var default_inventory = _default_inventory;
+            const body = {default_inventory, id};
+            fetch (conn + "api/inventory/updateMenu",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -375,6 +447,7 @@ function Inventory(){
     const [welcome_open, set_welcome] = useState(true);
     const [open_add, set_add] = useState(false);
     const [open_update, set_update] = useState(false);
+    const [open_restock, set_openRestock] = useState(false);
     // ask name 
     const [open_name_update, set_name_update] = useState(false);
     const [open_name_deactivate, set_name_deactivate] = useState(false);
@@ -406,11 +479,104 @@ function Inventory(){
         set_activate(true);
     };
 
-    const handleClose_add = () => {
+    const handleClose_add_cancel = () => {
+        name_input.current.value = '';
+        amount_input.current.value = '';
+        cost_input.current.value = '';
+        date_input.current.value = '';
+        vendor_input.current.value = '';
+        classify_input.current.value = '';
         set_add(false);
+    }
+
+    const handleClose_add = () => {
+        if (/^[A-Za-z\s]*$/.test(name_input.current.value)) {
+            if (/^\d+$/.test(amount_input.current.value)) {
+
+                const today_date = new Date();
+                const input_date = new Date (date_input.current.value);
+
+                if (/^\d+\.\d{0,2}$/.test(cost_input.current.value)) {
+
+                    if (/^\d{4}-\d{2}-\d{2}$/.test(date_input.current.value) &&
+                    today_date < input_date
+                     ) {
+                        if (vendor_input.current.value !== "") {
+                            if (parseInt(classify_input.current.value) >= 0) {
+                                set_add(false);
+                                insertInventory(name_input.current.value.toLowerCase(), amount_input.current.value, 
+                                    cost_input.current.value, date_input.current.value, vendor_input.current.value, 
+                                    classify_input.current.value);
+                                refreshPage();
+                            }
+                            else {
+                                alert("Please select a classification.");
+                            }
+                        }
+                        else {
+                            alert("Invalid vendor. Please enter a vendor name.")
+                        }
+                    }
+                    else {
+                        alert("Invalid expiration date. Please enter in YYYY-MM-DD format.")
+                    }
+                }
+                else {
+                    alert ("Invalid cost. Please enter in X.XX format.");
+                }
+            }
+            else {
+                alert ("Invalid amount. Please enter a whole number quantity.");
+            }
+        }
+        else {
+            alert("Invalid inventory name. Please retry.");
+        }
+
     };
-    const handleClose_update = () => {
+
+    const handleClose_update_cancel = () => {
         set_update(false);
+    }
+    const handleClose_update = () => {
+
+        if (/^[A-Za-z\s]*$/.test(name_input.current.value)) {
+            if (/^\d+$/.test(amount_input.current.value)) {
+
+                const today_date = new Date();
+                const input_date = new Date (date_input.current.value);
+
+                if (/^\d+\.\d{0,2}$/.test(cost_input.current.value)) {
+
+                    if (/^\d{4}-\d{2}-\d{2}$/.test(date_input.current.value) &&
+                    today_date < input_date
+                     ) {
+                        if (vendor_input.current.value !== "") {
+                            set_update(false);
+                            updateInventory(name_input.current.value.toLowerCase(), amount_input.current.value, 
+                                    cost_input.current.value, date_input.current.value, vendor_input.current.value, 
+                                    classify_input.current.value, id, true);
+                            refreshPage();
+                        }
+                        else {
+                            alert("Invalid vendor. Please enter a vendor name.")
+                        }
+                    }
+                    else {
+                        alert("Invalid expiration date. Please enter in YYYY-MM-DD format.")
+                    }
+                }
+                else {
+                    alert ("Invalid cost. Please enter in X.XX format.");
+                }
+            }
+            else {
+                alert ("Invalid amount. Please enter a whole number quantity.");
+            }
+        }
+        else {
+            alert("Invalid inventory name. Please retry.");
+        }
     };
 
     const handleClose_name_update = () => {
@@ -433,7 +599,7 @@ function Inventory(){
     
     const handleClose_welcome = () => {
         set_welcome(false);
-    }
+    };
 
     const [classifications, setClass] = React.useState('');
 
@@ -442,23 +608,31 @@ function Inventory(){
         setClass(event.target.value);
     };
 
+    const handleClickOpen_restock = () => {
+        set_openRestock(true);
+    }
+
+    const handleClose_restock = () => {
+        set_openRestock(false);
+    }
+
     useEffect( () => {
         getInventory();
+        getRestock();
+        getMenu();
     }, [])
 
     function refreshPage() {
         window.location.reload(false);
     }
 
-    return(
-        
+    return (
         <div className="inventory_page">
 
             <Dialog open={welcome_open} onClose={handleClose_welcome}>
                 <DialogTitle>Welcome to Inventory Page</DialogTitle>
 
                 <DialogActions>
-                    <Button>Back</Button>
                     <Button onClick={() => {
                         handleClose_welcome();
                     }}>Start</Button>
@@ -490,7 +664,7 @@ function Inventory(){
                         }}>Add Item</Button>
 
                         <Dialog open={open_add} onClose={handleClose_add}>
-                            <DialogTitle>Add</DialogTitle>
+                            <DialogTitle>Add New Item</DialogTitle>
                             <DialogContent>
 
                                 <TextField
@@ -520,7 +694,7 @@ function Inventory(){
                                     margin="dense"
                                     id="outlined-required"
                                     defaultValue={cost_display}
-                                    helperText="Cost"
+                                    helperText="Cost (X.XX)"
                                     type="text"
                                     fullWidth
                                     variant="standard"
@@ -532,7 +706,7 @@ function Inventory(){
                                     margin="dense"
                                     id="outlined-required"
                                     defaultValue={expirationdate_display}
-                                    helperText="Expiration Date"
+                                    helperText="Expiration Date (YYYY-MM-DD)"
                                     type="text"
                                     fullWidth
                                     variant="standard"
@@ -550,8 +724,8 @@ function Inventory(){
                                     variant="standard"
                                     inputRef={vendor_input}
                                 />
-
                                 <FormControl fullWidth>
+                                        <InputLabel name="demo-simple-select-label">Item Classification</InputLabel>
                                         <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
@@ -570,14 +744,9 @@ function Inventory(){
                             </DialogContent>
         
                             <DialogActions>
-                                {/* FIXME: ONCE BACKEND IS DONE */}
-                            <Button onClick={handleClose_add}>Cancel</Button>
+                            <Button onClick={handleClose_add_cancel}>Cancel</Button>
                             <Button onClick={() => {
                                 handleClose_add();
-            
-                                insertInventory(name_input.current.value, amount_input.current.value, 
-                                    cost_input.current.value, date_input.current.value, vendor_input.current.value, 
-                                    classify_input.current.value);
                             }}>Add</Button>
                             </DialogActions>
                         </Dialog> 
@@ -600,7 +769,6 @@ function Inventory(){
                             </DialogContent>
         
                             <DialogActions>
-                                {/* FIXME: ONCE BACKEND IS DONE */}
                                 <Button onClick={handleClose_name_update}>Cancel</Button>
                                 <Button onClick={() => {
                                     sendValue();
@@ -611,7 +779,7 @@ function Inventory(){
                         </Dialog>
                         
                         <Dialog open={open_update} onClose={handleClose_update}>
-                        <DialogTitle>Update</DialogTitle>
+                        <DialogTitle>Update Item</DialogTitle>
                         <DialogContent>
 
                             <TextField
@@ -641,7 +809,7 @@ function Inventory(){
                                 margin="dense"
                                 id="outlined-required"
                                 defaultValue={cost_display}
-                                helperText="Cost"
+                                helperText="Cost (X.XX)"
                                 type="text"
                                 fullWidth
                                 variant="standard"
@@ -653,7 +821,7 @@ function Inventory(){
                                 margin="dense"
                                 id="outlined-required"
                                 defaultValue={expirationdate_display}
-                                helperText="Expiration Date"
+                                helperText="Expiration Date (YYYY-MM-DD)"
                                 type="text"
                                 fullWidth
                                 variant="standard"
@@ -691,14 +859,9 @@ function Inventory(){
                         </DialogContent>
 
                         <DialogActions>
-                            {/* FIXME: ONCE BACKEND IS DONE */}
-                        <Button onClick={handleClose_update}>Cancel</Button>
+                        <Button onClick={handleClose_update_cancel}>Cancel</Button>
                         <Button onClick={() => {
                             handleClose_update();
-                            updateInventory(name_input.current.value, amount_input.current.value, 
-                                cost_input.current.value, date_input.current.value, vendor_input.current.value, 
-                                classify_input.current.value, id, true);
-                                refreshPage();
                         }}>Update</Button>
                         </DialogActions>
                         </Dialog>  
@@ -723,7 +886,6 @@ function Inventory(){
                             </DialogContent>
                 
                             <DialogActions>
-                                {/* FIXME: ONCE BACKEND IS DONE */}
                                 <Button onClick={handleClose_name_deactivate}>Cancel</Button>
                                 <Button onClick={() => {
                                     sendValue();
@@ -738,7 +900,8 @@ function Inventory(){
                                 backgroundColor: "#cf8f8f",
                             },}} 
                             open={open_deactivate}  onClose={handleClose_deactivate}>
-                            <DialogTitle>Do you want to deactivate?</DialogTitle>
+                            <DialogTitle>Do you want to deactivate item?</DialogTitle>
+                            <DialogContentText>This will remove an inventory item from current use.</DialogContentText>
                             <DialogContent>
                                 <TextField
                                     inputProps={{ readOnly: true }}
@@ -811,7 +974,6 @@ function Inventory(){
                             </DialogContent>
                 
                             <DialogActions>
-                                {/* FIXME */}
                                 <Button onClick={handleClose_deactivate}>Cancel</Button>
                                 <Button onClick={() => {
                                         updateInventory(name_display, amount_display, cost_display, expirationdate_display, vendor_display, 
@@ -839,7 +1001,6 @@ function Inventory(){
                             </DialogContent>
         
                             <DialogActions>
-                                {/* FIXME: ONCE BACKEND IS DONE */}
                                 <Button onClick={handleClose_name_activate}>Cancel</Button>
                                 <Button onClick={() => {
                                         sendValue();
@@ -857,7 +1018,9 @@ function Inventory(){
                         open={open_activate} 
                         onClose={handleClose_activate}>
                         
-                        <DialogTitle>Do you want to reactivate?</DialogTitle>
+                        <DialogTitle>Do you want to reactivate item?</DialogTitle>
+                        <DialogContentText>This will activate an inventory item for current use.</DialogContentText>
+
                         <DialogContent>
                             <TextField
                                 inputProps={{ readOnly: true }}
@@ -930,7 +1093,6 @@ function Inventory(){
                         </DialogContent>
             
                         <DialogActions>
-                            {/* FIXME: ONCE BACKEND IS DONE */}
                             <Button onClick={handleClose_activate}>Cancel</Button>
                             <Button onClick={() => {
                                 updateInventory(name_display, amount_display, cost_display, expirationdate_display, vendor_display, 
@@ -942,14 +1104,48 @@ function Inventory(){
                         </DialogActions>
                         
                     </Dialog>
+
+                    <Button size="small" variant="contained" className="back1-btn" onClick={handleClickOpen_restock} >Restock</Button>
+                    <Dialog open={open_restock} onClose={handleClose_restock}>
+                    <DialogContentText style={{color: 'red'}}>Please reorder items:</DialogContentText>
+
+                        <TableContainer component={Paper}>
+                        <Table sx={{ width: "max-content"}}  aria-label="simple table">
+                            <TableHead>
+                            <TableRow>
+                                <TableCell>Item Name</TableCell>
+                                <TableCell align="right">Amount</TableCell>
+
+                            </TableRow>
+                            </TableHead>
+                            <TableBody>
+                            {restock.map((item) => (
+                                <TableRow
+                                key={item[0]}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0, color: 'red' },
+                            }}
+                                >
+                                <TableCell component="th" scope="row">
+                                    {item[0]}
+                                </TableCell>
+                                    <TableCell align="right">{item[1]}</TableCell>
+                                </TableRow>
+                            ))}
+                            </TableBody>
+                        </Table>
+                        </TableContainer>
+                        <DialogActions>
+                                <Button onClick={handleClose_restock}>Close</Button>
+                        </DialogActions>
+                    </Dialog>
                     </Stack>
                 </span>
             </div>
 
             <div className='inventory_deactivate-section'>
-                <h1> Deactivate</h1> 
+                <h1>Deactivated Items</h1> 
                 <ThemeProvider theme={theme}>
-                    <div className="bass">
+                    <div className="base">
                         <br></br>
                         <h3>Base</h3>
                         { deac_inventory0.map((item) =>
@@ -1019,7 +1215,7 @@ function Inventory(){
                 <div className="inventory-btn">
 
                     <ThemeProvider theme={theme}>
-                    <div className="bass">
+                    <div className="base">
                         <h3>Base</h3>
                         
                         { inventory0.map((item) =>
