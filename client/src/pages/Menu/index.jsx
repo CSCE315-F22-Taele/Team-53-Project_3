@@ -18,6 +18,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import { Hint } from 'react-autocomplete-hint';
+import FormHelperText from '@mui/material/FormHelperText';
 
 
 
@@ -103,7 +104,6 @@ function Menu(){
 
     const [invItem, setItem] = useState([]);
     const [updateInv, set_updateInv] = useState([]);
-    const [test, setTest] = useState([]);
 
     const [open_add, set_add] = useState(false);
     const [open_update, set_update] = useState(false);
@@ -134,8 +134,6 @@ function Menu(){
     const [selling_status, set_selling_status] = useState('');
     const [customize_status, set_customize_status] = useState('');
 
-    const [item_display, set_itemDisplay] = useState(false);
-    const [text, setText] = useState('')
 
     const get_default_inventory = (default_inventory) => {
         let list = [];
@@ -183,9 +181,6 @@ function Menu(){
         
     }
 
-    const handleClick_itemDisplay = () =>{
-        set_itemDisplay((item_display) => !item_display);
-    }
 
     const handleChange_isCustomize = (event) => {
         if(event.target.value === 0){
@@ -913,9 +908,7 @@ function Menu(){
                                     /> */}
 
                                     <input className='input'
-                                         style={{ width: "500px" }}
-                                        value={text}
-                                        onChange={e => setText(e.target.value)} 
+                                        style={{ width: "500px" }}
                                         ref={inputName}
                                     />
                                 </Hint>   
@@ -1186,8 +1179,6 @@ function Menu(){
 
                             <input className='input'
                                 style={{ width: "500px" }}
-                                value={text}
-                                onChange={e => setText(e.target.value)} 
                                 ref={inputName}
                             />
                             </Hint>
@@ -1197,63 +1188,217 @@ function Menu(){
                             <Button style={{fontSize: '24px'}} onClick={handleClose_name_deactivate}>Cancel</Button>
                             <Button style={{fontSize: '24px'}} onClick={() => {
                                     sendValue(true);
-                                    setTest(invItem);
+                                    getEachinv();
                                     handleClose_update();
 
                             }}>Search</Button>
                         </DialogActions>
                     </Dialog>
-                        <Dialog open={open_deactivate} onClose={handleClose_deactivate}>
-                            <DialogTitle fontSize={36}>Do you want deactivate?</DialogTitle>
-                            <DialogContent>
+                    <Dialog
+                    PaperProps={{       
+                        style: {
+                            backgroundColor: "#cf8f8f",
+                        },}}  open={open_deactivate} onClose={handleClose_deactivate}>
+                        <DialogTitle fontSize={36}>Do you want deactivate?</DialogTitle>
+                        <DialogContent>
+                        <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue={name_display}
+                                helperText="Item Name"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                                inputRef={name_input}
+                            />
                             <TextField
-                                    inputProps={{ readOnly: true }}
-                                    margin="dense"
-                                    id="outlined-required"
-                                    defaultValue={name_display}
-                                    helperText="Item Name"
-                                    type="text"
-                                    fullWidth
-                                    variant="standard"
-                                    inputRef={name_input}
-                                />
-                                <TextField
-                                    inputProps={{ readOnly: true }}
-                                    margin="dense"
-                                    id="outlined-required"
-                                    defaultValue={cost_display}
-                                    helperText="Cost"
-                                    type="text"
-                                    fullWidth
-                                    variant="standard"
-                                /> 
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue={cost_display}
+                                helperText="Cost"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            /> 
 
-                                <TextField
-                                    inputProps={{ readOnly: true }}
-                                    margin="dense"
-                                    id="outlined-required"
-                                    defaultValue={test}
-                                    helperText="Current Default Inventory"
-                                    type="text"
-                                    fullWidth
-                                    variant="standard"
-                                /> 
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue={isCustomize}
+                                helperText="is Customize?"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            /> 
 
-                            </DialogContent>
-        
-                            <DialogActions>
-                                <Button style={{fontSize: '24px'}} onClick={handleClose_deactivate}>Cancel</Button>
-                                <Button style={{fontSize: '24px'}} onClick={() => {
-                                        handleClose_deactivate();
-                                        getSelectItem();
-                                        update_default_inventory();
-                                        var list = find_di(activate_menu, name_display);
-                                        updateMenu(name_display, cost_display, false, isCustomize, list, id);
-                                        refreshPage();
-                                }}>Deactivate</Button>
-                                
-                            </DialogActions>
-                        </Dialog>
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <Select
+                                labelId="demo-simple-select-readonly-label"
+                                id="demo-simple-select-readonly"
+                                value={select_item_base}
+                                onChange={handleChange_base}
+                                inputProps={{ readOnly: true }}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory0.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_base, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                                <FormHelperText>Base</FormHelperText>
+
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <Select
+                                labelId="demo-simple-select-readonly-label"
+                                id="demo-simple-select-readonly"
+                                value={select_item_pro}
+                                onChange={handleChange_pro}
+                                inputProps={{ readOnly: true }}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory1.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_pro, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                                <FormHelperText>Protein</FormHelperText>
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <Select
+                                labelId="demo-simple-select-readonly-label"
+                                id="demo-simple-select-readonly"
+                                value={select_item_top}
+                                onChange={handleChange_top}
+                                inputProps={{ readOnly: true }}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory2.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_top, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                                <FormHelperText>Toppings</FormHelperText>
+
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <Select
+                                labelId="demo-simple-select-readonly-label"
+                                id="demo-simple-select-readonly"
+                                value={select_item_dress}
+                                onChange={handleChange_dress}
+                                inputProps={{ readOnly: true }}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory3.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_dress, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                                <FormHelperText>Dressings</FormHelperText>
+
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <Select
+                                labelId="demo-simple-select-readonly-label"
+                                id="demo-simple-select-readonly"
+                                value={select_item_misc}
+                                onChange={handleChange_misc}
+                                inputProps={{ readOnly: true }}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory4.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_misc, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                                <FormHelperText>Misc</FormHelperText>
+
+                            </FormControl>
+
+
+                        </DialogContent>
+    
+                        <DialogActions>
+                            <Button style={{fontSize: '24px'}} onClick={handleClose_deactivate}>Cancel</Button>
+                            <Button style={{fontSize: '24px'}} onClick={() => {
+                                    handleClose_deactivate();
+                                    getSelectItem();
+                                    update_default_inventory();
+                                    var list = find_di(activate_menu, name_display);
+                                    updateMenu(name_display, cost_display, false, isCustomize, list, id);
+                                    refreshPage();
+                            }}>Deactivate</Button>
+                            
+                        </DialogActions>
+                    </Dialog>
                     {/* Activate Btn */}
                     <Button variant="contained" size="small"  className="back1-btn" onClick={handleClickOpen_name_activate} >Activate</Button>
                     
@@ -1274,9 +1419,7 @@ function Menu(){
                             <Hint options={menuname} allowTabFill>             
 
                             <input className='input'
-                                    style={{ width: "500px" }}
-                                value={text}
-                                onChange={e => setText(e.target.value)} 
+                                style={{ width: "500px" }}
                                 ref={inputName}
                             />
                             </Hint>
@@ -1286,7 +1429,7 @@ function Menu(){
                             <Button style={{fontSize: '24px'}} onClick={handleClose_name_activate}>Cancel</Button>
                             <Button style={{fontSize: '24px'}} onClick={() => {
                                     sendValue(true);
-                                    setTest(invItem);
+                                    getEachinv();
                                     handleClose_update();
                             }}>Search</Button>
                         </DialogActions>
@@ -1294,56 +1437,211 @@ function Menu(){
 
 
 
-                        <Dialog open={open_activate} onClose={handleClose_activate}>
-                            <DialogTitle fontSize={36}>Do you want activate?</DialogTitle>
-                            <DialogContent>
+                    <Dialog
+                        fontSize={36}
+                        PaperProps={{       
+                            style: {
+                                backgroundColor: "#82cdad",
+                            },}}  open={open_activate} onClose={handleClose_activate}>
+                        <DialogTitle>Do you want activate?</DialogTitle>
+                        <DialogContent>
+                        <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue={name_display}
+                                helperText="Item Name"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                                inputRef={name_input}
+                            />
                             <TextField
-                                    inputProps={{ readOnly: true }}
-                                    margin="dense"
-                                    id="outlined-required"
-                                    defaultValue={name_display}
-                                    helperText="Item Name"
-                                    type="text"
-                                    fullWidth
-                                    variant="standard"
-                                    inputRef={name_input}
-                                />
-                                <TextField
-                                    inputProps={{ readOnly: true }}
-                                    margin="dense"
-                                    id="outlined-required"
-                                    defaultValue={cost_display}
-                                    helperText="Cost"
-                                    type="text"
-                                    fullWidth
-                                    variant="standard"
-                                /> 
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue={cost_display}
+                                helperText="Cost"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            /> 
 
-                                <TextField
-                                    inputProps={{ readOnly: true }}
-                                    margin="dense"
-                                    id="outlined-required"
-                                    defaultValue={test}
-                                    helperText="Current Default Inventory"
-                                    type="text"
-                                    fullWidth
-                                    variant="standard"
-                                /> 
 
-                            </DialogContent>
-        
-                            <DialogActions>
-                                {/* FIXME: ONCE BACKEND IS DONE */}
-                                <Button style={{fontSize: '24px'}} onClick={handleClose_activate}>Cancel</Button>
-                                <Button style={{fontSize: '24px'}} onClick={() => {
-                                        handleClose_activate();
-                                        var list = find_di(deactivate_menu, name_display);
-                                        updateMenu(name_display, cost_display, true, isCustomize, list, id);
-                                        refreshPage();
-                                }}>Activate</Button>
-                                
-                            </DialogActions>
-                        </Dialog>
+                            <TextField
+                                inputProps={{ readOnly: true }}
+                                margin="dense"
+                                id="outlined-required"
+                                defaultValue={isCustomize}
+                                helperText="is Customize?"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                            /> 
+
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <Select
+                                labelId="demo-simple-select-readonly-label"
+                                id="demo-simple-select-readonly"
+                                value={select_item_base}
+                                onChange={handleChange_base}
+                                inputProps={{ readOnly: true }}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory0.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_base, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                                <FormHelperText>Base</FormHelperText>
+
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <Select
+                                labelId="demo-simple-select-readonly-label"
+                                id="demo-simple-select-readonly"
+                                value={select_item_pro}
+                                onChange={handleChange_pro}
+                                inputProps={{ readOnly: true }}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory1.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_pro, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                                <FormHelperText>Protein</FormHelperText>
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <Select
+                                labelId="demo-simple-select-readonly-label"
+                                id="demo-simple-select-readonly"
+                                value={select_item_top}
+                                onChange={handleChange_top}
+                                inputProps={{ readOnly: true }}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory2.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_top, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                                <FormHelperText>Toppings</FormHelperText>
+
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <Select
+                                labelId="demo-simple-select-readonly-label"
+                                id="demo-simple-select-readonly"
+                                value={select_item_dress}
+                                onChange={handleChange_dress}
+                                inputProps={{ readOnly: true }}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory3.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_dress, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                                <FormHelperText>Dressings</FormHelperText>
+
+                            </FormControl>
+
+                            <FormControl sx={{ m: 1, width: 500 }}>
+                                <Select
+                                labelId="demo-simple-select-readonly-label"
+                                id="demo-simple-select-readonly"
+                                value={select_item_misc}
+                                onChange={handleChange_misc}
+                                inputProps={{ readOnly: true }}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    {selected.map((value) => (
+                                        <Chip key={value} label={value} />
+                                    ))}
+                                    </Box>
+                                )}
+                                MenuProps={MenuProps}
+                                >
+                                {inventory4.map((item) => (
+                                    <MenuItem
+                                    key={item}
+                                    value={item}
+                                    style={getStyles(item, select_item_misc, theme)}
+                                    >
+                                    {item}
+                                    </MenuItem>
+                                ))}
+                                </Select>
+                                <FormHelperText>Misc</FormHelperText>
+
+                            </FormControl>
+
+                        </DialogContent>
+
+                        <DialogActions>
+                            {/* FIXME: ONCE BACKEND IS DONE */}
+                            <Button style={{fontSize: '24px'}} onClick={handleClose_activate}>Cancel</Button>
+                            <Button style={{fontSize: '24px'}} onClick={() => {
+                                    handleClose_activate();
+                                    var list = find_di(deactivate_menu, name_display);
+                                    updateMenu(name_display, cost_display, true, isCustomize, list, id);
+                                    refreshPage();
+                            }}>Activate</Button>
+                            
+                        </DialogActions>
+                    </Dialog>
                 </Stack>
                 </span>
             </div>
@@ -1362,8 +1660,8 @@ function Menu(){
                                 var check = false;
                                 inputName.current = item[0];
                                 sendValue(check); 
-                                setTest(invItem);
-                                handleClick_itemDisplay();
+                                getEachinv();
+                                handleClickOpen_update();
                                 
                             }}>
                         {item[0]}</Button>
@@ -1391,8 +1689,8 @@ function Menu(){
                                         var check = false;
                                         inputName.current = item[0];
                                         sendValue(check); 
-                                        setTest(invItem);
-                                        handleClick_itemDisplay();
+                                        getEachinv();
+                                        handleClickOpen_update();
                                         
                                     }}>
                                     {item[0]}</Button>
@@ -1400,70 +1698,6 @@ function Menu(){
                                 )                                  
                             )
                     }
-                    <Dialog open={item_display} onClose={handleClick_itemDisplay}>
-                            <DialogTitle fontSize={36}>Details</DialogTitle>
-                            <DialogContent>
-                            <TextField
-                                    inputProps={{ readOnly: true }}
-                                    margin="dense"
-                                    id="outlined-required"
-                                    defaultValue={name_display}
-                                    helperText="Item Name"
-                                    type="text"
-                                    fullWidth
-                                    variant="standard"
-                                    inputRef={name_input}
-                                />
-                                <TextField
-                                    inputProps={{ readOnly: true }}
-                                    margin="dense"
-                                    id="outlined-required"
-                                    defaultValue={cost_display}
-                                    helperText="Cost"
-                                    type="text"
-                                    fullWidth
-                                    variant="standard"
-                                /> 
-                                <TextField
-                                    inputProps={{ readOnly: true }}
-                                    margin="dense"
-                                    id="outlined-required"
-                                    defaultValue={isSelling}
-                                    helperText="is selling?"
-                                    type="text"
-                                    fullWidth
-                                    variant="standard"
-                                /> 
-                                <TextField
-                                    inputProps={{ readOnly: true }}
-                                    margin="dense"
-                                    id="outlined-required"
-                                    defaultValue={isCustomize}
-                                    helperText="is Customize?"
-                                    type="text"
-                                    fullWidth
-                                    variant="standard"
-                                /> 
-
-                                <TextField
-                                    inputProps={{ readOnly: true }}
-                                    margin="dense"
-                                    id="outlined-required"
-                                    defaultValue={test}
-                                    helperText="Current Default Inventory"
-                                    type="text"
-                                    fullWidth
-                                    variant="standard"
-                                /> 
-
-                            </DialogContent>
-        
-                            <DialogActions>
-                                <Button style={{fontSize: '24px'}} onClick={handleClick_itemDisplay}>Close</Button>
-
-                                
-                            </DialogActions>
-                        </Dialog>
                 </ThemeProvider>
 
                 </div>
