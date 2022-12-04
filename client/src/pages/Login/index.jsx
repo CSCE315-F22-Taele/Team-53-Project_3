@@ -6,14 +6,14 @@ import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { indigo } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
+
 import TextField from '@mui/material/TextField';
 import e from "cors";
 import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 
 import {useGoogleLogin } from '@react-oauth/google';
 import axios from "axios";
-import { createBox } from "@mui/system";
+
   
 // For local testing: (comment out)
 const conn = "http://localhost:3500/";
@@ -42,6 +42,11 @@ function Login () {
         : null
     );
 
+    const [newEmail, setNewEmail] = useState("");
+    const [newName, setNewName] = useState("");
+    const [newPassword, setnewPassword] = useState("");
+    const [newEmployeeId, setNewEmployeeid] = useState("");
+
     const [count, setCount] = useState(0);
 
     const isEmployeeGoogleOauth= async (sub) => {
@@ -60,37 +65,24 @@ function Login () {
     
             const jsonVals = await response.json();
             
-            setIsEmployee(jsonVals.isEmployee);
-            
             if( jsonVals.isEmployee == true){
                 window.localStorage.setItem('user', jsonVals.employeename);
                 
-
-                const response2 = await fetch (conn + `api/login/isManagerGoogleOauth/${sub}`, 
-                {
-                        method: "GET",
-                        headers: { "Content-Type": "application/json" },
-                    }
-                );
-        
-            
-                const jsonVals2 = await response2.json();
-                
-                //console.log(jsonVals2);
-                setIsManager(jsonVals2);
+                setIsEmployee(jsonVals.isEmployee);
+                managerCheck(jsonVals.employeename);
                 setUserName(jsonVals.employeename);
                 
             }
             else{
                 alert("Invalid email. Account with this email does not exist. Try another email or create an account.");
             }
-
+            window.location.reload()
         } catch (err) {
             
             console.error(err.message);
         }
-        console.log(sub)
-
+        //console.log(sub)
+        
     }
     
     const employeeLogin= async (email, password) => {
@@ -109,40 +101,84 @@ function Login () {
     
             const jsonVals = await response.json();
             console.log(jsonVals);
-    
             
             
             if( jsonVals.isEmployee == true){
+                window.localStorage.setItem('user', jsonVals.employeename);
+                
                 setIsEmployee(jsonVals.isEmployee);
                 setUserName(jsonVals.employeename);
-                // console.log(jsonVals.employeename);
-                const response2 = await fetch (conn + `api/login/isManager/${jsonVals.employeename}`, 
-                {   
-                        method: "GET",
-                        headers: { "Content-Type": "application/json" },
-                    }
-                );
-                    
-            
-                const jsonVals2 = await response2.json();
-                
-                console.log(jsonVals2);
-                setIsManager(jsonVals2);
+                managerCheck(jsonVals.employeename);
             }
             else{
                 alert("Invalid email or password. Try again or sign in with Google. ");
             }
+            window.location.reload()
 
         } catch (err) {
             
             console.error(err.message);
         }
-
+        
     }
     
+    const managerCheck = async (employeename) => {
+        // console.log(jsonVals.employeename);
+        const response2 = await fetch (conn + `api/login/isManager/${employeename}`, 
+        {   
+                method: "GET",
+                headers: { "Content-Type": "application/json" },
+            }
+        );
+        
+        const jsonVals2 = await response2.json();
+        
+        //console.log(jsonVals2);
+        setIsManager(jsonVals2);
+    }
 
     const addEmployeeGoogleOauth= async (sub) => {
         
+    }
+
+
+    const createAccount = async (employeeid, email, password) => {
+       try{
+        if( password !== "" && employeeid !== "" && email !== ""){
+        
+        const body = {employeeid, email, password};
+
+        fetch (conn + "api/login/updateBasedInsert",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            }
+        )
+
+        const response = await fetch (conn + `api/login/getName/${employeeid}`, 
+            {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
+        
+    
+        const jsonVals = await response.json();
+        console.log(jsonVals);
+            
+        if( jsonVals.isEmployee == true){
+                window.localStorage.setItem('user', jsonVals.employeename);
+                
+                setIsEmployee(jsonVals.isEmployee);
+                setUserName(jsonVals.employeename);
+                managerCheck(jsonVals.employeename);
+        }
+        
+        }
+        } catch (err) {
+        console.error(err.message);
+        }
     }
 
     const handleEmail = async (e) => {
@@ -153,51 +189,43 @@ function Login () {
     
     const handlePassword = async (e) => {
         setPassword(e.target.value);
-       
+    }
+
+    const handleNewName = async (e) => {
+        setNewName(e.target.value);
+    }
+
+    const handleNewEmployeeId = async (e) => {
+        setNewEmployeeid(e.target.value);
+    }
+
+    const handleNewEmail = async (e) => {
+        if( e.target.value.includes("@") ){
+        setNewEmail(e.target.value);
+        }
+        else{
+            
+        }
+    }
+
+    const handleNewPassword = async (e) => {
+        setnewPassword(e.target.value);
+    }
+
+
+    const clearLogin = async (e) => {
+        window.localStorage.setItem('user', "");
+        setIsEmployee(false);
+        setIsManager(false);
+        setPassword("");
+        setEmail("");
+        setUserName("");
+        setLoginData(null);
+        window.location.reload()
+
     }
     
-    
-    // const isEmployeeFunction= async (employeename) => {
-        
-    //     try {
 
-    //         setUserName(employeename);
-    //         // const employeename = userName;
-    //         // console.log(employeename);
-    //         const response = await fetch (conn + `api/login/isEmployee/${employeename}`, 
-    //         {
-    //                 method: "GET",
-    //                 headers: { "Content-Type": "application/json" },
-    //             }
-    //         );
-        
-    
-    //         const jsonVals = await response.json();
-            
-    //         //console.log(jsonVals);
-           
-    //         setIsEmployee(jsonVals);
-            
-    //         const response2 = await fetch (conn + `api/login/isManager/${employeename}`, 
-    //         {
-    //                 method: "GET",
-    //                 headers: { "Content-Type": "application/json" },
-    //             }
-    //         );
-        
-    
-    //         const jsonVals2 = await response2.json();
-            
-    //         //console.log(jsonVals2);
-    //         setIsManager(jsonVals2);
-
-
-    //     } catch (err) {
-    
-    //         console.error(err.message);
-    //     }
-
-    // };
 
    
     const Peoplestates = () => {
@@ -224,12 +252,14 @@ function Login () {
     };
 
     useEffect( () => {  
-        console.log(window.localStorage.getItem('user') );
+        //console.log(window.localStorage.getItem('user') );
         const auth = window.localStorage.getItem('user');
         if (auth) {
             setUserName(window.localStorage.getItem('user'));
+            setIsEmployee(true);
+
         }
-    }, [])
+    }, [userName])
 
     const login = useGoogleLogin({
         onSuccess: async respose => {
@@ -240,7 +270,7 @@ function Login () {
                     }
                 })
 
-                console.log(res.data);
+                //console.log(res.data);
                 
                 
                 setUserName(res.data.name);
@@ -259,6 +289,7 @@ function Login () {
 
     });
 
+    //console.log("USER",localStorage.getItem('user'));
 
     return (
     <div>
@@ -277,27 +308,32 @@ function Login () {
                 <h3> Create Account</h3>
                 <br></br>
                 
-                <TextField id="name" label="Name" variant="outlined" required fullWidth/>
+                
+                <TextField id="employee id" label="Employee Id" variant="outlined" required fullWidth onChange={handleNewEmployeeId}/>
                 <br class="spacing"/>
                 <br class="spacing"/>
-                <TextField id="employee id" label="Employee Id" variant="outlined" required fullWidth/>
+                <TextField id="email" label="Email" variant="outlined" required fullWidth onChange={handleNewEmail}/>
                 <br class="spacing"/>
                 <br class="spacing"/>
-                <TextField id="email" label="Email" variant="outlined" required fullWidth/>
+                <TextField id="password" label="Password" variant="outlined" required fullWidth onChange={handleNewPassword}/>
                 <br class="spacing"/>
-                <br class="spacing"/>
-                <TextField id="password" label="Password" variant="outlined" required fullWidth/>
-                <br class="spacing"/>
-                <br></br>
+                <Stack> 
+                <Button type="submit" size="large" variant="contained" sx={{ mt: 3, mb: 3 }} onClick={() => createAccount(newEmployeeId, newEmail, newPassword) }> Create Account</Button>
+                </Stack>
+                
+                <br /> 
                 <h4>Or</h4>
 
                 <Stack> 
+                
+                
                 <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3, mb: 2 }} onClick={login}> 
                 <img width="20px" class="googleImg" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />     Sign In with Google
                 </Button> 
-                
-                <Button type="submit" size="large" variant="contained" sx={{ mt: 3, mb: 3 }} onClick={userLogin}> Create Account</Button>
                 </Stack>
+                
+                
+                <br />
             </div>
             </div>
             )}
@@ -308,6 +344,8 @@ function Login () {
                 <div>
                 <br /> 
                 <br />
+                <br />
+               
                 <h3> Welcome. Please Login. </h3>
 
                 <br />
@@ -322,7 +360,7 @@ function Login () {
                 <Stack>
 
 
-                <Button type="submit"  size="large" variant="contained" sx={{ mt: 3, mb: 0 }} onClick={() => employeeLogin(email, password)}> Sign In</Button>
+                <Button type="submit"  size="large" variant="contained" sx={{ mt: 3, mb: 2 }} onClick={() => employeeLogin(email, password)}> Sign In</Button>
                 </Stack>
                 </form>
 
@@ -332,6 +370,12 @@ function Login () {
                 <img width="20px" class="googleImg" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />     Sign In with Google
                 </Button> 
                 </Stack>
+                <br /> 
+                <br />
+                <br />
+                <br />
+          
+          
                 </div>
             ) }
 
@@ -367,8 +411,17 @@ function Login () {
                 <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openmanager) => {userLogin()} }> Go to Manager Page</Button>
             </Link> 
         )
-
         }
+
+
+
+        <Link to="/login">     
+        <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={() => clearLogin()} > Logout</Button>
+        </Link>
+        
+        
+
+        
         </div>
         )}
 

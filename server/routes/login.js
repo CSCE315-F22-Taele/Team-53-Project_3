@@ -44,7 +44,7 @@ app.get("/isEmployeeGoogleOauth/:sub", async (req, res) => {
             employeename: name,
         };
         res.json(result);
-        
+
         // console.log(todo);
         // var isEmployee = false;
         // if (todo.rowCount >= 1) {
@@ -131,6 +131,53 @@ app.post("/insert", async (req, res) => {
         );
 
         res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.post("/updateBasedInsert", async (req, res) => {
+    try {
+        const { employeeid, email, password } = req.body;
+
+        const todo = await db.query(
+            "UPDATE employee SET email= $1, password=$2 WHERE employeeid= $3",
+            [ email, password, employeeid]
+        );
+
+
+
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
+app.get("/getName/:employeeid", async (req, res) => {
+    try {
+        const employeeid = req.params.employeeid;
+        const todo = await db.query(
+            "SELECT employeename FROM employee WHERE employeeid=$1",
+            [employeeid]
+        );
+
+        var name = todo.rows[0];
+        var isEmployee = false;
+        if (todo.rowCount >= 1) {
+            isEmployee = true;
+            name = JSON.stringify(name).substring(
+                17,
+                JSON.stringify(name).length - 2
+            );
+        }
+
+        let result = {
+            isEmployee: isEmployee,
+            employeename: name,
+        };
+        
+        res.json(result);
     } catch (err) {
         console.error(err.message);
     }
