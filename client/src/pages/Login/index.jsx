@@ -31,9 +31,11 @@ const theme = createTheme({
 });
 
 function Login () {
-    const [userName, setUserName] = useState("");
+    const [userName, setUserName] = useState(window.localStorage.getItem('user'));
     const [isEmployee,setIsEmployee ] = useState(false);
     const [isManager,setIsManager ] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [loginData, setLoginData] = useState(
         localStorage.getItem('loginData')
         ? JSON.parse(localStorage.getItem('loginData') )
@@ -42,16 +44,13 @@ function Login () {
 
     const [count, setCount] = useState(0);
 
-    
-
-    const isEmployeeFunction= async (employeename) => {
-        
+    const isEmployeeGoogleOauth= async (sub) => {
         try {
 
-            setUserName(employeename);
+            
             // const employeename = userName;
             // console.log(employeename);
-            const response = await fetch (conn + `api/login/isEmployee/${employeename}`, 
+            const response = await fetch (conn + `api/login/isEmployeeGoogleOauth/${sub}`, 
             {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
@@ -61,11 +60,46 @@ function Login () {
     
             const jsonVals = await response.json();
             
-            //console.log(jsonVals);
-           
-            setIsEmployee(jsonVals);
+            setIsEmployee(jsonVals.isEmployee);
             
-            const response2 = await fetch (conn + `api/login/isManager/${employeename}`, 
+            if( jsonVals.isEmployee == true){
+                window.localStorage.setItem('user', jsonVals.employeename);
+                
+
+                const response2 = await fetch (conn + `api/login/isManagerGoogleOauth/${sub}`, 
+                {
+                        method: "GET",
+                        headers: { "Content-Type": "application/json" },
+                    }
+                );
+        
+            
+                const jsonVals2 = await response2.json();
+                
+                //console.log(jsonVals2);
+                setIsManager(jsonVals2);
+                setUserName(jsonVals.employeename);
+                
+            }
+            else{
+                alert("Invalid email. Account with this email does not exist. Try another email or create an account.");
+            }
+
+        } catch (err) {
+            
+            console.error(err.message);
+        }
+        console.log(sub)
+
+    }
+    
+    const employeeLogin= async (email, password) => {
+        try {
+
+            
+            // const employeename = userName;
+            
+            const response = await fetch (conn + `api/login/isValidEmployee/${email}/${password}`, 
             {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
@@ -73,18 +107,97 @@ function Login () {
             );
         
     
-            const jsonVals2 = await response2.json();
+            const jsonVals = await response.json();
+            console.log(jsonVals);
+    
             
-            //console.log(jsonVals2);
-            setIsManager(jsonVals2);
-
+            
+            if( jsonVals.isEmployee == true){
+                setIsEmployee(jsonVals.isEmployee);
+                setUserName(jsonVals.employeename);
+                // console.log(jsonVals.employeename);
+                const response2 = await fetch (conn + `api/login/isManager/${jsonVals.employeename}`, 
+                {   
+                        method: "GET",
+                        headers: { "Content-Type": "application/json" },
+                    }
+                );
+                    
+            
+                const jsonVals2 = await response2.json();
+                
+                console.log(jsonVals2);
+                setIsManager(jsonVals2);
+            }
+            else{
+                alert("Invalid email or password. Try again or sign in with Google. ");
+            }
 
         } catch (err) {
-    
+            
             console.error(err.message);
         }
 
-    };
+    }
+    
+
+    const addEmployeeGoogleOauth= async (sub) => {
+        
+    }
+
+    const handleEmail = async (e) => {
+        
+        setEmail(e.target.value);
+        
+      }
+    
+    const handlePassword = async (e) => {
+        setPassword(e.target.value);
+       
+    }
+    
+    
+    // const isEmployeeFunction= async (employeename) => {
+        
+    //     try {
+
+    //         setUserName(employeename);
+    //         // const employeename = userName;
+    //         // console.log(employeename);
+    //         const response = await fetch (conn + `api/login/isEmployee/${employeename}`, 
+    //         {
+    //                 method: "GET",
+    //                 headers: { "Content-Type": "application/json" },
+    //             }
+    //         );
+        
+    
+    //         const jsonVals = await response.json();
+            
+    //         //console.log(jsonVals);
+           
+    //         setIsEmployee(jsonVals);
+            
+    //         const response2 = await fetch (conn + `api/login/isManager/${employeename}`, 
+    //         {
+    //                 method: "GET",
+    //                 headers: { "Content-Type": "application/json" },
+    //             }
+    //         );
+        
+    
+    //         const jsonVals2 = await response2.json();
+            
+    //         //console.log(jsonVals2);
+    //         setIsManager(jsonVals2);
+
+
+    //     } catch (err) {
+    
+    //         console.error(err.message);
+    //     }
+
+    // };
 
    
     const Peoplestates = () => {
@@ -110,6 +223,14 @@ function Login () {
         alert("Entering Employee Pages");
     };
 
+    useEffect( () => {  
+        console.log(window.localStorage.getItem('user') );
+        const auth = window.localStorage.getItem('user');
+        if (auth) {
+            setUserName(window.localStorage.getItem('user'));
+        }
+    }, [])
+
     const login = useGoogleLogin({
         onSuccess: async respose => {
             try {
@@ -128,7 +249,7 @@ function Login () {
                 setCount(countNew + 1);
 
                 setLoginData(res);
-                isEmployeeFunction(res.data.name);
+                isEmployeeGoogleOauth(res.data.sub);
             } catch (err) {
                 console.log(err)
 
@@ -136,18 +257,17 @@ function Login () {
 
         }
 
-        
-
-       
     });
 
 
     return (
     <div>
-        <br></br>
+        {!isEmployee && (<br></br>)}
+        
         <h1> Welcome to Pom and Honey's System</h1>
         <br></br>
         <br></br>
+        { !isEmployee  && (
         <div class="borderArea">
             <ThemeProvider theme={theme}>
             { !isEmployee  && (
@@ -155,22 +275,29 @@ function Login () {
             <div class="newPerson">
                 
                 <h3> Create Account</h3>
-                
-                <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3, mb: 2 }} onClick={login}> 
-                <img width="20px" class="googleImg" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />     Sign In with Google
-                </Button> 
                 <br></br>
-                <h4>Or</h4>
+                
                 <TextField id="name" label="Name" variant="outlined" required fullWidth/>
+                <br class="spacing"/>
+                <br class="spacing"/>
+                <TextField id="employee id" label="Employee Id" variant="outlined" required fullWidth/>
                 <br class="spacing"/>
                 <br class="spacing"/>
                 <TextField id="email" label="Email" variant="outlined" required fullWidth/>
                 <br class="spacing"/>
                 <br class="spacing"/>
                 <TextField id="password" label="Password" variant="outlined" required fullWidth/>
+                <br class="spacing"/>
+                <br></br>
+                <h4>Or</h4>
 
-                <Button type="submit" size="large" variant="contained" sx={{ mt: 3, mb: 3 }} onClick={userLogin}> Create Account</Button>
+                <Stack> 
+                <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3, mb: 2 }} onClick={login}> 
+                <img width="20px" class="googleImg" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />     Sign In with Google
+                </Button> 
                 
+                <Button type="submit" size="large" variant="contained" sx={{ mt: 3, mb: 3 }} onClick={userLogin}> Create Account</Button>
+                </Stack>
             </div>
             </div>
             )}
@@ -184,77 +311,70 @@ function Login () {
                 <h3> Welcome. Please Login. </h3>
 
                 <br />
-                
-                <TextField id="email" label="Email" variant="outlined" required fullWidth/>
+                <form >
+                <TextField id="outlined-basic" label="Email" fullWidth="true" variant="outlined" onChange={handleEmail} />
+                {/* <input type="text" value={email} onChange={handleEmail} /> */}
+                {/* <TextField id="email" label="Email" variant="outlined" required fullWidth value = { email } onChange = { handleEmail }/> */}
                 <br class="spacing"/>
                 <br class="spacing"/>
-                <TextField id="password" label="Password" variant="outlined" required fullWidth/>
+                <TextField id="outlined-basic" label="Pasword" fullWidth="true" type="password"variant="outlined" onChange={handlePassword} />
+                {/* <TextField id="password" label="Password" variant="outlined" required fullWidth value = { password } onChange = { handlePassword }/> */}
                 <Stack>
 
-                <Link to="/cashier" 
-                    state= {{
-                        userName: userName
-                }}>
-                    <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()}}> Sign In</Button>
-                </Link>
+
+                <Button type="submit"  size="large" variant="contained" sx={{ mt: 3, mb: 0 }} onClick={() => employeeLogin(email, password)}> Sign In</Button>
+                </Stack>
+                </form>
 
                 
-                
-                <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3 , mb:2 }}  onClick={ login} > 
+                <Stack>
+                <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3 , mb:2 }}  onClick={login} > 
                 <img width="20px" class="googleImg" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />     Sign In with Google
                 </Button> 
                 </Stack>
                 </div>
             ) }
 
-                {isEmployee  && (
-
-                <div class="success">
-
-                <h4> Hello, employee {userName} </h4>
-                <Link to="/cashier" 
-                    state= {{
-                        userName: userName
-                }}>     
-                    <Button type="cashier"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()} }> Go to Cashier Page</Button>
-                </Link> 
-                
-                
-                {isManager && (
-                    <Link to="/manager_route"
-                    state= {{
-                        userName: userName
-                }}>     
-                        <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openmanager) => {userLogin()} }> Go to Manager Page</Button>
-                    </Link> 
-                )
-
-                }
-                </div>
-                )}
-
-                {/* <GoogleLogin
-                    onSuccess={credentialResponse => {
-                        console.log(credentialResponse);
-                    }}
-                    onError={() => {
-                        console.log('Login Failed');
-                    }}
-                
-                    logo_alignment="center"
-                /> */}
-      
-                
-                <br />
-                <br />        
-                <br />        
-
-            </div>
-
-            </ThemeProvider>
         </div>
+                
+            </ThemeProvider>
+
+            <br />
+            <br />        
+            <br />        
+
+        </div>
+        )}
+
+        {isEmployee  && (
+
+        <div class="success">
+
+        <h4> Hello, employee {userName} </h4>
+        <Link to="/cashier" 
+            state= {{
+                userName: userName
+        }}>     
+            <Button type="cashier"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()} }> Go to Cashier Page</Button>
+        </Link> 
+
+
+        {isManager && (
+            <Link to="/manager_route"
+            state= {{
+                userName: userName
+        }}>     
+                <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openmanager) => {userLogin()} }> Go to Manager Page</Button>
+            </Link> 
+        )
+
+        }
+        </div>
+        )}
 
     </div>
+
+       
     );
 };
 

@@ -21,6 +21,61 @@ app.get("/isEmployee/:employeename", async (req, res) => {
     }
 });
 
+app.get("/isEmployeeGoogleOauth/:sub", async (req, res) => {
+    try {
+        const sub = req.params.sub;
+        const todo = await db.query(
+            "SELECT employeename FROM employee WHERE sub = $1",
+            [sub]
+        );
+        
+        var name = todo.rows[0];
+        var isEmployee = false;
+        if (todo.rowCount >= 1) {
+            isEmployee = true;
+            name = JSON.stringify(name).substring(
+                17,
+                JSON.stringify(name).length - 2
+            );
+        }
+
+        let result = {
+            isEmployee: isEmployee,
+            employeename: name,
+        };
+        res.json(result);
+        
+        // console.log(todo);
+        // var isEmployee = false;
+        // if (todo.rowCount >= 1) {
+        //     isEmployee = true;
+        // }
+
+        // res.json(isEmployee);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+app.get("/isManagerGoogleOauth/:sub", async (req, res) => {
+    try {
+        const employeename = req.params.sub;
+        const todo = await db.query(
+            "SELECT * FROM employee WHERE sub = $1 AND ismanager = true",
+            [sub]
+        );
+
+        var isManager = false;
+        if (todo.rowCount >= 1) {
+            isManager = true;
+        }
+
+        res.json(isManager);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 app.get("/isManager/:employeename", async (req, res) => {
     try {
         const employeename = req.params.employeename;
@@ -43,6 +98,23 @@ app.get("/isManager/:employeename", async (req, res) => {
 /***
 NOT TESTED: Need to update employee table in db.
 ***/
+
+app.post("/insertGoogleOauth", async (req, res) => {
+    try {
+        const { sub } = req.body;
+        const salary = 10;
+        const ismanager = false;
+
+        const todo = await db.query(
+            "UPDATE employee SET (sub) VALUES ($1)",
+            [sub]
+        );
+
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
 
 /*
 Insert a new employee.
@@ -71,7 +143,6 @@ app.get("/isValidEmployee/:email/:password", async (req, res) => {
     try {
         const email = req.params.email;
         const password = req.params.password;
-
         const todo = await db.query(
             "SELECT employeename FROM employee WHERE email=$1 AND password=$2",
             [email, password]

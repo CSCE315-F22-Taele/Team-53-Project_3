@@ -7,11 +7,20 @@ import {
     // Route,
     // Router,
     Link,
+    useNavigate
 } from "react-router-dom";
 // import Order from "../../pages/Order";
 // import Home from "../../pages/Home";
 
 export default function Navbar() {
+
+const auth = localStorage.getItem("userName");
+const navigate  = useNavigate();
+const logout =() => {
+    localStorage.clear();
+    navigate('/login');
+}
+
     return (
         <nav className="navBar">
             <Link to="/" className="home">
@@ -31,12 +40,20 @@ export default function Navbar() {
                         Order Now
                     </Link>
                 </li>
+                { auth ? 
                 <li>
-                    <Link class="nav__link" to="/login">
+                    <Link class="nav__link" onClick={logout} to="/login">
                         {" "}
-                        Login
+                        Logout
                     </Link>
+                </li>: 
+                <li>
+                <Link class="nav__link" to="/login">
+                    {" "}
+                    Login
+                </Link>
                 </li>
+                }
                 
 
             </ul>
