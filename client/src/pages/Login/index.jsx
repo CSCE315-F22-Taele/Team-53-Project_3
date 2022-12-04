@@ -86,7 +86,29 @@ function Login () {
 
     };
 
-   
+    const isEmailPasswordRight = async () => {
+        // try {
+
+        //     const response = await fetch (conn + `api/login/isEmployee/${email}/${password}`, 
+        //     {
+        //             method: "GET",
+        //             headers: { "Content-Type": "application/json" },
+        //     }
+        //     );
+
+        //     const jsonVals = await response.json();
+            
+        //     //console.log(jsonVals);
+           
+        //     (jsonVals);
+
+        // }catch (err) {
+    
+        //     console.error(err.message);
+        // }
+    
+                
+    }
     const Peoplestates = () => {
         const navigate = useNavigate();
         const openprofile = (userName) => {
