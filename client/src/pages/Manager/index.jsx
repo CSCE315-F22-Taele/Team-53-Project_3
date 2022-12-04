@@ -10,6 +10,9 @@ import e from "cors";
 import TextField from '@mui/material/TextField';
 import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 
+const conn = "http://localhost:3500/";
+// const conn = "https://pom-and-honey-bhf5.onrender.com/";
+
 export default function Manager(props) {
     
     const [startDate, setStartDate] = useState((0));
@@ -17,8 +20,6 @@ export default function Manager(props) {
     const [dates, setDates] = useState({start:-2, end:-2});
     const [salesReport, setSalesReport] = useState([]);
     const [salesShown, setSalesShown] = useState(false);
-
-    const conn = "http://localhost:3500/"; // for testing
 
     const salesGet = async () => {
         

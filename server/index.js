@@ -5,8 +5,6 @@ const cors = require("cors");
 const pool = require("./db");
 const path = require("path");
 
-
-
 const PORT = process.env.SERVER_PORT || 3500;
 
 // middleware
@@ -21,6 +19,7 @@ const inventoryRoute = require("./routes/inventory");
 const menuRoute = require("./routes/menu");
 const managerRoute = require("./routes/manager");
 const loginRoute = require("./routes/login");
+const employeeRoute = require("./routes/employee");
 
 app.use("/api/index", indexRoute); // Test Routes
 app.use("/api/order", orderRoute);
@@ -29,6 +28,7 @@ app.use("/api/inventory", inventoryRoute);
 app.use("/api/menu", menuRoute);
 app.use("/api/manager", managerRoute);
 app.use("/api/login", loginRoute);
+app.use("/api/employee", employeeRoute);
 
 app.use(
     cors({

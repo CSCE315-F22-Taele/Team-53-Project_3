@@ -14,6 +14,7 @@ import Inventory from "./pages/Inventory";
 import Menu from "./pages/Menu";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Cashier from "./pages/Cashier";
+import Manager_Route from "./pages/Manager_Route";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -30,6 +31,7 @@ root.render(
                 <Route path="/cashier" element={<Cashier />} />
                 <Route path="/manager" element={<Manager />} />
                 <Route path="/inventory" element={<Inventory />} />
+                <Route path="/manager_route" element={<Manager_Route />} />
             </Route>
         </Routes>
     </HashRouter>
