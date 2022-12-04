@@ -18,7 +18,6 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import { Hint } from 'react-autocomplete-hint';
-import FormHelperText from '@mui/material/FormHelperText';
 
 
 
@@ -1235,6 +1234,8 @@ function Menu(){
                             /> 
 
                             <FormControl sx={{ m: 1, width: 500 }}>
+                            <InputLabel id="demo-simple-select-readonly-label">Base</InputLabel>
+
                                 <Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
@@ -1260,11 +1261,11 @@ function Menu(){
                                     </MenuItem>
                                 ))}
                                 </Select>
-                                <FormHelperText>Base</FormHelperText>
 
                             </FormControl>
 
                             <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-simple-select-readonly-label">Protein</InputLabel>
                                 <Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
@@ -1290,10 +1291,10 @@ function Menu(){
                                     </MenuItem>
                                 ))}
                                 </Select>
-                                <FormHelperText>Protein</FormHelperText>
                             </FormControl>
 
                             <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-simple-select-readonly-label">Toppings</InputLabel>
                                 <Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
@@ -1319,11 +1320,10 @@ function Menu(){
                                     </MenuItem>
                                 ))}
                                 </Select>
-                                <FormHelperText>Toppings</FormHelperText>
-
                             </FormControl>
 
                             <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-simple-select-readonly-label">Dressings</InputLabel>
                                 <Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
@@ -1349,11 +1349,10 @@ function Menu(){
                                     </MenuItem>
                                 ))}
                                 </Select>
-                                <FormHelperText>Dressings</FormHelperText>
-
                             </FormControl>
 
                             <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-simple-select-readonly-label">Misc</InputLabel>
                                 <Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
@@ -1379,9 +1378,8 @@ function Menu(){
                                     </MenuItem>
                                 ))}
                                 </Select>
-                                <FormHelperText>Misc</FormHelperText>
-
                             </FormControl>
+
 
 
                         </DialogContent>
@@ -1480,7 +1478,10 @@ function Menu(){
                             /> 
 
                             <FormControl sx={{ m: 1, width: 500 }}>
+                            <InputLabel id="demo-simple-select-readonly-label">Base</InputLabel>
+
                                 <Select
+                                
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
                                 value={select_item_base}
@@ -1505,11 +1506,11 @@ function Menu(){
                                     </MenuItem>
                                 ))}
                                 </Select>
-                                <FormHelperText>Base</FormHelperText>
 
                             </FormControl>
 
                             <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-simple-select-readonly-label">Protein</InputLabel>
                                 <Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
@@ -1535,10 +1536,10 @@ function Menu(){
                                     </MenuItem>
                                 ))}
                                 </Select>
-                                <FormHelperText>Protein</FormHelperText>
                             </FormControl>
 
                             <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-simple-select-readonly-label">Toppings</InputLabel>
                                 <Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
@@ -1564,11 +1565,10 @@ function Menu(){
                                     </MenuItem>
                                 ))}
                                 </Select>
-                                <FormHelperText>Toppings</FormHelperText>
-
                             </FormControl>
 
                             <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-simple-select-readonly-label">Dressings</InputLabel>
                                 <Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
@@ -1594,11 +1594,10 @@ function Menu(){
                                     </MenuItem>
                                 ))}
                                 </Select>
-                                <FormHelperText>Dressings</FormHelperText>
-
                             </FormControl>
 
                             <FormControl sx={{ m: 1, width: 500 }}>
+                                <InputLabel id="demo-simple-select-readonly-label">Misc</InputLabel>
                                 <Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
@@ -1624,8 +1623,6 @@ function Menu(){
                                     </MenuItem>
                                 ))}
                                 </Select>
-                                <FormHelperText>Misc</FormHelperText>
-
                             </FormControl>
 
                         </DialogContent>
