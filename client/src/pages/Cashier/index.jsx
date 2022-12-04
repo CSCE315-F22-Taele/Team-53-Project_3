@@ -57,10 +57,16 @@ function Cashier (props) {
     const [ cat2click, setAllowClickCat2] = useState(true);
     const [ cat3click, setAllowClickCat3] = useState(true);
     const [countToppings, setCountToppings] = useState(0);
-    
-
+    const [awaitPickup,setAwaitPickup]= useState(false);
+    const [awaitPickup2,setAwaitPickup2]= useState(false);
+    const [orderNew,setOrderNew]= useState(false);
+    const [newAwait, setNewAwait]= useState(false);
     const name = "Pom and Honey at Texas A&M MSC";
-   
+
+    
+    const [newOrders, setNewOrders] = useState([]);
+    const [pickupOrder, setpickupOrder] = useState([]);
+
 
     const handleClick = () => {
         setIsShown((current) => !current);
@@ -529,6 +535,20 @@ function Cashier (props) {
             });
         }
     }
+
+    const setRemove = () => {
+        setAwaitPickup(true);
+        
+    }
+    const setRemove2 = () => {
+        setAwaitPickup2(true);
+        
+    }
+    
+    const setNewOrder = () => {
+        setOrderNew(true);
+        setNewAwait(true);
+    }
     
 
     return (
@@ -540,10 +560,79 @@ function Cashier (props) {
         <div class="cashier__mobileorders">
             <br />
             <h1>Mobile Orders</h1>
+            
+            
             <br />
             <h3> New Orders</h3>
+            <table>
+             {!orderNew && (
+                <div> 
+                <tr> 
+                    <th> Order Id</th>
+                    <th class="costCol"> Cost </th>
+                    <th class="buttonDone"> Done </th>
+                </tr>
+
+                { newOrders.map( (item) =>
+                    (
+                <tr>
+                
+                    <td> 221122005</td>
+                    <td class="costCol"> $27.32</td>
+                    <td class="buttonDone">  
+                        <Button  variant="contained" sx={{color:'green', backgroundColor:'white', mt: 3 , mb:2 }} onClick= {() => setNewOrder()} > 
+                            X
+                        </Button> 
+                    </td>
+                </tr>
+                ))}                                                                                       
+                </div>
+                )}
+
+            </table>
             <br />
             <h3> Awaiting Pickup</h3>
+            
+            <table>
+                    
+            <div>
+                <tr> 
+                    <th> Order Id</th>
+                    <th class="costCol"> Cost </th>
+                    <th class="buttonDone"> Done </th>
+                </tr>
+
+                
+                
+                {!awaitPickup && (
+
+                  
+                <tr>
+                    <td> 221122003</td>
+                    <td class="costCol"> $12.23</td>
+                    <td class="buttonDone">  
+                        <Button  variant="contained" sx={{color:'green', backgroundColor:'white', mt: 3 , mb:2 }} onClick= {() => setRemove()} > 
+                            X
+                        </Button> 
+                    </td>
+                </tr>
+            
+
+                )}
+
+                {newAwait && !awaitPickup2 && (
+                    <tr>
+                        <td> 221122005</td>
+                         <td class="costCol"> $27.32</td>
+                         <td class="buttonDone">  
+                                  <Button  variant="contained" sx={{color:'green', backgroundColor:'white', mt: 3 , mb:2 }} onClick= {() => setRemove2()} > 
+                                            X
+                                        </Button> 
+                         </td>
+                    </tr>
+                )}
+                </div>
+            </table>
 
             
 
