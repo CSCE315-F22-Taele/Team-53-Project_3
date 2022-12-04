@@ -4,7 +4,7 @@ import "./index.css";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 // import Stack from "@mui/material/Stack";
-import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
+//import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 
 export default function Manager(props) {
 
@@ -16,6 +16,9 @@ export default function Manager(props) {
     const [excessShown, setExcessShown] = useState(false); // show text after submit
     const [alignment, setAlignment] = React.useState('left'); // for toggle
     const [toggle, setToggle] = React.useState(true);
+
+    const [display_start, setDisplayStart] = useState("");
+    const [display_end, setDisplayEnd] = useState("");
     
 
     const conn = "http://localhost:3500/"; // for testing
@@ -26,8 +29,6 @@ export default function Manager(props) {
             setSalesReport([]);
             const start = (dates.start);
             const end = (dates.end);
-            console.log("start", start);
-            console.log("end", end);
             const response = await fetch (conn + `api/manager/getSaleReport/${start}/${end}`, 
             {
                     method: "GET",
@@ -36,18 +37,13 @@ export default function Manager(props) {
             );
 
             const data = await response.json();
-            console.log(data);
-            
             // for(var key in data){
             //     var reportVals = salesReport;
             //     reportVals.push(data[key]);
             //     setSalesReport(reportVals);
             // }
             
-            setSalesReport(data);
-            console.log("SALESREPORT");
-            console.log(salesReport);
-           
+            setSalesReport(data);           
             
         } catch (err) {
     
@@ -71,7 +67,6 @@ export default function Manager(props) {
             );
 
             const data = await response.json();
-            console.log(data);
 
             setExcessReport(data);
             
@@ -88,16 +83,34 @@ export default function Manager(props) {
 
         event.preventDefault(); // idk what this does
 
-        const startDate = event.target.startDate.value;
-        const endDate = event.target.endDate.value;
+        if (/^\d{4}-\d{2}-\d{2}$/.test(event.target.startDate.value)) {
+            if (/^\d{4}-\d{2}-\d{2}$/.test(event.target.endDate.value)) {
+                // To display results in proper date format.
+                setDisplayStart(event.target.startDate.value);
+                setDisplayEnd(event.target.endDate.value);
 
-        setDates({start: parseInt(startDate), end: parseInt(endDate)});
-        console.log("start", startDate);
-        console.log("end", endDate);
+                const start_date = new Date(event.target.startDate.value);
+                const end_date = new Date (event.target.endDate.value);
+                if (start_date <= end_date) {
+                    var startDate = (event.target.startDate.value.replace('-','').replace('-','') + "000").substring(2);
+                    var endDate = (event.target.endDate.value.replace('-','').replace('-','') + "000").substring(2);
 
-        setSalesShown(true);
-
-        event.target.reset(); // idk what this does
+                    setDates({start: parseInt(startDate), end: parseInt(endDate)});
+                    setSalesShown(true);
+                    event.target.reset();
+                }
+                else {
+                    alert("Invalid inputs. Start date must begin before end date.");
+                }
+            }
+            else {
+                alert("Invalid end date. Please enter in YYYY-MM-DD format.")
+            }
+        }
+        else {
+            setSalesShown(false);
+            alert("Invalid start date. Please enter in YYYY-MM-DD format.")
+        }
     };
 
     // set parameters for excess report
@@ -106,14 +119,42 @@ export default function Manager(props) {
 
         event.preventDefault();
 
-        const startDate = event.target.startDate.value;
-        const endDate = event.target.endDate.value;
-        const thresh = event.target.thresholdVal.value;
+        if (/^\d{4}-\d{2}-\d{2}$/.test(event.target.startDate.value)) {
+            if (/^\d{4}-\d{2}-\d{2}$/.test(event.target.endDate.value)) {
+                // To display results in proper date format.
+                setDisplayStart(event.target.startDate.value);
+                setDisplayEnd(event.target.endDate.value);
 
-        setExcessParams({start: parseInt(startDate), end: parseInt(endDate), threshold: parseInt(thresh)});
-        setExcessShown(true);
+                const start_date = new Date(event.target.startDate.value);
+                const end_date = new Date (event.target.endDate.value);
+                if (start_date <= end_date) {
+                    var startDate = (event.target.startDate.value.replace('-','').replace('-','') + "000").substring(2);
+                    var endDate = (event.target.endDate.value.replace('-','').replace('-','') + "000").substring(2);
 
-        event.target.reset(); // idk what this does
+                    if (/^\d+$/.test(event.target.thresholdVal.value)) {
+                        var thresh = event.target.thresholdVal.value;
+                        setExcessParams({start: parseInt(startDate), end: parseInt(endDate), threshold: parseInt(thresh)});
+                        setExcessShown(true);
+                        event.target.reset();
+                    }
+                    else {
+                        setExcessShown(false);
+                        alert("Invalid threshold. Please enter a whole number. (Eg. 10)");
+                    }
+                    
+                }
+                else {
+                    alert("Invalid inputs. Start date must begin before end date.");
+                }
+            }
+            else {
+                alert("Invalid end date. Please enter in YYYY-MM-DD format.")
+            }
+        }
+        else {
+            setExcessShown(false);
+            alert("Invalid start date. Please enter in YYYY-MM-DD format.")
+        }
     }
 
     // for toggle
@@ -123,10 +164,12 @@ export default function Manager(props) {
 
     const handleSalesClick = event => {
         setToggle(true);
+        setExcessShown(false);
     }
 
     const handleExcessClick = event => {
         setToggle(false);
+        setSalesShown(false);
     }
 
 
@@ -158,13 +201,14 @@ export default function Manager(props) {
                 <div class="salesReport">
                     <br />
                     <h1>Sales Report</h1>
+                    <p>This will display all sales from start to end date.</p>
                     <br />
                     <form onSubmit={handleSaleSubmit}>
                         <input
                             type="text"
                             id="startDate"
                             name="startDate"
-                            placeholder="Start Date: YYMMDD000"
+                            placeholder="Start Date (YYYY-MM-DD)"
                         />
 
                         <br />
@@ -174,7 +218,7 @@ export default function Manager(props) {
                             type="text"
                             id="endDate"
                             name="endDate"
-                            placeholder="End Date: YYMMDD000"
+                            placeholder="End Date (YYYY-MM-DD)"
                         />
 
                         <br />
@@ -185,11 +229,11 @@ export default function Manager(props) {
                         <br />
                         <br />
 
-                        {salesShown && <h5>Sales from {dates.start} to {dates.end}:</h5>}
+                        {salesShown && <h5>Sales from {display_start} to {display_end}:</h5>}
 
                     </form>
 
-                    {salesReport.map( (item) =>
+                    {salesShown && salesReport.map( (item) =>
                         <li> {item.name} : {item.sold}</li>
                     )}
 
@@ -200,13 +244,14 @@ export default function Manager(props) {
                 <div class="excessReport">
                     <br />
                     <h1>Excess Report</h1>
+                    <p>This will display inventory items used under a specified percentage from start to end date.</p>
                     <br />
                     <form onSubmit={handleExcessSubmit}>
                         <input
                             type="text"
                             id="startDate"
                             name="startDate"
-                            placeholder="Start Date: YYMMDD000"
+                            placeholder="Start Date (YYYY-MM-DD)"
                         />
 
                         <br />
@@ -216,7 +261,7 @@ export default function Manager(props) {
                             type="text"
                             id="endDate"
                             name="endDate"
-                            placeholder="End Date: YYMMDD000"
+                            placeholder="End Date (YYYY-MM-DD)"
                         />
 
                         <br />
@@ -226,7 +271,7 @@ export default function Manager(props) {
                             type="text"
                             id="thresholdVal"
                             name="thresholdVal"
-                            placeholder="Threshold "
+                            placeholder="Threshold (Eg. 10)"
                         />
 
                         <br />
@@ -239,9 +284,9 @@ export default function Manager(props) {
 
                     </form>
 
-                    {excessShown && <h5>Excess Report from {excessParams.start} to {excessParams.end} with {excessParams.threshold} threshold:</h5>}
+                    {excessShown && <h5>Excess Report from {display_start} to {display_end} with {excessParams.threshold} threshold:</h5>}
 
-                    {excessReport.map( (item) =>
+                    {excessShown && excessReport.map( (item) =>
                         <li> {item.name} : {item.amount}</li>
                     )}
 
