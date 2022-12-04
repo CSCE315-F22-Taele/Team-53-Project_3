@@ -8,7 +8,6 @@ import Stack from '@mui/material/Stack';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { TextField } from '@mui/material';
 import Chip from '@mui/material/Chip';
@@ -18,6 +17,10 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
+import { Hint } from 'react-autocomplete-hint';
+
+
+
 
 
 const conn = "http://localhost:3500/";
@@ -32,6 +35,17 @@ function Menu(){
             },
             secondary: indigo,
         },
+        typography: {
+
+            fontSize: 20,
+        },
+    });
+
+    const increaseSize = createTheme({
+        typography: {
+
+            fontSize: 20,
+        },
     });
     const deactivate_theme = createTheme({
         palette: {
@@ -42,6 +56,11 @@ function Menu(){
                 main:"#b94b56",
             },
         },
+        typography: {
+
+            fontSize: 20,
+        },
+
     });
 
     const ITEM_HEIGHT = 48;
@@ -63,18 +82,70 @@ function Menu(){
               : theme.typography.fontWeightMedium,
         };
     }
+    const [inventory, setInventory] = useState([]);
+    const [inventory0, setInventory0] = useState([]);
+    const [inventory1, setInventory1] = useState([]);
+    const [inventory2, setInventory2] = useState([]);
+    const [inventory3, setInventory3] = useState([]);
+    const [inventory4, setInventory4] = useState([]); 
 
-    function get_default_inventory(default_inventory){
-        let inv = item;
+    const [menu, setMenu] = useState([]);
+    const [activate_menu, set_activateMenu] = useState([]);
+    const [deactivate_menu, set_deactivateMenu] = useState([]);
+    const [menuname, set_menuName] = useState([]);
+
+    const [select_item, set_selectItem] = useState([]);
+    const [select_item_base, set_selectItem_base] = useState([]);
+    const [select_item_pro, set_selectItem_pro] = useState([]);
+    const [select_item_top, set_selectItem_top] = useState([]);
+    const [select_item_dress, set_selectItem_dress] = useState([]);
+    const [select_item_misc, set_selectItem_misc] = useState([]);
+
+    const [invItem, setItem] = useState([]);
+    const [updateInv, set_updateInv] = useState([]);
+    const [test, setTest] = useState([]);
+
+    const [open_add, set_add] = useState(false);
+    const [open_update, set_update] = useState(false);
+
+    // ask name
+    const [open_name_update, set_name_update] = useState(false);
+    const [open_name_deactivate, set_name_deactivate] = useState(false);
+    const [open_name_activate, set_name_activate] = useState(false);
+    
+
+    const [open_deactivate, set_deactivate] = useState(false);
+    const [open_activate, set_activate] = useState(false);
+
+
+    const [welcome_open, set_welcome] = useState(true);
+    const [isSelling, set_is_selling] = useState(false);
+    const [isCustomize, set_is_customize] = useState(false);
+
+    const [name_display, set_nameDisplay] = useState('');
+    const [cost_display, set_costDisplay] = useState('');
+    const [id, setId] = useState('');
+
+    const inputName = useRef('');
+
+    const name_input = useRef('');
+    const cost_input = useRef('');
+
+    const [selling_status, set_selling_status] = useState('');
+    const [customize_status, set_customize_status] = useState('');
+
+    const [item_display, set_itemDisplay] = useState(false);
+    const [text, setText] = useState('')
+
+    const get_default_inventory = (default_inventory) => {
+        let list = [];
+        setItem([]);
         for(var key in inventory){
             if(default_inventory[key] === 1){
-                console.log(inventory[key]);
-                inv.push(inventory[key]);
+                invItem.push(inventory[key]);
             }
         }
-        setItem(inv);
-        console.log(item);
-        return{inv};
+        setItem(list);
     }
 
     function refreshPage() {
@@ -101,20 +172,19 @@ function Menu(){
     }
 
     const update_default_inventory = () => {
-
-        var list  = updateInv;
-
-        console.log(select_item);
         
-
-        if(select_item.length === 0){
-            list = findIndex(item);
-             
-        }else {
+        var list  = [];        
+        if(select_item.length !== 0){
             list = findIndex(select_item);
         }
+        
+        
         set_updateInv(list);
         
+    }
+
+    const handleClick_itemDisplay = () =>{
+        set_itemDisplay((item_display) => !item_display);
     }
 
     const handleChange_isCustomize = (event) => {
@@ -123,14 +193,16 @@ function Menu(){
         } else {
             set_is_customize(false);
         }
+        set_customize_status(event.target.value);
     };
 
     const handleChange_isSelling = (event) => {
         if(event.target.value === 0){
             set_is_selling(true);
         } else {
-            set_is_selling(false);
+            set_is_selling(false);      
         }
+        set_selling_status(event.target.value);
     };
 
     const handleChange_base = (event) => {
@@ -185,81 +257,28 @@ function Menu(){
     const getSelectItem = () => {
         let itemList = select_item;
 
-
-            for(var key in select_item_base){
-                itemList.push(select_item_base[key][0])
+            for(let key in select_item_base){
+                itemList.push(select_item_base[key])
             }
 
-            for(var key in select_item_pro){
-                itemList.push(select_item_pro[key][0])
+            for(let key in select_item_pro){
+                itemList.push(select_item_pro[key])
             }
 
-            for(var key in select_item_top){
-                itemList.push(select_item_top[key][0])
+            for(let key in select_item_top){
+                itemList.push(select_item_top[key])
             }
 
-            for(var key in select_item_dress){
-                itemList.push(select_item_dress[key][0])
+            for(let key in select_item_dress){
+                itemList.push(select_item_dress[key])
             }
 
-            for(var key in select_item_misc){
-                itemList.push(select_item_misc[key][0])
+            for(let key in select_item_misc){
+                itemList.push(select_item_misc[key])
             }
 
             set_selectItem(itemList);
-        
-
-
     }
-
-
-    const [inventory, setInventory] = useState([]);
-    const [inventory0, setInventory0] = useState([]);
-    const [inventory1, setInventory1] = useState([]);
-    const [inventory2, setInventory2] = useState([]);
-    const [inventory3, setInventory3] = useState([]);
-    const [inventory4, setInventory4] = useState([]); 
-
-    const [menu, setMenu] = useState([]);
-    const [activate_menu, set_activateMenu] = useState([]);
-    const [deactivate_menu, set_deactivateMenu] = useState([]);
-
-    const [select_item, set_selectItem] = useState([]);
-    const [select_item_base, set_selectItem_base] = useState([]);
-    const [select_item_pro, set_selectItem_pro] = useState([]);
-    const [select_item_top, set_selectItem_top] = useState([]);
-    const [select_item_dress, set_selectItem_dress] = useState([]);
-    const [select_item_misc, set_selectItem_misc] = useState([]);
-
-    const [item, setItem] = useState([]);
-    const [updateInv, set_updateInv] = useState([]);
-
-    const [open_add, set_add] = useState(false);
-    const [open_update, set_update] = useState(false);
-
-    // ask name
-    const [open_name_add, set_name_add] = useState(false);
-    const [open_name_update, set_name_update] = useState(false);
-    const [open_name_deactivate, set_name_deactivate] = useState(false);
-    const [open_name_activate, set_name_activate] = useState(false);
-
-    const [open_deactivate, set_deactivate] = useState(false);
-    const [open_activate, set_activate] = useState(false);
-
-    const [welcome_open, set_welcome] = useState(true);
-    const [isSelling, set_is_selling] = useState(false);
-    const [isCustomize, set_is_customize] = useState(false);
-
-    const [name_display, set_nameDisplay] = useState('');
-    const [cost_display, set_costDisplay] = useState('');
-    const [id, setId] = useState('');
-
-    const inputName = useRef('');
-
-    const name_input = useRef('');
-    const cost_input = useRef('');
-
-
 
     const handleClickOpen_add = () => {
         set_add(true);
@@ -267,9 +286,7 @@ function Menu(){
     const handleClickOpen_update = () => {
         set_update(true);
     };
-    const handleClickOpen_name_add = () => {
-        set_name_add(true);
-    };
+
     const handleClickOpen_name_update = () => {
         set_name_update(true);
     };
@@ -286,15 +303,14 @@ function Menu(){
         set_activate(true);
     };
 
+
     const handleClose_add = () => {
         set_add(false);
     };
     const handleClose_update = () => {
         set_update(false);
     };
-    const handleClose_name_add = () => {
-        set_name_add(false);
-    };
+
     const handleClose_name_update = () => {
         set_name_update(false);
     };
@@ -316,14 +332,6 @@ function Menu(){
         set_welcome(false);
     }
 
-    const handleChange_selling = () => {
-        set_is_selling(true);
-    };
-
-    const handleChange_customize = () => {
-        set_is_customize(true);
-    };
-
     const reset = () => {
         setItem([]);
         set_selectItem([]);
@@ -337,93 +345,197 @@ function Menu(){
         set_is_customize(false);
     }
 
-    const sendValue = () => {
+    const sendValue = (c) => {
         set_nameDisplay("");
         set_costDisplay("");
         set_selectItem([]);
+        set_is_selling(false);
         setId("");
-        
-        for(let key in inventory){
-            if(menu[key][0] === inputName.current.value){
-                set_nameDisplay(menu[key][0]);
-                set_costDisplay(menu[key][1]);
-                get_default_inventory(menu[key][2]);
-                set_is_selling(menu[key][3]);
-                set_is_customize(menu[key][4]);
-                setId(menu[key][5]);
-                break;
-            } 
+        setItem([]);
+        var check = false;
+
+        if(c){
+            if(inputName.current.value !== ""){
+                let n = inputName.current.value;
+                n = n.toLowerCase();
+                console.log(n);
+                for(let key in menu){
+                    let menuName = menu[key][0];
+                    menuName = menuName.toLowerCase();
+                    if((menuName === n && !menu[key][3] && open_name_activate ) || 
+                    (menuName === n && menu[key][3] && open_name_deactivate) || (menuName === n && open_name_update) ){
+                        
+                        set_nameDisplay(menu[key][0]);
+                        set_costDisplay(menu[key][1]);
+                        get_default_inventory(menu[key][2]);
+                        set_is_selling(menu[key][3]);
+                        if(menu[key][3] === true){
+                            set_selling_status(0);
+                        } else {
+                            set_selling_status(1);
+                        }
+                        
+                        set_is_customize(menu[key][4]);
+                        if(menu[key][4] === true){
+                            set_customize_status(0);
+                        } else {
+                            set_customize_status(1);
+                        }
+                        setId(menu[key][5]);
+                        check = true;
+                        break;
+                    } 
+                }  
+            }
+        } else {
+            if(inputName.current !== ""){
+                let n = inputName.current.toLowerCase();
+
+                for(let key in menu){
+                    let menuName = menu[key][0].toLowerCase();
+
+                    if(menuName === n  ){
+                        console.log(menu[key][3]);
+                        console.log(open_name_activate);
+                        console.log(open_name_deactivate);
+                        set_nameDisplay(menu[key][0]);
+                        set_costDisplay(menu[key][1]);
+                        get_default_inventory(menu[key][2]);
+                        set_is_selling(menu[key][3]);
+                        if(menu[key][3] === true){
+                            set_selling_status(0);
+                        } else {
+                            set_selling_status(1);
+                        }
+                        
+                        set_is_customize(menu[key][4]);
+                        if(menu[key][4] === true){
+                            set_customize_status(0);
+                        } else {
+                            set_customize_status(1);
+                        }
+                        setId(menu[key][5]);
+                        check = true;
+                        break;
+                    } 
+                }  
+            }
+        }
+
+        if(check){
+            if(open_name_update){
+                handleClickOpen_update(); 
+                handleClose_name_update();
+            } else if(open_name_deactivate){
+                handleClickOpen_deactivate(); 
+                handleClose_name_deactivate();
+            } else if(open_name_activate){
+                handleClickOpen_activate(); 
+                handleClose_name_activate();
+            }            
+        } else {
+            alert("The item doesn't exist!");
+            if(open_name_update){
+                handleClickOpen_name_update();
+            } else if(open_name_deactivate){
+                handleClickOpen_name_deactivate();
+            } else if(open_name_activate){
+                handleClickOpen_name_activate()
+            }
+           
+            
         }
         
     }
+    const getEachinv = async() => {
+        let list_base = [];
+        let list_pro = [];
+        let list_top = [];
+        let list_dress = [];
+        let list_misc = [];
+        for(var key in invItem){
+            if((inventory0.indexOf(invItem[key]) !== -1)){
+                list_base.push(invItem[key]);
+            }
+            if((inventory1.indexOf(invItem[key]) !== -1)){
+                list_pro.push(invItem[key]);
+            }
+            if((inventory2.indexOf(invItem[key]) !== -1)){
+                list_top.push(invItem[key]);
+            }
+            if((inventory3.indexOf(invItem[key]) !== -1)){
+                list_dress.push(invItem[key]);
+            }
+            if((inventory4.indexOf(invItem[key]) !== -1)){
+                list_misc.push(invItem[key]);
+            }
+        }
+        set_selectItem_base(list_base);
+        set_selectItem_pro(list_pro);
+        set_selectItem_top(list_top);
+        set_selectItem_dress(list_dress);
+        set_selectItem_misc(list_misc);
 
+    }
 
     
     // This function will retrieve all of the inventory to reference w/ default_inventory used in menu.
-    const getInventory = async () => {
+    const getInventory = async ()  => {
         try {
             const response = await fetch(conn + "api/menu/getInventory");
             // FIXME: Need to split into array to display. Reference Order page. 'data' contains inventory itemnames and classification.
             const data = await response.json();
             for(var key in data){
-                let inventoryBase = [];
-                let inventoryProteins = [];
-                let inventoryToppings = [];
-                let inventoryDressings = [];
-                let inventoryMisc = [];
+                let inv = inventory;
+                let inventoryBase = inventory0;
+                let inventoryProteins = inventory1;
+                let inventoryToppings = inventory2;
+                let inventoryDressings = inventory3;
+                let inventoryMisc = inventory4;
 
                     if (data[key].classify === 0){
                         inventoryBase.push(data[key].itemname);
-
-                        let inventoryVals = inventory0;
-                        inventoryVals.push(inventoryBase);
     
-                        setInventory0(inventoryVals);  
+                        setInventory0(inventoryBase);  
                     }
                     else if(data[key].classify === 1){
                         inventoryProteins.push(data[key].itemname);
-
-                        let inventoryVals = inventory1;
-                        inventoryVals.push(inventoryProteins);
-    
-                        setInventory1(inventoryVals);
+                        setInventory1(inventoryProteins);
                     }
                     else if(data[key].classify === 2){
                         inventoryToppings.push(data[key].itemname);
-
-                        let inventoryVals = inventory2;
-                        inventoryVals.push(inventoryToppings);
     
-                        setInventory2(inventoryVals);
+                        setInventory2(inventoryToppings);
                     }
                     else if(data[key].classify === 3){
                         inventoryDressings.push(data[key].itemname);
 
-                        let inventoryVals = inventory3;
-                        inventoryVals.push(inventoryDressings);
-    
-                        setInventory3(inventoryVals);
+                        setInventory3(inventoryDressings);
                     }
                     else if(data[key].classify === 4){
                         inventoryMisc.push(data[key].itemname);
-
-                        let inventoryVals = inventory4;
-                        inventoryVals.push(inventoryMisc);
     
-                        setInventory4(inventoryVals);
+                        setInventory4(inventoryMisc);
                     }
 
-                let inv = data[key].itemname;
-                let inventoryVals = inventory;
-                inventoryVals.push(inv);
-
-                setInventory(inventoryVals);
+                inv.push(data[key].itemname) ;
+                setInventory(inv);
                 
             }
         }
         catch (err) {
             console.error(err.message);
         }
+    }
+
+    function find_di (menu, name) {
+        var list = [];
+        for(var key in menu){
+            if(menu[key][0] === name){
+                list = menu[key][2];
+            }
+        }
+        return list;
     }
 
     const getMenu = async () => {
@@ -436,6 +548,7 @@ function Menu(){
                 let m = [];
                 let d = [];
                 let a = [];
+                let n = menuname;
 
                 if(data[key].is_selling){
                     a.push(data[key].menuitem);
@@ -460,11 +573,12 @@ function Menu(){
                 m.push(data[key].is_selling);
                 m.push(data[key].is_customize);
                 m.push(data[key].id);
-
+                n.push(data[key].menuitem);
                 let m_Vals = menu;
                 m_Vals.push(m);
 
                 setMenu(m_Vals);
+                set_menuName(n);
             }
         }
         catch (err) {
@@ -483,7 +597,6 @@ function Menu(){
             var is_customize = _is_customize;
             var default_inventory = _default_inventory;
             var id = _id;
-
             const body = {menuitem, cost, is_selling, is_customize, default_inventory, id};
             fetch (conn + "api/menu/update",
                 {
@@ -506,16 +619,26 @@ function Menu(){
             var is_selling = true; // Do not change
             var is_customize = _is_customize;
             var default_inventory = _default_inventory;
+            
+            if(menuitem === "" || cost === "" || is_selling === "" || is_customize === "" || default_inventory.length === 0){
+                alert("The input is invalid");
+                getSelectItem();
+                update_default_inventory();
+            } else {
+                handleClose_add();
+                const body = {menuitem, cost, is_selling, is_customize, default_inventory};
+                fetch (conn + "api/menu/insert",
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(body)
+                    }
+                )
+                reset();
+                refreshPage();
+            }
 
-            const body = {menuitem, cost, is_selling, is_customize, default_inventory};
 
-            fetch (conn + "api/menu/insert",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(body)
-                }
-            )
             
         } catch (err) {
             console.error(err.message);
@@ -525,21 +648,23 @@ function Menu(){
     useEffect( () => {
         getInventory();
         getMenu();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return(
         <div className="menu_page">
-            <Dialog open={welcome_open} onClose={handleClose_welcome}>
-                <DialogTitle>Welcome to Menu Page</DialogTitle>
-
+            
+            <Dialog open={welcome_open} onClose={handleClose_welcome} >
+                <DialogTitle fontSize={36}>Welcome to Menu Page</DialogTitle>
+                
                 <DialogActions>
-                    <Button>Back</Button>
-                    <Button onClick={() => {
+                    <Button style={{fontSize: '24px'}}>Back</Button>
+                    <Button style={{fontSize: '24px'}} onClick={() => {
                         handleClose_welcome();
                     }}>Start</Button>
                 </DialogActions>                                
             </Dialog>
-
+            <ThemeProvider theme={increaseSize}>
             <div className="menu_receipt-section">
 
 
@@ -554,13 +679,13 @@ function Menu(){
                 >
                     <Button variant="contained" size="small"  className="menu_add-btn" onClick={handleClickOpen_add}>Add Item</Button>
                         <Dialog open={open_add} onClose={handleClose_add}>
-                            <DialogTitle>Add</DialogTitle>
+                            <DialogTitle fontSize={36}>Add</DialogTitle>
                             <DialogContent>
                             <TextField
                                     required
                                     margin="dense"
                                     id="outlined-required"
-                                    defaultValue={name_display}
+                                    
                                     helperText="Item Name"
                                     type="text"
                                     fullWidth
@@ -572,8 +697,8 @@ function Menu(){
                                     required
                                     margin="dense"
                                     id="outlined-required"
-                                    defaultValue={cost_display}
-                                    helperText="Cost"
+                                   
+                                    helperText="Cost (eg. 2 or 2.00)"
                                     type="text"
                                     fullWidth
                                     variant="standard"
@@ -752,18 +877,17 @@ function Menu(){
                                 </DialogContent>
         
                                 <DialogActions>
-                                    {/* FIXME: ONCE BACKEND IS DONE */}
-                                <Button onClick={() => {
+
+                                <Button style={{fontSize: '24px'}} onClick={() => {
                                     handleClose_add()
                                     reset();
                                     }}>Cancel</Button>
-                                <Button onClick={() => {
-                                    handleClose_add();
+                                <Button style={{fontSize: '24px'}} onClick={() => {
+                                    
                                     getSelectItem();
                                     update_default_inventory();
                                     insertMenu(name_input.current.value, cost_input.current.value, isCustomize, updateInv);
-                                    reset();
-                                    refreshPage();
+                                    
                                 }}>Add</Button>
                                 </DialogActions>
                         </Dialog>  
@@ -771,8 +895,10 @@ function Menu(){
                     <Button variant="contained" size="small" className="back1-btn" onClick={handleClickOpen_name_update}>Update</Button>
                         
                             <Dialog open={open_name_update} onClose={handleClose_name_update}>
-                            <DialogTitle>What is the item's name?</DialogTitle>
+                            <DialogTitle fontSize={36}>What is the item's name?</DialogTitle>
                                 <DialogContent>
+                                <Hint options={menuname} allowTabFill>             
+                                    {/* 
                                     <TextField
                                         required
                                         margin="dense"
@@ -782,22 +908,37 @@ function Menu(){
                                         fullWidth
                                         variant="standard"
                                         inputRef={inputName}
-                                    />                 
+                                        value={text}
+                                        onChange={e => setText(e.target.value)} 
+                                    /> */}
+
+                                    <input className='input'
+                                         style={{ width: "500px" }}
+                                        value={text}
+                                        onChange={e => setText(e.target.value)} 
+                                        ref={inputName}
+                                    />
+                                </Hint>   
                                 </DialogContent>
             
                                 <DialogActions>
-                                    {/* FIXME: ONCE BACKEND IS DONE */}
-                                    <Button onClick={handleClose_name_update}>Cancel</Button>
-                                    <Button onClick={() => {
-                                            handleClickOpen_update();
+                                    <Button style={{fontSize: '24px'}} onClick={handleClose_name_update}>Cancel</Button>
+                                    <Button style={{fontSize: '24px'}} onClick={() => {
                                             handleClose_name_update();
-                                            sendValue();
+                                            
+                                            sendValue(true);
+                                            getEachinv();
+
                                     }}>Search</Button>
                                 </DialogActions>                                
                             </Dialog>
+
+
                         <Dialog open={open_update} onClose={handleClose_update}>
-                            <DialogTitle>Update</DialogTitle>
+                            <DialogTitle fontSize={36}>Update</DialogTitle>
+   
                             <DialogContent>
+
                             <TextField
                                 required
                                 margin="dense"
@@ -821,12 +962,13 @@ function Menu(){
                                 inputRef={cost_input}
                             /> 
                             
-                            <FormControl sx={{ m: 1, width: 250 }}>
+                           <FormControl sx={{ m: 1, width: 250 }}>
                                 <InputLabel id="demo-multiple-chip-label">is selling?</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         onChange={handleChange_isSelling}
+                                        value={selling_status}
                                         >
                                         <MenuItem value={0}>Yes</MenuItem>
                                         <MenuItem value={1}>No</MenuItem>
@@ -840,23 +982,13 @@ function Menu(){
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         onChange={handleChange_isCustomize}
+                                        value={customize_status}
                                         >
                                         <MenuItem value={0}>Yes</MenuItem>
                                         <MenuItem value={1}>No</MenuItem>
 
                                     </Select>
                                 </FormControl>
-                            
-                            <TextField
-                                inputProps={{ readOnly: true }}
-                                margin="dense"
-                                id="outlined-required"
-                                defaultValue={item}
-                                helperText="Current Default Inventory"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                            /> 
 
                             <br />
 
@@ -1016,32 +1148,31 @@ function Menu(){
                                 </DialogContent>
         
                                 <DialogActions>
-                                    {/* FIXME: ONCE BACKEND IS DONE */}
-                                    <Button onClick={() => {
+                                    <Button style={{fontSize: '24px'}} onClick={() => {
                                     handleClose_update()
                                     reset();
+                                    
                                     }}>Cancel</Button>
-                                <Button onClick={() => {
+                                <Button style={{fontSize: '24px'}} onClick={() => { 
                                     handleClose_update();
-
                                     getSelectItem();
                                     update_default_inventory();
-;                                   updateMenu(name_input.current.value, cost_input.current.value, isSelling, isCustomize, updateInv, 
+                                    updateMenu(name_input.current.value, cost_input.current.value, isSelling, isCustomize, updateInv, 
                                         id);
                                     reset();
                                     refreshPage();
                                 }}>Update</Button>
                                 </DialogActions>
-                        </Dialog>  
+                        </Dialog> 
 
                     {/* Deactivate Btn */}
                     <ThemeProvider theme={deactivate_theme}>
                     <Button color="primary" variant="contained" size="small" className="back1-btn" onClick={handleClickOpen_name_deactivate} >Deactivate</Button>
                     </ThemeProvider>
                     <Dialog open={open_name_deactivate} onClose={handleClose_name_deactivate}>
-                        <DialogTitle>What is the item's name?</DialogTitle>
+                        <DialogTitle fontSize={36}>What is the item's name?</DialogTitle>
                         <DialogContent>
-                            <TextField
+                            {/* <TextField
                                 required
                                 margin="dense"
                                 id="outlined-required"
@@ -1050,21 +1181,30 @@ function Menu(){
                                 fullWidth
                                 variant="standard"
                                 inputRef={inputName}
-                            />              
+                            />               */}
+                            <Hint options={menuname} allowTabFill>             
+
+                            <input className='input'
+                                style={{ width: "500px" }}
+                                value={text}
+                                onChange={e => setText(e.target.value)} 
+                                ref={inputName}
+                            />
+                            </Hint>
                         </DialogContent>
     
                         <DialogActions>
-                            <Button onClick={handleClose_name_deactivate}>Cancel</Button>
-                            <Button onClick={() => {
-                                    sendValue();
-                                    handleClickOpen_deactivate();
-                                    handleClose_name_deactivate();
-                                    
+                            <Button style={{fontSize: '24px'}} onClick={handleClose_name_deactivate}>Cancel</Button>
+                            <Button style={{fontSize: '24px'}} onClick={() => {
+                                    sendValue(true);
+                                    setTest(invItem);
+                                    handleClose_update();
+
                             }}>Search</Button>
                         </DialogActions>
                     </Dialog>
                         <Dialog open={open_deactivate} onClose={handleClose_deactivate}>
-                            <DialogTitle>Do you want deactivate?</DialogTitle>
+                            <DialogTitle fontSize={36}>Do you want deactivate?</DialogTitle>
                             <DialogContent>
                             <TextField
                                     inputProps={{ readOnly: true }}
@@ -1092,7 +1232,7 @@ function Menu(){
                                     inputProps={{ readOnly: true }}
                                     margin="dense"
                                     id="outlined-required"
-                                    defaultValue={item}
+                                    defaultValue={test}
                                     helperText="Current Default Inventory"
                                     type="text"
                                     fullWidth
@@ -1102,13 +1242,13 @@ function Menu(){
                             </DialogContent>
         
                             <DialogActions>
-                                {/* FIXME: ONCE BACKEND IS DONE */}
-                                <Button onClick={handleClose_deactivate}>Cancel</Button>
-                                <Button onClick={() => {
+                                <Button style={{fontSize: '24px'}} onClick={handleClose_deactivate}>Cancel</Button>
+                                <Button style={{fontSize: '24px'}} onClick={() => {
                                         handleClose_deactivate();
                                         getSelectItem();
                                         update_default_inventory();
-                                        updateMenu(name_display, cost_display, false, isCustomize, updateInv, id);
+                                        var list = find_di(activate_menu, name_display);
+                                        updateMenu(name_display, cost_display, false, isCustomize, list, id);
                                         refreshPage();
                                 }}>Deactivate</Button>
                                 
@@ -1119,9 +1259,9 @@ function Menu(){
                     
                     
                     <Dialog open={open_name_activate} onClose={handleClose_name_activate}>
-                        <DialogTitle>What is the item's name?</DialogTitle>
+                        <DialogTitle fontSize={36}>What is the item's name?</DialogTitle>
                         <DialogContent>
-                            <TextField
+                            {/* <TextField
                                 required
                                 margin="dense"
                                 id="outlined-required"
@@ -1130,16 +1270,24 @@ function Menu(){
                                 fullWidth
                                 variant="standard"
                                 inputRef={inputName}
-                            />              
+                            />               */}
+                            <Hint options={menuname} allowTabFill>             
+
+                            <input className='input'
+                                    style={{ width: "500px" }}
+                                value={text}
+                                onChange={e => setText(e.target.value)} 
+                                ref={inputName}
+                            />
+                            </Hint>
                         </DialogContent>
     
                         <DialogActions>
-                            <Button onClick={handleClose_name_activate}>Cancel</Button>
-                            <Button onClick={() => {
-                                    sendValue();
-                                    handleClickOpen_activate();
-                                    handleClose_name_activate();
-                                    
+                            <Button style={{fontSize: '24px'}} onClick={handleClose_name_activate}>Cancel</Button>
+                            <Button style={{fontSize: '24px'}} onClick={() => {
+                                    sendValue(true);
+                                    setTest(invItem);
+                                    handleClose_update();
                             }}>Search</Button>
                         </DialogActions>
                     </Dialog>
@@ -1147,7 +1295,7 @@ function Menu(){
 
 
                         <Dialog open={open_activate} onClose={handleClose_activate}>
-                            <DialogTitle>Do you want activate?</DialogTitle>
+                            <DialogTitle fontSize={36}>Do you want activate?</DialogTitle>
                             <DialogContent>
                             <TextField
                                     inputProps={{ readOnly: true }}
@@ -1175,7 +1323,7 @@ function Menu(){
                                     inputProps={{ readOnly: true }}
                                     margin="dense"
                                     id="outlined-required"
-                                    defaultValue={item}
+                                    defaultValue={test}
                                     helperText="Current Default Inventory"
                                     type="text"
                                     fullWidth
@@ -1186,12 +1334,11 @@ function Menu(){
         
                             <DialogActions>
                                 {/* FIXME: ONCE BACKEND IS DONE */}
-                                <Button onClick={handleClose_activate}>Cancel</Button>
-                                <Button onClick={() => {
+                                <Button style={{fontSize: '24px'}} onClick={handleClose_activate}>Cancel</Button>
+                                <Button style={{fontSize: '24px'}} onClick={() => {
                                         handleClose_activate();
-                                        getSelectItem();
-                                        update_default_inventory();
-                                        updateMenu(name_display, cost_display, true, isCustomize, updateInv, id);
+                                        var list = find_di(deactivate_menu, name_display);
+                                        updateMenu(name_display, cost_display, true, isCustomize, list, id);
                                         refreshPage();
                                 }}>Activate</Button>
                                 
@@ -1200,7 +1347,7 @@ function Menu(){
                 </Stack>
                 </span>
             </div>
-
+            </ThemeProvider>
 
             <div className="menu_deactivate-section">
                 <h1>Deactivate</h1>
@@ -1210,7 +1357,15 @@ function Menu(){
                     
                     (                                               
                         <Button className="menu_item-btn" variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                        >
+                        onClick= { () => 
+                            {
+                                var check = false;
+                                inputName.current = item[0];
+                                sendValue(check); 
+                                setTest(invItem);
+                                handleClick_itemDisplay();
+                                
+                            }}>
                         {item[0]}</Button>
                         
                     )                                  
@@ -1231,12 +1386,84 @@ function Menu(){
                                 
                                 (                                               
                                     <Button className="menu_item-btn" variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                                    >
+                                    onClick= { () => 
+                                    {
+                                        var check = false;
+                                        inputName.current = item[0];
+                                        sendValue(check); 
+                                        setTest(invItem);
+                                        handleClick_itemDisplay();
+                                        
+                                    }}>
                                     {item[0]}</Button>
                                     
                                 )                                  
                             )
                     }
+                    <Dialog open={item_display} onClose={handleClick_itemDisplay}>
+                            <DialogTitle fontSize={36}>Details</DialogTitle>
+                            <DialogContent>
+                            <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={name_display}
+                                    helperText="Item Name"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                    inputRef={name_input}
+                                />
+                                <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={cost_display}
+                                    helperText="Cost"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                /> 
+                                <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={isSelling}
+                                    helperText="is selling?"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                /> 
+                                <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={isCustomize}
+                                    helperText="is Customize?"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                /> 
+
+                                <TextField
+                                    inputProps={{ readOnly: true }}
+                                    margin="dense"
+                                    id="outlined-required"
+                                    defaultValue={test}
+                                    helperText="Current Default Inventory"
+                                    type="text"
+                                    fullWidth
+                                    variant="standard"
+                                /> 
+
+                            </DialogContent>
+        
+                            <DialogActions>
+                                <Button style={{fontSize: '24px'}} onClick={handleClick_itemDisplay}>Close</Button>
+
+                                
+                            </DialogActions>
+                        </Dialog>
                 </ThemeProvider>
 
                 </div>
