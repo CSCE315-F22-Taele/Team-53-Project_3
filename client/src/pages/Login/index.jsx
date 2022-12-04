@@ -86,7 +86,29 @@ function Login () {
 
     };
 
-   
+    const isEmailPasswordRight = async () => {
+        // try {
+
+        //     const response = await fetch (conn + `api/login/isEmployee/${email}/${password}`, 
+        //     {
+        //             method: "GET",
+        //             headers: { "Content-Type": "application/json" },
+        //     }
+        //     );
+
+        //     const jsonVals = await response.json();
+            
+        //     //console.log(jsonVals);
+           
+        //     (jsonVals);
+
+        // }catch (err) {
+    
+        //     console.error(err.message);
+        // }
+    
+                
+    }
     const Peoplestates = () => {
         const navigate = useNavigate();
         const openprofile = (userName) => {
@@ -98,7 +120,7 @@ function Login () {
         }
 
         const openmanager = (userName) => {
-            navigate ("/manager", {
+            navigate ("/manager_route", {
                 state: {
                     userName: userName
                 }
@@ -107,7 +129,7 @@ function Login () {
     }
 
     const userLogin = () => {
-        alert("Logged In")
+        alert("Entering Employee Pages");
     };
 
     const login = useGoogleLogin({
@@ -219,13 +241,12 @@ function Login () {
                     <Button type="cashier"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()} }> Go to Cashier Page</Button>
                 </Link> 
                 
-                {/* FIX ME: ROUTE TO MANAGER PAGE */}
+                
                 {isManager && (
-                    <Link to="/manager"
+                    <Link to="/manager_route"
                     state= {{
                         userName: userName
                 }}>     
-                {/* What is the button type supposed to be? What's cashier? */}
                         <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openmanager) => {userLogin()} }> Go to Manager Page</Button>
                     </Link> 
                 )

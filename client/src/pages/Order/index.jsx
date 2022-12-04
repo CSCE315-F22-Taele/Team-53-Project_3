@@ -245,8 +245,9 @@ function Order () {
             }
             
             current += ':' + date.getSeconds() + "." + date.getMilliseconds();
-
-            const body = {orderid, current, totalCost, listOrdered, inventoryUsed};
+            
+            var mobile_order = 1;
+            const body = {orderid, current, totalCost, listOrdered, inventoryUsed, mobile_order};
             const response = fetch (conn + "api/order/postOrder", 
             {
                     method: "POST",
@@ -718,11 +719,11 @@ function Order () {
                     state= {{
                         orderid : orderid,
                         totalCost : totalCost,
-                        listOrdered : listOrdered
+                        inventoryUsed : inventoryUsed,
+                        listOrderedNames : listOrderedNames
                     }}
                     >
 
-                  
                     <Button variant="contained" size="large" sx={{mt: 3, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick= { (openprofile) => {sendtoDb()}}>Submit Order</Button>
                         
                     

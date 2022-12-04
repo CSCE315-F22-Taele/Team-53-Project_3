@@ -68,6 +68,7 @@ app.post("/insert", async (req, res) => {
     }
 });
 
+
 app.get("/getRestock", async (req, res) => {
     try {
         const todo = await db.query(
