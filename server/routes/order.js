@@ -131,6 +131,23 @@ app.get("/getOrderStatus", async (req, res) => {
     }
 });
 
+app.get("/getNewOrders/:mobile_order", async (req, res) => {
+    try {
+        
+        const mobile_order = req.params.mobile_order;
+        console.log(req.params.mobile_order);
+        console.log(mobile_order);
+        const todo = await db.query(
+            "SELECT * FROM ordering WHERE mobile_order = $1",
+            [mobile_order]
+        );
+
+        res.json(todo.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
 app.get("/getCurrentOrderStatus/:orderid", async (req, res) => {
     try {
         const orderid = req.params.orderid;

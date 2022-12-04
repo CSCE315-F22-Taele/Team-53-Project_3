@@ -55,8 +55,9 @@ body {
 
 table{
     margin-left: 10px;
-    margin-right: 10px;
+    margin-right: 1px;
     width: 100%;
+    justify-content: center;
 }
 
 
@@ -77,6 +78,9 @@ table{
     margin-bottom: 0px;
 } */
 
+.orderid{
+    width: 40%;
+}
 .buttonDone{
     width: 50%;
 }
