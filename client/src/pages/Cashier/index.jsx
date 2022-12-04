@@ -246,7 +246,9 @@ function Cashier (props) {
             
             current += ':' + date.getSeconds() + "." + date.getMilliseconds();
 
-            const body = {orderid, current, totalCost, listOrdered, inventoryUsed};
+            // If cashier, order is not online.
+            var mobile_order = 0;
+            const body = {orderid, current, totalCost, listOrdered, inventoryUsed, mobile_order};
             const response = fetch (conn + "api/order/postOrder", 
             {
                     method: "POST",

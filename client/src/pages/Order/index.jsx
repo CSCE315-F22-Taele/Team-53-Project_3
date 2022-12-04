@@ -245,8 +245,9 @@ function Order () {
             }
             
             current += ':' + date.getSeconds() + "." + date.getMilliseconds();
-
-            const body = {orderid, current, totalCost, listOrdered, inventoryUsed};
+            
+            var mobile_order = 1;
+            const body = {orderid, current, totalCost, listOrdered, inventoryUsed, mobile_order};
             const response = fetch (conn + "api/order/postOrder", 
             {
                     method: "POST",
