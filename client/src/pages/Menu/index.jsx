@@ -19,10 +19,6 @@ import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import { Hint } from 'react-autocomplete-hint';
 
-
-
-
-
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
@@ -37,14 +33,14 @@ function Menu(){
         },
         typography: {
 
-            fontSize: 20,
+            fontSize: 16,
         },
     });
 
     const increaseSize = createTheme({
         typography: {
 
-            fontSize: 20,
+            fontSize: 16,
         },
     });
     const deactivate_theme = createTheme({
@@ -58,7 +54,7 @@ function Menu(){
         },
         typography: {
 
-            fontSize: 20,
+            fontSize: 16,
         },
 
     });
@@ -174,8 +170,7 @@ function Menu(){
         if(select_item.length !== 0){
             list = findIndex(select_item);
         }
-        
-        
+
         set_updateInv(list);
         
     }
@@ -352,7 +347,7 @@ function Menu(){
             if(inputName.current.value !== ""){
                 let n = inputName.current.value;
                 n = n.toLowerCase();
-                console.log(n);
+
                 for(let key in menu){
                     let menuName = menu[key][0];
                     menuName = menuName.toLowerCase();
@@ -428,13 +423,16 @@ function Menu(){
                 handleClose_name_activate();
             }            
         } else {
-            alert("The item doesn't exist!");
+            //alert("This item doesn't exist!");
             if(open_name_update){
                 handleClickOpen_name_update();
+                alert("This item doesn't exist!");
             } else if(open_name_deactivate){
                 handleClickOpen_name_deactivate();
+                alert("This item doesn't exist or is currently deactivated!");
             } else if(open_name_activate){
                 handleClickOpen_name_activate()
+                alert("This item doesn't exist or is currently activated!");
             }
            
             
@@ -611,28 +609,41 @@ function Menu(){
             var menuitem = _menuitem;
             var cost = _cost;
             var is_selling = true; // Do not change
-            var is_customize = _is_customize;
+            var is_customize = _is_customize; // If no input, set to false
             var default_inventory = _default_inventory;
             
-            if(menuitem === "" || cost === "" || is_selling === "" || is_customize === "" || default_inventory.length === 0){
-                alert("The input is invalid");
+            if (String(menuitem.length) !== 0) {
+                if (/^\d+\.\d{0,2}$/.test(cost)) {
+                    if (default_inventory.length !== 0) {
+                        handleClose_add();
+                        const body = {menuitem, cost, is_selling, is_customize, default_inventory};
+                        fetch (conn + "api/menu/insert",
+                            {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(body)
+                            }
+                        )
+                        reset();
+                        refreshPage();
+                    }
+                    else {
+                        alert("Invalid: Inventory cannot be empty. Please select inventory used for this menu item.");
+                        getSelectItem();
+                        update_default_inventory();
+                    }
+                }
+                else {
+                    alert ("Invalid cost. Please enter in X.XX format.");
+                    getSelectItem();
+                    update_default_inventory();
+                }
+            } 
+            else {
+                alert("Invalid menu item name. Please retry.")
                 getSelectItem();
                 update_default_inventory();
-            } else {
-                handleClose_add();
-                const body = {menuitem, cost, is_selling, is_customize, default_inventory};
-                fetch (conn + "api/menu/insert",
-                    {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(body)
-                    }
-                )
-                reset();
-                refreshPage();
             }
-
-
             
         } catch (err) {
             console.error(err.message);
@@ -649,11 +660,10 @@ function Menu(){
         <div className="menu_page">
             
             <Dialog open={welcome_open} onClose={handleClose_welcome} >
-                <DialogTitle fontSize={36}>Welcome to Menu Page</DialogTitle>
+                <DialogTitle fontSize={25}>Welcome to Menu Page</DialogTitle>
                 
                 <DialogActions>
-                    <Button style={{fontSize: '24px'}}>Back</Button>
-                    <Button style={{fontSize: '24px'}} onClick={() => {
+                    <Button style={{fontSize: '20px'}} onClick={() => {
                         handleClose_welcome();
                     }}>Start</Button>
                 </DialogActions>                                
@@ -671,9 +681,9 @@ function Menu(){
                     direction="row"
                     spacing={5}
                 >
-                    <Button variant="contained" size="small"  className="menu_add-btn" onClick={handleClickOpen_add}>Add Item</Button>
+                    <Button variant="contained" size="small"  className="menu_add-btn" onClick={handleClickOpen_add}>Add</Button>
                         <Dialog open={open_add} onClose={handleClose_add}>
-                            <DialogTitle fontSize={36}>Add</DialogTitle>
+                            <DialogTitle fontSize={25}>Add New Item</DialogTitle>
                             <DialogContent>
                             <TextField
                                     required
@@ -692,7 +702,7 @@ function Menu(){
                                     margin="dense"
                                     id="outlined-required"
                                    
-                                    helperText="Cost (eg. 2 or 2.00)"
+                                    helperText="Cost (eg. X.XX)"
                                     type="text"
                                     fullWidth
                                     variant="standard"
@@ -701,7 +711,7 @@ function Menu(){
 
 
                                 <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-multiple-chip-label">Allowed for customization?</InputLabel>
+                                <InputLabel id="demo-multiple-chip-label">Allow for customization?</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
@@ -715,7 +725,7 @@ function Menu(){
 
                                 <br />
                                 <br />
-                                <InputLabel align="left" >Default Inventory</InputLabel>
+                                <InputLabel align="left">Default Inventory</InputLabel>
                                 
                                 <FormControl sx={{ m: 1, width: 500 }}>
                                     <InputLabel id="demo-multiple-chip-label">Base</InputLabel>
@@ -872,11 +882,11 @@ function Menu(){
         
                                 <DialogActions>
 
-                                <Button style={{fontSize: '24px'}} onClick={() => {
+                                <Button style={{fontSize: '20px'}} onClick={() => {
                                     handleClose_add()
                                     reset();
                                     }}>Cancel</Button>
-                                <Button style={{fontSize: '24px'}} onClick={() => {
+                                <Button style={{fontSize: '20px'}} onClick={() => {
                                     
                                     getSelectItem();
                                     update_default_inventory();
@@ -889,23 +899,9 @@ function Menu(){
                     <Button variant="contained" size="small" className="back1-btn" onClick={handleClickOpen_name_update}>Update</Button>
                         
                             <Dialog open={open_name_update} onClose={handleClose_name_update}>
-                            <DialogTitle fontSize={36}>What is the item's name?</DialogTitle>
+                            <DialogTitle fontSize={25}>What is the item's name?</DialogTitle>
                                 <DialogContent>
-                                <Hint options={menuname} allowTabFill>             
-                                    {/* 
-                                    <TextField
-                                        required
-                                        margin="dense"
-                                        id="outlined-required"
-                                        label="Item name"
-                                        type="text"
-                                        fullWidth
-                                        variant="standard"
-                                        inputRef={inputName}
-                                        value={text}
-                                        onChange={e => setText(e.target.value)} 
-                                    /> */}
-
+                                <Hint options={menuname} allowTabFill>
                                     <input className='input'
                                         style={{ width: "500px" }}
                                         ref={inputName}
@@ -914,8 +910,8 @@ function Menu(){
                                 </DialogContent>
             
                                 <DialogActions>
-                                    <Button style={{fontSize: '24px'}} onClick={handleClose_name_update}>Cancel</Button>
-                                    <Button style={{fontSize: '24px'}} onClick={() => {
+                                    <Button style={{fontSize: '20px'}} onClick={handleClose_name_update}>Cancel</Button>
+                                    <Button style={{fontSize: '20px'}} onClick={() => {
                                             handleClose_name_update();
                                             
                                             sendValue(true);
@@ -927,7 +923,7 @@ function Menu(){
 
 
                         <Dialog open={open_update} onClose={handleClose_update}>
-                            <DialogTitle fontSize={36}>Update</DialogTitle>
+                            <DialogTitle fontSize={25}>Update</DialogTitle>
    
                             <DialogContent>
 
@@ -955,7 +951,7 @@ function Menu(){
                             /> 
                             
                            <FormControl sx={{ m: 1, width: 250 }}>
-                                <InputLabel id="demo-multiple-chip-label">is selling?</InputLabel>
+                                <InputLabel id="demo-multiple-chip-label">Is selling?</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
@@ -969,7 +965,7 @@ function Menu(){
                             </FormControl>
 
                             <FormControl sx={{ m: 1, width: 250 }}>
-                                <InputLabel id="demo-multiple-chip-label">Allowed for customization?</InputLabel>
+                                <InputLabel id="demo-multiple-chip-label">Allow for customization?</InputLabel>
                                     <Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
@@ -984,7 +980,7 @@ function Menu(){
 
                             <br />
 
-                            <InputLabel align="left" >Update Default Inventory</InputLabel>
+                            <InputLabel align="left">Update Default Inventory</InputLabel>
                             <FormControl sx={{ m: 1, width: 500 }}>
                                 <InputLabel id="demo-multiple-chip-label">Base</InputLabel>
                                 <Select
@@ -1140,12 +1136,12 @@ function Menu(){
                                 </DialogContent>
         
                                 <DialogActions>
-                                    <Button style={{fontSize: '24px'}} onClick={() => {
+                                    <Button style={{fontSize: '20px'}} onClick={() => {
                                     handleClose_update()
                                     reset();
                                     
                                     }}>Cancel</Button>
-                                <Button style={{fontSize: '24px'}} onClick={() => { 
+                                <Button style={{fontSize: '20px'}} onClick={() => { 
                                     handleClose_update();
                                     getSelectItem();
                                     update_default_inventory();
@@ -1162,18 +1158,8 @@ function Menu(){
                     <Button color="primary" variant="contained" size="small" className="back1-btn" onClick={handleClickOpen_name_deactivate} >Deactivate</Button>
                     </ThemeProvider>
                     <Dialog open={open_name_deactivate} onClose={handleClose_name_deactivate}>
-                        <DialogTitle fontSize={36}>What is the item's name?</DialogTitle>
+                        <DialogTitle fontSize={25}>What is the item's name?</DialogTitle>
                         <DialogContent>
-                            {/* <TextField
-                                required
-                                margin="dense"
-                                id="outlined-required"
-                                label="Item Name"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                inputRef={inputName}
-                            />               */}
                             <Hint options={menuname} allowTabFill>             
 
                             <input className='input'
@@ -1184,8 +1170,8 @@ function Menu(){
                         </DialogContent>
     
                         <DialogActions>
-                            <Button style={{fontSize: '24px'}} onClick={handleClose_name_deactivate}>Cancel</Button>
-                            <Button style={{fontSize: '24px'}} onClick={() => {
+                            <Button style={{fontSize: '20px'}} onClick={handleClose_name_deactivate}>Cancel</Button>
+                            <Button style={{fontSize: '20px'}} onClick={() => {
                                     sendValue(true);
                                     getEachinv();
                                     handleClose_update();
@@ -1198,7 +1184,7 @@ function Menu(){
                         style: {
                             backgroundColor: "#cf8f8f",
                         },}}  open={open_deactivate} onClose={handleClose_deactivate}>
-                        <DialogTitle fontSize={36}>Do you want deactivate?</DialogTitle>
+                        <DialogTitle fontSize={25}>Do you want to deactivate?</DialogTitle>
                         <DialogContent>
                         <TextField
                                 inputProps={{ readOnly: true }}
@@ -1385,8 +1371,8 @@ function Menu(){
                         </DialogContent>
     
                         <DialogActions>
-                            <Button style={{fontSize: '24px'}} onClick={handleClose_deactivate}>Cancel</Button>
-                            <Button style={{fontSize: '24px'}} onClick={() => {
+                            <Button style={{fontSize: '20px'}} onClick={handleClose_deactivate}>Cancel</Button>
+                            <Button style={{fontSize: '20px'}} onClick={() => {
                                     handleClose_deactivate();
                                     getSelectItem();
                                     update_default_inventory();
@@ -1402,7 +1388,7 @@ function Menu(){
                     
                     
                     <Dialog open={open_name_activate} onClose={handleClose_name_activate}>
-                        <DialogTitle fontSize={36}>What is the item's name?</DialogTitle>
+                        <DialogTitle fontSize={25}>What is the item's name?</DialogTitle>
                         <DialogContent>
                             {/* <TextField
                                 required
@@ -1424,8 +1410,8 @@ function Menu(){
                         </DialogContent>
     
                         <DialogActions>
-                            <Button style={{fontSize: '24px'}} onClick={handleClose_name_activate}>Cancel</Button>
-                            <Button style={{fontSize: '24px'}} onClick={() => {
+                            <Button style={{fontSize: '20px'}} onClick={handleClose_name_activate}>Cancel</Button>
+                            <Button style={{fontSize: '20px'}} onClick={() => {
                                     sendValue(true);
                                     getEachinv();
                                     handleClose_update();
@@ -1436,7 +1422,7 @@ function Menu(){
 
 
                     <Dialog
-                        fontSize={36}
+                        fontSize={25}
                         PaperProps={{       
                             style: {
                                 backgroundColor: "#82cdad",
@@ -1628,9 +1614,8 @@ function Menu(){
                         </DialogContent>
 
                         <DialogActions>
-                            {/* FIXME: ONCE BACKEND IS DONE */}
-                            <Button style={{fontSize: '24px'}} onClick={handleClose_activate}>Cancel</Button>
-                            <Button style={{fontSize: '24px'}} onClick={() => {
+                            <Button style={{fontSize: '20px'}} onClick={handleClose_activate}>Cancel</Button>
+                            <Button style={{fontSize: '20px'}} onClick={() => {
                                     handleClose_activate();
                                     var list = find_di(deactivate_menu, name_display);
                                     updateMenu(name_display, cost_display, true, isCustomize, list, id);
@@ -1645,7 +1630,9 @@ function Menu(){
             </ThemeProvider>
 
             <div className="menu_deactivate-section">
-                <h1>Deactivate</h1>
+                <h1>Deactivated</h1>
+                <p>These menu items are currently not selling.</p>
+                <p></p>
                 <ThemeProvider theme={theme}>
 
                 { deactivate_menu.map((item) =>
@@ -1673,6 +1660,7 @@ function Menu(){
 
             <div className="menu_activate-section">
                 <h1>Activate</h1>
+                <p>These menu items are currently being sold.</p>
 
                 <div className="menu-btn">
                 <ThemeProvider theme={theme}>
