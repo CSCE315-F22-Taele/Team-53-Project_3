@@ -43,7 +43,7 @@ export default function Manager(props) {
             //     setSalesReport(reportVals);
             // }
             
-            setSalesReport(data);           
+            setSalesReport(data); 
             
         } catch (err) {
     
@@ -284,7 +284,7 @@ export default function Manager(props) {
 
                     </form>
 
-                    {excessShown && <h5>Excess Report from {display_start} to {display_end} with {excessParams.threshold} threshold:</h5>}
+                    {excessShown && <h5>Excess Report from {display_start} to {display_end} with a {excessParams.threshold}% threshold:</h5>}
 
                     {excessShown && excessReport.map( (item) =>
                         <li> {item.name} : {item.amount}</li>
