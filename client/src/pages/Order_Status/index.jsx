@@ -28,7 +28,7 @@ const theme = createTheme({
 export default function Order_Status(props){
 
     const [orderstatus, setStatus] = useState(null);
-    const [received, setReceived] = useState();
+    const [received, setReceived] = useState(false);
     const [prepare, setPrepare] = useState(false);
     const [done, setDone] = useState(false); 
     const location = useLocation();
@@ -58,20 +58,20 @@ export default function Order_Status(props){
     };
 
     const receiveTrue = () => {
-        if (orderstatus === 1){
+        if (orderstatus === "1"){
             setReceived(true);
         }
     }
 
     const prepareTrue = () => {
-        if (orderstatus === 2){
+        if (orderstatus === "2"){
             setPrepare(true);
         }
     }
 
 
     const doneTrue = () => {
-        if (orderstatus === 3){
+        if (orderstatus === "3"){
             setDone(true);
         }
     }
@@ -111,7 +111,6 @@ export default function Order_Status(props){
             <br />
             <h1>Thank you for your order!</h1>
             <h3>Your order number is {location.state.orderIDStatus}</h3>
-            <p>order status {orderstatus}</p>
             <br />
             <br />
 
@@ -124,7 +123,7 @@ export default function Order_Status(props){
 
             {
 
-                done?
+                orderstatus === 3?
 
                 <Stack direction="row" spacing={35} size="600px"  justifyContent="center">
                     <CheckBox fontSize="large"/>
@@ -134,7 +133,7 @@ export default function Order_Status(props){
 
                 :
 
-                prepare?
+                orderstatus === 2?
 
                 <Stack direction="row" spacing={35} size="600px"  justifyContent="center">
                     <CheckBox fontSize="large"/>
@@ -144,7 +143,7 @@ export default function Order_Status(props){
 
                 :
 
-                received?
+                orderstatus === 1?
 
                 <Stack direction="row" spacing={35} size="600px"  justifyContent="center">
                     <CheckBox fontSize="large"/>
