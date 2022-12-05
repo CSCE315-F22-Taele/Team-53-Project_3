@@ -567,9 +567,9 @@ function Inventory(){
                        if (vendor_input.current.value !== "") {
                            if (parseInt(classify_input.current.value) >= 0) {
                                set_add(false);
-                               // insertInventory(name_input.current.value.toLowerCase(), amount_input.current.value,
-                               //     cost_input.current.value, date_input.current.value, vendor_input.current.value,
-                               //     classify_input.current.value);
+                               insertInventory(name_input.current.value.toLowerCase(), amount_input.current.value,
+                                   cost_input.current.value, date_input.current.value, vendor_input.current.value,
+                                   classify_input.current.value);
                                refreshPage();
                            }
                            else {

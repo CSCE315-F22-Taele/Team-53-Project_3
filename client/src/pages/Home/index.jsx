@@ -4,7 +4,8 @@ import "./index.css";
 import { useMemo } from "react";
 import { GoogleMap, LoadScript, Marker, InfoWindow, withGoogleMap} from "@react-google-maps/api";
 
-
+const conn = "http://localhost:3500/";
+// const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
 const Home = () => {
     const name = "Pom and Honey at Texas A&M MSC";
@@ -39,6 +40,18 @@ const Home = () => {
     // }
     // var apiKey = process.env.REACT_APP_GOOGLE_CLIENT_ID;
     // console.log(JSON.stringify(apiKey));
+
+    const getGoogleMapKey = async () => {
+        try {
+            const response = await fetch(conn + "api/login/getGoogleMapsKey");
+            var jsonVals = await response.json();
+            localStorage.setItem("googleMapAPIKey", jsonVals);
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
+    getGoogleMapKey();
 
     return (
         
@@ -83,7 +96,7 @@ const Home = () => {
 
         <div class= "maps">
         <LoadScript
-        googleMapsApiKey="AIzaSyBPOdOPwCGIUGjZ8Wl_SmEpkaL5dA38wF8"
+        googleMapsApiKey={localStorage.getItem("googleMapAPIKey")}
       >
         <GoogleMap
           mapContainerStyle={containerStyle}
