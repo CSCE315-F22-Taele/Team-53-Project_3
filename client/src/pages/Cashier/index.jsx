@@ -5,9 +5,9 @@ import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { indigo } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
-import {BrowserRouter as Router, Link, useNavigate, useLocation, json} from 'react-router-dom';
+import {BrowserRouter as Link, useNavigate, useLocation} from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
+// import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -67,7 +67,7 @@ function Cashier (props) {
     // const [orderNew,setOrderNew]= useState(false);
     // const [newAwait, setNewAwait]= useState(false);
     const [clicked, setClickedInfo] = useState(false);
-    const name = "Pom and Honey at Texas A&M MSC";
+    // const name = "Pom and Honey at Texas A&M MSC";
 
     
     const [newOrders, setNewOrders] = useState([]);
@@ -75,9 +75,9 @@ function Cashier (props) {
 
     
 
-    const handleClick = () => {
-        setIsShown((current) => !current);
-    }; 
+    // const handleClick = () => {
+    //     setIsShown((current) => !current);
+    // }; 
 
     const orderIdVal = async () => {
         
@@ -106,8 +106,8 @@ function Cashier (props) {
             
             for( var key in jsonVals) { 
                  
-                if (jsonVals[key].is_selling == true){
-                    if (jsonVals[key].is_customize == true){
+                if (jsonVals[key].is_selling === true){
+                    if (jsonVals[key].is_customize === true){
                        var menuCustom = [];
                        menuCustom.push( jsonVals[key].menuitem);
                        menuCustom.push( jsonVals[key].cost);
@@ -127,12 +127,12 @@ function Cashier (props) {
                          menu.push( jsonVals[key].id);
                          menu.push( jsonVals[key].default_inventory);
                         
-                         var menuVals = menuNames;
-                         menuVals.push(menu);
+                         var menuVals2 = menuNames;
+                         menuVals2.push(menu);
                         
              
                          
-                         setMenuNames(menuVals);
+                         setMenuNames(menuVals2);
                     }
                 }
             }
@@ -350,7 +350,7 @@ function Cashier (props) {
 
             }
 
-            if (localTrue==true){
+            if (localTrue===true){
                 x=true;
                 indexNames=i;
             }
