@@ -8,6 +8,7 @@ import Order from "./pages/Order";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Checkout from "./pages/Checkout";
+import Cashier_checkout from "./pages/Cashier_checkout";
 import pomHoney from "./pomAndHoney.png";
 import Manager from "./pages/Manager";
 import Inventory from "./pages/Inventory";
@@ -33,6 +34,7 @@ root.render(
                     <Route path="/inventory" element={<Inventory />} />
                     <Route path="/menu" element={<Menu />} />
                     <Route path="/manager_route" element={<Manager_Route />} />
+                    <Route path="/cashier_checkout" element={<Cashier_checkout />} />
                 </Route>
             </Routes>
         </HashRouter>

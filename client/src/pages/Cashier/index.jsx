@@ -539,7 +539,7 @@ function Cashier (props) {
     const Peoplestates = () => {
         const navigate = useNavigate();
         const openprofile = (totalCost) => {
-            navigate ("/checkout", {
+            navigate ("/cashier_checkout", {
                 state: {
                     totalCost: totalCost
                     
@@ -572,9 +572,9 @@ function Cashier (props) {
             
             setpickupOrders(jsonVals2);
             
-            console.log(jsonVals);
-            console.log(jsonVals2);
-
+            // console.log(jsonVals);
+            // console.log(jsonVals2);
+            
         } catch (err) {
     
             console.error(err.message);
@@ -598,7 +598,8 @@ function Cashier (props) {
         )
         
         getOrders();
-       
+        window.location.reload();
+        
 
 
     }
@@ -618,6 +619,8 @@ function Cashier (props) {
         )
 
         getOrders();
+        window.location.reload();
+        
         
     }
     
@@ -910,11 +913,13 @@ function Cashier (props) {
                 <h1> Cost: ${totalCost} </h1>
               
                 <Stack spacing = {2}>
-                    <Link to="/checkout" 
+                    <Link to="/cashier_checkout" 
                     state= {{
                         orderid : orderid,
                         totalCost : totalCost,
-                        listOrdered : listOrdered
+                        inventoryUsed : inventoryUsed,
+                        listOrderedNames : listOrderedNames,
+                        userName: nameCashier
                     }}
                     >
 
