@@ -498,7 +498,7 @@ function Login () {
 
         <div class="success">
 
-        <h4> Hello, employee {userName} </h4>
+        <h4> Howdy, employee {userName}! </h4>
         <Link to="/cashier" 
             state= {{
                 userName: userName

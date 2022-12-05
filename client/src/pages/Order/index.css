@@ -10,12 +10,12 @@ body {
 
 .order__pageOrder {
     height: 100%;
-    background: #fff8e8;
+    background: #faf7ef;
 }
 .order__orderingSection {
     /* display: inline-block; */
     width: 75%;
-    background: #fff8e8;
+    background: #faf7ef;
     float: left;
     height: 100%;
     border-right: 2px solid black;
@@ -23,7 +23,7 @@ body {
 
 .order__currentOrder {
     /* display: inline-block; */
-    background-color: #fff8e8;
+    background-color: #faf7ef;
     float: left;
     width: 25%;
     height: 100%;

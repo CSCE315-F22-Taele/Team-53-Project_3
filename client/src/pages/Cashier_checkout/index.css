@@ -20,11 +20,11 @@ div {
 
 .checkout__pageCheckout {
     height: 100%;
-    background: whitesmoke;
+    background: #faf7ef;
 }
 
 .checkout__receipt {
-    background-color: whitesmoke;
+    background-color: #faf7ef;
     float: right;
     width: 25%;
     height: 100%;
@@ -32,7 +32,7 @@ div {
 
 .checkout__options {
     width: 75%;
-    background: whitesmoke;
+    background: #faf7ef;
     float: left;
     height: 100%;
     border-right: 2px solid black;
