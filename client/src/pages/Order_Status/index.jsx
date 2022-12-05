@@ -62,11 +62,7 @@ export default function Order_Status(props){
     //     }
     // }
 
-    // const prepareTrue = e => {
-    //     if (order[mobile_order] == 2){
-    //         setPrepare(true);
-    //     }
-    // }
+
 
     // const completeTrue = e => {
     //     if (order[mobile_order] == 3){

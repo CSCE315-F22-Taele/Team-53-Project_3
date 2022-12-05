@@ -11,7 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { TextField } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Hidden from '@mui/material/Hidden';
-import {BrowserRouter as Routes, Link, useLocation} from 'react-router-dom';
+import {BrowserRouter as Routes, Link, useLocation, useNavigate} from 'react-router-dom';
  
 // For local testing:
 const conn = "http://localhost:3500/";
@@ -156,6 +156,7 @@ export default function CheckoutPage(props) {
       }
     }
   }
+
 
   const submitCheckout = async () => {
     postCheckout();
@@ -363,7 +364,7 @@ export default function CheckoutPage(props) {
             <h2> Cost: ${location.state.totalCost} </h2>
                 <Stack spacing = {0}>
                     <br></br>
-                    <Link to="/">
+                    <Link to="/Order_Status" state={{orderIDStatus : orderIDStatus}}>
                       <Button  variant="contained" size="large" sx={{mt: 3, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick={() => submitCheckout()}>Check out</Button>
                     </Link>
                     <Link to="/">
