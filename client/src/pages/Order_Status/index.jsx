@@ -48,7 +48,7 @@ export default function Order_Status(props){
             const jsonVals = await response.json();
             console.log("response: ", jsonVals);
             
-            setStatus(jsonVals.mobile_order);
+            setStatus(jsonVals[0].mobile_order);
             
         }
         catch (err) {
