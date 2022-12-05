@@ -17,10 +17,13 @@ import Cashier from "./pages/Cashier";
 import Manager_Route from "./pages/Manager_Route";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
     // <React.StrictMode>
-    <GoogleOAuthProvider clientId="603210015113-816enf77hq16jp4qpbql6an52fktugnu.apps.googleusercontent.com">
-
+    //
+    // <GoogleOAuthProvider clientId= {"603210015113-816enf77hq16jp4qpbql6an52fktugnu.apps.googleusercontent.com"}>
+    <GoogleOAuthProvider clientId= {JSON.stringify(process.env.REACT_APP_GOOGLE_CLIENT_ID)}> 
+    
     <HashRouter>
         <Routes>
             <Route path="/" element={<Layout />}>
