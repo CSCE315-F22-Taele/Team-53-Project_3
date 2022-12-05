@@ -606,7 +606,7 @@ function Menu(){
     const insertMenu = (_menuitem, _cost, _is_customize, _default_inventory) => {
         try {
             // FIXME: Need to update w/ input before inserting.
-            var menuitem = _menuitem;
+            var menuitem = _menuitem.toLowerCase();
             var cost = _cost;
             var is_selling = true; // Do not change
             var is_customize = _is_customize; // If no input, set to false
@@ -660,7 +660,7 @@ function Menu(){
         <div className="menu_page">
             
             <Dialog open={welcome_open} onClose={handleClose_welcome} >
-                <DialogTitle fontSize={25}>Welcome to Menu Page</DialogTitle>
+                <DialogTitle fontSize={25}>Welcome to the Menu page.</DialogTitle>
                 
                 <DialogActions>
                     <Button style={{fontSize: '20px'}} onClick={() => {
@@ -672,9 +672,9 @@ function Menu(){
             <div className="menu_receipt-section">
 
 
-                <span className='menu_back-btn'>
+                {/* <span className='menu_back-btn'>
                     <Button variant="contained" size="small"  className="menu_back-btn" >Back</Button>                  
-                </span>
+                </span> */}
 
                 <span className='menu_edit-btn' >
                 <Stack 
@@ -1427,7 +1427,7 @@ function Menu(){
                             style: {
                                 backgroundColor: "#82cdad",
                             },}}  open={open_activate} onClose={handleClose_activate}>
-                        <DialogTitle>Do you want activate?</DialogTitle>
+                        <DialogTitle>Do you want to activate?</DialogTitle>
                         <DialogContent>
                         <TextField
                                 inputProps={{ readOnly: true }}

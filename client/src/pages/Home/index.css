@@ -5,7 +5,6 @@
     font-family: "Montserrat", sans-serif;
 } */
 
-
 div {
     font-family: "Montserrat", sans-serif;
 }
@@ -23,7 +22,7 @@ div {
     align-content: center;
     flex-direction: column;
     height: 100vh;
-    background-image: url("./food.jpg"); 
+    background-image: url("./food.jpg");
     opacity: 0.95;
 }
 
@@ -46,21 +45,19 @@ div {
     margin: 0;
 } */
 
-.googlemaps{
+.googlemaps {
     margin-left: 25%;
-
 }
 
-.maps{
+.maps {
     justify-content: center;
 }
 
-.hours{
+.hours {
     width: 50%;
     justify-content: center;
     margin: auto;
 }
-
 
 .marker {
     position: absolute;
@@ -73,9 +70,8 @@ div {
     border-radius: 100%;
     user-select: none;
     transform: translate(-50%, -50%);
-
 }
 
-.marker:hover{
+.marker:hover {
     z-index: 1;
 }

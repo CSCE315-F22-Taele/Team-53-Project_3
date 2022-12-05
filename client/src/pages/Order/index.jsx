@@ -708,10 +708,7 @@ function Order () {
             <br></br>
             <br></br>
             <br></br>
-
-             
             
-
                 <h1> Cost: ${totalCost} </h1>
               
                 <Stack spacing = {2}>

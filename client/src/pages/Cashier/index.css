@@ -3,7 +3,6 @@
 }
 
 body {
-    
     color: black;
     justify-content: center;
     text-align: center;
@@ -11,21 +10,23 @@ body {
 
 .cashier__pageOrder {
     height: 100%;
-    background: whitesmoke;
+    /* background: whitesmoke; */
+    background-color: #fff8e8;
 }
 
-.cashier__mobileorders{
+.cashier__mobileorders {
     width: 25%;
-    background: whitesmoke;
+    /* background: whitesmoke; */
+    background-color: #fff8e8;
     float: left;
     height: 100%;
-    
 }
 
 .cashier__orderingSection {
     /* display: inline-block; */
     width: 50%;
-    background: whitesmoke;
+    /* background: whitesmoke; */
+    background-color: #fff8e8;
     float: left;
     height: 100%;
     border-left: 2px solid black;
@@ -34,42 +35,41 @@ body {
 
 .cashier__currentOrder {
     /* display: inline-block; */
-    
-    background-color: whitesmoke;
+
+    /* background-color: whitesmoke; */
+    background-color: #fff8e8;
     float: left;
     width: 25%;
     height: 100%;
 }
 
-
-.addItems{
+.addItems {
     bottom: 5%;
     right: 2.5%;
     margin: 5%;
 }
 
-.h1{
+.h1 {
     font-weight: bold;
     font-size: 30%;
 }
 
-table{
+table {
     margin-left: 10px;
     margin-right: 1px;
     width: 100%;
     justify-content: center;
 }
 
-
-.delete{
-    width:35%;
+.delete {
+    width: 35%;
 }
 
-.item{
+.item {
     width: 45%;
 }
 
-.price{
+.price {
     width: 20%;
 }
 
@@ -78,13 +78,13 @@ table{
     margin-bottom: 0px;
 } */
 
-.orderid{
+.orderid {
     width: 40%;
 }
-.buttonDone{
+.buttonDone {
     width: 50%;
 }
 
-.costCol{
+.costCol {
     width: 15%;
 }

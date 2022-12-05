@@ -24,6 +24,7 @@ import Paper from '@mui/material/Paper';
 import { Hint } from 'react-autocomplete-hint';
 import { format } from 'date-fns'
 import { border, fontWeight, style } from '@mui/system';
+import {BrowserRouter as Link} from 'react-router-dom';
  
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
@@ -340,7 +341,7 @@ function Inventory(){
    const insertInventory = (_itemname, _amount, _cost, _expirationdate, _vendor,_classify) => {
        try {
            // Need to update w/ input before inserting.
-           var itemname = _itemname;
+           var itemname = _itemname.toLowerCase();
            var amount = _amount;
            var cost = _cost;
            var expirationdate = _expirationdate;
@@ -719,7 +720,7 @@ function Inventory(){
        <div className="inventory_page">
  
            <Dialog open={welcome_open} onClose={handleClose_welcome}>
-               <DialogTitle>Welcome to Inventory Page</DialogTitle>
+               <DialogTitle>Welcome to the Inventory page.</DialogTitle>
  
                <DialogActions>
                    <Button
@@ -731,10 +732,11 @@ function Inventory(){
            </Dialog>
            <ThemeProvider theme={increaseSize}>
            <div className="inventory_receipt-section">
-               <span className='back-btn'>
-                   <Button size="small" variant="contained" className="inventory_back-btn" >Back</Button>                 
+               {/* <span className='back-btn'>
+                   <Link to="/login"></Link> Idk why it doesn't work?
+                    <Button type="submit" size="small" variant="contained" className="inventory_back-btn" >Back</Button>
                </span>
-          
+           */}
                <span className='edit-btn' >
                    
                    <Stack

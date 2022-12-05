@@ -72,20 +72,40 @@ const Home = () => {
             Our Store:
         </h2>
         <br />
-        <h5>
-            Hours
+
+        <h5> 
+            Hours of Operation:
         </h5>
 
         <table class="hours">
             <tr>
-                <th> Monday-Friday</th>
+                <th> Monday</th>
                 <th> 10 AM - 3 PM</th>
             </tr>
             <tr>
-                <th>Saturday and Sunday</th>
-                <th> CLOSED</th>
+                <th> Tuesday</th>
+                <th> 10 AM - 3 PM</th>
             </tr>
-            
+            <tr>
+                <th> Wednesday</th>
+                <th> 10 AM - 3 PM</th>
+            </tr>
+            <tr>
+                <th> Thursday</th>
+                <th> 10 AM - 3 PM</th>
+            </tr>
+            <tr>
+                <th> Friday</th>
+                <th> 10 AM - 3 PM</th>
+            </tr>
+            <tr>
+                <th> Saturday</th>
+                <th> Closed</th>
+            </tr>
+            <tr>
+                <th> Sunday</th>
+                <th> Closed</th>
+            </tr>
             
         </table>
         <br />

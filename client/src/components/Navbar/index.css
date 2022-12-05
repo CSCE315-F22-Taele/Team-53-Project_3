@@ -1,5 +1,5 @@
 nav {
-    background: white;
+    background: #fff8e8;
     display: flex;
     align-items: center;
     gap: 2rem;
@@ -18,8 +18,8 @@ nav {
 }
 
 .nav__link:hover {
-    background-color:#283593;
-    color:white;
+    background-color: #283593;
+    color: white;
     text-decoration: none;
 }
 
@@ -49,5 +49,3 @@ a:hover{
     color:white;
     text-decoration: none;
 } */
-
-

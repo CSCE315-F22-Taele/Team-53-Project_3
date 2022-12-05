@@ -341,7 +341,6 @@ function Login () {
     }
 
     const userLogin = () => {
-        alert("Entering Employee Pages");
     };
 
     useEffect( () => {  
