@@ -29,6 +29,7 @@ export default function Order_Status(props){
 
     const [order, setOrder] = useState([]);
     const [orderID, setOrderID] = useState(0);
+    const [orderstatus, setStatus] = useState([]);
 
     const [received, setReceived] = useState(false);
     const [prepare, setPrepare] = useState(false);
@@ -48,8 +49,8 @@ export default function Order_Status(props){
             const jsonVals = await response.json();
             console.log("response: ", jsonVals);
 
-            setOrder(jsonVals);
-            console.log("order: ", order);
+            setStatus(jsonVals.mobile_order);
+            
         }
         catch (err) {
             console.log("no api");
