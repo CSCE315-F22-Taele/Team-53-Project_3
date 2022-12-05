@@ -6,16 +6,26 @@ app.get("/isEmployee/:employeename", async (req, res) => {
     try {
         const employeename = req.params.employeename;
         const todo = await db.query(
-            "SELECT * FROM employee WHERE employeename = $1",
+            "SELECT is_working FROM employee WHERE employeename = $1",
             [employeename]
         );
 
+        var is_working = todo.rows[0];
         var isEmployee = false;
         if (todo.rowCount >= 1) {
             isEmployee = true;
+            is_working = JSON.stringify(is_working).substring(
+                17,
+                JSON.stringify(is_working).length - 2
+            );
         }
 
-        res.json(isEmployee);
+        let result = {
+            isEmployee: isEmployee,
+            is_working: is_working,
+        };
+        res.json(result);
+
     } catch (err) {
         console.error(err.message);
     }
@@ -25,7 +35,7 @@ app.get("/isEmployeeGoogleOauth/:sub", async (req, res) => {
     try {
         const sub = req.params.sub;
         const todo = await db.query(
-            "SELECT employeename FROM employee WHERE sub = $1",
+            "SELECT employeename FROM employee WHERE sub = $1 and is_working=true",
             [sub]
         );
         
@@ -99,15 +109,14 @@ app.get("/isManager/:employeename", async (req, res) => {
 NOT TESTED: Need to update employee table in db.
 ***/
 
-app.post("/insertGoogleOauth", async (req, res) => {
+app.post("/insertGoogleOauth/:sub/:employeename", async (req, res) => {
     try {
-        const { sub } = req.body;
-        const salary = 10;
-        const ismanager = false;
+        const { employeename, sub } = req.body;
+        
 
         const todo = await db.query(
-            "UPDATE employee SET (sub) VALUES ($1)",
-            [sub]
+            "UPDATE employee SET sub=($1) WHERE employeename = $2",
+            [sub, employeename]
         );
 
         res.json(todo.rows);
@@ -183,6 +192,41 @@ app.get("/getName/:employeeid", async (req, res) => {
     }
 });
 
+app.get("/getInfo/:employeeid", async (req, res) => {
+    try {
+        const employeeid = req.params.employeeid;
+        
+        const todo = await db.query(
+            "SELECT employeename, is_working FROM employee WHERE employeeid=$1",
+            [employeeid]
+        );
+
+        // console.log(todo);
+        
+        var name = todo.rows[0].employeename;
+        var is_working = todo.rows[0].is_working;
+        // console.log(todo.rows[0]);
+        // console.log("working",is_working);
+        var isEmployee = false;
+        // console.log("entered");
+        if (todo.rowCount >= 1) {
+            isEmployee = true;
+           
+        }
+        // console.log(name);
+        let result = {
+            isEmployee: isEmployee,
+            employeename: name,
+            is_working: is_working,
+        };
+        
+        res.json(result);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
 /*
 Check if email & password is valid combo in employee table.
 */
@@ -191,7 +235,7 @@ app.get("/isValidEmployee/:email/:password", async (req, res) => {
         const email = req.params.email;
         const password = req.params.password;
         const todo = await db.query(
-            "SELECT employeename FROM employee WHERE email=$1 AND password=$2",
+            "SELECT employeename FROM employee WHERE email=$1 AND password=$2 AND is_working=true",
             [email, password]
         );
 

@@ -137,17 +137,80 @@ function Login () {
         setIsManager(jsonVals2);
     }
 
-    const addEmployeeGoogleOauth= async (sub) => {
+    const addEmployeeGoogleOauth = useGoogleLogin({
+        onSuccess: async respose => {
+            try {
+                const res = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+                    headers: {
+                        "Authorization": `Bearer ${respose.access_token}`
+                    }
+                })
+
+                //console.log(res.data);
+                
+            const employeename = res.data.name; 
+            const sub = res.data.sub;
+            const body = {employeename, sub};
+           
+            fetch (conn + `api/login/insertGoogleOauth/${sub}/${employeename}`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                }
+            )
+            
+
+            const response = await fetch (conn + `api/login/isEmployee/${employeename}`, 
+                {
+                        method: "GET",
+                        headers: { "Content-Type": "application/json" },
+                    }
+                );
+            
         
-    }
+            const jsonVals = await response.json();
+            console.log(jsonVals);
+                
+            if( jsonVals.isEmployee === true && jsonVals.is_working === true){
+                    window.localStorage.setItem('user', jsonVals.employeename);
+                    
+                    setIsEmployee(jsonVals.isEmployee);
+                    setUserName(jsonVals.employeename);
+                    managerCheck(jsonVals.employeename);
+            }
+            else if(jsonVals.isEmployee === true){
+                alert("You are an employee. Please contact your manager to allow for access with this Google email.");
+                window.location.reload()
+            }
+            else{
+                alert("You are not an employee. Make sure your name matches.")
+            }
+        
+        } catch (err) {
+            console.log(err)
 
+        }
+        
 
-    const createAccount = async (employeeid, email, password) => {
+        }
+
+    });
+
+  
+    const createAccount = async () => {
+        
        try{
+        const employeeid= newEmployeeId;
+        const email = newEmail;
+        const password = newPassword;
+        console.log(email);
+        
         if( password !== "" && employeeid !== "" && email !== ""){
         
         const body = {employeeid, email, password};
-
+        console.log(employeeid, email, password);
+        console.log(newEmployeeId);
         fetch (conn + "api/login/updateBasedInsert",
             {
                 method: "POST",
@@ -156,7 +219,7 @@ function Login () {
             }
         )
 
-        const response = await fetch (conn + `api/login/getName/${employeeid}`, 
+        const response = await fetch (conn + `api/login/getInfo/${employeeid}`, 
             {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
@@ -166,15 +229,25 @@ function Login () {
     
         const jsonVals = await response.json();
         console.log(jsonVals);
-            
-        if( jsonVals.isEmployee == true){
+        
+        if( jsonVals.isEmployee === true && jsonVals.is_working === true){
                 window.localStorage.setItem('user', jsonVals.employeename);
                 
                 setIsEmployee(jsonVals.isEmployee);
                 setUserName(jsonVals.employeename);
                 managerCheck(jsonVals.employeename);
         }
+        else if(jsonVals.isEmployee === true){
+            alert("You are an employee. Please contact your manager to allow for access with this password and email");
+            window.location.reload()
+        }
+        else{
+            alert("You are not an employee or you have supplied the wrong id. ");
+        }
         
+        }
+        else{
+            alert("Invalid entry. Make sure you have a valid email and id.")
         }
         } catch (err) {
         console.error(err.message);
@@ -197,15 +270,14 @@ function Login () {
 
     const handleNewEmployeeId = async (e) => {
         setNewEmployeeid(e.target.value);
+        
     }
 
     const handleNewEmail = async (e) => {
         if( e.target.value.includes("@") ){
-        setNewEmail(e.target.value);
+            setNewEmail(e.target.value);
         }
-        else{
-            
-        }
+       
     }
 
     const handleNewPassword = async (e) => {
@@ -318,7 +390,7 @@ function Login () {
                 <TextField id="password" label="Password" variant="outlined" required fullWidth onChange={handleNewPassword}/>
                 <br class="spacing"/>
                 <Stack> 
-                <Button type="submit" size="large" variant="contained" sx={{ mt: 3, mb: 3 }} onClick={() => createAccount(newEmployeeId, newEmail, newPassword) }> Create Account</Button>
+                <Button type="submit" size="large" variant="contained" sx={{ mt: 3, mb: 3 }} onClick={() => createAccount() }> Create Account</Button>
                 </Stack>
                 
                 <br /> 
@@ -326,9 +398,9 @@ function Login () {
 
                 <Stack> 
                 
-                
-                <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3, mb: 2 }} onClick={login}> 
-                <img width="20px" class="googleImg" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />     Sign In with Google
+                {/* Or actually when we make an account, have it insert into the employee table, but set is_working to false. Then leave an alert saying "double check w/ manager for access" */}
+                <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3, mb: 2 }} onClick={() => addEmployeeGoogleOauth()}> 
+                <img width="20px" class="googleImg" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />     Sign Up with Google
                 </Button> 
                 </Stack>
                 
