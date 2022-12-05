@@ -345,22 +345,26 @@ function Login () {
     };
 
     useEffect( () => {  
-        //console.log(window.localStorage.getItem('user') );
+        console.log("user", window.localStorage.getItem('user') );
         const auth = window.localStorage.getItem('user');
         if (auth) {
             setUserName(window.localStorage.getItem('user'));
-            setIsEmployee(true);
             setIsManager(window.localStorage.getItem('manager'));
+            setIsEmployee(true);
+            
         }
 
         // const managerOrnot = window.localStorage.getItem('manager');
         // if(managerOrnot){
         //     setIsManager(window.localStorage.getItem('manager'));
         // }
-    }, [userName])
+        console.log("manager", window.localStorage.getItem('manager') );
+        
 
-    // console.log(window.localStorage.getItem('manager'));
+    }, [userName,isManager])
 
+    console.log(window.localStorage.getItem('manager'));
+    
     const login = useGoogleLogin({
         onSuccess: async respose => {
             try {
