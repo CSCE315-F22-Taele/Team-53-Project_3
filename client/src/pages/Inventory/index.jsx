@@ -567,9 +567,9 @@ function Inventory(){
                        if (vendor_input.current.value !== "") {
                            if (parseInt(classify_input.current.value) >= 0) {
                                set_add(false);
-                               // insertInventory(name_input.current.value.toLowerCase(), amount_input.current.value,
-                               //     cost_input.current.value, date_input.current.value, vendor_input.current.value,
-                               //     classify_input.current.value);
+                               insertInventory(name_input.current.value.toLowerCase(), amount_input.current.value,
+                                   cost_input.current.value, date_input.current.value, vendor_input.current.value,
+                                   classify_input.current.value);
                                refreshPage();
                            }
                            else {
@@ -1229,11 +1229,11 @@ function Inventory(){
 
                <ThemeProvider theme={theme}>
 
-               <button className='cat' onClick={()=>{
+               <h2 className='cat' onClick={()=>{
                 set_deac_base(!open_deac_base)
                 setActive6(!active6)}}
                 style={{fontWeight: active6 ? 600 : 400}}
-                >Base</button>
+                >Base</h2>
 
                    <div className="base">
                        {deac_inventory0.map((item) =>
@@ -1260,11 +1260,11 @@ function Inventory(){
                       
                    </div>
 
-                    <button className='cat' onClick={()=>{
+                    <h2 className='cat' onClick={()=>{
                         set_deac_pro(!set_deac_pro);
                         setActive7(!active7)}}
                         style={{fontWeight: active7 ? 600 : 400}}
-                        >Protein</button>
+                        >Protein</h2>
                     <div className="protein">
                        
                        {deac_inventory1.map( (item) =>
@@ -1286,11 +1286,11 @@ function Inventory(){
                        }
                    </div>
 
-                   <button className='cat' onClick={()=>{
+                   <h2 className='cat' onClick={()=>{
                     set_deac_top(!open_deac_top);
                     setActive8(!active8)}}
                     style={{fontWeight: active8 ? 600 : 400}}
-                    >Toppings</button>
+                    >Toppings</h2>
 
                    <div className="toppings">
                        {deac_inventory2.map( (item) =>
@@ -1313,11 +1313,11 @@ function Inventory(){
  
                    </div>
 
-                   <button className='cat' onClick={()=>{
+                   <h2 className='cat' onClick={()=>{
                     set_deac_dress(!open_deac_dress);
                     setActive9(!active9)}}
                     style={{fontWeight: active9 ? 600 : 400}}
-                    >Dressing</button>
+                    >Dressing</h2>
                    <div className="dressing">
                        {deac_inventory3.map( (item) =>
                                (
@@ -1339,11 +1339,11 @@ function Inventory(){
  
                    </div>
 
-                   <button className='cat' onClick={()=>{
+                   <h2 className='cat' onClick={()=>{
                     set_deac_misc(!open_deac_misc)
                     setActive10(!active10)}}
                     style={{fontWeight: active10 ? 600 : 400}}
-                    >Miscellaneous</button>
+                    >Miscellaneous</h2>
                    <div className="misc">
                        {open_deac_misc && deac_inventory4.map( (item) =>
                                (
