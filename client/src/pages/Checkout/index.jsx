@@ -100,6 +100,8 @@ export default function CheckoutPage(props) {
     setCardNumber("");
   }
 
+  const[orderIDStatus, setOrderIDStatus] = (0); // for order status page
+
   const postCheckout = async () => {
     try {
       // Determine type of card (UIN or credit/debit)
@@ -112,6 +114,8 @@ export default function CheckoutPage(props) {
       const paymentmethod = paymentMethod;
       const amount = location.state.totalCost;
       const orderid = location.state.orderid;
+
+      setOrderIDStatus(orderid);
 
       const body = {paymentmethod, amount, cardnumber, orderid};
             fetch (conn + "api/checkout/postCheckout",
@@ -369,4 +373,5 @@ export default function CheckoutPage(props) {
         </div>
       </div> 
   );
+
 }
