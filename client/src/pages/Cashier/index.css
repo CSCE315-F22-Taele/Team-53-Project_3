@@ -11,13 +11,13 @@ body {
 .cashier__pageOrder {
     height: 100%;
     /* background: whitesmoke; */
-    background-color: #fff8e8;
+    background-color: #faf7ef;
 }
 
 .cashier__mobileorders {
     width: 25%;
     /* background: whitesmoke; */
-    background-color: #fff8e8;
+    background-color: #faf7ef;
     float: left;
     height: 100%;
 }
@@ -26,7 +26,7 @@ body {
     /* display: inline-block; */
     width: 50%;
     /* background: whitesmoke; */
-    background-color: #fff8e8;
+    background-color: #faf7ef;
     float: left;
     height: 100%;
     border-left: 2px solid black;
@@ -37,7 +37,7 @@ body {
     /* display: inline-block; */
 
     /* background-color: whitesmoke; */
-    background-color: #fff8e8;
+    background-color: #faf7ef;
     float: left;
     width: 25%;
     height: 100%;

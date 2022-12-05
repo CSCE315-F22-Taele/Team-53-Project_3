@@ -736,11 +736,8 @@ function Cashier (props) {
         <div class="cashier__orderingSection">
             <br></br>
 
-            <h1 class="order__orderingTitle">  Ordering from Pom and Honey at Texas A&M MSC </h1>
+            <h1 class="order__orderingTitle"> Pom & Honey Menu </h1>
             <br></br>
-            <br></br>
-            <br></br>
-            <h2> Item</h2>
             <ThemeProvider theme={theme}>
             <div class="order__buttons">
             { menuNamesCustom.map( (item) =>
