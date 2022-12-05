@@ -123,7 +123,10 @@ function Login () {
                 
                 setIsEmployee(jsonVals.isEmployee);
                 setUserName(jsonVals.employeename);
-                managerCheck(jsonVals.employeename);
+                const isManger = managerCheck(jsonVals.employeename);
+                window.localStorage.setItem('manager', isManger);
+
+                
             }
             else{
                 alert("Invalid email or password. Try again or sign in with Google. ");
@@ -150,6 +153,7 @@ function Login () {
         
         //console.log(jsonVals2);
         setIsManager(jsonVals2);
+        return jsonVals2;
     }
 
     const addEmployeeGoogleOauth = useGoogleLogin({
@@ -304,6 +308,7 @@ function Login () {
 
     const clearLogin = async (e) => {
         window.localStorage.setItem('user', "");
+        window.localStorage.setItem('manager', "");
         setIsEmployee(false);
         setIsManager(false);
         setPassword("");
