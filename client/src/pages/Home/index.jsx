@@ -68,15 +68,48 @@ const Home = () => {
             </div>
         </div>
 
-        <h2>
-            Our Store:
-        </h2>
+        
         <br />
 
-        <h5> 
-            Hours of Operation:
+        <table class="center">
+            <tr>
+            <th>
+            <h5>
+            Location
         </h5>
 
+        <div class= "maps">
+        <LoadScript
+        googleMapsApiKey={localStorage.getItem("googleMapAPIKey")}
+      >
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={14}
+          class="googlemaps"
+          onChildClick={() => handleClick(true)}
+        >
+           <Marker onclick={() => handleClick(true)} position={{ lat: 30.612255, lng: -96.341286 }} >
+
+          {clicked && (
+                <InfoWindow onCloseClick={() => {setClicked(false) }} >
+                    <span> Hello.</span>
+                </InfoWindow>
+                )}
+            
+            </Marker>
+        </GoogleMap>
+      </LoadScript>
+      <br/>
+      <h6><b> 275 Joe Routt Tamu Blvd, College Station, TX 77840</b></h6>
+      <br/>
+      <br/>
+      </div>
+        
+        </th>
+        <th>
+
+        <h5> Hours of Operation:</h5>
         <table class="hours">
             <tr>
                 <th> Monday</th>
@@ -108,40 +141,19 @@ const Home = () => {
             </tr>
             
         </table>
+        
+        <br></br>
+        <h5> Contact us:</h5>
+        <p>Call:  (210) 741-9309</p>
+        <p>Email:<a href="mailto:dining@tamu.edu">dining@tamu.edu</a></p>
         <br />
+        <h6> Leave us feedback!</h6>
         <br />
-        <h5>
-            Location
-        </h5>
 
-        <div class= "maps">
-        <LoadScript
-        googleMapsApiKey={localStorage.getItem("googleMapAPIKey")}
-      >
-        <GoogleMap
-          mapContainerStyle={containerStyle}
-          center={center}
-          zoom={14}
-          class="googlemaps"
-          onChildClick={() => handleClick(true)}
-        >
-           <Marker onclick={() => handleClick(true)} position={{ lat: 30.612255, lng: -96.341286 }} >
 
-          {clicked && (
-                <InfoWindow onCloseClick={() => {setClicked(false) }} >
-                    <span> Hello.</span>
-                </InfoWindow>
-                )}
-            
-            </Marker>
-        </GoogleMap>
-      </LoadScript>
-      <br/>
-      <br/>
-      <h5> 275 Joe Routt Tamu Blvd, College Station, TX 77840</h5>
-      <br/>
-      <br/>
-      </div>
+      </th>
+      </tr>
+      </table>
         </div>
     );
 };

@@ -54,7 +54,7 @@ div {
 }
 
 .hours {
-    width: 50%;
+    width: 100%;
     justify-content: center;
     margin: auto;
 }
@@ -74,4 +74,30 @@ div {
 
 .marker:hover {
     z-index: 1;
+}
+
+.center {
+    table-layout: fixed;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+
+td {
+    width: 25%;
+}
+
+a {
+    text-decoration: underline;
+}
+a:link,
+a:visited {
+    color: rgb(0, 0, 0);
+}
+a:hover {
+    color: red;
+}
+
+p {
+    margin: 0;
 }
