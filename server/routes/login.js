@@ -252,4 +252,8 @@ app.get("/getGoogleClientKey", async (req, res) => {
     res.json(process.env.GOOGLE_CLIENT_ID);
 });
 
+app.get("/getGoogleMapsKey", async (req, res) => {
+    res.json(process.env.GOOGLE_MAPS_API_KEY);
+});
+
 module.exports = app;
