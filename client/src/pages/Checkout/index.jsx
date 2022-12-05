@@ -100,7 +100,7 @@ export default function CheckoutPage(props) {
     setCardNumber("");
   }
 
-  const[orderIDStatus, setOrderIDStatus] = (0); // for order status page
+  const[orderIDStatus, setOrderIDStatus] = useState(0); // for order status page
 
   const postCheckout = async () => {
     try {
