@@ -1,8 +1,8 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./index.css";
 import { useMemo } from "react";
-import { GoogleMap, LoadScript, Marker, InfoWindow, withGoogleMap} from "@react-google-maps/api";
+import { GoogleMap, LoadScript, Marker, InfoWindow} from "@react-google-maps/api";
 
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";

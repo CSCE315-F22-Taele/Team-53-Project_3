@@ -4,10 +4,10 @@ import "./index.css";
 // import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { indigo, white } from "@mui/material/colors";
+import { indigo } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
 import e from "cors";
-import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
+import {BrowserRouter as Router, Link, useNavigate, useLocation, json} from 'react-router-dom';
 // import { json } from "express";
 
 // For local testing: (comment out)
@@ -93,8 +93,8 @@ function Order () {
             
             for( var key in jsonVals) { 
                  
-                if (jsonVals[key].is_selling == true){
-                    if (jsonVals[key].is_customize == true){
+                if (jsonVals[key].is_selling === true){
+                    if (jsonVals[key].is_customize === true){
                        var menuCustom = [];
                        menuCustom.push( jsonVals[key].menuitem);
                        menuCustom.push( jsonVals[key].cost);
@@ -333,7 +333,7 @@ function Order () {
 
             }
 
-            if (localTrue==true){
+            if (localTrue === true){
                 x=true;
                 indexNames=i;
             }

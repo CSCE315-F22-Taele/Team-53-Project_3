@@ -61,15 +61,17 @@ const logout =() => {
                 { nameExists ? 
                 <>
                 <li>
-                    <Link class="nav__link" onClick={logout} to="/login">
-                        Logout
-                    </Link>
-                </li>
-                <li>
                     <Link class="nav__link" to="/login">
                         Tools
                     </Link>
                 </li>
+                
+                <li>
+                    <Link class="nav__link" onClick={logout} to="/login">
+                        Logout
+                    </Link>
+                </li>
+                
 
                 </>
                 
