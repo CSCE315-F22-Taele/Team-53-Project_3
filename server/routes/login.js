@@ -10,14 +10,11 @@ app.get("/isEmployee/:employeename", async (req, res) => {
             [employeename]
         );
 
-        var is_working = todo.rows[0];
+        var is_working = todo.rows[0].is_working;
         var isEmployee = false;
         if (todo.rowCount >= 1) {
             isEmployee = true;
-            is_working = JSON.stringify(is_working).substring(
-                17,
-                JSON.stringify(is_working).length - 2
-            );
+            
         }
 
         let result = {

@@ -76,7 +76,7 @@ function Login () {
             else{
                 alert("Invalid email. Account with this email does not exist. Try another email or create an account.");
             }
-            window.location.reload()
+            window.location.reload();
         } catch (err) {
             
             console.error(err.message);
@@ -171,9 +171,9 @@ function Login () {
         
             const jsonVals = await response.json();
             console.log(jsonVals);
-                
+            
             if( jsonVals.isEmployee === true && jsonVals.is_working === true){
-                    window.localStorage.setItem('user', jsonVals.employeename);
+                    window.localStorage.setItem('user', employeename);
                     
                     setIsEmployee(jsonVals.isEmployee);
                     setUserName(jsonVals.employeename);
@@ -186,7 +186,7 @@ function Login () {
             else{
                 alert("You are not an employee. Make sure your name matches.")
             }
-        
+            window.location.reload();
         } catch (err) {
             console.log(err)
 
@@ -249,6 +249,8 @@ function Login () {
         else{
             alert("Invalid entry. Make sure you have a valid email and id.")
         }
+        window.location.reload();
+
         } catch (err) {
         console.error(err.message);
         }
