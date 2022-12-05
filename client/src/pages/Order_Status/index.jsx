@@ -36,8 +36,8 @@ export default function Order_Status(props){
 
     const orderStatusGet = async () => {
         
-        const id = CheckoutPage.orderIDStatus;
-
+        // const id = CheckoutPage.orderIDStatus;
+        const id = 221205000; // hardcoded to test
         try {
             const response = await fetch(conn + `api/order/getCurrentOrderStatus/${id}`,
                 {
@@ -52,23 +52,30 @@ export default function Order_Status(props){
             console.log("order: ", order);
         }
         catch (err) {
+            console.log("no api");
             console.error(err.message);
         }
     };
 
-    // const receiveTrue = e => {
-    //     if (order[mobile_order] == 1){
-    //         setReceived(true);
+    const receiveTrue = () => {
+        if (order[0] == 1){
+            setReceived(true);
+        }
+    }
+
+    // const prepareTrue = () => {
+    //     if (order[mobile_order] == 2){
+    //         setPrepare(true);
     //     }
     // }
 
 
-
-    // const completeTrue = e => {
+    // const doneTrue = () => {
     //     if (order[mobile_order] == 3){
     //         setDone(true);
     //     }
     // }
+
 
     const googleTranslateElementInit = () => {
         new window.google.translate.TranslateElement(
@@ -92,7 +99,10 @@ export default function Order_Status(props){
 
     useEffect( () => {
         orderStatusGet();
-    })
+        receiveTrue();
+        // prepareTrue();
+        // doneTrue();
+    },[])
 
     return (
         <div>
