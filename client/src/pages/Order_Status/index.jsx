@@ -28,9 +28,6 @@ const theme = createTheme({
 export default function Order_Status(props){
 
     const [orderstatus, setStatus] = useState(null);
-    const [received, setReceived] = useState(false);
-    const [prepare, setPrepare] = useState(false);
-    const [done, setDone] = useState(false); 
     const location = useLocation();
 
     const orderStatusGet = async () => {
@@ -57,25 +54,6 @@ export default function Order_Status(props){
         }
     };
 
-    const receiveTrue = () => {
-        if (orderstatus === "1"){
-            setReceived(true);
-        }
-    }
-
-    const prepareTrue = () => {
-        if (orderstatus === "2"){
-            setPrepare(true);
-        }
-    }
-
-
-    const doneTrue = () => {
-        if (orderstatus === "3"){
-            setDone(true);
-        }
-    }
-
 
     const googleTranslateElementInit = () => {
         new window.google.translate.TranslateElement(
@@ -100,9 +78,6 @@ export default function Order_Status(props){
  
     useEffect( () => {
         orderStatusGet();
-        receiveTrue();
-        prepareTrue();
-        doneTrue();
     },[])
 
     return (
