@@ -66,9 +66,10 @@ app.get("/isEmployeeGoogleOauth/:sub", async (req, res) => {
 
 app.get("/isManagerGoogleOauth/:sub", async (req, res) => {
     try {
-        const employeename = req.params.sub;
+        const sub = req.params.sub;
+
         const todo = await db.query(
-            "SELECT * FROM employee WHERE sub = $1 AND ismanager = true",
+            "SELECT * FROM employee WHERE sub = ($1) AND ismanager = true",
             [sub]
         );
 
@@ -76,7 +77,7 @@ app.get("/isManagerGoogleOauth/:sub", async (req, res) => {
         if (todo.rowCount >= 1) {
             isManager = true;
         }
-
+        
         res.json(isManager);
     } catch (err) {
         console.error(err.message);

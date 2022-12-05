@@ -33,7 +33,7 @@ const theme = createTheme({
 function Login () {
     const [userName, setUserName] = useState(window.localStorage.getItem('user'));
     const [isEmployee,setIsEmployee ] = useState(false);
-    const [isManager,setIsManager ] = useState(false);
+    const [isManager,setIsManager ] = useState(window.localStorage.getItem('manager'));
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginData, setLoginData] = useState(
@@ -62,21 +62,36 @@ function Login () {
                 }
             );
         
-    
+            console.log(sub);
             const jsonVals = await response.json();
             
             if( jsonVals.isEmployee == true){
                 window.localStorage.setItem('user', jsonVals.employeename);
                 
                 setIsEmployee(jsonVals.isEmployee);
-                managerCheck(jsonVals.employeename);
+                //fix me: 
+                console.log("DOne");
+                const response2 = await fetch (conn + `api/login/isManagerGoogleOauth/${sub}`, 
+                {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                });
+                console.log("DOne");
+                const jsonVals2 = await response2.json();
+                
+                console.log(jsonVals2);
+                
+                setIsManager(jsonVals2);
+                window.localStorage.setItem('manager', jsonVals);
+            
                 setUserName(jsonVals.employeename);
+                
                 
             }
             else{
                 alert("Invalid email. Account with this email does not exist. Try another email or create an account.");
             }
-            window.location.reload();
+            
         } catch (err) {
             
             console.error(err.message);
@@ -301,29 +316,6 @@ function Login () {
     
 
 
-    const isEmailPasswordRight = async () => {
-        // try {
-
-        //     const response = await fetch (conn + `api/login/isEmployee/${email}/${password}`, 
-        //     {
-        //             method: "GET",
-        //             headers: { "Content-Type": "application/json" },
-        //     }
-        //     );
-
-        //     const jsonVals = await response.json();
-            
-        //     //console.log(jsonVals);
-           
-        //     (jsonVals);
-
-        // }catch (err) {
-    
-        //     console.error(err.message);
-        // }
-    
-                
-    }
     const Peoplestates = () => {
         const navigate = useNavigate();
         const openprofile = (userName) => {
@@ -357,6 +349,7 @@ function Login () {
         }
     }, [userName])
 
+    console.log(isManager);
     const login = useGoogleLogin({
         onSuccess: async respose => {
             try {
@@ -498,28 +491,68 @@ function Login () {
             <Button type="cashier"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()} }> Go to Cashier Page</Button>
         </Link> 
 
+        <Link to="/login">     
+            <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={() => clearLogin()} > Logout</Button>
+            </Link>
+
 
         {isManager && (
-            <Link to="/manager_route"
-            state= {{
-                userName: userName
-        }}>     
-                <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openmanager) => {userLogin()} }> Go to Manager Page</Button>
-            </Link> 
-        )
-        }
+        //     <Link to="/manager_route"
+        //     state= {{
+        //         userName: userName
+        // }}>     
+        //         <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openmanager) => {userLogin()} }> Go to Manager Page</Button>
+        //     </Link> 
 
-
-
-        <Link to="/login">     
-        <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={() => clearLogin()} > Logout</Button>
-        </Link>
+        <div>
+        <Stack spacing={5} direction="row" justifyContent="center" >
+        <div>
+        <ThemeProvider theme={theme}>
+            
+            
+            
+            <Link to="/manager" 
+                    state= {{
+                        userName: userName
+            }}>    
         
+          <Button variant="contained" sx={{width:200, height:150, padding: 1, marginLeft: 2,mt:2,   mb:2}}
+            >Reports</Button>
+            </Link>
+            
         
+            <Link to="/inventory" 
+                    state= {{
+                        userName: userName
+            }}>    
+          <Button variant="contained" sx={{ width:200, height:150,padding: 1, marginLeft: 2,mt:2,  mb:2 }}
+            >Inventory</Button>
+            </Link>
+           
+            <Link to="/menu" 
+                    state= {{
+                        userName: userName
+            }}>    
+          <Button variant="contained" sx={{ width:200, height:150, padding: 1, marginLeft: 2, mt:2,mb:2 }}
+            >Menu Customization</Button> 
+            </Link>
+
+           
 
         
+        </ThemeProvider>
         </div>
+
+        </Stack>
+        
+        
+
+        </div>
+
+   
         )}
+
+        </div> )}
 
     </div>
 
