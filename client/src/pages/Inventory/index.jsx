@@ -490,13 +490,15 @@ function Inventory(){
                handleClose_name_activate();
            }           
        } else {
-           alert("The item doesn't exist!");
            if(open_name_update){
                handleClickOpen_name_update();
+               alert("The item doesn't exist!");
            } else if(open_name_deactivate){
                handleClickOpen_name_deactivate();
+               alert("The item doesn't exist or is currently deactivated!");
            } else if(open_name_activate){
                handleClickOpen_name_activate()
+               alert("The item doesn't exist or is currently activated!");
            }
        }
  
@@ -1224,7 +1226,6 @@ function Inventory(){
  
            <div className='inventory_deactivate-section'>
                <h1>Deactivated Items</h1>
-
 
                <ThemeProvider theme={theme}>
 
