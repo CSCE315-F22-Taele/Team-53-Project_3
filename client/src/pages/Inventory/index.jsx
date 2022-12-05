@@ -732,11 +732,11 @@ function Inventory(){
            </Dialog>
            <ThemeProvider theme={increaseSize}>
            <div className="inventory_receipt-section">
-               {/* <span className='back-btn'>
-                   <Link to="/login"></Link> Idk why it doesn't work?
+               {/* FIXME: Link to login. */}
+               <span className='back-btn'>
                     <Button type="submit" size="small" variant="contained" className="inventory_back-btn" >Back</Button>
                </span>
-           */}
+          
                <span className='edit-btn' >
                    
                    <Stack

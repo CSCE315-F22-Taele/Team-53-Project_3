@@ -671,10 +671,10 @@ function Menu(){
             <ThemeProvider theme={increaseSize}>
             <div className="menu_receipt-section">
 
-
-                {/* <span className='menu_back-btn'>
+                {/* FIXME: Link to login. */}
+                <span className='menu_back-btn'>
                     <Button variant="contained" size="small"  className="menu_back-btn" >Back</Button>                  
-                </span> */}
+                </span>
 
                 <span className='menu_edit-btn' >
                 <Stack 
