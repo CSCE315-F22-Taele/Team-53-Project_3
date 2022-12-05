@@ -7,7 +7,10 @@ import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-
+import CheckoutPage from '../Checkout/index';
+import DoneIcon from '@mui/icons-material/Done';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBox from '@mui/icons-material/CheckBox';
 
 // For local testing: (comment out)
 const conn = "http://localhost:3500/";
@@ -25,12 +28,23 @@ const theme = createTheme({
 export default function Order_Status(props){
 
     const [order, setOrder] = useState([]);
+    const [orderID, setOrderID] = useState(0);
 
     const orderStatusGet = async () => {
+        
+        const id = CheckoutPage.orderIDStatus;
+
         try {
-            const response = await fetch(conn + "api/order/getOrderStatus");
+            const response = await fetch(conn + `api/order/getCurrentOrderStatus/${id}`,
+                {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
             const jsonVals = await response.json();
             console.log(jsonVals);
+
+            setOrder(jsonVals);
         }
         catch (err) {
             console.error(err.message);
@@ -45,8 +59,9 @@ export default function Order_Status(props){
           },
           "google_translate_element"
         );
-      };
-      useEffect(() => {
+    };
+
+    useEffect(() => {
         var addScript = document.createElement("script");
         addScript.setAttribute(
           "src",
@@ -54,7 +69,7 @@ export default function Order_Status(props){
         );
         document.body.appendChild(addScript);
         window.googleTranslateElementInit = googleTranslateElementInit;
-      }, []);
+    }, []);
 
     useEffect( () => {
         orderStatusGet();
@@ -63,11 +78,29 @@ export default function Order_Status(props){
     return (
         <div>
             <div id="google_translate_element"></div>
-            <Stack direction="row" spacing={1}>
-                <Chip label="Order Received" color="success" />
-                <Chip label="Making Your Order" color="primary" />
-                <Chip label="Order Completed" color="success" />
+            <br />
+            <h1>Thank you for your order!</h1>
+            <br />
+            <br />
+
+            <Stack direction="row" spacing={10} size="600px"  justifyContent="center">
+                <h2>Order Received</h2>
+                <h2>Order in Progress</h2>
+                <h2>Order Complete</h2>
             </Stack>
+            <br />
+            <Stack direction="row" spacing={35} size="600px"  justifyContent="center">
+                <CheckBoxOutlineBlankIcon fontSize="large"/>
+                <CheckBoxOutlineBlankIcon fontSize="large"/>
+                <CheckBoxOutlineBlankIcon fontSize="large"/>
+            </Stack>
+
+            <Stack direction="row" spacing={35} size="600px"  justifyContent="center">
+                <CheckBox fontSize="large"/>
+                <CheckBox fontSize="large"/>
+                <CheckBox fontSize="large"/>
+            </Stack>
+
         </div>
     );
 };
