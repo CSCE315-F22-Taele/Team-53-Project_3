@@ -34,8 +34,19 @@
 }
 
 
-.inventory_item-btn{
-    pointer-events: none;
+.cat {
+    border:none;
+    background-color: rgb(245, 245, 245);
+    color: black;
+    border-radius: 4px;
+    font-size: 40px;
+    cursor: pointer;
+    outline: none;
+    font-weight: 400;
+    /* color:rgb(88, 90, 156); */
+}
+.cat:focus {
+    outline: none;
 }
 
 .inventory_receipt-section{
@@ -48,6 +59,7 @@
 .inventory-btn{
     padding: 2%;
 }
+
 
 
 
