@@ -17,9 +17,25 @@ import Cashier from "./pages/Cashier";
 import Manager_Route from "./pages/Manager_Route";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+const conn = "http://localhost:3500/";
+// const conn = "https://pom-and-honey-bhf5.onrender.com/";
+
+const getClientId = async () => {
+    try {
+        const response = await fetch(conn + "api/login/getGoogleClientKey");
+        var jsonVals = await response.json();
+        localStorage.setItem("id", jsonVals);
+    } catch (err) {
+        console.error(err.message);
+    }
+};
+
+getClientId();
+
 root.render(
     // <React.StrictMode>
-    <GoogleOAuthProvider clientId="603210015113-816enf77hq16jp4qpbql6an52fktugnu.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={localStorage.getItem("id")}>
         <HashRouter>
             <Routes>
                 <Route path="/" element={<Layout />}>
@@ -36,6 +52,7 @@ root.render(
             </Routes>
         </HashRouter>
     </GoogleOAuthProvider>
+    //{" "}
     // </React.StrictMode>
 );
 

@@ -14,7 +14,6 @@ app.get("/isEmployee/:employeename", async (req, res) => {
         var isEmployee = false;
         if (todo.rowCount >= 1) {
             isEmployee = true;
-            
         }
 
         let result = {
@@ -22,7 +21,6 @@ app.get("/isEmployee/:employeename", async (req, res) => {
             is_working: is_working,
         };
         res.json(result);
-
     } catch (err) {
         console.error(err.message);
     }
@@ -35,7 +33,7 @@ app.get("/isEmployeeGoogleOauth/:sub", async (req, res) => {
             "SELECT employeename FROM employee WHERE sub = $1 and is_working=true",
             [sub]
         );
-        
+
         var name = todo.rows[0];
         var isEmployee = false;
         if (todo.rowCount >= 1) {
@@ -109,7 +107,6 @@ NOT TESTED: Need to update employee table in db.
 app.post("/insertGoogleOauth/:sub/:employeename", async (req, res) => {
     try {
         const { employeename, sub } = req.body;
-        
 
         const todo = await db.query(
             "UPDATE employee SET sub=($1) WHERE employeename = $2",
@@ -148,17 +145,14 @@ app.post("/updateBasedInsert", async (req, res) => {
 
         const todo = await db.query(
             "UPDATE employee SET email= $1, password=$2 WHERE employeeid= $3",
-            [ email, password, employeeid]
+            [email, password, employeeid]
         );
-
-
 
         res.json(todo.rows);
     } catch (err) {
         console.error(err.message);
     }
 });
-
 
 app.get("/getName/:employeeid", async (req, res) => {
     try {
@@ -182,7 +176,7 @@ app.get("/getName/:employeeid", async (req, res) => {
             isEmployee: isEmployee,
             employeename: name,
         };
-        
+
         res.json(result);
     } catch (err) {
         console.error(err.message);
@@ -192,14 +186,14 @@ app.get("/getName/:employeeid", async (req, res) => {
 app.get("/getInfo/:employeeid", async (req, res) => {
     try {
         const employeeid = req.params.employeeid;
-        
+
         const todo = await db.query(
             "SELECT employeename, is_working FROM employee WHERE employeeid=$1",
             [employeeid]
         );
 
         // console.log(todo);
-        
+
         var name = todo.rows[0].employeename;
         var is_working = todo.rows[0].is_working;
         // console.log(todo.rows[0]);
@@ -208,7 +202,6 @@ app.get("/getInfo/:employeeid", async (req, res) => {
         // console.log("entered");
         if (todo.rowCount >= 1) {
             isEmployee = true;
-           
         }
         // console.log(name);
         let result = {
@@ -216,13 +209,12 @@ app.get("/getInfo/:employeeid", async (req, res) => {
             employeename: name,
             is_working: is_working,
         };
-        
+
         res.json(result);
     } catch (err) {
         console.error(err.message);
     }
 });
-
 
 /*
 Check if email & password is valid combo in employee table.
@@ -255,4 +247,9 @@ app.get("/isValidEmployee/:email/:password", async (req, res) => {
         console.error(err.message);
     }
 });
+
+app.get("/getGoogleClientKey", async (req, res) => {
+    res.json(process.env.GOOGLE_CLIENT_ID);
+});
+
 module.exports = app;
