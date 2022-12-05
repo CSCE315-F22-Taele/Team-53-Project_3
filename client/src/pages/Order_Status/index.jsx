@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import "./index.css";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { indigo, white } from "@mui/material/colors";
-import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
+import {BrowserRouter as Router, Link, useLocation, useNavigate} from 'react-router-dom';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
@@ -27,18 +27,17 @@ const theme = createTheme({
 
 export default function Order_Status(props){
 
-    const [order, setOrder] = useState([]);
-    const [orderID, setOrderID] = useState(0);
-    const [orderstatus, setStatus] = useState([]);
-
-    const [received, setReceived] = useState(false);
+    const [orderstatus, setStatus] = useState(null);
+    const [received, setReceived] = useState();
     const [prepare, setPrepare] = useState(false);
-    const [done, setDone] = useState(false);
+    const [done, setDone] = useState(false); 
+    const location = useLocation();
 
     const orderStatusGet = async () => {
         
-        // const id = CheckoutPage.orderIDStatus;
-        const id = 221205000; // hardcoded to test
+        const id = location.state.orderIDStatus;
+        console.log(id);
+
         try {
             const response = await fetch(conn + `api/order/getCurrentOrderStatus/${id}`,
                 {
@@ -48,7 +47,7 @@ export default function Order_Status(props){
             );
             const jsonVals = await response.json();
             console.log("response: ", jsonVals);
-
+            
             setStatus(jsonVals.mobile_order);
             
         }
@@ -59,23 +58,23 @@ export default function Order_Status(props){
     };
 
     const receiveTrue = () => {
-        if (order[0] == 1){
+        if (orderstatus === 1){
             setReceived(true);
         }
     }
 
-    // const prepareTrue = () => {
-    //     if (order[mobile_order] == 2){
-    //         setPrepare(true);
-    //     }
-    // }
+    const prepareTrue = () => {
+        if (orderstatus === 2){
+            setPrepare(true);
+        }
+    }
 
 
-    // const doneTrue = () => {
-    //     if (order[mobile_order] == 3){
-    //         setDone(true);
-    //     }
-    // }
+    const doneTrue = () => {
+        if (orderstatus === 3){
+            setDone(true);
+        }
+    }
 
 
     const googleTranslateElementInit = () => {
@@ -98,11 +97,12 @@ export default function Order_Status(props){
         window.googleTranslateElementInit = googleTranslateElementInit;
     }, []);
 
+ 
     useEffect( () => {
         orderStatusGet();
         receiveTrue();
-        // prepareTrue();
-        // doneTrue();
+        prepareTrue();
+        doneTrue();
     },[])
 
     return (
@@ -110,6 +110,8 @@ export default function Order_Status(props){
             <div id="google_translate_element"></div>
             <br />
             <h1>Thank you for your order!</h1>
+            <h3>Your order number is {location.state.orderIDStatus}</h3>
+            <p>order status {orderstatus}</p>
             <br />
             <br />
 
