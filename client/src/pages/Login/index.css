@@ -17,6 +17,7 @@ body{
    
     height: 80%;
     width: 85%;
+   
 
 }   
 
@@ -73,5 +74,10 @@ body{
 
 .success{
     justify-content: center;
-    
+    position: absolute;
+    display: contents;
+}
+
+.lastSpace{
+    margin-top: 15px; 
 }
