@@ -30,6 +30,10 @@ export default function Order_Status(props){
     const [order, setOrder] = useState([]);
     const [orderID, setOrderID] = useState(0);
 
+    const [received, setReceived] = useState(false);
+    const [prepare, setPrepare] = useState(false);
+    const [done, setDone] = useState(false);
+
     const orderStatusGet = async () => {
         
         const id = CheckoutPage.orderIDStatus;
@@ -42,14 +46,33 @@ export default function Order_Status(props){
                 }
             );
             const jsonVals = await response.json();
-            console.log(jsonVals);
+            console.log("response: ", jsonVals);
 
             setOrder(jsonVals);
+            console.log("order: ", order);
         }
         catch (err) {
             console.error(err.message);
         }
     };
+
+    // const receiveTrue = e => {
+    //     if (order[mobile_order] == 1){
+    //         setReceived(true);
+    //     }
+    // }
+
+    // const prepareTrue = e => {
+    //     if (order[mobile_order] == 2){
+    //         setPrepare(true);
+    //     }
+    // }
+
+    // const completeTrue = e => {
+    //     if (order[mobile_order] == 3){
+    //         setDone(true);
+    //     }
+    // }
 
     const googleTranslateElementInit = () => {
         new window.google.translate.TranslateElement(
@@ -89,19 +112,47 @@ export default function Order_Status(props){
                 <h2>Order Complete</h2>
             </Stack>
             <br />
-            <Stack direction="row" spacing={35} size="600px"  justifyContent="center">
-                <CheckBoxOutlineBlankIcon fontSize="large"/>
-                <CheckBoxOutlineBlankIcon fontSize="large"/>
-                <CheckBoxOutlineBlankIcon fontSize="large"/>
-            </Stack>
 
-            <Stack direction="row" spacing={35} size="600px"  justifyContent="center">
-                <CheckBox fontSize="large"/>
-                <CheckBox fontSize="large"/>
-                <CheckBox fontSize="large"/>
-            </Stack>
+            {
 
-        </div>
+                done?
+
+                <Stack direction="row" spacing={35} size="600px"  justifyContent="center">
+                    <CheckBox fontSize="large"/>
+                    <CheckBox fontSize="large"/>
+                    <CheckBox fontSize="large"/>
+                </Stack>
+
+                :
+
+                prepare?
+
+                <Stack direction="row" spacing={35} size="600px"  justifyContent="center">
+                    <CheckBox fontSize="large"/>
+                    <CheckBox fontSize="large"/>
+                    <CheckBoxOutlineBlankIcon fontSize="large"/>
+                </Stack>
+
+                :
+
+                received?
+
+                <Stack direction="row" spacing={35} size="600px"  justifyContent="center">
+                    <CheckBox fontSize="large"/>
+                    <CheckBoxOutlineBlankIcon fontSize="large"/>
+                    <CheckBoxOutlineBlankIcon fontSize="large"/>
+                </Stack>
+
+                :
+
+                <Stack direction="row" spacing={35} size="600px"  justifyContent="center">
+                    <CheckBoxOutlineBlankIcon fontSize="large"/>
+                    <CheckBoxOutlineBlankIcon fontSize="large"/>
+                    <CheckBoxOutlineBlankIcon fontSize="large"/>
+                </Stack>
+                
+            }
+       </div>
     );
 };
 
