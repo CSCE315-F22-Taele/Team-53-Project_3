@@ -33,7 +33,7 @@ const theme = createTheme({
 function Login () {
     const [userName, setUserName] = useState(window.localStorage.getItem('user'));
     const [isEmployee,setIsEmployee ] = useState(false);
-    const [isManager,setIsManager ] = useState(window.localStorage.getItem('manager'));
+    const [isManager,setIsManager ] = useState( window.localStorage.getItem('manager') );
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginData, setLoginData] = useState(
@@ -123,15 +123,17 @@ function Login () {
                 
                 setIsEmployee(jsonVals.isEmployee);
                 setUserName(jsonVals.employeename);
-                const isManger = managerCheck(jsonVals.employeename);
-                window.localStorage.setItem('manager', isManger);
-
+                managerCheck(jsonVals.employeename);
+                //const isManger =
+                // console.log(isManager);
+                window.localStorage.setItem('manager', isManager);
+ 
                 
             }
             else{
                 alert("Invalid email or password. Try again or sign in with Google. ");
             }
-            window.location.reload()
+            //window.location.reload()
 
         } catch (err) {
             
@@ -151,9 +153,9 @@ function Login () {
         
         const jsonVals2 = await response2.json();
         
-        //console.log(jsonVals2);
+        console.log(jsonVals2);
         setIsManager(jsonVals2);
-        return jsonVals2;
+        // return jsonVals2;
     }
 
     const addEmployeeGoogleOauth = useGoogleLogin({
@@ -308,7 +310,7 @@ function Login () {
 
     const clearLogin = async (e) => {
         window.localStorage.setItem('user', "");
-        window.localStorage.setItem('manager', "");
+        window.localStorage.setItem('manager', false);
         setIsEmployee(false);
         setIsManager(false);
         setPassword("");
@@ -319,8 +321,6 @@ function Login () {
 
     }
     
-
-
     const Peoplestates = () => {
         const navigate = useNavigate();
         const openprofile = (userName) => {
@@ -341,6 +341,7 @@ function Login () {
     }
 
     const userLogin = () => {
+
     };
 
     useEffect( () => {  
@@ -349,11 +350,17 @@ function Login () {
         if (auth) {
             setUserName(window.localStorage.getItem('user'));
             setIsEmployee(true);
-
+            setIsManager(window.localStorage.getItem('manager'));
         }
+
+        // const managerOrnot = window.localStorage.getItem('manager');
+        // if(managerOrnot){
+        //     setIsManager(window.localStorage.getItem('manager'));
+        // }
     }, [userName])
 
-    console.log(isManager);
+    // console.log(window.localStorage.getItem('manager'));
+
     const login = useGoogleLogin({
         onSuccess: async respose => {
             try {
