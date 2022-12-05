@@ -109,7 +109,7 @@ const Home = () => {
         </th>
         <th>
 
-        <h5> Hours of Operation:</h5>
+        <h5> Hours of Operation</h5>
         <table class="hours">
             <tr>
                 <th> Monday</th>
@@ -143,7 +143,8 @@ const Home = () => {
         </table>
         
         <br></br>
-        <h5> Contact us:</h5>
+        <br></br>
+        <h5> Contact us</h5>
         <p>Call:  (210) 741-9309</p>
         <p>Email:<a href="mailto:dining@tamu.edu">dining@tamu.edu</a></p>
         <br />

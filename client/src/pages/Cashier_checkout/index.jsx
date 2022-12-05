@@ -216,7 +216,7 @@ export default function Cashier_CheckoutPage(props) {
         
         <div class='checkout__options'>
           <br></br>
-          <h1> Cashier Select a payment method: </h1>
+          <h1> Select a payment method: </h1>
 
           <ThemeProvider theme={theme}>
             <div class="checkout__buttons">

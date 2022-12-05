@@ -32,6 +32,7 @@ div {
     margin: auto;
     font-weight: bold;
     font-family: "Abril Fatface", cursive;
+    color: #fff8e8;
 }
 
 .home__subtitle {
@@ -88,7 +89,7 @@ td {
 }
 
 a {
-    text-decoration: underline;
+    text-decoration: none;
 }
 a:link,
 a:visited {
@@ -100,4 +101,8 @@ a:hover {
 
 p {
     margin: 0;
+}
+
+.home__text {
+    color: #fff8e8;
 }
