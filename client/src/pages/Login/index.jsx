@@ -66,7 +66,7 @@ function Login () {
             console.log(sub);
             const jsonVals = await response.json();
             
-            if( jsonVals.isEmployee == true){
+            if( jsonVals.isEmployee === true){
                 window.localStorage.setItem('user', jsonVals.employeename);
                 
                 setIsEmployee(jsonVals.isEmployee);
@@ -123,12 +123,11 @@ function Login () {
                 
                 setIsEmployee(jsonVals.isEmployee);
                 setUserName(jsonVals.employeename);
-                setIsManager(jsonVals.ismanager);
-                //managerCheck(jsonVals.employeename);
-                //const isManger =
+                managerCheck(jsonVals.employeename);
                 // console.log(isManager);
                 // console.log("isEmployee login:", jsonVals.ismanager);
-                window.localStorage.setItem('manager', jsonVals.ismanager);
+                //window.localStorage.setItem('manager', isManager);
+                //console.log("after set", isManager);
                 //window.location.reload();
                 
             }
