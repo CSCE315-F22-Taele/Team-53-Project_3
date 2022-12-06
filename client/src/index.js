@@ -17,6 +17,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import Cashier from "./pages/Cashier";
 import Manager_Route from "./pages/Manager_Route";
 import Order_Status from "./pages/Order_Status";
+import Employee from "./pages/Employee";
 // import Manager_Route from "./pages/Manager_Route";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -55,6 +56,8 @@ root.render(
                         path="/cashier_checkout"
                         element={<Cashier_checkout />}
                     />
+                    <Route path="/employee" element={<Employee />} />
+                    
                 </Route>
             </Routes>
         </HashRouter>

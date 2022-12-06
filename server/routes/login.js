@@ -75,7 +75,7 @@ app.get("/isManagerGoogleOauth/:sub", async (req, res) => {
         if (todo.rowCount >= 1) {
             isManager = true;
         }
-        
+
         res.json(isManager);
     } catch (err) {
         console.error(err.message);
@@ -229,14 +229,14 @@ app.get("/isValidEmployee/:email/:password", async (req, res) => {
             [email, password]
         );
 
-        var name = todo.rows[0];
+        var name = todo.rows[0].employeename;
         var isEmployee = false;
         if (todo.rowCount >= 1) {
             isEmployee = true;
-            name = JSON.stringify(name).substring(
-                17,
-                JSON.stringify(name).length - 2
-            );
+            // name = JSON.stringify(name).substring(
+            //     17,
+            //     JSON.stringify(name).length - 2
+            //);
         }
 
         let result = {
