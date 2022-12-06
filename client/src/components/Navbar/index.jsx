@@ -31,6 +31,7 @@ const navigate  = useNavigate();
 const logout =() => {
     localStorage.clear();
     setNameExists(false);
+    
     //window.location.reload(false);
     // console.log(localStorage);
     // navigate("/login");

@@ -33,7 +33,7 @@ const theme = createTheme({
 function Login () {
     const [userName, setUserName] = useState(window.localStorage.getItem('user'));
     const [isEmployee,setIsEmployee ] = useState(false);
-    const [isManager,setIsManager ] = useState( window.localStorage.getItem('manager') );
+    const [isManager,setIsManager ] = useState( Boolean(window.localStorage.getItem('manager') ));
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginData, setLoginData] = useState(
@@ -82,7 +82,7 @@ function Login () {
                 console.log(jsonVals2);
                 
                 setIsManager(jsonVals2);
-                window.localStorage.setItem('manager', jsonVals);
+                window.localStorage.setItem('manager', jsonVals2);
             
                 setUserName(jsonVals.employeename);
                 
@@ -155,6 +155,7 @@ function Login () {
         
         console.log(jsonVals2);
         setIsManager(jsonVals2);
+        window.localStorage.setItem('manager', jsonVals2);
         // return jsonVals2;
     }
 
@@ -317,8 +318,12 @@ function Login () {
         setEmail("");
         setUserName("");
         setLoginData(null);
-        window.location.reload(false);
+        window.location.reload();
     }
+    
+    const userLogin = () => {
+
+    };
     
     const Peoplestates = () => {
         const navigate = useNavigate();
@@ -339,16 +344,14 @@ function Login () {
         }
     }
 
-    const userLogin = () => {
 
-    };
 
     useEffect( () => {  
         console.log("user", window.localStorage.getItem('user') );
         const auth = window.localStorage.getItem('user');
         if (auth) {
             setUserName(window.localStorage.getItem('user'));
-            setIsManager(window.localStorage.getItem('manager'));
+            setIsManager(Boolean(window.localStorage.getItem('manager') ) );
             setIsEmployee(true);
             
         }
@@ -520,9 +523,9 @@ function Login () {
         </Stack>
 
         <br />
-        <h1> {isManager}</h1>
+        {/* <h1> {isManager}</h1> */}
         <br />
-        {isEmployee && isManager && (
+        {isManager && (
         //     <Link to="/manager_route"
         //     state= {{
         //         userName: userName
@@ -563,6 +566,13 @@ function Login () {
             >Menu Customization</Button> 
             </Link>
 
+            <Link to="/employee" 
+                    state= {{
+                        userName: userName
+            }}>    
+          <Button variant="contained" sx={{ width:200, height:150, padding: 1, marginLeft: 2, mt:2,mb:2 }}
+            >Employee</Button> 
+            </Link>
            
 
         
