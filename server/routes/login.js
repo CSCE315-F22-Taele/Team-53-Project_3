@@ -75,7 +75,7 @@ app.get("/isManagerGoogleOauth/:sub", async (req, res) => {
         if (todo.rowCount >= 1) {
             isManager = true;
         }
-        
+
         res.json(isManager);
     } catch (err) {
         console.error(err.message);
@@ -225,23 +225,27 @@ app.get("/isValidEmployee/:email/:password", async (req, res) => {
         const email = req.params.email;
         const password = req.params.password;
         const todo = await db.query(
-            "SELECT employeename FROM employee WHERE email=$1 AND password=$2 AND is_working=true",
+            "SELECT employeename, ismanager FROM employee WHERE email=$1 AND password=$2 AND is_working=true",
             [email, password]
         );
 
-        var name = todo.rows[0];
+        var name = todo.rows[0].employeename;
+        var ismanager = todo.rows[0].ismanager;
+        console.log("query:" + todo.rows[0]);
         var isEmployee = false;
+        var isManager = false;
         if (todo.rowCount >= 1) {
             isEmployee = true;
-            name = JSON.stringify(name).substring(
-                17,
-                JSON.stringify(name).length - 2
-            );
+            // name = JSON.stringify(name).substring(
+            //     17,
+            //     JSON.stringify(name).length - 2
+            //);
         }
 
         let result = {
             isEmployee: isEmployee,
             employeename: name,
+            ismanager: ismanager,
         };
         res.json(result);
     } catch (err) {

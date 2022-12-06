@@ -31,9 +31,10 @@ const theme = createTheme({
 });
 
 function Login () {
+    window.localStorage.setItem('manager', false);
     const [userName, setUserName] = useState(window.localStorage.getItem('user'));
     const [isEmployee,setIsEmployee ] = useState(false);
-    const [isManager,setIsManager ] = useState( window.localStorage.getItem('manager') );
+    const [isManager,setIsManager ] = useState( false );
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loginData, setLoginData] = useState(
@@ -79,10 +80,9 @@ function Login () {
                 console.log("DOne");
                 const jsonVals2 = await response2.json();
                 
-                console.log(jsonVals2);
                 
                 setIsManager(jsonVals2);
-                window.localStorage.setItem('manager', jsonVals);
+                window.localStorage.setItem('manager', jsonVals2); // Was jsonVals but shouldn't it be jsonVals2?
             
                 setUserName(jsonVals.employeename);
                 
@@ -115,7 +115,7 @@ function Login () {
         
     
             const jsonVals = await response.json();
-            console.log(jsonVals);
+            // console.log("employeeLogin:", jsonVals);
             
             
             if( jsonVals.isEmployee === true){
@@ -123,11 +123,13 @@ function Login () {
                 
                 setIsEmployee(jsonVals.isEmployee);
                 setUserName(jsonVals.employeename);
-                managerCheck(jsonVals.employeename);
+                setIsManager(jsonVals.ismanager);
+                //managerCheck(jsonVals.employeename);
                 //const isManger =
                 // console.log(isManager);
-                window.localStorage.setItem('manager', isManager);
-                window.location.reload(false);
+                // console.log("isEmployee login:", jsonVals.ismanager);
+                window.localStorage.setItem('manager', jsonVals.ismanager);
+                //window.location.reload();
                 
             }
             else{
@@ -153,7 +155,6 @@ function Login () {
         
         const jsonVals2 = await response2.json();
         
-        console.log(jsonVals2);
         setIsManager(jsonVals2);
         // return jsonVals2;
     }
@@ -202,12 +203,12 @@ function Login () {
             }
             else if(jsonVals.isEmployee === true){
                 alert("You are an employee. Please contact your manager to allow for access with this Google email.");
-                window.location.reload()
+                window.location.reload(false);
             }
             else{
                 alert("You are not an employee. Make sure your name matches.")
             }
-            window.location.reload();
+            window.location.reload(false);
         } catch (err) {
             console.log(err)
 
@@ -344,12 +345,19 @@ function Login () {
     };
 
     useEffect( () => {  
-        console.log("user", window.localStorage.getItem('user') );
+        // console.log("user", window.localStorage.getItem('user') );
         const auth = window.localStorage.getItem('user');
+        // console.log("auth:", auth);
         if (auth) {
             setUserName(window.localStorage.getItem('user'));
-            setIsManager(window.localStorage.getItem('manager'));
+            //console.log("if auth", window.localStorage.getItem('manager'));
+            //setIsManager(window.localStorage.getItem('manager'));
             setIsEmployee(true);
+
+            if (managerCheck(auth) === 'true') {
+                setIsManager(true);
+                window.localStorage.setItem('manager', true);
+            }
             
         }
 
@@ -357,12 +365,13 @@ function Login () {
         // if(managerOrnot){
         //     setIsManager(window.localStorage.getItem('manager'));
         // }
-        console.log("manager", window.localStorage.getItem('manager') );
+        // console.log("manager", window.localStorage.getItem('manager') );
         
 
     }, [userName,isManager])
 
-    console.log(window.localStorage.getItem('manager'));
+    // window.localStorage.setItem('manager', isManager);
+    // console.log("before login", window.localStorage.getItem('manager'));
     
     const login = useGoogleLogin({
         onSuccess: async respose => {
@@ -393,7 +402,6 @@ function Login () {
     });
 
     //console.log("USER",localStorage.getItem('user'));
-
     return (
     <div>
         {!isEmployee && (<br></br>)}
@@ -522,7 +530,7 @@ function Login () {
         <br />
         <h1> {isManager}</h1>
         <br />
-        {isEmployee && isManager && (
+        {isManager && (
         //     <Link to="/manager_route"
         //     state= {{
         //         userName: userName
