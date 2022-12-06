@@ -7,7 +7,7 @@ import { indigo } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
 import {BrowserRouter as Router, Link, useNavigate, useLocation, json} from 'react-router-dom';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
+// import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -67,7 +67,7 @@ function Cashier (props) {
     // const [orderNew,setOrderNew]= useState(false);
     // const [newAwait, setNewAwait]= useState(false);
     const [clicked, setClickedInfo] = useState(false);
-    const name = "Pom and Honey at Texas A&M MSC";
+    // const name = "Pom and Honey at Texas A&M MSC";
 
     
     const [newOrders, setNewOrders] = useState([]);
@@ -75,9 +75,9 @@ function Cashier (props) {
 
     
 
-    const handleClick = () => {
-        setIsShown((current) => !current);
-    }; 
+    // const handleClick = () => {
+    //     setIsShown((current) => !current);
+    // }; 
 
     const orderIdVal = async () => {
         
@@ -106,8 +106,8 @@ function Cashier (props) {
             
             for( var key in jsonVals) { 
                  
-                if (jsonVals[key].is_selling == true){
-                    if (jsonVals[key].is_customize == true){
+                if (jsonVals[key].is_selling === true){
+                    if (jsonVals[key].is_customize === true){
                        var menuCustom = [];
                        menuCustom.push( jsonVals[key].menuitem);
                        menuCustom.push( jsonVals[key].cost);
@@ -127,12 +127,12 @@ function Cashier (props) {
                          menu.push( jsonVals[key].id);
                          menu.push( jsonVals[key].default_inventory);
                         
-                         var menuVals = menuNames;
-                         menuVals.push(menu);
+                         var menuVals2 = menuNames;
+                         menuVals2.push(menu);
                         
              
                          
-                         setMenuNames(menuVals);
+                         setMenuNames(menuVals2);
                     }
                 }
             }
@@ -350,7 +350,7 @@ function Cashier (props) {
 
             }
 
-            if (localTrue==true){
+            if (localTrue===true){
                 x=true;
                 indexNames=i;
             }
@@ -539,7 +539,7 @@ function Cashier (props) {
     const Peoplestates = () => {
         const navigate = useNavigate();
         const openprofile = (totalCost) => {
-            navigate ("/checkout", {
+            navigate ("/cashier_checkout", {
                 state: {
                     totalCost: totalCost
                     
@@ -572,9 +572,9 @@ function Cashier (props) {
             
             setpickupOrders(jsonVals2);
             
-            console.log(jsonVals);
-            console.log(jsonVals2);
-
+            // console.log(jsonVals);
+            // console.log(jsonVals2);
+            
         } catch (err) {
     
             console.error(err.message);
@@ -598,7 +598,8 @@ function Cashier (props) {
         )
         
         getOrders();
-       
+        window.location.reload();
+        
 
 
     }
@@ -618,6 +619,8 @@ function Cashier (props) {
         )
 
         getOrders();
+        window.location.reload();
+        
         
     }
     
@@ -719,9 +722,6 @@ function Cashier (props) {
                 </tr>
                 ))} 
             
-
-            
-
                 <br />
                 </div>
             </table>
@@ -733,11 +733,8 @@ function Cashier (props) {
         <div class="cashier__orderingSection">
             <br></br>
 
-            <h1 class="order__orderingTitle">  Ordering from Pom and Honey at Texas A&M MSC </h1>
+            <h1 class="order__orderingTitle"> Pom & Honey Menu </h1>
             <br></br>
-            <br></br>
-            <br></br>
-            <h2> Item</h2>
             <ThemeProvider theme={theme}>
             <div class="order__buttons">
             { menuNamesCustom.map( (item) =>
@@ -907,14 +904,16 @@ function Cashier (props) {
              
             
 
-                <h1> Cost: ${totalCost} </h1>
+                <h1> Subtotal: ${totalCost} </h1>
               
                 <Stack spacing = {2}>
-                    <Link to="/checkout" 
+                    <Link to="/cashier_checkout" 
                     state= {{
                         orderid : orderid,
                         totalCost : totalCost,
-                        listOrdered : listOrdered
+                        inventoryUsed : inventoryUsed,
+                        listOrderedNames : listOrderedNames,
+                        userName: nameCashier
                     }}
                     >
 
