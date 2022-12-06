@@ -229,10 +229,11 @@ app.get("/isValidEmployee/:email/:password", async (req, res) => {
             [email, password]
         );
 
-        var name = todo.rows[0].employeename;
+        var name = null;
         var isEmployee = false;
         if (todo.rowCount >= 1) {
             isEmployee = true;
+            name = todo.rows[0].employeename;
             // name = JSON.stringify(name).substring(
             //     17,
             //     JSON.stringify(name).length - 2
@@ -243,6 +244,7 @@ app.get("/isValidEmployee/:email/:password", async (req, res) => {
             isEmployee: isEmployee,
             employeename: name,
         };
+        
         res.json(result);
     } catch (err) {
         console.error(err.message);
