@@ -82,7 +82,7 @@ function Login () {
                 
                 
                 setIsManager(jsonVals2);
-                window.localStorage.setItem('manager', jsonVals2); // Was jsonVals but shouldn't it be jsonVals2?
+                window.localStorage.setItem('manager', jsonVals2);
             
                 setUserName(jsonVals.employeename);
                 
@@ -156,6 +156,7 @@ function Login () {
         const jsonVals2 = await response2.json();
         
         setIsManager(jsonVals2);
+        window.localStorage.setItem('manager', jsonVals2);
         // return jsonVals2;
     }
 
@@ -318,8 +319,12 @@ function Login () {
         setEmail("");
         setUserName("");
         setLoginData(null);
-        window.location.reload(false);
+        window.location.reload();
     }
+    
+    const userLogin = () => {
+
+    };
     
     const Peoplestates = () => {
         const navigate = useNavigate();
@@ -340,9 +345,7 @@ function Login () {
         }
     }
 
-    const userLogin = () => {
 
-    };
 
     useEffect( () => {  
         // console.log("user", window.localStorage.getItem('user') );
@@ -350,8 +353,7 @@ function Login () {
         // console.log("auth:", auth);
         if (auth) {
             setUserName(window.localStorage.getItem('user'));
-            //console.log("if auth", window.localStorage.getItem('manager'));
-            //setIsManager(window.localStorage.getItem('manager'));
+            setIsManager(window.localStorage.getItem('manager'));
             setIsEmployee(true);
 
             if (managerCheck(auth) === 'true') {
@@ -528,9 +530,9 @@ function Login () {
         </Stack>
 
         <br />
-        <h1> {isManager}</h1>
+        {/* <h1> {isManager}</h1> */}
         <br />
-        {isManager && (
+        {isEmployee && isManager && (
         //     <Link to="/manager_route"
         //     state= {{
         //         userName: userName
@@ -571,6 +573,13 @@ function Login () {
             >Menu Customization</Button> 
             </Link>
 
+            <Link to="/employee" 
+                    state= {{
+                        userName: userName
+            }}>    
+          <Button variant="contained" sx={{ width:200, height:150, padding: 1, marginLeft: 2, mt:2,mb:2 }}
+            >Employee</Button> 
+            </Link>
            
 
         
