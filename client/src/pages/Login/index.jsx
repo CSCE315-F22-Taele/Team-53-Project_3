@@ -498,21 +498,31 @@ function Login () {
         {isEmployee  && (
 
         <div class="success">
-
+        
+        <Stack spacing={5} direction="row" justifyContent="center" >
+        <div>
+        <ThemeProvider theme={theme}>
         <h4> Howdy, employee {userName}! </h4>
         <Link to="/cashier" 
             state= {{
                 userName: userName
         }}>     
-            <Button type="cashier"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()} }> Go to Cashier Page</Button>
+            <Button type="cashier"  variant="contained" sx={{width:200, height:150, padding: 1, marginLeft: 2, mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()} }> Go to Cashier Page</Button>
         </Link> 
 
         <Link to="/">     
-            <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={() => clearLogin()} > Logout</Button>
+            <Button type="submit"  variant="contained" sx={{width:200, height:150, padding: 1, marginLeft: 2, mt: 3, mb: 0 }} onClick={() => clearLogin()} > Logout</Button>
             </Link>
 
+            </ThemeProvider>
+        </div>
 
-        {isManager && (
+        </Stack>
+
+        <br />
+        <h1> {isManager}</h1>
+        <br />
+        {isEmployee && isManager && (
         //     <Link to="/manager_route"
         //     state= {{
         //         userName: userName
