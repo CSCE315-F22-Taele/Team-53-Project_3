@@ -353,7 +353,7 @@ function Login () {
         // console.log("auth:", auth);
         if (auth) {
             setUserName(window.localStorage.getItem('user'));
-            setIsManager(window.localStorage.getItem('manager'));
+            // setIsManager(window.localStorage.getItem('manager'));
             setIsEmployee(true);
 
             if (managerCheck(auth) === 'true') {
@@ -532,7 +532,7 @@ function Login () {
         <br />
         {/* <h1> {isManager}</h1> */}
         <br />
-        {isEmployee && isManager && (
+        {isManager && (
         //     <Link to="/manager_route"
         //     state= {{
         //         userName: userName
