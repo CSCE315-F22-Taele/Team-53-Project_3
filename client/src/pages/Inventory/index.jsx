@@ -24,7 +24,7 @@ import Paper from '@mui/material/Paper';
 import { Hint } from 'react-autocomplete-hint';
 import { format } from 'date-fns'
 import { border, fontWeight, style } from '@mui/system';
-import {BrowserRouter as Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
  
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
@@ -732,10 +732,11 @@ function Inventory(){
            </Dialog>
            <ThemeProvider theme={increaseSize}>
            <div className="inventory_receipt-section">
-               {/* FIXME: Link to login. */}
+               <Link to="/login">
                <span className='back-btn'>
                     <Button type="submit" size="small" variant="contained" className="inventory_back-btn" >Back</Button>
                </span>
+               </Link>
           
                <span className='edit-btn' >
                    

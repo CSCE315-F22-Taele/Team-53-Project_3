@@ -3,12 +3,14 @@ import { useState } from "react";
 import "./index.css";
 import { useMemo } from "react";
 import { GoogleMap, LoadScript, Marker, InfoWindow} from "@react-google-maps/api";
+import Button from "@mui/material/Button";
+import { Link } from 'react-router-dom';
 
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
 const Home = () => {
-    const name = "Pom and Honey at Texas A&M MSC";
+    const name = "Pom & Honey at Texas A&M MSC";
     const center = useMemo(() => ({ lat:  30.610656, lng:-96.342429 }), []);
 
     // useEffect( () => {
@@ -30,17 +32,6 @@ const Home = () => {
         setClicked(val);
     };
 
-    // const Marker = ({text}) => (
-    //     <InfoWindow onClick={() => handleClick(false)} alignItems={'center'}>
-    //         <Text>{text}</Text>
-    //     </InfoWindow>
-    // );
-    // const markerClicked() => {
-
-    // }
-    // var apiKey = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-    // console.log(JSON.stringify(apiKey));
-
     const getGoogleMapKey = async () => {
         try {
             const response = await fetch(conn + "api/login/getGoogleMapsKey");
@@ -54,8 +45,6 @@ const Home = () => {
     getGoogleMapKey();
 
     return (
-        
-
         <div>
         <div class="home__header">
             <div class="home__title">{name}</div>
@@ -63,8 +52,12 @@ const Home = () => {
                 <h2>
                     {" "}
                     We offer one of a kind Mediterranean food for all visitors
-                    of Texas A&M's Memorial Student Center.{" "}
+                    of Texas A&M University.{" "}
                 </h2>
+                <br></br>
+                <Link to="/order">{" "}
+                    <Button variant="contained" sx={{ width:300, height:50, padding: 4, marginleft: 2, marginRight:2, marginBottom:2, color: "black", borderRadius:10, border:1}} style={{backgroundColor: "#f3d03e",}}>Try us today.</Button>
+                </Link>
             </div>
         </div>
 
@@ -77,7 +70,6 @@ const Home = () => {
             <h5>
             Location
         </h5>
-
         <div class= "maps">
         <LoadScript
         googleMapsApiKey={localStorage.getItem("googleMapAPIKey")}
@@ -155,6 +147,13 @@ const Home = () => {
       </th>
       </tr>
       </table>
+
+      <div class="footer">
+            <br></br>
+            <span class="home__footer_text">
+                <p>Made by Team 53: Preksha Vaghela, Victoria Pham, Annie Ren, Hexin Hu</p>
+            </span>
+      </div>
         </div>
     );
 };

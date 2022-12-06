@@ -18,6 +18,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Box from '@mui/material/Box';
 import { Hint } from 'react-autocomplete-hint';
+import { Link } from 'react-router-dom';
+
 
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
@@ -475,7 +477,6 @@ function Menu(){
     const getInventory = async ()  => {
         try {
             const response = await fetch(conn + "api/menu/getInventory");
-            // FIXME: Need to split into array to display. Reference Order page. 'data' contains inventory itemnames and classification.
             const data = await response.json();
             for(var key in data){
                 let inv = inventory;
@@ -533,7 +534,6 @@ function Menu(){
     const getMenu = async () => {
         try {
             const response = await fetch(conn + "api/menu/get");
-            // FIXME: Need to split into array to display. Reference Order page. 'data' contains all attributes of menu table (menuitem, cost, id, is_selling, is_customize, default_inventory).
             const data = await response.json();
 
             for(var key in data){
@@ -582,7 +582,6 @@ function Menu(){
     // Will update current menu item.
     const updateMenu =(_menuitem, _cost, _is_selling, _is_customize, _default_inventory, _id) => {
         try {
-            // FIXME: Need to update w/ input before updating.
             var menuitem = _menuitem;
             var cost = _cost;
             var is_selling = _is_selling;
@@ -605,7 +604,6 @@ function Menu(){
     // Will insert a new menu item into menu.
     const insertMenu = (_menuitem, _cost, _is_customize, _default_inventory) => {
         try {
-            // FIXME: Need to update w/ input before inserting.
             var menuitem = _menuitem.toLowerCase();
             var cost = _cost;
             var is_selling = true; // Do not change
@@ -671,10 +669,11 @@ function Menu(){
             <ThemeProvider theme={increaseSize}>
             <div className="menu_receipt-section">
 
-                {/* FIXME: Link to login. */}
-                <span className='menu_back-btn'>
-                    <Button variant="contained" size="small"  className="menu_back-btn" >Back</Button>                  
-                </span>
+                <Link to="/login">
+                    <span className='menu_back-btn'>
+                        <Button variant="contained" size="small"  className="menu_back-btn" >Back</Button>                  
+                    </span>
+                </Link>
 
                 <span className='menu_edit-btn' >
                 <Stack 
