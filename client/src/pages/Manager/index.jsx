@@ -335,10 +335,32 @@ export default function Manager(props) {
                     </form>
 
                     {excessShown && <h5>Excess Report from {display_start} to {display_end} with a {excessParams.threshold}% threshold:</h5>}
+                    
+                    <br />
+                    <div id="excessTable" style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}> 
+                    {excessShown && 
+                        <TableContainer component={Paper} sx={{ maxWidth: 400}} align="center" justifyContent="center">
+                        <Table sx={{ maxWidth: 400}} aria-label="customized table" align="center" justifyContent="center">
+                            <TableHead>
+                            <TableRow>
+                                <StyledTableCell>Item</StyledTableCell>
+                                <StyledTableCell align="left">Excess Amount</StyledTableCell>
+                            </TableRow>
+                            </TableHead>
+                            <TableBody>
+                            {excessReport.map((row) => (
+                                <StyledTableRow key={row.name}>
+                                <StyledTableCell align="left">{row.name}</StyledTableCell>
+                                <StyledTableCell align="left">{row.amount}</StyledTableCell>
+                                </StyledTableRow>
+                            ))}
+                            </TableBody>
+                        </Table>
+                        </TableContainer>
+                    }
+                    
+                    </div>
 
-                    {excessShown && excessReport.map( (item) =>
-                        <li> {item.name} : {item.amount}</li>
-                    )}
 
                 </div>
             }
