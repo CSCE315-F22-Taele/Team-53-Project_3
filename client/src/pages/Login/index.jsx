@@ -118,7 +118,7 @@ function Login () {
             console.log(jsonVals);
             
             
-            if( jsonVals.isEmployee == true){
+            if( jsonVals.isEmployee === true){
                 window.localStorage.setItem('user', jsonVals.employeename);
                 
                 setIsEmployee(jsonVals.isEmployee);
@@ -127,7 +127,7 @@ function Login () {
                 //const isManger =
                 // console.log(isManager);
                 window.localStorage.setItem('manager', isManager);
- 
+                window.location.reload(false);
                 
             }
             else{
@@ -317,8 +317,7 @@ function Login () {
         setEmail("");
         setUserName("");
         setLoginData(null);
-        window.location.reload()
-
+        window.location.reload(false);
     }
     
     const Peoplestates = () => {
@@ -399,7 +398,7 @@ function Login () {
     <div>
         {!isEmployee && (<br></br>)}
         
-        <h1> Welcome to Pom and Honey's System</h1>
+        <h1> Welcome to Pom & Honey's System</h1>
         <br></br>
         <br></br>
         { !isEmployee  && (
@@ -409,7 +408,8 @@ function Login () {
                 <div>
             <div class="newPerson">
                 
-                <h3> Create Account</h3>
+                <h3> Create New Account</h3>
+                <p>New employee? Please create a new account.</p>
                 <br></br>
                 
                 
@@ -450,7 +450,8 @@ function Login () {
                 <br />
                 <br />
                
-                <h3> Welcome. Please Login. </h3>
+                <h3> Welcome back. Please login. </h3>
+                <p>You must be a current employee to login.</p>
 
                 <br />
                 <form >
@@ -506,7 +507,7 @@ function Login () {
             <Button type="cashier"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()} }> Go to Cashier Page</Button>
         </Link> 
 
-        <Link to="/login">     
+        <Link to="/">     
             <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={() => clearLogin()} > Logout</Button>
             </Link>
 

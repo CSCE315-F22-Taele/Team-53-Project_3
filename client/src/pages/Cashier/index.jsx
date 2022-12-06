@@ -722,9 +722,6 @@ function Cashier (props) {
                 </tr>
                 ))} 
             
-
-            
-
                 <br />
                 </div>
             </table>
@@ -907,7 +904,7 @@ function Cashier (props) {
              
             
 
-                <h1> Cost: ${totalCost} </h1>
+                <h1> Subtotal: ${totalCost} </h1>
               
                 <Stack spacing = {2}>
                     <Link to="/cashier_checkout" 

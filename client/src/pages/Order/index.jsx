@@ -668,7 +668,7 @@ function Order () {
            
         <div class="order__currentOrder">
                 <br />
-                <h1> Current Order</h1>
+                <h1> My Order</h1>
                 
                 <br />
                 <table>
@@ -706,7 +706,7 @@ function Order () {
             <br></br>
             <br></br>
             
-                <h1> Cost: ${totalCost} </h1>
+                <h2> Subtotal: ${totalCost} </h2>
               
                 <Stack spacing = {2}>
                     <Link to="/checkout" 

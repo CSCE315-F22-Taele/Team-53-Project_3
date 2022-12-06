@@ -31,13 +31,13 @@ const navigate  = useNavigate();
 const logout =() => {
     localStorage.clear();
     setNameExists(false);
-    window.location.reload()
-    console.log(localStorage);
-    navigate("/login");
+    //window.location.reload(false);
+    // console.log(localStorage);
+    // navigate("/login");
 }
 
-    console.log(nameExists);
-    console.log(localStorage.getItem("user"));
+    // console.log(nameExists);
+    // console.log(localStorage.getItem("user"));
     return (
         <nav className="navBar">
             <Link to="/" className="home">
@@ -67,7 +67,7 @@ const logout =() => {
                 </li>
                 
                 <li>
-                    <Link class="nav__link" onClick={logout} to="/login">
+                    <Link class="nav__link" onClick={logout} to="/">
                         Logout
                     </Link>
                 </li>
