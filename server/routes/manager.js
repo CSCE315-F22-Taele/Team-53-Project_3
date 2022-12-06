@@ -2,11 +2,10 @@ const express = require("express");
 const app = express.Router();
 const db = require("../db");
 
-/*
-Get sale report
-    - Pass in two dates in orderid format
-    - Return menu item name & total sold object in decreasing order.
-*/
+/**
+ * This API call will get the sales report (menu name & total sold) given a start and end date
+ * @type {HTTP GET Request}
+ */
 app.get("/getSaleReport/:start/:end", async (req, res) => {
     const start = req.params.start;
     const end = req.params.end;
@@ -58,11 +57,11 @@ app.get("/getSaleReport/:start/:end", async (req, res) => {
     }
 });
 
-/*
-Get excess report
-    - Pass in two dates in orderid format & threshold percentage.
-    - Return inventory item name & total inventory item used in decreasing order.
-*/
+
+/**
+ * This API call will get the excess report given start, end and threshold percentage
+ * @type {HTTP GET Request}
+ */
 app.get("/getExcessReport/:start/:end/:threshold", async (req, res) => {
     const start = req.params.start;
     const end = req.params.end;

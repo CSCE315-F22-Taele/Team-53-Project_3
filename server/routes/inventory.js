@@ -2,6 +2,10 @@ const express = require("express");
 const app = express.Router();
 const db = require("../db");
 
+/**
+ * This API call willl get the inventory table
+ * @type {HTTP GET Request}
+ */
 app.get("/get", async (req, res) => {
     try {
         const todo = await db.query("SELECT * FROM inventory ORDER BY itemid");
@@ -12,6 +16,10 @@ app.get("/get", async (req, res) => {
     }
 });
 
+/**
+ * This API call will update an inventory item
+ * @type {HTTP POST Request}
+ */
 app.post("/update", async (req, res) => {
     try {
         const {
@@ -45,6 +53,10 @@ app.post("/update", async (req, res) => {
     }
 });
 
+/**
+ * This API call will insert a new item into the inventory table
+ * @type {[type]}
+ */
 app.post("/insert", async (req, res) => {
     try {
         const {
@@ -68,7 +80,10 @@ app.post("/insert", async (req, res) => {
     }
 });
 
-
+/**
+ * This API call will get the item and amount of items below 100
+ * @type {HTTP GET Request}
+ */
 app.get("/getRestock", async (req, res) => {
     try {
         const todo = await db.query(
@@ -81,6 +96,10 @@ app.get("/getRestock", async (req, res) => {
     }
 });
 
+/**
+ * This API call will get the default inventory for each menu item
+ * @type {HTTP GET Request}
+ */
 app.get("/getMenu", async (req, res) => {
     try {
         const todo = await db.query(
@@ -93,6 +112,10 @@ app.get("/getMenu", async (req, res) => {
     }
 });
 
+/**
+ * This API call will resize the default array and insert into menu cost when a new inventory item is added
+ * @type {HTTP POST Request}
+ */
 app.post("/updateMenu", async (req, res) => {
     const { default_inventory, id } = req.body;
     try {

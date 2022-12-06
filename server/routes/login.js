@@ -2,6 +2,10 @@ const express = require("express");
 const app = express.Router();
 const db = require("../db");
 
+/**
+ * [employeename is the name of the employee passed in]
+ * @type {HTTP GET request}
+ */
 app.get("/isEmployee/:employeename", async (req, res) => {
     try {
         const employeename = req.params.employeename;
@@ -26,6 +30,10 @@ app.get("/isEmployee/:employeename", async (req, res) => {
     }
 });
 
+/**
+ * [sub is the OAuth Key that is generated when a user creates a new account using OAuth]
+ * @type {HTTP GET Request}
+ */
 app.get("/isEmployeeGoogleOauth/:sub", async (req, res) => {
     try {
         const sub = req.params.sub;
@@ -49,19 +57,15 @@ app.get("/isEmployeeGoogleOauth/:sub", async (req, res) => {
             employeename: name,
         };
         res.json(result);
-
-        // console.log(todo);
-        // var isEmployee = false;
-        // if (todo.rowCount >= 1) {
-        //     isEmployee = true;
-        // }
-
-        // res.json(isEmployee);
     } catch (err) {
         console.error(err.message);
     }
 });
 
+/**
+ * [sub is the OAuth Key that is generated when a user creates a new account using OAuth]
+ * @type {HTTP GET Request}
+ */
 app.get("/isManagerGoogleOauth/:sub", async (req, res) => {
     try {
         const sub = req.params.sub;
@@ -82,6 +86,10 @@ app.get("/isManagerGoogleOauth/:sub", async (req, res) => {
     }
 });
 
+/**
+ * [employeename is the first and last name of the employee passed in]
+ * @type {HTTP GET Request}
+ */
 app.get("/isManager/:employeename", async (req, res) => {
     try {
         const employeename = req.params.employeename;
@@ -101,10 +109,10 @@ app.get("/isManager/:employeename", async (req, res) => {
     }
 });
 
-/***
-NOT TESTED: Need to update employee table in db.
-***/
-
+/**
+ * [This API call will update the the sub attribute with the unique key for an employee's OAuth login]
+ * @type {HTTP POST Request}
+ */
 app.post("/insertGoogleOauth/:sub/:employeename", async (req, res) => {
     try {
         const { employeename, sub } = req.body;
@@ -120,9 +128,10 @@ app.post("/insertGoogleOauth/:sub/:employeename", async (req, res) => {
     }
 });
 
-/*
-Insert a new employee.
-*/
+/**
+ * This API call will insert a new employee into the employee table
+ * @type {HTTP POST Request}
+ */
 app.post("/insert", async (req, res) => {
     try {
         const { employeename, email, password } = req.body;
@@ -140,6 +149,10 @@ app.post("/insert", async (req, res) => {
     }
 });
 
+/**
+ * This API call will update an emplyoee's email & password based on their id
+ * @type {HTTP POST Request}
+ */
 app.post("/updateBasedInsert", async (req, res) => {
     try {
         const { employeeid, email, password } = req.body;
@@ -155,6 +168,10 @@ app.post("/updateBasedInsert", async (req, res) => {
     }
 });
 
+/**
+ * This API call will get the name of employee given an employeeid
+ * @type {HTTP GET Request}
+ */
 app.get("/getName/:employeeid", async (req, res) => {
     try {
         const employeeid = req.params.employeeid;
@@ -184,6 +201,10 @@ app.get("/getName/:employeeid", async (req, res) => {
     }
 });
 
+/**
+ * This API call will check if an employee is working given an employeeid
+ * @type {HTTP GET Request}
+ */
 app.get("/getInfo/:employeeid", async (req, res) => {
     try {
         const employeeid = req.params.employeeid;
@@ -193,18 +214,13 @@ app.get("/getInfo/:employeeid", async (req, res) => {
             [employeeid]
         );
 
-        // console.log(todo);
-
         var name = todo.rows[0].employeename;
         var is_working = todo.rows[0].is_working;
-        // console.log(todo.rows[0]);
-        // console.log("working",is_working);
         var isEmployee = false;
-        // console.log("entered");
         if (todo.rowCount >= 1) {
             isEmployee = true;
         }
-        // console.log(name);
+
         let result = {
             isEmployee: isEmployee,
             employeename: name,
@@ -217,9 +233,10 @@ app.get("/getInfo/:employeeid", async (req, res) => {
     }
 });
 
-/*
-Check if email & password is valid combo in employee table.
-*/
+/**
+ * This API call will allow an employee to login if provided a correct login & is currently working
+ * @type {HTTP Get Request}
+ */
 app.get("/isValidEmployee/:email/:password", async (req, res) => {
     try {
         const email = req.params.email;
@@ -233,10 +250,6 @@ app.get("/isValidEmployee/:email/:password", async (req, res) => {
         var isEmployee = false;
         if (todo.rowCount >= 1) {
             isEmployee = true;
-            // name = JSON.stringify(name).substring(
-            //     17,
-            //     JSON.stringify(name).length - 2
-            //);
         }
 
         let result = {
@@ -249,10 +262,18 @@ app.get("/isValidEmployee/:email/:password", async (req, res) => {
     }
 });
 
+/**
+ * This call will get the OAuth API key
+ * @type {HTTP GET Request}
+ */
 app.get("/getGoogleClientKey", async (req, res) => {
     res.json(process.env.GOOGLE_CLIENT_ID);
 });
 
+/**
+ * This call will get the Google Map API key
+ * @type {HTTP Get Request}
+ */
 app.get("/getGoogleMapsKey", async (req, res) => {
     res.json(process.env.GOOGLE_MAPS_API_KEY);
 });
