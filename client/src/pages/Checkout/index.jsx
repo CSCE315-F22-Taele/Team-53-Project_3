@@ -379,7 +379,7 @@ export default function CheckoutPage(props) {
             <h2> Cost: ${location.state.totalCost} </h2>
                 <Stack spacing = {0}>
                     <br></br>
-                    <Link to="/Order_Status" state={{orderIDStatus : orderIDStatus}}>
+                    <Link to="/Order_Status" state={{orderIDStatus : location.state.orderid}}>
                       <Button  variant="contained" size="large" sx={{mt: 3, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick={() => submitCheckout()}>Check out</Button>
                     </Link>
                     <Link to="/">
