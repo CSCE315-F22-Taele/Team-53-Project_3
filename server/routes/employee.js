@@ -2,6 +2,10 @@ const express = require("express");
 const app = express.Router();
 const db = require("../db");
 
+/**
+ * This API call will get the employee table
+ * @type {HTTP GET Request}
+ */
 app.get("/get", async (req, res) => {
     try {
         const todo = await db.query(
@@ -17,6 +21,10 @@ app.get("/get", async (req, res) => {
 /*
 Update employee information.
 */
+/**
+ * This API call will update an employee information
+ * @type {HTTP POST Request}
+ */
 app.post("/update", async (req, res) => {
     try {
         const {

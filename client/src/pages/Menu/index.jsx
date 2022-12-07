@@ -24,7 +24,11 @@ import { Link } from 'react-router-dom';
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
-function Menu(){
+/**
+ * This function will display the menu page.
+ * @constructor
+ */
+function Menu() {
 
     const theme = createTheme({
         palette: {
@@ -72,6 +76,13 @@ function Menu(){
         },
     };
 
+    /**
+     * This function will alter the text when clicked on
+     * @param  {[type]} item                   an item
+     * @param  {Array} itemName                inventory item list
+     * @param  {createTheme} theme             theme (font/size)
+     * @return {[type]}          Resize the font/size of text
+     */
     function getStyles(item, itemName, theme) {
         return {
           fontWeight:
@@ -80,12 +91,13 @@ function Menu(){
               : theme.typography.fontWeightMedium,
         };
     }
+
     const [inventory, setInventory] = useState([]);
     const [inventory0, setInventory0] = useState([]);
     const [inventory1, setInventory1] = useState([]);
     const [inventory2, setInventory2] = useState([]);
     const [inventory3, setInventory3] = useState([]);
-    const [inventory4, setInventory4] = useState([]); 
+    const [inventory4, setInventory4] = useState([]);
 
     const [menu, setMenu] = useState([]);
     const [activate_menu, set_activateMenu] = useState([]);
@@ -109,7 +121,7 @@ function Menu(){
     const [open_name_update, set_name_update] = useState(false);
     const [open_name_deactivate, set_name_deactivate] = useState(false);
     const [open_name_activate, set_name_activate] = useState(false);
-    
+
 
     const [open_deactivate, set_deactivate] = useState(false);
     const [open_activate, set_activate] = useState(false);
@@ -131,7 +143,11 @@ function Menu(){
     const [selling_status, set_selling_status] = useState('');
     const [customize_status, set_customize_status] = useState('');
 
-
+    /**
+     * This function will get the inventory entity used information for a menu item
+     * @param  {Number} default_inventory               menu item id
+     * @return {Array}                   Populate inventory information in array
+     */
     const get_default_inventory = (default_inventory) => {
         let list = [];
         setItem([]);
@@ -147,6 +163,11 @@ function Menu(){
         window.location.reload(false);
     }
 
+    /**
+     * Find the indexes of the default inventory items
+     * @param  {Array} itemlist               inventory items array
+     * @return {Array}          default inventory items used in a menu item
+     */
     function findIndex(itemlist){
         var list = updateInv;
         for(var key in inventory){
@@ -166,18 +187,26 @@ function Menu(){
         return list;
     }
 
+    /**
+     * Update the default inventory used in menu item
+     * @return {Array} default inventory used
+     */
     const update_default_inventory = () => {
-        
-        var list  = [];        
+
+        var list  = [];
         if(select_item.length !== 0){
             list = findIndex(select_item);
         }
 
         set_updateInv(list);
-        
+
     }
 
-
+    /**
+     * This function sets menu item to customizable
+     * @param  {Number}  event               boolean value of is customizable
+     * @return {Boolean}       set menu item to customizable
+     */
     const handleChange_isCustomize = (event) => {
         if(event.target.value === 0){
             set_is_customize(true);
@@ -187,15 +216,25 @@ function Menu(){
         set_customize_status(event.target.value);
     };
 
+    /**
+     * This function sets menu item to deactivate or activate.
+     * @param  {Number}  event               boolean value of is selling
+     * @return {Boolean}       set whether menu item is being sold
+     */
     const handleChange_isSelling = (event) => {
         if(event.target.value === 0){
             set_is_selling(true);
         } else {
-            set_is_selling(false);      
+            set_is_selling(false);
         }
         set_selling_status(event.target.value);
     };
 
+    /**
+     * This function alters the base inventory items of a menu item.
+     * @param  {String} event               inventory item name
+     * @return {Array}       set base inventory items in default inventory of menu
+     */
     const handleChange_base = (event) => {
         const {
           target: { value },
@@ -206,6 +245,11 @@ function Menu(){
         );
     };
 
+    /**
+     * This function alters the protein inventory items of a menu item.
+     * @param  {String} event               inventory item name
+     * @return {Array}       set protein inventory items in default inventory of menu
+     */
     const handleChange_pro = (event) => {
         const {
           target: { value },
@@ -216,6 +260,11 @@ function Menu(){
         );
     };
 
+    /**
+     * This function alters the topping inventory items of a menu item.
+     * @param  {String} event               inventory item name
+     * @return {Array}       set topping inventory items in default inventory of menu
+     */
     const handleChange_top = (event) => {
         const {
           target: { value },
@@ -226,6 +275,11 @@ function Menu(){
         );
     };
 
+    /**
+     * This function alters the dressing inventory items of a menu item.
+     * @param  {String} event               inventory item name
+     * @return {Array}       set dressing inventory items in default inventory of menu
+     */
     const handleChange_dress = (event) => {
         const {
           target: { value },
@@ -235,6 +289,12 @@ function Menu(){
           typeof value === 'string' ? value.split(', ') : value,
         );
     };
+
+    /**
+     * This function alters the misc. inventory items of a menu item.
+     * @param  {String} event               inventory item name
+     * @return {Array}       set misc. inventory items in default inventory of menu
+     */
     const handleChange_misc = (event) => {
         const {
           target: { value },
@@ -245,6 +305,10 @@ function Menu(){
         );
     };
 
+    /**
+     * Get selected inventory items for default array
+     * @return {Array} default inventory items Array for menu item
+     */
     const getSelectItem = () => {
         let itemList = select_item;
 
@@ -274,6 +338,7 @@ function Menu(){
     const handleClickOpen_add = () => {
         set_add(true);
     };
+
     const handleClickOpen_update = () => {
         set_update(true);
     };
@@ -281,19 +346,22 @@ function Menu(){
     const handleClickOpen_name_update = () => {
         set_name_update(true);
     };
+
     const handleClickOpen_name_deactivate = () => {
         set_name_deactivate(true);
     };
+
     const handleClickOpen_name_activate = () => {
         set_name_activate(true);
     };
+
     const handleClickOpen_deactivate = () => {
         set_deactivate(true);
     };
+
     const handleClickOpen_activate = () => {
         set_activate(true);
     };
-
 
     const handleClose_add = () => {
         set_add(false);
@@ -323,6 +391,9 @@ function Menu(){
         set_welcome(false);
     }
 
+    /**
+     * Reset all values
+     */
     const reset = () => {
         setItem([]);
         set_selectItem([]);
@@ -336,6 +407,11 @@ function Menu(){
         set_is_customize(false);
     }
 
+    /**
+     * Check if menu item is to be displayed.
+     * @param  {Boolean} c               check if valid menu item request
+     * @return set specific menu item information to be displayed
+     */
     const sendValue = (c) => {
         set_nameDisplay("");
         set_costDisplay("");
@@ -353,9 +429,9 @@ function Menu(){
                 for(let key in menu){
                     let menuName = menu[key][0];
                     menuName = menuName.toLowerCase();
-                    if((menuName === n && !menu[key][3] && open_name_activate ) || 
+                    if((menuName === n && !menu[key][3] && open_name_activate ) ||
                     (menuName === n && menu[key][3] && open_name_deactivate) || (menuName === n && open_name_update) ){
-                        
+
                         set_nameDisplay(menu[key][0]);
                         set_costDisplay(menu[key][1]);
                         get_default_inventory(menu[key][2]);
@@ -365,7 +441,7 @@ function Menu(){
                         } else {
                             set_selling_status(1);
                         }
-                        
+
                         set_is_customize(menu[key][4]);
                         if(menu[key][4] === true){
                             set_customize_status(0);
@@ -375,8 +451,8 @@ function Menu(){
                         setId(menu[key][5]);
                         check = true;
                         break;
-                    } 
-                }  
+                    }
+                }
             }
         } else {
             if(inputName.current !== ""){
@@ -386,9 +462,6 @@ function Menu(){
                     let menuName = menu[key][0].toLowerCase();
 
                     if(menuName === n  ){
-                        console.log(menu[key][3]);
-                        console.log(open_name_activate);
-                        console.log(open_name_deactivate);
                         set_nameDisplay(menu[key][0]);
                         set_costDisplay(menu[key][1]);
                         get_default_inventory(menu[key][2]);
@@ -398,7 +471,7 @@ function Menu(){
                         } else {
                             set_selling_status(1);
                         }
-                        
+
                         set_is_customize(menu[key][4]);
                         if(menu[key][4] === true){
                             set_customize_status(0);
@@ -408,22 +481,22 @@ function Menu(){
                         setId(menu[key][5]);
                         check = true;
                         break;
-                    } 
-                }  
+                    }
+                }
             }
         }
 
         if(check){
             if(open_name_update){
-                handleClickOpen_update(); 
+                handleClickOpen_update();
                 handleClose_name_update();
             } else if(open_name_deactivate){
-                handleClickOpen_deactivate(); 
+                handleClickOpen_deactivate();
                 handleClose_name_deactivate();
             } else if(open_name_activate){
-                handleClickOpen_activate(); 
+                handleClickOpen_activate();
                 handleClose_name_activate();
-            }            
+            }
         } else {
             //alert("This item doesn't exist!");
             if(open_name_update){
@@ -436,11 +509,16 @@ function Menu(){
                 handleClickOpen_name_activate()
                 alert("This item doesn't exist or is currently activated!");
             }
-           
-            
+
+
         }
-        
+
     }
+
+    /**
+     * Function to populate inventory separated by classification.
+     * @type {Array}
+     */
     const getEachinv = async() => {
         let list_base = [];
         let list_pro = [];
@@ -472,8 +550,10 @@ function Menu(){
 
     }
 
-    
-    // This function will retrieve all of the inventory to reference w/ default_inventory used in menu.
+    /**
+     * This function will retrieve all of the inventory to reference w/ default_inventory used in menu.
+     * @return {Promise} All inventory table information
+     */
     const getInventory = async ()  => {
         try {
             const response = await fetch(conn + "api/menu/getInventory");
@@ -488,8 +568,8 @@ function Menu(){
 
                     if (data[key].classify === 0){
                         inventoryBase.push(data[key].itemname);
-    
-                        setInventory0(inventoryBase);  
+
+                        setInventory0(inventoryBase);
                     }
                     else if(data[key].classify === 1){
                         inventoryProteins.push(data[key].itemname);
@@ -497,7 +577,7 @@ function Menu(){
                     }
                     else if(data[key].classify === 2){
                         inventoryToppings.push(data[key].itemname);
-    
+
                         setInventory2(inventoryToppings);
                     }
                     else if(data[key].classify === 3){
@@ -507,13 +587,13 @@ function Menu(){
                     }
                     else if(data[key].classify === 4){
                         inventoryMisc.push(data[key].itemname);
-    
+
                         setInventory4(inventoryMisc);
                     }
 
                 inv.push(data[key].itemname) ;
                 setInventory(inv);
-                
+
             }
         }
         catch (err) {
@@ -531,6 +611,10 @@ function Menu(){
         return list;
     }
 
+    /**
+     * Function to get menu item information from menucost table.
+     * @return {Promise} get menu item information.
+     */
     const getMenu = async () => {
         try {
             const response = await fetch(conn + "api/menu/get");
@@ -548,7 +632,7 @@ function Menu(){
                     a.push(data[key].default_inventory);
                     let a_Vals = activate_menu;
                     a_Vals.push(a);
-    
+
                     set_activateMenu(a_Vals);
                 } else {
                     d.push(data[key].menuitem);
@@ -556,7 +640,7 @@ function Menu(){
                     d.push(data[key].default_inventory);
                     let d_Vals = deactivate_menu;
                     d_Vals.push(d);
-    
+
                     set_deactivateMenu(d_Vals);
                 }
                 m.push(data[key].menuitem);
@@ -579,7 +663,15 @@ function Menu(){
 
     }
 
-    // Will update current menu item.
+    /**
+     * Function to update menu item in menucost table.
+     * @param  {String}  _menuitem                        menu item name
+     * @param  {Float}  _cost                             menu item cost
+     * @param  {Boolean} _is_selling                      menu item deactivate/activated
+     * @param  {Boolean} _is_customize                    menu item is customizable
+     * @param  {Array}  _default_inventory                menu item array of used inventory
+     * @param  {Number}  _id                              menu item pk
+     */
     const updateMenu =(_menuitem, _cost, _is_selling, _is_customize, _default_inventory, _id) => {
         try {
             var menuitem = _menuitem;
@@ -600,8 +692,14 @@ function Menu(){
             console.error(err.message);
         }
     }
-    
-    // Will insert a new menu item into menu.
+
+    /**
+     * Function will insert a new menu item into menu.
+     * @param  {String}  _menuitem                       name of menu item
+     * @param  {Float}  _cost                            cost of menu item
+     * @param  {Boolean} _is_customize                   allow for customization
+     * @param  {Array}  _default_inventory               inventory used for menu item
+     */
     const insertMenu = (_menuitem, _cost, _is_customize, _default_inventory) => {
         try {
             var menuitem = _menuitem.toLowerCase();
@@ -609,7 +707,7 @@ function Menu(){
             var is_selling = true; // Do not change
             var is_customize = _is_customize; // If no input, set to false
             var default_inventory = _default_inventory;
-            
+
             if (String(menuitem.length) !== 0) {
                 if (/^\d+\.\d{0,2}$/.test(cost)) {
                     if (default_inventory.length !== 0) {
@@ -636,13 +734,13 @@ function Menu(){
                     getSelectItem();
                     update_default_inventory();
                 }
-            } 
+            }
             else {
                 alert("Invalid menu item name. Please retry.")
                 getSelectItem();
                 update_default_inventory();
             }
-            
+
         } catch (err) {
             console.error(err.message);
         }
@@ -656,27 +754,27 @@ function Menu(){
 
     return(
         <div className="menu_page">
-            
+
             <Dialog open={welcome_open} onClose={handleClose_welcome} >
                 <DialogTitle fontSize={25}>Welcome to the Menu page.</DialogTitle>
-                
+
                 <DialogActions>
                     <Button style={{fontSize: '20px'}} onClick={() => {
                         handleClose_welcome();
                     }}>Start</Button>
-                </DialogActions>                                
+                </DialogActions>
             </Dialog>
             <ThemeProvider theme={increaseSize}>
             <div className="menu_receipt-section">
 
                 <Link to="/login">
                     <span className='menu_back-btn'>
-                        <Button variant="contained" size="small"  className="menu_back-btn" >Back</Button>                  
+                        <Button variant="contained" size="small"  className="menu_back-btn" >Back</Button>
                     </span>
                 </Link>
 
                 <span className='menu_edit-btn' >
-                <Stack 
+                <Stack
                     direction="row"
                     spacing={5}
                 >
@@ -688,7 +786,7 @@ function Menu(){
                                     required
                                     margin="dense"
                                     id="outlined-required"
-                                    
+
                                     helperText="Item Name"
                                     type="text"
                                     fullWidth
@@ -700,13 +798,13 @@ function Menu(){
                                     required
                                     margin="dense"
                                     id="outlined-required"
-                                   
+
                                     helperText="Cost (eg. X.XX)"
                                     type="text"
                                     fullWidth
                                     variant="standard"
                                     inputRef={cost_input}
-                                /> 
+                                />
 
 
                                 <FormControl sx={{ m: 1, width: 500 }}>
@@ -725,7 +823,7 @@ function Menu(){
                                 <br />
                                 <br />
                                 <InputLabel align="left">Default Inventory</InputLabel>
-                                
+
                                 <FormControl sx={{ m: 1, width: 500 }}>
                                     <InputLabel id="demo-multiple-chip-label">Base</InputLabel>
                                     <Select
@@ -878,7 +976,7 @@ function Menu(){
                                 </FormControl>
 
                                 </DialogContent>
-        
+
                                 <DialogActions>
 
                                 <Button style={{fontSize: '20px'}} onClick={() => {
@@ -886,17 +984,17 @@ function Menu(){
                                     reset();
                                     }}>Cancel</Button>
                                 <Button style={{fontSize: '20px'}} onClick={() => {
-                                    
+
                                     getSelectItem();
                                     update_default_inventory();
                                     insertMenu(name_input.current.value, cost_input.current.value, isCustomize, updateInv);
-                                    
+
                                 }}>Add</Button>
                                 </DialogActions>
-                        </Dialog>  
-                    
+                        </Dialog>
+
                     <Button variant="contained" size="small" className="back1-btn" onClick={handleClickOpen_name_update}>Update</Button>
-                        
+
                             <Dialog open={open_name_update} onClose={handleClose_name_update}>
                             <DialogTitle fontSize={25}>What is the item's name?</DialogTitle>
                                 <DialogContent>
@@ -905,25 +1003,25 @@ function Menu(){
                                         style={{ width: "500px" }}
                                         ref={inputName}
                                     />
-                                </Hint>   
+                                </Hint>
                                 </DialogContent>
-            
+
                                 <DialogActions>
                                     <Button style={{fontSize: '20px'}} onClick={handleClose_name_update}>Cancel</Button>
                                     <Button style={{fontSize: '20px'}} onClick={() => {
                                             handleClose_name_update();
-                                            
+
                                             sendValue(true);
                                             getEachinv();
 
                                     }}>Search</Button>
-                                </DialogActions>                                
+                                </DialogActions>
                             </Dialog>
 
 
                         <Dialog open={open_update} onClose={handleClose_update}>
                             <DialogTitle fontSize={25}>Update</DialogTitle>
-   
+
                             <DialogContent>
 
                             <TextField
@@ -947,8 +1045,8 @@ function Menu(){
                                 fullWidth
                                 variant="standard"
                                 inputRef={cost_input}
-                            /> 
-                            
+                            />
+
                            <FormControl sx={{ m: 1, width: 250 }}>
                                 <InputLabel id="demo-multiple-chip-label">Is selling?</InputLabel>
                                     <Select
@@ -1133,24 +1231,24 @@ function Menu(){
 
 
                                 </DialogContent>
-        
+
                                 <DialogActions>
                                     <Button style={{fontSize: '20px'}} onClick={() => {
                                     handleClose_update()
                                     reset();
-                                    
+
                                     }}>Cancel</Button>
-                                <Button style={{fontSize: '20px'}} onClick={() => { 
+                                <Button style={{fontSize: '20px'}} onClick={() => {
                                     handleClose_update();
                                     getSelectItem();
                                     update_default_inventory();
-                                    updateMenu(name_input.current.value, cost_input.current.value, isSelling, isCustomize, updateInv, 
+                                    updateMenu(name_input.current.value, cost_input.current.value, isSelling, isCustomize, updateInv,
                                         id);
                                     reset();
                                     refreshPage();
                                 }}>Update</Button>
                                 </DialogActions>
-                        </Dialog> 
+                        </Dialog>
 
                     {/* Deactivate Btn */}
                     <ThemeProvider theme={deactivate_theme}>
@@ -1159,7 +1257,7 @@ function Menu(){
                     <Dialog open={open_name_deactivate} onClose={handleClose_name_deactivate}>
                         <DialogTitle fontSize={25}>What is the item's name?</DialogTitle>
                         <DialogContent>
-                            <Hint options={menuname} allowTabFill>             
+                            <Hint options={menuname} allowTabFill>
 
                             <input className='input'
                                 style={{ width: "500px" }}
@@ -1167,7 +1265,7 @@ function Menu(){
                             />
                             </Hint>
                         </DialogContent>
-    
+
                         <DialogActions>
                             <Button style={{fontSize: '20px'}} onClick={handleClose_name_deactivate}>Cancel</Button>
                             <Button style={{fontSize: '20px'}} onClick={() => {
@@ -1179,7 +1277,7 @@ function Menu(){
                         </DialogActions>
                     </Dialog>
                     <Dialog
-                    PaperProps={{       
+                    PaperProps={{
                         style: {
                             backgroundColor: "#cf8f8f",
                         },}}  open={open_deactivate} onClose={handleClose_deactivate}>
@@ -1205,7 +1303,7 @@ function Menu(){
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                            /> 
+                            />
 
                             <TextField
                                 inputProps={{ readOnly: true }}
@@ -1216,7 +1314,7 @@ function Menu(){
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                            /> 
+                            />
 
                             <FormControl sx={{ m: 1, width: 500 }}>
                             <InputLabel id="demo-simple-select-readonly-label">Base</InputLabel>
@@ -1368,7 +1466,7 @@ function Menu(){
 
 
                         </DialogContent>
-    
+
                         <DialogActions>
                             <Button style={{fontSize: '20px'}} onClick={handleClose_deactivate}>Cancel</Button>
                             <Button style={{fontSize: '20px'}} onClick={() => {
@@ -1379,13 +1477,13 @@ function Menu(){
                                     updateMenu(name_display, cost_display, false, isCustomize, list, id);
                                     refreshPage();
                             }}>Deactivate</Button>
-                            
+
                         </DialogActions>
                     </Dialog>
                     {/* Activate Btn */}
                     <Button variant="contained" size="small"  className="back1-btn" onClick={handleClickOpen_name_activate} >Activate</Button>
-                    
-                    
+
+
                     <Dialog open={open_name_activate} onClose={handleClose_name_activate}>
                         <DialogTitle fontSize={25}>What is the item's name?</DialogTitle>
                         <DialogContent>
@@ -1399,7 +1497,7 @@ function Menu(){
                                 variant="standard"
                                 inputRef={inputName}
                             />               */}
-                            <Hint options={menuname} allowTabFill>             
+                            <Hint options={menuname} allowTabFill>
 
                             <input className='input'
                                 style={{ width: "500px" }}
@@ -1407,7 +1505,7 @@ function Menu(){
                             />
                             </Hint>
                         </DialogContent>
-    
+
                         <DialogActions>
                             <Button style={{fontSize: '20px'}} onClick={handleClose_name_activate}>Cancel</Button>
                             <Button style={{fontSize: '20px'}} onClick={() => {
@@ -1422,7 +1520,7 @@ function Menu(){
 
                     <Dialog
                         fontSize={25}
-                        PaperProps={{       
+                        PaperProps={{
                             style: {
                                 backgroundColor: "#82cdad",
                             },}}  open={open_activate} onClose={handleClose_activate}>
@@ -1448,7 +1546,7 @@ function Menu(){
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                            /> 
+                            />
 
 
                             <TextField
@@ -1460,13 +1558,13 @@ function Menu(){
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                            /> 
+                            />
 
                             <FormControl sx={{ m: 1, width: 500 }}>
                             <InputLabel id="demo-simple-select-readonly-label">Base</InputLabel>
 
                                 <Select
-                                
+
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
                                 value={select_item_base}
@@ -1620,7 +1718,7 @@ function Menu(){
                                     updateMenu(name_display, cost_display, true, isCustomize, list, id);
                                     refreshPage();
                             }}>Activate</Button>
-                            
+
                         </DialogActions>
                     </Dialog>
                 </Stack>
@@ -1635,21 +1733,21 @@ function Menu(){
                 <ThemeProvider theme={theme}>
 
                 { deactivate_menu.map((item) =>
-                    
-                    (                                               
+
+                    (
                         <Button className="menu_item-btn" variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                        onClick= { () => 
+                        onClick= { () =>
                             {
                                 var check = false;
                                 inputName.current = item[0];
-                                sendValue(check); 
+                                sendValue(check);
                                 getEachinv();
                                 handleClickOpen_update();
-                                
+
                             }}>
                         {item[0]}</Button>
-                        
-                    )                                  
+
+                    )
                     )
                 }
                 </ThemeProvider>
@@ -1665,21 +1763,21 @@ function Menu(){
                 <ThemeProvider theme={theme}>
 
                     { activate_menu.map((item) =>
-                                
-                                (                                               
+
+                                (
                                     <Button className="menu_item-btn" variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                                    onClick= { () => 
+                                    onClick= { () =>
                                     {
                                         var check = false;
                                         inputName.current = item[0];
-                                        sendValue(check); 
+                                        sendValue(check);
                                         getEachinv();
                                         handleClickOpen_update();
-                                        
+
                                     }}>
                                     {item[0]}</Button>
-                                    
-                                )                                  
+
+                                )
                             )
                     }
                 </ThemeProvider>

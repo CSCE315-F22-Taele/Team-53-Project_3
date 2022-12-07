@@ -11,6 +11,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { TextField } from '@mui/material';
 
 // For local testing: (comment out)
 const conn = "http://localhost:3500/";
@@ -32,7 +33,8 @@ function Employee (props) {
     const nameManager = location.state.userName;
     const [workingEmployees, setWorking] = useState([]);
     const [notworkingEmployees, setNotWorking] = useState([]);
-   
+    const [clicked, setClickedInfo] = useState(false);
+    const [isworking, setIsWorking] = useState(null);
 
     const getEmployees = async () => {
         setWorking([]);
@@ -76,12 +78,15 @@ function Employee (props) {
         }
     };
 
+    const handleIsworking = async (e) => {
+        setIsWorking(e.target.value);
+    }
     useEffect( () => {  
       getEmployees();
     }, [])
 
-
-    console.log(workingEmployees.at(0));
+    
+    
     return (
         <div>
             <br />
@@ -101,9 +106,27 @@ function Employee (props) {
                
                 { workingEmployees.map( (item) =>
                     <tr>
-                        <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'green', backgroundColor:'white', mt: 3 , mb:2 }} >
+                        <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => setClickedInfo(true)} >
                         <td> {item[0]} </td>
                         </Button>
+
+                        <Dialog open={clicked} onClose={() => setClickedInfo(false)}>
+                            <DialogTitle>Employee Information</DialogTitle>
+                            <DialogContent>
+                                <TextField
+                                required
+                                margin="dense"
+                                id="outlined-required"
+                                label="true/false"
+                                type="text"
+                                fullWidth
+                                variant="standard"
+                                value = { isworking }
+                                onChange = { handleIsworking }
+                                />
+                           </DialogContent>
+                        </Dialog>
+                        
                     <td> {item[2]} </td>
                     
                     <td> {item[1]} </td>
@@ -127,9 +150,17 @@ function Employee (props) {
                
                 { notworkingEmployees.map( (item) =>
                     <tr>
-                        <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'green', backgroundColor:'white', mt: 3 , mb:2 }} >
+                        <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => setClickedInfo(true)} >
                         <td> {item[0]} </td>
                         </Button>
+
+                        <Dialog open={clicked} onClose={() => setClickedInfo(false)}>
+                            <DialogTitle>Employee Information</DialogTitle>
+                            <DialogContent>
+                                
+                           </DialogContent>
+                        </Dialog>
+
                     <td> {item[2]} </td>
                     
                     <td> {item[1]} </td>
@@ -138,6 +169,7 @@ function Employee (props) {
                 )}
            
             </table>
+            <br />
             <br />
 
         </div>
