@@ -83,7 +83,7 @@ app.get("/getExcessReport/:start/:end/:threshold", async (req, res) => {
 
         // Calculate total number of inventory items used
         const total_items = await db.query(
-            "SELECT inventory FROM ordering WHERE orderid > $1 AND orderid < $2",
+            "SELECT inventory FROM ordering WHERE orderid >= $1 AND orderid < $2",
             [start, end]
         );
 
@@ -94,7 +94,8 @@ app.get("/getExcessReport/:start/:end/:threshold", async (req, res) => {
             var single_order = tmp.split(",");
 
             for (var item in single_order) {
-                total[item] = total[item] + parseInt(single_order[item]);
+                total[item] =
+                    total[item] + parseInt(single_order[parseInt(item) + 1]);
             }
         }
 
@@ -115,7 +116,7 @@ app.get("/getExcessReport/:start/:end/:threshold", async (req, res) => {
             tmp = tmp * 100; // Why multiply 100 twice?
             if (tmp < parseFloat(threshold)) {
                 let inventory_and_name = {
-                    name: inventory_names[parseInt(a) - 1],
+                    name: inventory_names[a],
                     amount: total[a],
                 };
                 below_threshold.push(inventory_and_name);

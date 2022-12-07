@@ -55,7 +55,6 @@ root.render(
                         element={<Cashier_checkout />}
                     />
                     <Route path="/employee" element={<Employee />} />
-                    
                 </Route>
             </Routes>
         </HashRouter>
