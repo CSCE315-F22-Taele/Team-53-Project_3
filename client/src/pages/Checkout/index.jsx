@@ -11,18 +11,17 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { TextField } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import {BrowserRouter as   Routes, Link, useLocation} from 'react-router-dom';
- 
-// For local testing:
-const conn = "http://localhost:3500/";
-// For production:
-// const conn = "https://pom-and-honey-bhf5.onrender.com/";
- 
-/* FIXME:
-  - Make page responsive to screen size
-*/
 
+const conn = "http://localhost:3500/";
+// const conn = "https://pom-and-honey-bhf5.onrender.com/";
+
+/**
+ * Function to display customer checkout page.
+ * @param       {Props} props  Information passed from customer ordering page.
+ * @constructor
+ */
 export default function CheckoutPage(props) {
- 
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -31,37 +30,40 @@ export default function CheckoutPage(props) {
       secondary: indigo,
     },
   });
- 
+
   const [open_card, setCard] = useState(false);
   const [open_uin, setUIN] = useState(false);
- 
+
   const handleClickOpen_Card = () => {
     setCard(true);
     setPaymentMethod(2);
   };
- 
+
   const handleClose_Card = () => {
     setCard(false);
     setCreditName("");
     setCreditCardNumber("");
     setCreditExpirationDate("");
-    setCreditSecurityCode(""); 
+    setCreditSecurityCode("");
   };
 
+  /**
+   * Error check credit card information input if click submit.
+   */
   const handleClose_Card_Submitted = () => {
-    if (1000000000000000 < parseInt(creditCardNumber) && 9999999999999999 >= parseInt(creditCardNumber) && 
+    if (1000000000000000 < parseInt(creditCardNumber) && 9999999999999999 >= parseInt(creditCardNumber) &&
         /^[A-Za-z\s]*$/.test(creditName) &&
         parseInt(creditExpirationDate.substring(0, 2)) > 0 &&
         parseInt(creditExpirationDate.substring(0, 2)) <= 12 &&
         creditExpirationDate.indexOf("/") > -1 &&
         parseInt(creditExpirationDate.substring(3, 5)) > 0 &&
         parseInt(creditExpirationDate.substring(3, 5)) <= 31 &&
-        100 < parseInt(creditSecurityCode) && 
+        100 < parseInt(creditSecurityCode) &&
         999 >= parseInt(creditSecurityCode) ) {
       setCard(false);
     }
     else {
-      alert("Invalid card information. Please retry.");     
+      alert("Invalid card information. Please retry.");
     }
   }
 
@@ -75,7 +77,7 @@ export default function CheckoutPage(props) {
     setPaymentMethod(1);
 
   };
- 
+
   const handleClose_UIN = () => {
     setUIN(false);
   };
@@ -88,7 +90,10 @@ export default function CheckoutPage(props) {
       alert("Invalid UIN. Please retry.");
     }
   }
- 
+
+  /**
+   * Result if customer selects a cash payment option.
+   */
   const selectCash = async () => {
     setPaymentMethod(3);
     alert("Please submit order and head to the cashier to make payment.");
@@ -99,6 +104,9 @@ export default function CheckoutPage(props) {
     setCardNumber("");
   }
 
+  /**
+   * Function that inserts checkout information into checkout table.
+   */
   const postCheckout = async () => {
     try {
       // Determine type of card (UIN or credit/debit)
@@ -126,13 +134,16 @@ export default function CheckoutPage(props) {
     }
   }
 
-  const postInventory = async () => {   
+  /**
+   * Function that decrement inventory amounts used in order when checkout complete and update inventory table.
+   */
+  const postInventory = async () => {
     for (var i = 0; i < totalInventory.length; i++) {
 
       var tmp = JSON.stringify(totalInventory[i]);
       var tmp_int = parseInt(tmp.substring(10, tmp.length-1));
       var amount = tmp_int;
-    
+
       if (parseInt(location.state.inventoryUsed[i]) > 0 && !isNaN(location.state.inventoryUsed[i])) {
         amount = tmp_int - parseInt(location.state.inventoryUsed[i]);
       }
@@ -195,6 +206,9 @@ export default function CheckoutPage(props) {
     setCreditName(e.target.value);
   }
 
+  /**
+   * Function to get the current inventory amounts (used to decrement inventory used in order).
+   */
   const getInventory = async () => {
     setInventory([]);
     try {
@@ -212,7 +226,7 @@ export default function CheckoutPage(props) {
 
   return (
       <div class="checkout__pageCheckout">
-        
+
         <div class='checkout__options'>
           <br></br>
           <h1>Checkout</h1>
@@ -220,13 +234,13 @@ export default function CheckoutPage(props) {
 
           <ThemeProvider theme={theme}>
             <div class="checkout__buttons">
-              <Button class="btn" variant='contained' 
+              <Button class="btn" variant='contained'
               onClick={selectCash} >Cash</Button>
 
               <Button class="btn" variant='contained' onClick={handleClickOpen_Card}>Credit/Debit</Button>
 
               <Button class="btn" variant='contained' onClick={handleClickOpen_UIN_Dining}>Dining Dollars</Button>
-              
+
               <Button class="btn" variant='contained' onClick={handleClickOpen_UIN_MealSwipe}>Retail Swipe</Button>
 
               <Dialog open={open_card} onClose={handleClose_Card}>
@@ -279,9 +293,9 @@ export default function CheckoutPage(props) {
                             value = { creditSecurityCode }
                             onChange = { handleCreditSecurityCode
                             }
-                          />                
+                          />
                         </DialogContent>
- 
+
                         <DialogActions>
                           <Button onClick={handleClose_Card}>Cancel</Button>
                           <Button onClick={handleClose_Card_Submitted}>Submit</Button>
@@ -306,7 +320,7 @@ export default function CheckoutPage(props) {
                         onChange = { handleCardNumber }
                       />
                     </DialogContent>
- 
+
                     <DialogActions>
                       <Button onClick={handleClose_UIN}>Cancel</Button>
                       <Button onClick={handleClose_UIN_Submitted}>Submit</Button>
@@ -315,7 +329,7 @@ export default function CheckoutPage(props) {
 
             </div>
           </ThemeProvider>
-          
+
           <br></br>
           <br></br>
           <br></br>
@@ -327,8 +341,8 @@ export default function CheckoutPage(props) {
           <br></br>
           <br></br>
           <br></br>
-          
-        </div>    
+
+        </div>
 
         <div class="checkout__receipt">
           <br></br>
@@ -340,18 +354,18 @@ export default function CheckoutPage(props) {
               <th class="price">Price</th>
             </tr>
           </table>
-          <table> 
+          <table>
 
                 { location.state.listOrderedNames.map( (item) =>
-                    <tr> 
-                        <td class="item">{item[0]} </td> 
+                    <tr>
+                        <td class="item">{item[0]} </td>
                         <td class="price"> ${item[1]} </td>
                     </tr>
-                )}   
+                )}
 
                 </table>
             <div>
- 
+
             <br></br>
             <br></br>
             <br></br>
@@ -367,6 +381,6 @@ export default function CheckoutPage(props) {
                     </Link>
                 </Stack>
         </div>
-      </div> 
+      </div>
   );
 }

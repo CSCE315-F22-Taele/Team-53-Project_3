@@ -2,6 +2,10 @@ const express = require("express");
 const app = express.Router();
 const db = require("../db");
 
+/**
+ * This API call will get the employee table
+ * @type {HTTP GET Request}
+ */
 app.get("/get", async (req, res) => {
     try {
         const todo = await db.query(
