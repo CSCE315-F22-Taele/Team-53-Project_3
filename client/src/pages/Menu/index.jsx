@@ -21,8 +21,8 @@ import { Hint } from 'react-autocomplete-hint';
 import { Link } from 'react-router-dom';
 
 
-const conn = "http://localhost:3500/";
-// const conn = "https://pom-and-honey-bhf5.onrender.com/";
+// const conn = "http://localhost:3500/";
+const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
 /**
  * This function will display the menu page.
