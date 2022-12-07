@@ -308,7 +308,6 @@ function Order () {
      * @param  {String} index                  item name
      * @param  {Number} val                    item id
      * @param  {Number} category               Classification of inventory item
-     * @return {[type]}          store all inventory items to be displayed
      */
     const pushInv = (index, val, category) => {
         let namesCart = listOrderedInv;

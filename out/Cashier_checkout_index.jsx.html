@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Cashier_checkout/index.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Cashier_checkout/index.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
+import "./index.css"
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { indigo } from '@mui/material/colors';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { TextField } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import {BrowserRouter as  Routes,Link, useLocation} from 'react-router-dom';
+
+const conn = "http://localhost:3500/";
+// const conn = "https://pom-and-honey-bhf5.onrender.com/";
+
+/**
+ * Function to display customer checkout page.
+ * @param       {Props} props  Information passed from customer ordering page.
+ * @constructor
+ */
+export default function Cashier_CheckoutPage(props) {
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#283593',
+      },
+      secondary: indigo,
+    },
+  });
+
+  const [open_card, setCard] = useState(false);
+  const [open_uin, setUIN] = useState(false);
+
+  const handleClickOpen_Card = () => {
+    setCard(true);
+    setPaymentMethod(2);
+  };
+
+  const handleClose_Card = () => {
+    setCard(false);
+    setCreditName("");
+    setCreditCardNumber("");
+    setCreditExpirationDate("");
+    setCreditSecurityCode("");
+  };
+
+  /**
+  * Error check credit card information input if click submit.
+  */
+  const handleClose_Card_Submitted = () => {
+    if (1000000000000000 &lt; parseInt(creditCardNumber) &amp;&amp; 9999999999999999 >= parseInt(creditCardNumber) &amp;&amp;
+        /^[A-Za-z\s]*$/.test(creditName) &amp;&amp;
+        parseInt(creditExpirationDate.substring(0, 2)) > 0 &amp;&amp;
+        parseInt(creditExpirationDate.substring(0, 2)) &lt;= 12 &amp;&amp;
+        creditExpirationDate.indexOf("/") > -1 &amp;&amp;
+        parseInt(creditExpirationDate.substring(3, 5)) > 0 &amp;&amp;
+        parseInt(creditExpirationDate.substring(3, 5)) &lt;= 31 &amp;&amp;
+        100 &lt; parseInt(creditSecurityCode) &amp;&amp;
+        999 >= parseInt(creditSecurityCode) ) {
+      setCard(false);
+    }
+    else {
+      alert("Invalid card information. Please retry.");
+    }
+  }
+
+  const handleClickOpen_UIN_Dining = () => {
+    setUIN(true);
+    setPaymentMethod(0);
+  };
+
+  const handleClickOpen_UIN_MealSwipe = () => {
+    setUIN(true);
+    setPaymentMethod(1);
+  };
+
+  const handleClose_UIN = () => {
+    setUIN(false);
+  };
+
+  const handleClose_UIN_Submitted = () => {
+    if (100000000 &lt; parseInt(cardNumber) &amp;&amp; 999999999 > parseInt(cardNumber)) {
+      setUIN(false);
+    }
+    else {
+      alert("Invalid UIN. Please retry.");
+    }
+  }
+
+  /**
+   * Result if customer selects a cash payment option.
+   */
+  const selectCash = async () => {
+    setPaymentMethod(3);
+    alert("Take cash with register.");
+    setCreditCardNumber("");
+    setCreditName("");
+    setCreditExpirationDate("");
+    setCreditSecurityCode("");
+    setCardNumber("");
+  }
+
+  /**
+   * Function that inserts checkout information into checkout table.
+   */
+  const postCheckout = async () => {
+    try {
+      // Determine type of card (UIN or credit/debit)
+      var cardnumber_ = cardNumber;
+      if (cardNumber === "") {
+        cardnumber_ = creditCardNumber;
+      }
+
+      const cardnumber = cardnumber_;
+      const paymentmethod = paymentMethod;
+      const amount = location.state.totalCost;
+      const orderid = location.state.orderid;
+
+      const body = {paymentmethod, amount, cardnumber, orderid};
+            fetch (conn + "api/checkout/postCheckout",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                }
+            )
+      // alert("Please wait for your order to be called: " + orderid);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  /**
+   * Function that decrement inventory amounts used in order when checkout complete and update inventory table.
+   */
+  const postInventory = async () => {
+    for (var i = 0; i &lt; totalInventory.length; i++) {
+
+      var tmp = JSON.stringify(totalInventory[i]);
+      var tmp_int = parseInt(tmp.substring(10, tmp.length-1));
+      var amount = tmp_int;
+
+      if (parseInt(location.state.inventoryUsed[i]) > 0 &amp;&amp; !isNaN(location.state.inventoryUsed[i])) {
+        amount = tmp_int - parseInt(location.state.inventoryUsed[i]);
+      }
+      var itemid = i + 1;
+
+      try {
+        const body = {amount, itemid};
+        fetch (conn + "api/checkout/postInventory",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+          }
+      )} catch (err) {
+        console.error(err.message);
+      }
+    }
+  }
+
+  const submitCheckout = async () => {
+    postCheckout();
+    postInventory();
+  }
+
+  // Used to receive data from order page
+  const location = useLocation();
+
+  // Used to store value of customer input
+  const [paymentMethod, setPaymentMethod] = useState(3);
+  const [cardNumber, setCardNumber] = useState("");
+  const [totalInventory, setInventory] = useState([]);
+  const [creditCardNumber, setCreditCardNumber] = useState("");
+
+  // Used to error check credit card input
+  const [creditExpirationDate, setCreditExpirationDate] = useState("");
+  const [creditSecurityCode, setCreditSecurityCode] = useState("");
+  const [creditName, setCreditName] = useState("");
+
+  const handleCardNumber = async (e) => {
+    setCardNumber(e.target.value);
+    setCreditCardNumber("");
+    setCreditName("");
+    setCreditExpirationDate("");
+    setCreditSecurityCode("");
+  }
+
+  const handleCreditCardNumber = async (e) => {
+    setCreditCardNumber(e.target.value);
+    setCardNumber("");
+  }
+
+  // Error check expiration and security code input for credit card
+  const handleCreditExpirationDate = async (e) => {
+    setCreditExpirationDate(e.target.value);
+  }
+  const handleCreditSecurityCode = async (e) => {
+    setCreditSecurityCode(e.target.value);
+  }
+  const handleCreditName = async (e) => {
+    setCreditName(e.target.value);
+  }
+
+  const getInventory = async () => {
+    setInventory([]);
+    try {
+      const response = await fetch(conn + "api/checkout/getInventory");
+      const data = await response.json();
+      setInventory(data);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
+  useEffect( () => {
+    getInventory();
+}, [])
+
+  return (
+      &lt;div class="checkout__pageCheckout">
+
+        &lt;div class='checkout__options'>
+          &lt;br>&lt;/br>
+          &lt;h1>Checkout&lt;/h1>
+          &lt;h3> Please select a payment method: &lt;/h3>
+
+          &lt;ThemeProvider theme={theme}>
+            &lt;div class="checkout__buttons">
+              &lt;Button class="btn" variant='contained'
+              onClick={selectCash} >Cash&lt;/Button>
+
+              &lt;Button class="btn" variant='contained' onClick={handleClickOpen_Card}>Credit/Debit&lt;/Button>
+
+              &lt;Button class="btn" variant='contained' onClick={handleClickOpen_UIN_Dining}>Dining Dollars&lt;/Button>
+
+              &lt;Button class="btn" variant='contained' onClick={handleClickOpen_UIN_MealSwipe}>Retail Swipe&lt;/Button>
+
+              &lt;Dialog open={open_card} onClose={handleClose_Card}>
+                    &lt;DialogTitle>Card Information&lt;/DialogTitle>
+                      &lt;DialogContent>
+                        &lt;DialogContentText>
+                          Please fill in your card information:
+                        &lt;/DialogContentText>
+                          &lt;TextField
+                            required
+                            margin="dense"
+                            id="outlined-required"
+                            label="Full Name"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value = { creditName }
+                            onChange = { handleCreditName }
+                          />
+                          &lt;TextField
+                            required
+                            margin="dense"
+                            id="outlined-required"
+                            label="Card Number"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value = { creditCardNumber }
+                            onChange = { handleCreditCardNumber }
+                          />
+                          &lt;TextField
+                            required
+                            margin="dense"
+                            id="outlined-required"
+                            label="Expiration Date"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value = { creditExpirationDate }
+                            onChange = { handleCreditExpirationDate }
+                          />
+                          &lt;TextField
+                            required
+                            margin="dense"
+                            id="outlined-required"
+                            label="Security Code"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                            value = { creditSecurityCode }
+                            onChange = { handleCreditSecurityCode
+                            }
+                          />
+                        &lt;/DialogContent>
+
+                        &lt;DialogActions>
+                          &lt;Button onClick={handleClose_Card}>Cancel&lt;/Button>
+                          &lt;Button onClick={handleClose_Card_Submitted}>Submit&lt;/Button>
+                        &lt;/DialogActions>
+                &lt;/Dialog>
+
+              &lt;Dialog open={open_uin} onClose={handleClose_UIN}>
+                    &lt;DialogTitle>Student Information&lt;/DialogTitle>
+                    &lt;DialogContent>
+                      &lt;DialogContentText>
+                        Please fill in your UIN:
+                      &lt;/DialogContentText>
+                      &lt;TextField
+                        required
+                        margin="dense"
+                        id="outlined-required"
+                        label="UIN"
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                        value = { cardNumber }
+                        onChange = { handleCardNumber }
+                      />
+                    &lt;/DialogContent>
+
+                    &lt;DialogActions>
+                      &lt;Button onClick={handleClose_UIN}>Cancel&lt;/Button>
+                      &lt;Button onClick={handleClose_UIN_Submitted}>Submit&lt;/Button>
+                    &lt;/DialogActions>
+                &lt;/Dialog>
+
+            &lt;/div>
+          &lt;/ThemeProvider>
+
+          &lt;br>&lt;/br>
+          &lt;br>&lt;/br>
+          &lt;br>&lt;/br>
+          &lt;br>&lt;/br>
+          &lt;br>&lt;/br>
+          &lt;br>&lt;/br>
+          &lt;br>&lt;/br>
+          &lt;br>&lt;/br>
+          &lt;br>&lt;/br>
+          &lt;br>&lt;/br>
+          &lt;br>&lt;/br>
+
+        &lt;/div>
+
+        &lt;div class="checkout__receipt">
+          &lt;br>&lt;/br>
+          &lt;h2> Receipt &lt;/h2>
+          &lt;br>&lt;/br>
+          &lt;table>
+            &lt;tr>
+              &lt;th class="item">Item&lt;/th>
+              &lt;th class="price">Price&lt;/th>
+            &lt;/tr>
+          &lt;/table>
+          &lt;table>
+
+                { location.state.listOrderedNames.map( (item) =>
+                    &lt;tr>
+                        &lt;td class="item">{item[0]} &lt;/td>
+                        &lt;td class="price"> ${item[1]} &lt;/td>
+                    &lt;/tr>
+                )}
+
+            &lt;/table>
+            &lt;div>
+
+            &lt;br>&lt;/br>
+            &lt;br>&lt;/br>
+            &lt;br>&lt;/br>
+            &lt;/div>
+            &lt;h2> Cost: ${location.state.totalCost} &lt;/h2>
+                &lt;Stack spacing = {0}>
+                    &lt;br>&lt;/br>
+                    &lt;Link to="/cashier"
+                    state= {{
+                      userName : location.state.userName
+                    }}>
+                      &lt;Button  variant="contained" size="large" sx={{mt: 3, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick={() => submitCheckout()}>Check out&lt;/Button>
+                    &lt;/Link>
+                    &lt;Link to="/cashier"
+                    state= {{
+                      userName : location.state.userName
+                    }}>
+                      &lt;Button  variant="contained" size="large" sx={{mt: 3, backgroundColor:"#9d222e", color:"white" }} fullWidth={true}>Cancel Order&lt;/Button>
+                    &lt;/Link>
+                &lt;/Stack>
+        &lt;/div>
+      &lt;/div>
+  );
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cashier.html">Cashier</a></li><li><a href="Employee.html">Employee</a></li><li><a href="Inventory.html">Inventory</a></li><li><a href="Login.html">Login</a></li><li><a href="Menu.html">Menu</a></li><li><a href="Order.html">Order</a></li><li><a href="module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Home">Home</a></li><li><a href="global.html#rounding">rounding</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 22:12:34 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

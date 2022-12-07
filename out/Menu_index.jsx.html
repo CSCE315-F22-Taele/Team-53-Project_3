@@ -1,4 +1,32 @@
-import React, { useRef } from 'react'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Menu/index.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Menu/index.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useRef } from 'react'
 import { useState, useEffect } from "react";
 import "./index.css";
 import Button from "@mui/material/Button";
@@ -79,7 +107,7 @@ function Menu() {
     /**
      * This function will alter the text when clicked on
      * @param  {string} item                   an item
-     * @param  {Array<string>} itemName        inventory item list
+     * @param  {Array&lt;string>} itemName        inventory item list
      * @param  {createTheme} theme             theme (font/size)
      */
     function getStyles(item, itemName, theme) {
@@ -163,7 +191,7 @@ function Menu() {
 
     /**
      * Find the indexes of the default inventory items
-     * @param  {Array<string>} itemlist               inventory items array
+     * @param  {Array&lt;string>} itemlist               inventory items array
      */
     function findIndex(itemlist){
         var list = updateInv;
@@ -418,8 +446,8 @@ function Menu() {
                 for(let key in menu){
                     let menuName = menu[key][0];
                     menuName = menuName.toLowerCase();
-                    if((menuName === n && !menu[key][3] && open_name_activate ) ||
-                    (menuName === n && menu[key][3] && open_name_deactivate) || (menuName === n && open_name_update) ){
+                    if((menuName === n &amp;&amp; !menu[key][3] &amp;&amp; open_name_activate ) ||
+                    (menuName === n &amp;&amp; menu[key][3] &amp;&amp; open_name_deactivate) || (menuName === n &amp;&amp; open_name_update) ){
 
                         set_nameDisplay(menu[key][0]);
                         set_costDisplay(menu[key][1]);
@@ -741,36 +769,36 @@ function Menu() {
     }, [])
 
     return(
-        <div className="menu_page">
+        &lt;div className="menu_page">
 
-            <Dialog open={welcome_open} onClose={handleClose_welcome} >
-                <DialogTitle fontSize={25}>Welcome to the Menu page.</DialogTitle>
+            &lt;Dialog open={welcome_open} onClose={handleClose_welcome} >
+                &lt;DialogTitle fontSize={25}>Welcome to the Menu page.&lt;/DialogTitle>
 
-                <DialogActions>
-                    <Button style={{fontSize: '20px'}} onClick={() => {
+                &lt;DialogActions>
+                    &lt;Button style={{fontSize: '20px'}} onClick={() => {
                         handleClose_welcome();
-                    }}>Start</Button>
-                </DialogActions>
-            </Dialog>
-            <ThemeProvider theme={increaseSize}>
-            <div className="menu_receipt-section">
+                    }}>Start&lt;/Button>
+                &lt;/DialogActions>
+            &lt;/Dialog>
+            &lt;ThemeProvider theme={increaseSize}>
+            &lt;div className="menu_receipt-section">
 
-                <Link to="/login">
-                    <span className='menu_back-btn'>
-                        <Button variant="contained" size="small"  className="menu_back-btn" >Back</Button>
-                    </span>
-                </Link>
+                &lt;Link to="/login">
+                    &lt;span className='menu_back-btn'>
+                        &lt;Button variant="contained" size="small"  className="menu_back-btn" >Back&lt;/Button>
+                    &lt;/span>
+                &lt;/Link>
 
-                <span className='menu_edit-btn' >
-                <Stack
+                &lt;span className='menu_edit-btn' >
+                &lt;Stack
                     direction="row"
                     spacing={5}
                 >
-                    <Button variant="contained" size="small"  className="menu_add-btn" onClick={handleClickOpen_add}>Add</Button>
-                        <Dialog open={open_add} onClose={handleClose_add}>
-                            <DialogTitle fontSize={25}>Add New Item</DialogTitle>
-                            <DialogContent>
-                            <TextField
+                    &lt;Button variant="contained" size="small"  className="menu_add-btn" onClick={handleClickOpen_add}>Add&lt;/Button>
+                        &lt;Dialog open={open_add} onClose={handleClose_add}>
+                            &lt;DialogTitle fontSize={25}>Add New Item&lt;/DialogTitle>
+                            &lt;DialogContent>
+                            &lt;TextField
                                     required
                                     margin="dense"
                                     id="outlined-required"
@@ -782,7 +810,7 @@ function Menu() {
                                     inputRef={name_input}
                                 />
 
-                                <TextField
+                                &lt;TextField
                                     required
                                     margin="dense"
                                     id="outlined-required"
@@ -795,224 +823,224 @@ function Menu() {
                                 />
 
 
-                                <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-multiple-chip-label">Allow for customization?</InputLabel>
-                                    <Select
+                                &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-multiple-chip-label">Allow for customization?&lt;/InputLabel>
+                                    &lt;Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         onChange={handleChange_isCustomize}
                                         >
-                                        <MenuItem value={0}>Yes</MenuItem>
-                                        <MenuItem value={1}>No</MenuItem>
+                                        &lt;MenuItem value={0}>Yes&lt;/MenuItem>
+                                        &lt;MenuItem value={1}>No&lt;/MenuItem>
 
-                                    </Select>
-                                </FormControl>
+                                    &lt;/Select>
+                                &lt;/FormControl>
 
-                                <br />
-                                <br />
-                                <InputLabel align="left">Default Inventory</InputLabel>
+                                &lt;br />
+                                &lt;br />
+                                &lt;InputLabel align="left">Default Inventory&lt;/InputLabel>
 
-                                <FormControl sx={{ m: 1, width: 500 }}>
-                                    <InputLabel id="demo-multiple-chip-label">Base</InputLabel>
-                                    <Select
+                                &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                    &lt;InputLabel id="demo-multiple-chip-label">Base&lt;/InputLabel>
+                                    &lt;Select
                                     labelId="demo-multiple-chip-label"
                                     id="demo-multiple-chip"
                                     multiple
                                     value={select_item_base}
                                     onChange={handleChange_base}
-                                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                    input={&lt;OutlinedInput id="select-multiple-chip" label="Chip" />}
                                     renderValue={(selected) => (
-                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                        &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map((value) => (
-                                            <Chip key={value} label={value} />
+                                            &lt;Chip key={value} label={value} />
                                         ))}
-                                        </Box>
+                                        &lt;/Box>
                                     )}
                                     MenuProps={MenuProps}
                                     >
                                     {inventory0.map((item) => (
-                                        <MenuItem
+                                        &lt;MenuItem
                                         key={item}
                                         value={item}
                                         style={getStyles(item, select_item_base, theme)}
                                         >
                                         {item}
-                                        </MenuItem>
+                                        &lt;/MenuItem>
                                     ))}
-                                    </Select>
-                                </FormControl>
+                                    &lt;/Select>
+                                &lt;/FormControl>
 
 
-                                <FormControl sx={{ m: 1, width: 500 }}>
-                                    <InputLabel id="demo-multiple-chip-label">Protein</InputLabel>
-                                    <Select
+                                &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                    &lt;InputLabel id="demo-multiple-chip-label">Protein&lt;/InputLabel>
+                                    &lt;Select
                                     labelId="demo-multiple-chip-label"
                                     id="demo-multiple-chip"
                                     multiple
                                     value={select_item_pro}
                                     onChange={handleChange_pro}
-                                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                    input={&lt;OutlinedInput id="select-multiple-chip" label="Chip" />}
                                     renderValue={(selected) => (
-                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                        &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map((value) => (
-                                            <Chip key={value} label={value} />
+                                            &lt;Chip key={value} label={value} />
                                         ))}
-                                        </Box>
+                                        &lt;/Box>
                                     )}
                                     MenuProps={MenuProps}
                                     >
                                     {inventory1.map((item) => (
-                                        <MenuItem
+                                        &lt;MenuItem
                                         key={item}
                                         value={item}
                                         style={getStyles(item, select_item_pro, theme)}
                                         >
                                         {item}
-                                        </MenuItem>
+                                        &lt;/MenuItem>
                                     ))}
-                                    </Select>
-                                </FormControl>
+                                    &lt;/Select>
+                                &lt;/FormControl>
 
-                                <FormControl sx={{ m: 1, width: 500 }}>
-                                    <InputLabel id="demo-multiple-chip-label">Toppings</InputLabel>
-                                    <Select
+                                &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                    &lt;InputLabel id="demo-multiple-chip-label">Toppings&lt;/InputLabel>
+                                    &lt;Select
                                     labelId="demo-multiple-chip-label"
                                     id="demo-multiple-chip"
                                     multiple
                                     value={select_item_top}
                                     onChange={handleChange_top}
-                                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                    input={&lt;OutlinedInput id="select-multiple-chip" label="Chip" />}
                                     renderValue={(selected) => (
-                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                        &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map((value) => (
-                                            <Chip key={value} label={value} />
+                                            &lt;Chip key={value} label={value} />
                                         ))}
-                                        </Box>
+                                        &lt;/Box>
                                     )}
                                     MenuProps={MenuProps}
                                     >
                                     {inventory2.map((item) => (
-                                        <MenuItem
+                                        &lt;MenuItem
                                         key={item}
                                         value={item}
                                         style={getStyles(item, select_item_top, theme)}
                                         >
                                         {item}
-                                        </MenuItem>
+                                        &lt;/MenuItem>
                                     ))}
-                                    </Select>
-                                </FormControl>
+                                    &lt;/Select>
+                                &lt;/FormControl>
 
-                                <FormControl sx={{ m: 1, width: 500 }}>
-                                    <InputLabel id="demo-multiple-chip-label">Dressings</InputLabel>
-                                    <Select
+                                &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                    &lt;InputLabel id="demo-multiple-chip-label">Dressings&lt;/InputLabel>
+                                    &lt;Select
                                     labelId="demo-multiple-chip-label"
                                     id="demo-multiple-chip"
                                     multiple
                                     value={select_item_dress}
                                     onChange={handleChange_dress}
-                                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                    input={&lt;OutlinedInput id="select-multiple-chip" label="Chip" />}
                                     renderValue={(selected) => (
-                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                        &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map((value) => (
-                                            <Chip key={value} label={value} />
+                                            &lt;Chip key={value} label={value} />
                                         ))}
-                                        </Box>
+                                        &lt;/Box>
                                     )}
                                     MenuProps={MenuProps}
                                     >
                                     {inventory3.map((item) => (
-                                        <MenuItem
+                                        &lt;MenuItem
                                         key={item}
                                         value={item}
                                         style={getStyles(item, select_item_dress, theme)}
                                         >
                                         {item}
-                                        </MenuItem>
+                                        &lt;/MenuItem>
                                     ))}
-                                    </Select>
-                                </FormControl>
+                                    &lt;/Select>
+                                &lt;/FormControl>
 
-                                <FormControl sx={{ m: 1, width: 500 }}>
-                                    <InputLabel id="demo-multiple-chip-label">Misc</InputLabel>
-                                    <Select
+                                &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                    &lt;InputLabel id="demo-multiple-chip-label">Misc&lt;/InputLabel>
+                                    &lt;Select
                                     labelId="demo-multiple-chip-label"
                                     id="demo-multiple-chip"
                                     multiple
                                     value={select_item_misc}
                                     onChange={handleChange_misc}
-                                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                    input={&lt;OutlinedInput id="select-multiple-chip" label="Chip" />}
                                     renderValue={(selected) => (
-                                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                        &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map((value) => (
-                                            <Chip key={value} label={value} />
+                                            &lt;Chip key={value} label={value} />
                                         ))}
-                                        </Box>
+                                        &lt;/Box>
                                     )}
                                     MenuProps={MenuProps}
                                     >
                                     {inventory4.map((item) => (
-                                        <MenuItem
+                                        &lt;MenuItem
                                         key={item}
                                         value={item}
                                         style={getStyles(item, select_item_misc, theme)}
                                         >
                                         {item}
-                                        </MenuItem>
+                                        &lt;/MenuItem>
                                     ))}
-                                    </Select>
-                                </FormControl>
+                                    &lt;/Select>
+                                &lt;/FormControl>
 
-                                </DialogContent>
+                                &lt;/DialogContent>
 
-                                <DialogActions>
+                                &lt;DialogActions>
 
-                                <Button style={{fontSize: '20px'}} onClick={() => {
+                                &lt;Button style={{fontSize: '20px'}} onClick={() => {
                                     handleClose_add()
                                     reset();
-                                    }}>Cancel</Button>
-                                <Button style={{fontSize: '20px'}} onClick={() => {
+                                    }}>Cancel&lt;/Button>
+                                &lt;Button style={{fontSize: '20px'}} onClick={() => {
 
                                     getSelectItem();
                                     update_default_inventory();
                                     insertMenu(name_input.current.value, cost_input.current.value, isCustomize, updateInv);
 
-                                }}>Add</Button>
-                                </DialogActions>
-                        </Dialog>
+                                }}>Add&lt;/Button>
+                                &lt;/DialogActions>
+                        &lt;/Dialog>
 
-                    <Button variant="contained" size="small" className="back1-btn" onClick={handleClickOpen_name_update}>Update</Button>
+                    &lt;Button variant="contained" size="small" className="back1-btn" onClick={handleClickOpen_name_update}>Update&lt;/Button>
 
-                            <Dialog open={open_name_update} onClose={handleClose_name_update}>
-                            <DialogTitle fontSize={25}>What is the item's name?</DialogTitle>
-                                <DialogContent>
-                                <Hint options={menuname} allowTabFill>
-                                    <input className='input'
+                            &lt;Dialog open={open_name_update} onClose={handleClose_name_update}>
+                            &lt;DialogTitle fontSize={25}>What is the item's name?&lt;/DialogTitle>
+                                &lt;DialogContent>
+                                &lt;Hint options={menuname} allowTabFill>
+                                    &lt;input className='input'
                                         style={{ width: "500px" }}
                                         ref={inputName}
                                     />
-                                </Hint>
-                                </DialogContent>
+                                &lt;/Hint>
+                                &lt;/DialogContent>
 
-                                <DialogActions>
-                                    <Button style={{fontSize: '20px'}} onClick={handleClose_name_update}>Cancel</Button>
-                                    <Button style={{fontSize: '20px'}} onClick={() => {
+                                &lt;DialogActions>
+                                    &lt;Button style={{fontSize: '20px'}} onClick={handleClose_name_update}>Cancel&lt;/Button>
+                                    &lt;Button style={{fontSize: '20px'}} onClick={() => {
                                             handleClose_name_update();
 
                                             sendValue(true);
                                             getEachinv();
 
-                                    }}>Search</Button>
-                                </DialogActions>
-                            </Dialog>
+                                    }}>Search&lt;/Button>
+                                &lt;/DialogActions>
+                            &lt;/Dialog>
 
 
-                        <Dialog open={open_update} onClose={handleClose_update}>
-                            <DialogTitle fontSize={25}>Update</DialogTitle>
+                        &lt;Dialog open={open_update} onClose={handleClose_update}>
+                            &lt;DialogTitle fontSize={25}>Update&lt;/DialogTitle>
 
-                            <DialogContent>
+                            &lt;DialogContent>
 
-                            <TextField
+                            &lt;TextField
                                 required
                                 margin="dense"
                                 id="outlined-required"
@@ -1023,7 +1051,7 @@ function Menu() {
                                 variant="standard"
                                 inputRef={name_input}
                             />
-                            <TextField
+                            &lt;TextField
                                 required
                                 margin="dense"
                                 id="outlined-required"
@@ -1035,198 +1063,198 @@ function Menu() {
                                 inputRef={cost_input}
                             />
 
-                           <FormControl sx={{ m: 1, width: 250 }}>
-                                <InputLabel id="demo-multiple-chip-label">Is selling?</InputLabel>
-                                    <Select
+                           &lt;FormControl sx={{ m: 1, width: 250 }}>
+                                &lt;InputLabel id="demo-multiple-chip-label">Is selling?&lt;/InputLabel>
+                                    &lt;Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         onChange={handleChange_isSelling}
                                         value={selling_status}
                                         >
-                                        <MenuItem value={0}>Yes</MenuItem>
-                                        <MenuItem value={1}>No</MenuItem>
+                                        &lt;MenuItem value={0}>Yes&lt;/MenuItem>
+                                        &lt;MenuItem value={1}>No&lt;/MenuItem>
 
-                                    </Select>
-                            </FormControl>
+                                    &lt;/Select>
+                            &lt;/FormControl>
 
-                            <FormControl sx={{ m: 1, width: 250 }}>
-                                <InputLabel id="demo-multiple-chip-label">Allow for customization?</InputLabel>
-                                    <Select
+                            &lt;FormControl sx={{ m: 1, width: 250 }}>
+                                &lt;InputLabel id="demo-multiple-chip-label">Allow for customization?&lt;/InputLabel>
+                                    &lt;Select
                                         labelId="demo-simple-select-label"
                                         id="demo-simple-select"
                                         onChange={handleChange_isCustomize}
                                         value={customize_status}
                                         >
-                                        <MenuItem value={0}>Yes</MenuItem>
-                                        <MenuItem value={1}>No</MenuItem>
+                                        &lt;MenuItem value={0}>Yes&lt;/MenuItem>
+                                        &lt;MenuItem value={1}>No&lt;/MenuItem>
 
-                                    </Select>
-                                </FormControl>
+                                    &lt;/Select>
+                                &lt;/FormControl>
 
-                            <br />
+                            &lt;br />
 
-                            <InputLabel align="left">Update Default Inventory</InputLabel>
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-multiple-chip-label">Base</InputLabel>
-                                <Select
+                            &lt;InputLabel align="left">Update Default Inventory&lt;/InputLabel>
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-multiple-chip-label">Base&lt;/InputLabel>
+                                &lt;Select
                                 labelId="demo-multiple-chip-label"
                                 id="demo-multiple-chip"
                                 multiple
                                 value={select_item_base}
                                 onChange={handleChange_base}
-                                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                input={&lt;OutlinedInput id="select-multiple-chip" label="Chip" />}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory0.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_base, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
-                            </FormControl>
+                                &lt;/Select>
+                            &lt;/FormControl>
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-multiple-chip-label">Protein</InputLabel>
-                                <Select
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-multiple-chip-label">Protein&lt;/InputLabel>
+                                &lt;Select
                                 labelId="demo-multiple-chip-label"
                                 id="demo-multiple-chip"
                                 multiple
                                 value={select_item_pro}
                                 onChange={handleChange_pro}
-                                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                input={&lt;OutlinedInput id="select-multiple-chip" label="Chip" />}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory1.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_pro, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
-                            </FormControl>
+                                &lt;/Select>
+                            &lt;/FormControl>
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-multiple-chip-label">Toppings</InputLabel>
-                                <Select
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-multiple-chip-label">Toppings&lt;/InputLabel>
+                                &lt;Select
                                 labelId="demo-multiple-chip-label"
                                 id="demo-multiple-chip"
                                 multiple
                                 value={select_item_top}
                                 onChange={handleChange_top}
-                                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                input={&lt;OutlinedInput id="select-multiple-chip" label="Chip" />}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory2.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_top, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
-                            </FormControl>
+                                &lt;/Select>
+                            &lt;/FormControl>
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-multiple-chip-label">Dressings</InputLabel>
-                                <Select
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-multiple-chip-label">Dressings&lt;/InputLabel>
+                                &lt;Select
                                 labelId="demo-multiple-chip-label"
                                 id="demo-multiple-chip"
                                 multiple
                                 value={select_item_dress}
                                 onChange={handleChange_dress}
-                                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                input={&lt;OutlinedInput id="select-multiple-chip" label="Chip" />}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory3.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_dress, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
-                            </FormControl>
+                                &lt;/Select>
+                            &lt;/FormControl>
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-multiple-chip-label">Misc</InputLabel>
-                                <Select
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-multiple-chip-label">Misc&lt;/InputLabel>
+                                &lt;Select
                                 labelId="demo-multiple-chip-label"
                                 id="demo-multiple-chip"
                                 multiple
                                 value={select_item_misc}
                                 onChange={handleChange_misc}
-                                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                                input={&lt;OutlinedInput id="select-multiple-chip" label="Chip" />}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory4.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_misc, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
-                            </FormControl>
+                                &lt;/Select>
+                            &lt;/FormControl>
 
 
 
-                                </DialogContent>
+                                &lt;/DialogContent>
 
-                                <DialogActions>
-                                    <Button style={{fontSize: '20px'}} onClick={() => {
+                                &lt;DialogActions>
+                                    &lt;Button style={{fontSize: '20px'}} onClick={() => {
                                     handleClose_update()
                                     reset();
 
-                                    }}>Cancel</Button>
-                                <Button style={{fontSize: '20px'}} onClick={() => {
+                                    }}>Cancel&lt;/Button>
+                                &lt;Button style={{fontSize: '20px'}} onClick={() => {
                                     handleClose_update();
                                     getSelectItem();
                                     update_default_inventory();
@@ -1234,44 +1262,44 @@ function Menu() {
                                         id);
                                     reset();
                                     refreshPage();
-                                }}>Update</Button>
-                                </DialogActions>
-                        </Dialog>
+                                }}>Update&lt;/Button>
+                                &lt;/DialogActions>
+                        &lt;/Dialog>
 
                     {/* Deactivate Btn */}
-                    <ThemeProvider theme={deactivate_theme}>
-                    <Button color="primary" variant="contained" size="small" className="back1-btn" onClick={handleClickOpen_name_deactivate} >Deactivate</Button>
-                    </ThemeProvider>
-                    <Dialog open={open_name_deactivate} onClose={handleClose_name_deactivate}>
-                        <DialogTitle fontSize={25}>What is the item's name?</DialogTitle>
-                        <DialogContent>
-                            <Hint options={menuname} allowTabFill>
+                    &lt;ThemeProvider theme={deactivate_theme}>
+                    &lt;Button color="primary" variant="contained" size="small" className="back1-btn" onClick={handleClickOpen_name_deactivate} >Deactivate&lt;/Button>
+                    &lt;/ThemeProvider>
+                    &lt;Dialog open={open_name_deactivate} onClose={handleClose_name_deactivate}>
+                        &lt;DialogTitle fontSize={25}>What is the item's name?&lt;/DialogTitle>
+                        &lt;DialogContent>
+                            &lt;Hint options={menuname} allowTabFill>
 
-                            <input className='input'
+                            &lt;input className='input'
                                 style={{ width: "500px" }}
                                 ref={inputName}
                             />
-                            </Hint>
-                        </DialogContent>
+                            &lt;/Hint>
+                        &lt;/DialogContent>
 
-                        <DialogActions>
-                            <Button style={{fontSize: '20px'}} onClick={handleClose_name_deactivate}>Cancel</Button>
-                            <Button style={{fontSize: '20px'}} onClick={() => {
+                        &lt;DialogActions>
+                            &lt;Button style={{fontSize: '20px'}} onClick={handleClose_name_deactivate}>Cancel&lt;/Button>
+                            &lt;Button style={{fontSize: '20px'}} onClick={() => {
                                     sendValue(true);
                                     getEachinv();
                                     handleClose_update();
 
-                            }}>Search</Button>
-                        </DialogActions>
-                    </Dialog>
-                    <Dialog
+                            }}>Search&lt;/Button>
+                        &lt;/DialogActions>
+                    &lt;/Dialog>
+                    &lt;Dialog
                     PaperProps={{
                         style: {
                             backgroundColor: "#cf8f8f",
                         },}}  open={open_deactivate} onClose={handleClose_deactivate}>
-                        <DialogTitle fontSize={25}>Do you want to deactivate?</DialogTitle>
-                        <DialogContent>
-                        <TextField
+                        &lt;DialogTitle fontSize={25}>Do you want to deactivate?&lt;/DialogTitle>
+                        &lt;DialogContent>
+                        &lt;TextField
                                 inputProps={{ readOnly: true }}
                                 margin="dense"
                                 id="outlined-required"
@@ -1282,7 +1310,7 @@ function Menu() {
                                 variant="standard"
                                 inputRef={name_input}
                             />
-                            <TextField
+                            &lt;TextField
                                 inputProps={{ readOnly: true }}
                                 margin="dense"
                                 id="outlined-required"
@@ -1293,7 +1321,7 @@ function Menu() {
                                 variant="standard"
                             />
 
-                            <TextField
+                            &lt;TextField
                                 inputProps={{ readOnly: true }}
                                 margin="dense"
                                 id="outlined-required"
@@ -1304,178 +1332,178 @@ function Menu() {
                                 variant="standard"
                             />
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                            <InputLabel id="demo-simple-select-readonly-label">Base</InputLabel>
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                            &lt;InputLabel id="demo-simple-select-readonly-label">Base&lt;/InputLabel>
 
-                                <Select
+                                &lt;Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
                                 value={select_item_base}
                                 onChange={handleChange_base}
                                 inputProps={{ readOnly: true }}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory0.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_base, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
+                                &lt;/Select>
 
-                            </FormControl>
+                            &lt;/FormControl>
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-simple-select-readonly-label">Protein</InputLabel>
-                                <Select
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-simple-select-readonly-label">Protein&lt;/InputLabel>
+                                &lt;Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
                                 value={select_item_pro}
                                 onChange={handleChange_pro}
                                 inputProps={{ readOnly: true }}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory1.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_pro, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
-                            </FormControl>
+                                &lt;/Select>
+                            &lt;/FormControl>
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-simple-select-readonly-label">Toppings</InputLabel>
-                                <Select
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-simple-select-readonly-label">Toppings&lt;/InputLabel>
+                                &lt;Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
                                 value={select_item_top}
                                 onChange={handleChange_top}
                                 inputProps={{ readOnly: true }}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory2.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_top, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
-                            </FormControl>
+                                &lt;/Select>
+                            &lt;/FormControl>
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-simple-select-readonly-label">Dressings</InputLabel>
-                                <Select
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-simple-select-readonly-label">Dressings&lt;/InputLabel>
+                                &lt;Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
                                 value={select_item_dress}
                                 onChange={handleChange_dress}
                                 inputProps={{ readOnly: true }}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory3.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_dress, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
-                            </FormControl>
+                                &lt;/Select>
+                            &lt;/FormControl>
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-simple-select-readonly-label">Misc</InputLabel>
-                                <Select
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-simple-select-readonly-label">Misc&lt;/InputLabel>
+                                &lt;Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
                                 value={select_item_misc}
                                 onChange={handleChange_misc}
                                 inputProps={{ readOnly: true }}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory4.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_misc, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
-                            </FormControl>
+                                &lt;/Select>
+                            &lt;/FormControl>
 
 
 
-                        </DialogContent>
+                        &lt;/DialogContent>
 
-                        <DialogActions>
-                            <Button style={{fontSize: '20px'}} onClick={handleClose_deactivate}>Cancel</Button>
-                            <Button style={{fontSize: '20px'}} onClick={() => {
+                        &lt;DialogActions>
+                            &lt;Button style={{fontSize: '20px'}} onClick={handleClose_deactivate}>Cancel&lt;/Button>
+                            &lt;Button style={{fontSize: '20px'}} onClick={() => {
                                     handleClose_deactivate();
                                     getSelectItem();
                                     update_default_inventory();
                                     var list = find_di(activate_menu, name_display);
                                     updateMenu(name_display, cost_display, false, isCustomize, list, id);
                                     refreshPage();
-                            }}>Deactivate</Button>
+                            }}>Deactivate&lt;/Button>
 
-                        </DialogActions>
-                    </Dialog>
+                        &lt;/DialogActions>
+                    &lt;/Dialog>
                     {/* Activate Btn */}
-                    <Button variant="contained" size="small"  className="back1-btn" onClick={handleClickOpen_name_activate} >Activate</Button>
+                    &lt;Button variant="contained" size="small"  className="back1-btn" onClick={handleClickOpen_name_activate} >Activate&lt;/Button>
 
 
-                    <Dialog open={open_name_activate} onClose={handleClose_name_activate}>
-                        <DialogTitle fontSize={25}>What is the item's name?</DialogTitle>
-                        <DialogContent>
-                            {/* <TextField
+                    &lt;Dialog open={open_name_activate} onClose={handleClose_name_activate}>
+                        &lt;DialogTitle fontSize={25}>What is the item's name?&lt;/DialogTitle>
+                        &lt;DialogContent>
+                            {/* &lt;TextField
                                 required
                                 margin="dense"
                                 id="outlined-required"
@@ -1485,36 +1513,36 @@ function Menu() {
                                 variant="standard"
                                 inputRef={inputName}
                             />               */}
-                            <Hint options={menuname} allowTabFill>
+                            &lt;Hint options={menuname} allowTabFill>
 
-                            <input className='input'
+                            &lt;input className='input'
                                 style={{ width: "500px" }}
                                 ref={inputName}
                             />
-                            </Hint>
-                        </DialogContent>
+                            &lt;/Hint>
+                        &lt;/DialogContent>
 
-                        <DialogActions>
-                            <Button style={{fontSize: '20px'}} onClick={handleClose_name_activate}>Cancel</Button>
-                            <Button style={{fontSize: '20px'}} onClick={() => {
+                        &lt;DialogActions>
+                            &lt;Button style={{fontSize: '20px'}} onClick={handleClose_name_activate}>Cancel&lt;/Button>
+                            &lt;Button style={{fontSize: '20px'}} onClick={() => {
                                     sendValue(true);
                                     getEachinv();
                                     handleClose_update();
-                            }}>Search</Button>
-                        </DialogActions>
-                    </Dialog>
+                            }}>Search&lt;/Button>
+                        &lt;/DialogActions>
+                    &lt;/Dialog>
 
 
 
-                    <Dialog
+                    &lt;Dialog
                         fontSize={25}
                         PaperProps={{
                             style: {
                                 backgroundColor: "#82cdad",
                             },}}  open={open_activate} onClose={handleClose_activate}>
-                        <DialogTitle>Do you want to activate?</DialogTitle>
-                        <DialogContent>
-                        <TextField
+                        &lt;DialogTitle>Do you want to activate?&lt;/DialogTitle>
+                        &lt;DialogContent>
+                        &lt;TextField
                                 inputProps={{ readOnly: true }}
                                 margin="dense"
                                 id="outlined-required"
@@ -1525,7 +1553,7 @@ function Menu() {
                                 variant="standard"
                                 inputRef={name_input}
                             />
-                            <TextField
+                            &lt;TextField
                                 inputProps={{ readOnly: true }}
                                 margin="dense"
                                 id="outlined-required"
@@ -1537,7 +1565,7 @@ function Menu() {
                             />
 
 
-                            <TextField
+                            &lt;TextField
                                 inputProps={{ readOnly: true }}
                                 margin="dense"
                                 id="outlined-required"
@@ -1548,10 +1576,10 @@ function Menu() {
                                 variant="standard"
                             />
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                            <InputLabel id="demo-simple-select-readonly-label">Base</InputLabel>
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                            &lt;InputLabel id="demo-simple-select-readonly-label">Base&lt;/InputLabel>
 
-                                <Select
+                                &lt;Select
 
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
@@ -1559,171 +1587,171 @@ function Menu() {
                                 onChange={handleChange_base}
                                 inputProps={{ readOnly: true }}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory0.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_base, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
+                                &lt;/Select>
 
-                            </FormControl>
+                            &lt;/FormControl>
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-simple-select-readonly-label">Protein</InputLabel>
-                                <Select
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-simple-select-readonly-label">Protein&lt;/InputLabel>
+                                &lt;Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
                                 value={select_item_pro}
                                 onChange={handleChange_pro}
                                 inputProps={{ readOnly: true }}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory1.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_pro, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
-                            </FormControl>
+                                &lt;/Select>
+                            &lt;/FormControl>
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-simple-select-readonly-label">Toppings</InputLabel>
-                                <Select
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-simple-select-readonly-label">Toppings&lt;/InputLabel>
+                                &lt;Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
                                 value={select_item_top}
                                 onChange={handleChange_top}
                                 inputProps={{ readOnly: true }}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory2.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_top, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
-                            </FormControl>
+                                &lt;/Select>
+                            &lt;/FormControl>
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-simple-select-readonly-label">Dressings</InputLabel>
-                                <Select
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-simple-select-readonly-label">Dressings&lt;/InputLabel>
+                                &lt;Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
                                 value={select_item_dress}
                                 onChange={handleChange_dress}
                                 inputProps={{ readOnly: true }}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory3.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_dress, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
-                            </FormControl>
+                                &lt;/Select>
+                            &lt;/FormControl>
 
-                            <FormControl sx={{ m: 1, width: 500 }}>
-                                <InputLabel id="demo-simple-select-readonly-label">Misc</InputLabel>
-                                <Select
+                            &lt;FormControl sx={{ m: 1, width: 500 }}>
+                                &lt;InputLabel id="demo-simple-select-readonly-label">Misc&lt;/InputLabel>
+                                &lt;Select
                                 labelId="demo-simple-select-readonly-label"
                                 id="demo-simple-select-readonly"
                                 value={select_item_misc}
                                 onChange={handleChange_misc}
                                 inputProps={{ readOnly: true }}
                                 renderValue={(selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                    &lt;Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                     {selected.map((value) => (
-                                        <Chip key={value} label={value} />
+                                        &lt;Chip key={value} label={value} />
                                     ))}
-                                    </Box>
+                                    &lt;/Box>
                                 )}
                                 MenuProps={MenuProps}
                                 >
                                 {inventory4.map((item) => (
-                                    <MenuItem
+                                    &lt;MenuItem
                                     key={item}
                                     value={item}
                                     style={getStyles(item, select_item_misc, theme)}
                                     >
                                     {item}
-                                    </MenuItem>
+                                    &lt;/MenuItem>
                                 ))}
-                                </Select>
-                            </FormControl>
+                                &lt;/Select>
+                            &lt;/FormControl>
 
-                        </DialogContent>
+                        &lt;/DialogContent>
 
-                        <DialogActions>
-                            <Button style={{fontSize: '20px'}} onClick={handleClose_activate}>Cancel</Button>
-                            <Button style={{fontSize: '20px'}} onClick={() => {
+                        &lt;DialogActions>
+                            &lt;Button style={{fontSize: '20px'}} onClick={handleClose_activate}>Cancel&lt;/Button>
+                            &lt;Button style={{fontSize: '20px'}} onClick={() => {
                                     handleClose_activate();
                                     var list = find_di(deactivate_menu, name_display);
                                     updateMenu(name_display, cost_display, true, isCustomize, list, id);
                                     refreshPage();
-                            }}>Activate</Button>
+                            }}>Activate&lt;/Button>
 
-                        </DialogActions>
-                    </Dialog>
-                </Stack>
-                </span>
-            </div>
-            </ThemeProvider>
+                        &lt;/DialogActions>
+                    &lt;/Dialog>
+                &lt;/Stack>
+                &lt;/span>
+            &lt;/div>
+            &lt;/ThemeProvider>
 
-            <div className="menu_deactivate-section">
-                <h1>Deactivated</h1>
-                <p>These menu items are currently not selling.</p>
-                <p></p>
-                <ThemeProvider theme={theme}>
+            &lt;div className="menu_deactivate-section">
+                &lt;h1>Deactivated&lt;/h1>
+                &lt;p>These menu items are currently not selling.&lt;/p>
+                &lt;p>&lt;/p>
+                &lt;ThemeProvider theme={theme}>
 
                 { deactivate_menu.map((item) =>
 
                     (
-                        <Button className="menu_item-btn" variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                        &lt;Button className="menu_item-btn" variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                         onClick= { () =>
                             {
                                 var check = false;
@@ -1733,27 +1761,27 @@ function Menu() {
                                 handleClickOpen_update();
 
                             }}>
-                        {item[0]}</Button>
+                        {item[0]}&lt;/Button>
 
                     )
                     )
                 }
-                </ThemeProvider>
+                &lt;/ThemeProvider>
 
-            </div>
+            &lt;/div>
 
 
-            <div className="menu_activate-section">
-                <h1>Activate</h1>
-                <p>These menu items are currently being sold.</p>
+            &lt;div className="menu_activate-section">
+                &lt;h1>Activate&lt;/h1>
+                &lt;p>These menu items are currently being sold.&lt;/p>
 
-                <div className="menu-btn">
-                <ThemeProvider theme={theme}>
+                &lt;div className="menu-btn">
+                &lt;ThemeProvider theme={theme}>
 
                     { activate_menu.map((item) =>
 
                                 (
-                                    <Button className="menu_item-btn" variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                                    &lt;Button className="menu_item-btn" variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                                     onClick= { () =>
                                     {
                                         var check = false;
@@ -1763,18 +1791,41 @@ function Menu() {
                                         handleClickOpen_update();
 
                                     }}>
-                                    {item[0]}</Button>
+                                    {item[0]}&lt;/Button>
 
                                 )
                             )
                     }
-                </ThemeProvider>
+                &lt;/ThemeProvider>
 
-                </div>
+                &lt;/div>
 
-            </div>
-        </div>
+            &lt;/div>
+        &lt;/div>
     );
 }
 
 export default Menu;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cashier.html">Cashier</a></li><li><a href="Employee.html">Employee</a></li><li><a href="Inventory.html">Inventory</a></li><li><a href="Login.html">Login</a></li><li><a href="Menu.html">Menu</a></li><li><a href="Order.html">Order</a></li><li><a href="module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Home">Home</a></li><li><a href="global.html#rounding">rounding</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 22:12:34 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

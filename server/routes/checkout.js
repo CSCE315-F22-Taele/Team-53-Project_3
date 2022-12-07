@@ -15,7 +15,6 @@ app.get("/getMenu", async (req, res) => {
     }
 });
 
-
 /**
  * This API call will insert into the checkout table
  */

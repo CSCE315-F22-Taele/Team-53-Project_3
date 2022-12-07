@@ -1,4 +1,32 @@
-import * as React from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: index.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: index.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as React from "react";
 import { useState, useEffect } from "react";
 import "./index.css";
 import Button from "@mui/material/Button";
@@ -30,7 +58,7 @@ const theme = createTheme({
  * @constructor
  */
 function Login () {
-    window.localStorage.setItem('manager', window.localStorage.getItem('manager' ));
+    window.localStorage.setItem('manager', false);
     const [userName, setUserName] = useState(window.localStorage.getItem('user'));
     const [isEmployee,setIsEmployee ] = useState(false);
     const [isManager,setIsManager ] = useState( false );
@@ -51,7 +79,7 @@ function Login () {
 
     /**
      * This function determines if a valid employee via Google OAuth.
-     * @param  {string}  sub               Google OAuth login key
+     * @param  {String}  sub               Google OAuth login key
      * @return {Promise}     if valid employee
      */
     const isEmployeeGoogleOauth= async (sub) => {
@@ -96,8 +124,8 @@ function Login () {
 
     /**
      * Function that determines if valid employee login.
-     * @param  {string}  email                  employee email
-     * @param  {string}  password               employee password
+     * @param  {String}  email                  employee email
+     * @param  {String}  password               employee password
      * @return {Promise}          if valid employee
      */
     const employeeLogin= async (email, password) => {
@@ -133,7 +161,7 @@ function Login () {
 
     /**
      * Function to check if employee has a manager role
-     * @param  {string}  employeename               name of employee
+     * @param  {String}  employeename               name of employee
      * @return {Promise}              if employee is manager
      */
     const managerCheck = async (employeename) => {
@@ -184,7 +212,7 @@ function Login () {
 
             const jsonVals = await response.json();
 
-            if( jsonVals.isEmployee === true && jsonVals.is_working === true){
+            if( jsonVals.isEmployee === true &amp;&amp; jsonVals.is_working === true){
                     window.localStorage.setItem('user', employeename);
 
                     setIsEmployee(jsonVals.isEmployee);
@@ -206,7 +234,7 @@ function Login () {
     });
 
     /**
-     * Employee create a new account with email & password.
+     * Employee create a new account with email &amp; password.
      */
     const createAccount = async () => {
 
@@ -216,7 +244,7 @@ function Login () {
         const password = newPassword;
         console.log(email);
 
-        if( password !== "" && employeeid !== "" && email !== ""){
+        if( password !== "" &amp;&amp; employeeid !== "" &amp;&amp; email !== ""){
 
         const body = {employeeid, email, password};
 
@@ -239,7 +267,7 @@ function Login () {
         const jsonVals = await response.json();
 
 
-        if( jsonVals.isEmployee === true && jsonVals.is_working === true){
+        if( jsonVals.isEmployee === true &amp;&amp; jsonVals.is_working === true){
                 window.localStorage.setItem('user', jsonVals.employeename);
 
                 setIsEmployee(jsonVals.isEmployee);
@@ -378,200 +406,223 @@ function Login () {
 
 
     return (
-    <div>
-        {!isEmployee && (<br></br>)}
+    &lt;div>
+        {!isEmployee &amp;&amp; (&lt;br>&lt;/br>)}
 
-        <h1> Welcome to Pom & Honey's System</h1>
-        <br></br>
-        <br></br>
-        { !isEmployee  && (
-        <div class="borderArea">
-            <ThemeProvider theme={theme}>
-            { !isEmployee  && (
-                <div>
-            <div class="newPerson">
+        &lt;h1> Welcome to Pom &amp; Honey's System&lt;/h1>
+        &lt;br>&lt;/br>
+        &lt;br>&lt;/br>
+        { !isEmployee  &amp;&amp; (
+        &lt;div class="borderArea">
+            &lt;ThemeProvider theme={theme}>
+            { !isEmployee  &amp;&amp; (
+                &lt;div>
+            &lt;div class="newPerson">
 
-                <h3> Create New Account</h3>
-                <p>New employee? Please create a new account.</p>
-                <br></br>
+                &lt;h3> Create New Account&lt;/h3>
+                &lt;p>New employee? Please create a new account.&lt;/p>
+                &lt;br>&lt;/br>
 
 
-                <TextField id="employee id" label="Employee Id" variant="outlined" required fullWidth onChange={handleNewEmployeeId}/>
-                <br class="spacing"/>
-                <br class="spacing"/>
-                <TextField id="email" label="Email" variant="outlined" required fullWidth onChange={handleNewEmail}/>
-                <br class="spacing"/>
-                <br class="spacing"/>
-                <TextField id="password" label="Password" variant="outlined" required fullWidth onChange={handleNewPassword}/>
-                <br class="spacing"/>
-                <Stack>
-                <Button type="submit" size="large" variant="contained" sx={{ mt: 3, mb: 3 }} onClick={() => createAccount() }> Create Account</Button>
-                </Stack>
+                &lt;TextField id="employee id" label="Employee Id" variant="outlined" required fullWidth onChange={handleNewEmployeeId}/>
+                &lt;br class="spacing"/>
+                &lt;br class="spacing"/>
+                &lt;TextField id="email" label="Email" variant="outlined" required fullWidth onChange={handleNewEmail}/>
+                &lt;br class="spacing"/>
+                &lt;br class="spacing"/>
+                &lt;TextField id="password" label="Password" variant="outlined" required fullWidth onChange={handleNewPassword}/>
+                &lt;br class="spacing"/>
+                &lt;Stack>
+                &lt;Button type="submit" size="large" variant="contained" sx={{ mt: 3, mb: 3 }} onClick={() => createAccount() }> Create Account&lt;/Button>
+                &lt;/Stack>
 
-                <br />
-                <h4>Or</h4>
+                &lt;br />
+                &lt;h4>Or&lt;/h4>
 
-                <Stack>
+                &lt;Stack>
 
                 {/* Or actually when we make an account, have it insert into the employee table, but set is_working to false. Then leave an alert saying "double check w/ manager for access" */}
-                <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3, mb: 2 }} onClick={() => addEmployeeGoogleOauth()}>
-                <img width="20px" class="googleImg" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />     Sign Up with Google
-                </Button>
-                </Stack>
+                &lt;Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3, mb: 2 }} onClick={() => addEmployeeGoogleOauth()}>
+                &lt;img width="20px" class="googleImg" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />     Sign Up with Google
+                &lt;/Button>
+                &lt;/Stack>
 
 
-                <br />
-            </div>
-            </div>
+                &lt;br />
+            &lt;/div>
+            &lt;/div>
             )}
 
-            <div class="loginOld">
+            &lt;div class="loginOld">
 
-             { !isEmployee  && (
-                <div>
-                <br />
-                <br />
-                <br />
+             { !isEmployee  &amp;&amp; (
+                &lt;div>
+                &lt;br />
+                &lt;br />
+                &lt;br />
 
-                <h3> Welcome back. Please login. </h3>
-                <p>You must be a current employee to login.</p>
+                &lt;h3> Welcome back. Please login. &lt;/h3>
+                &lt;p>You must be a current employee to login.&lt;/p>
 
-                <br />
-                <form >
-                <TextField id="outlined-basic" label="Email" fullWidth="true" variant="outlined" onChange={handleEmail} />
-                <br class="spacing"/>
-                <br class="spacing"/>
-                <TextField id="outlined-basic" label="Pasword" fullWidth="true" type="password"variant="outlined" onChange={handlePassword} />
+                &lt;br />
+                &lt;form >
+                &lt;TextField id="outlined-basic" label="Email" fullWidth="true" variant="outlined" onChange={handleEmail} />
+                &lt;br class="spacing"/>
+                &lt;br class="spacing"/>
+                &lt;TextField id="outlined-basic" label="Pasword" fullWidth="true" type="password"variant="outlined" onChange={handlePassword} />
                 
-                <Stack>
+                &lt;Stack>
 
 
-                <Button type="submit"  size="large" variant="contained" sx={{ mt: 3, mb: 2 }} onClick={() => employeeLogin(email, password)}> Sign In</Button>
-                </Stack>
-                </form>
+                &lt;Button type="submit"  size="large" variant="contained" sx={{ mt: 3, mb: 2 }} onClick={() => employeeLogin(email, password)}> Sign In&lt;/Button>
+                &lt;/Stack>
+                &lt;/form>
 
 
-                <Stack>
-                <Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3 , mb:2 }}  onClick={login} >
-                <img width="20px" class="googleImg" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />     Sign In with Google
-                </Button>
-                </Stack>
-                <br />
-                <br />
-                <br />
-                <br />
+                &lt;Stack>
+                &lt;Button type="googleLogin"  variant="contained" sx={{color:'black', backgroundColor:'white', mt: 3 , mb:2 }}  onClick={login} >
+                &lt;img width="20px" class="googleImg" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />     Sign In with Google
+                &lt;/Button>
+                &lt;/Stack>
+                &lt;br />
+                &lt;br />
+                &lt;br />
+                &lt;br />
 
 
-                </div>
+                &lt;/div>
             ) }
 
-        </div>
+        &lt;/div>
 
-            </ThemeProvider>
+            &lt;/ThemeProvider>
 
-            <br />
-            <br />
-            <br />
+            &lt;br />
+            &lt;br />
+            &lt;br />
 
-        </div>
+        &lt;/div>
         )}
 
-        {isEmployee  && (
+        {isEmployee  &amp;&amp; (
 
-        <div class="success">
+        &lt;div class="success">
 
-        <Stack spacing={5} direction="row" justifyContent="center" >
-        <div>
-        <ThemeProvider theme={theme}>
-        <h4> Howdy, employee {userName}! </h4>
-        <Link to="/cashier"
+        &lt;Stack spacing={5} direction="row" justifyContent="center" >
+        &lt;div>
+        &lt;ThemeProvider theme={theme}>
+        &lt;h4> Howdy, employee {userName}! &lt;/h4>
+        &lt;Link to="/cashier"
             state= {{
                 userName: userName
         }}>
-            <Button type="cashier"  variant="contained" sx={{width:200, height:150, padding: 1, marginLeft: 2, mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()} }> Go to Cashier Page</Button>
-        </Link>
+            &lt;Button type="cashier"  variant="contained" sx={{width:200, height:150, padding: 1, marginLeft: 2, mt: 3, mb: 0 }} onClick={(openprofile) => {userLogin()} }> Go to Cashier Page&lt;/Button>
+        &lt;/Link>
 
-        <Link to="/">
-            <Button type="submit"  variant="contained" sx={{width:200, height:150, padding: 1, marginLeft: 2, mt: 3, mb: 0 }} onClick={() => clearLogin()} > Logout</Button>
-            </Link>
+        &lt;Link to="/">
+            &lt;Button type="submit"  variant="contained" sx={{width:200, height:150, padding: 1, marginLeft: 2, mt: 3, mb: 0 }} onClick={() => clearLogin()} > Logout&lt;/Button>
+            &lt;/Link>
 
-            </ThemeProvider>
-        </div>
+            &lt;/ThemeProvider>
+        &lt;/div>
 
-        </Stack>
+        &lt;/Stack>
 
-        <br />
-        {/* <h1> {isManager}</h1> */}
-        <br />
-        {isManager && (
-        //     <Link to="/manager_route"
+        &lt;br />
+        {/* &lt;h1> {isManager}&lt;/h1> */}
+        &lt;br />
+        {isManager &amp;&amp; (
+        //     &lt;Link to="/manager_route"
         //     state= {{
         //         userName: userName
         // }}>
-        //         <Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openmanager) => {userLogin()} }> Go to Manager Page</Button>
-        //     </Link>
+        //         &lt;Button type="submit"  variant="contained" sx={{ mt: 3, mb: 0 }} onClick={(openmanager) => {userLogin()} }> Go to Manager Page&lt;/Button>
+        //     &lt;/Link>
 
-        <div>
-        <Stack spacing={5} direction="row" justifyContent="center" >
-        <div>
-        <ThemeProvider theme={theme}>
+        &lt;div>
+        &lt;Stack spacing={5} direction="row" justifyContent="center" >
+        &lt;div>
+        &lt;ThemeProvider theme={theme}>
 
 
 
-            <Link to="/manager"
+            &lt;Link to="/manager"
                     state= {{
                         userName: userName
             }}>
 
-          <Button variant="contained" sx={{width:200, height:150, padding: 1, marginLeft: 2,mt:2,   mb:2}}
-            >Reports</Button>
-            </Link>
+          &lt;Button variant="contained" sx={{width:200, height:150, padding: 1, marginLeft: 2,mt:2,   mb:2}}
+            >Reports&lt;/Button>
+            &lt;/Link>
 
 
-            <Link to="/inventory"
+            &lt;Link to="/inventory"
                     state= {{
                         userName: userName
             }}>
-          <Button variant="contained" sx={{ width:200, height:150,padding: 1, marginLeft: 2,mt:2,  mb:2 }}
-            >Inventory</Button>
-            </Link>
+          &lt;Button variant="contained" sx={{ width:200, height:150,padding: 1, marginLeft: 2,mt:2,  mb:2 }}
+            >Inventory&lt;/Button>
+            &lt;/Link>
 
-            <Link to="/menu"
+            &lt;Link to="/menu"
                     state= {{
                         userName: userName
             }}>
-          <Button variant="contained" sx={{ width:200, height:150, padding: 1, marginLeft: 2, mt:2,mb:2 }}
-            >Menu Customization</Button>
-            </Link>
+          &lt;Button variant="contained" sx={{ width:200, height:150, padding: 1, marginLeft: 2, mt:2,mb:2 }}
+            >Menu Customization&lt;/Button>
+            &lt;/Link>
 
-            <Link to="/employee"
+            &lt;Link to="/employee"
                     state= {{
                         userName: userName
             }}>
-          <Button variant="contained" sx={{ width:200, height:150, padding: 1, marginLeft: 2, mt:2,mb:2 }}
-            >Employee</Button>
-            </Link>
+          &lt;Button variant="contained" sx={{ width:200, height:150, padding: 1, marginLeft: 2, mt:2,mb:2 }}
+            >Employee&lt;/Button>
+            &lt;/Link>
 
 
 
-        </ThemeProvider>
-        </div>
+        &lt;/ThemeProvider>
+        &lt;/div>
 
-        </Stack>
+        &lt;/Stack>
 
 
 
-        </div>
+        &lt;/div>
 
 
         )}
 
-        </div> )}
+        &lt;/div> )}
 
-    </div>
+    &lt;/div>
 
 
     );
 };
 
 export default Login;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Login.html">Login</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 21:54:41 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

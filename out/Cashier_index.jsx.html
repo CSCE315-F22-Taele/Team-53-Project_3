@@ -1,4 +1,32 @@
-import * as React from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Cashier/index.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Cashier/index.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as React from "react";
 import { useState, useEffect } from "react";
 import "./index.css";
 import Button from "@mui/material/Button";
@@ -72,7 +100,7 @@ function Cashier (props) {
     // const [orderNew,setOrderNew]= useState(false);
     // const [newAwait, setNewAwait]= useState(false);
     const [clicked, setClickedInfo] = useState(false);
-    // const name = "Pom and Honey at Texas A&M MSC";
+    // const name = "Pom and Honey at Texas A&amp;M MSC";
 
     const [newOrders, setNewOrders] = useState([]);
     const [pickupOrder, setpickupOrders] = useState([]);
@@ -146,7 +174,7 @@ function Cashier (props) {
 
             var length = menuNames.length + menuNamesCustom.length;
             var value = [];
-            for( let i =0; i< length; i++){
+            for( let i =0; i&lt; length; i++){
                 value.push(0);
             }
 
@@ -225,7 +253,7 @@ function Cashier (props) {
             var length = realInventory0.length + realInventory1.length +  realInventory2.length + realInventory3.length + realInventory4.length;
             var value = [];
 
-            for( let i =0; i< length; i++){
+            for( let i =0; i&lt; length; i++){
                 value.push(0);
             }
 
@@ -246,7 +274,7 @@ function Cashier (props) {
             var date=new Date();
             var current = date.getHours() + ':';
 
-            if (date.getMinutes() < 10) {
+            if (date.getMinutes() &lt; 10) {
                 current += "0" + date.getMinutes();
             }
             else {
@@ -298,7 +326,7 @@ function Cashier (props) {
 
         let inv = inventoryUsed;
 
-        for( var i=0; i< inv.length; i++){
+        for( var i=0; i&lt; inv.length; i++){
             inv[i] += inventory_default[i];
         }
 
@@ -335,11 +363,11 @@ function Cashier (props) {
         }
 
         let indexNames=-1;
-        for (var i = 0; i < namesCart.length; ++i) {
+        for (var i = 0; i &lt; namesCart.length; ++i) {
 
 
             var localTrue = true;
-            for (var j = 0; j < namesCart[i].length; ++j) {
+            for (var j = 0; j &lt; namesCart[i].length; ++j) {
 
                 if( addition[j] !== namesCart[i][j]){
 
@@ -371,7 +399,7 @@ function Cashier (props) {
             setCount(countVal);
             console.log("added",countVal);
 
-            if (countToppings < 10 && category === 2){
+            if (countToppings &lt; 10 &amp;&amp; category === 2){
                 let countCurr = countToppings +1;
                 console.log("COUNT updated: ",countToppings);
                 setCountToppings(countCurr);
@@ -396,7 +424,7 @@ function Cashier (props) {
         else if (category === 1){
             setAllowClickCat1(false);
         }
-        else if( category === 2 && countToppings >= 10){
+        else if( category === 2 &amp;&amp; countToppings >= 10){
             setAllowClickCat2(false);
         }
         else if (category === 3){
@@ -423,7 +451,6 @@ function Cashier (props) {
         setAllowClickCat2(true);
         setAllowClickCat3(true);
         setCountToppings(0);
-        window.localStorage.setItem('userName', location.state.userName);
     }
 
     /**
@@ -468,7 +495,7 @@ function Cashier (props) {
 
             let inv = inventoryUsed;
 
-            for( var i=0; i< listOrderedInv.length; i++){
+            for( var i=0; i&lt; listOrderedInv.length; i++){
                 inv[listOrderedInv[i][1] -1] -= 1;
             }
 
@@ -477,7 +504,7 @@ function Cashier (props) {
             setlistOrderedInv([]);
         }
 
-        for( var i=0; i< inv.length; i++){
+        for( var i=0; i&lt; inv.length; i++){
             inv[i] -= listItems[i];
         }
         setInventoryUsed(inv);
@@ -514,7 +541,7 @@ function Cashier (props) {
         else if (category === 1){
             setAllowClickCat1(true);
         }
-        else if (countToppings <= 10){
+        else if (countToppings &lt;= 10){
             let countCurr = countToppings -1;
             setCountToppings(countCurr);
             console.log("delete button: ",countCurr);
@@ -608,8 +635,8 @@ function Cashier (props) {
     }
 
     /**
-     * This function will set the mobile order to be ready for piick up.
-     * @param {Number} orderid       order d
+     * This function will set the mobile order to be ready for pick up.
+     * @param {Number} orderid       order id
      * @param {Number} mobile_order  current order status
      * @param {Number} index         size of array of online order ready for pick up
      */
@@ -636,7 +663,7 @@ function Cashier (props) {
         // listNamesOrdered =
         // menuNames.includes()
         // menuNamesCustom.includes()
-        // for( var i=0; i< inv.length; i++){
+        // for( var i=0; i&lt; inv.length; i++){
 
         // }
         console.log(orderedList);
@@ -644,251 +671,251 @@ function Cashier (props) {
 
     return (
 
-        <div class="cashier__pageOrder">
-            <h4> Cashier: {nameCashier} </h4>
-        <div class="cashier__mobileorders">
-            <br />
-            <h1>Mobile Orders</h1>
+        &lt;div class="cashier__pageOrder">
+            &lt;h4> Cashier: {nameCashier} &lt;/h4>
+        &lt;div class="cashier__mobileorders">
+            &lt;br />
+            &lt;h1>Mobile Orders&lt;/h1>
 
 
-            <br />
-            <h3> New Orders</h3>
-            <table>
+            &lt;br />
+            &lt;h3> New Orders&lt;/h3>
+            &lt;table>
 
-                <div>
-                <tr>
-                    <th class="orderid"> Order Id</th>
-                    <th class="costCol"> Cost </th>
-                    <th class="buttonDone"> Done </th>
-                </tr>
+                &lt;div>
+                &lt;tr>
+                    &lt;th class="orderid"> Order Id&lt;/th>
+                    &lt;th class="costCol"> Cost &lt;/th>
+                    &lt;th class="buttonDone"> Done &lt;/th>
+                &lt;/tr>
 
                 { newOrders.map( (item, index) =>
                     (
-                <tr>
+                &lt;tr>
 
-                    <td class="orderid">
-                        <Button onClick={() => setClickedInfo(true)}>{item.orderid} </Button>
+                    &lt;td class="orderid">
+                        &lt;Button onClick={() => setClickedInfo(true)}>{item.orderid} &lt;/Button>
 
-                        <Dialog open={clicked} onClose={() => setClickedInfo(false)}>
-                            <DialogTitle>Order {item.orderid} Information</DialogTitle>
-                            <DialogContent>
+                        &lt;Dialog open={clicked} onClose={() => setClickedInfo(false)}>
+                            &lt;DialogTitle>Order {item.orderid} Information&lt;/DialogTitle>
+                            &lt;DialogContent>
                             { item.ordereditems.map( (val) =>
                             (
-                            <DialogContentText>
+                            &lt;DialogContentText>
                                 {val}
-                            </DialogContentText>
+                            &lt;/DialogContentText>
                             ))  }
-                           </DialogContent>
-                        </Dialog>
+                           &lt;/DialogContent>
+                        &lt;/Dialog>
 
-                    </td>
-                    <td class="costCol"> {item.amount}</td>
-                    <td class="buttonDone">
-                        <Button  variant="contained" sx={{color:'green', backgroundColor:'white', mt: 3 , mb:2 }} onClick= {() => setNewOrder(item.orderid, 2, index)} >
+                    &lt;/td>
+                    &lt;td class="costCol"> {item.amount}&lt;/td>
+                    &lt;td class="buttonDone">
+                        &lt;Button  variant="contained" sx={{color:'green', backgroundColor:'white', mt: 3 , mb:2 }} onClick= {() => setNewOrder(item.orderid, 2, index)} >
                             X
-                        </Button>
-                    </td>
-                </tr>
+                        &lt;/Button>
+                    &lt;/td>
+                &lt;/tr>
                 ))}
 
-                <br />
-                </div>
+                &lt;br />
+                &lt;/div>
 
 
-            </table>
-            <br />
-            <h3> Awaiting Pickup</h3>
+            &lt;/table>
+            &lt;br />
+            &lt;h3> Awaiting Pickup&lt;/h3>
 
-            <table>
+            &lt;table>
 
-            <div>
-                <tr>
-                    <th> Order Id</th>
-                    <th class="costCol"> Cost </th>
-                    <th class="buttonDone"> Done </th>
-                </tr>
+            &lt;div>
+                &lt;tr>
+                    &lt;th> Order Id&lt;/th>
+                    &lt;th class="costCol"> Cost &lt;/th>
+                    &lt;th class="buttonDone"> Done &lt;/th>
+                &lt;/tr>
 
 
                 { pickupOrder.map( (item, index) =>
                     (
-                <tr>
+                &lt;tr>
 
-                    <td class="orderid">
-                     {item.orderid} </td>
-                    <td class="costCol"> {item.amount}</td>
-                    <td class="buttonDone">
-                        <Button  variant="contained" sx={{color:'green', backgroundColor:'white', mt: 3 , mb:2 }} onClick= {() => setPickedup(item.orderid, 3, index)} >
+                    &lt;td class="orderid">
+                     {item.orderid} &lt;/td>
+                    &lt;td class="costCol"> {item.amount}&lt;/td>
+                    &lt;td class="buttonDone">
+                        &lt;Button  variant="contained" sx={{color:'green', backgroundColor:'white', mt: 3 , mb:2 }} onClick= {() => setPickedup(item.orderid, 3, index)} >
                             X
-                        </Button>
-                    </td>
-                </tr>
+                        &lt;/Button>
+                    &lt;/td>
+                &lt;/tr>
                 ))}
 
-                <br />
-                </div>
-            </table>
+                &lt;br />
+                &lt;/div>
+            &lt;/table>
 
 
 
-        </div>
+        &lt;/div>
 
-        <div class="cashier__orderingSection">
-            <br></br>
+        &lt;div class="cashier__orderingSection">
+            &lt;br>&lt;/br>
 
-            <h1 class="order__orderingTitle"> Pom & Honey Menu </h1>
-            <br></br>
-            <ThemeProvider theme={theme}>
-            <div class="order__buttons">
+            &lt;h1 class="order__orderingTitle"> Pom &amp; Honey Menu &lt;/h1>
+            &lt;br>&lt;/br>
+            &lt;ThemeProvider theme={theme}>
+            &lt;div class="order__buttons">
             { menuNamesCustom.map( (item) =>
             (
-                <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                &lt;Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                 onClick= { () => { pushItem(item[2], item[0], item[1],item[3], true)  }}>
-                {item[0]}</Button>
+                {item[0]}&lt;/Button>
             ) )}
             { menuNames.map( (item) =>
             (
-                <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                &lt;Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                 onClick= { () => { pushItem(item[2], item[0], item[1],item[3], false) }}>
-                {item[0]}</Button>
+                {item[0]}&lt;/Button>
             ) )}
 
 
 
 
 
-            </div>
+            &lt;/div>
 
-            {showCustom && (
-                <div>
+            {showCustom &amp;&amp; (
+                &lt;div>
 
 
 
-                    {cat0click && (
-                    <div class="buttons base">
-                    <h2> Base</h2>
+                    {cat0click &amp;&amp; (
+                    &lt;div class="buttons base">
+                    &lt;h2> Base&lt;/h2>
                     { realInventory0.map( (item) =>
                     (
-                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                        &lt;Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                         onClick= { () => { pushInv(item[1], item[0], 0)  }}>
-                        {item[0]}</Button>
+                        {item[0]}&lt;/Button>
                     ) )}
-                    </div>
+                    &lt;/div>
                     )
                     }
-                    { (!cat0click) &&
+                    { (!cat0click) &amp;&amp;
                         (
-                        <div>
-                        <h5>Added Items to Gyro/Bowl:</h5>
-                        <table>
+                        &lt;div>
+                        &lt;h5>Added Items to Gyro/Bowl:&lt;/h5>
+                        &lt;table>
                         { listOrderedInv.map( (item) =>
-                        <tr>
-                            <td> {item[0]}</td>
-                            <td>
-                                <Button  variant="contained" sx={{color:'red', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => {deleteCustom(item)} } >
+                        &lt;tr>
+                            &lt;td> {item[0]}&lt;/td>
+                            &lt;td>
+                                &lt;Button  variant="contained" sx={{color:'red', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => {deleteCustom(item)} } >
                                 X
-                                </Button>
-                            </td>
-                        </tr>
+                                &lt;/Button>
+                            &lt;/td>
+                        &lt;/tr>
                         )}
-                        </table>
+                        &lt;/table>
 
-                    <br></br>
-                    <br></br>
-                    <br></br>
-                    </div>
+                    &lt;br>&lt;/br>
+                    &lt;br>&lt;/br>
+                    &lt;br>&lt;/br>
+                    &lt;/div>
                         )
                     }
 
-                {cat1click && (
-                 <div class="buttons protein">
-                <h2> Protein</h2>
+                {cat1click &amp;&amp; (
+                 &lt;div class="buttons protein">
+                &lt;h2> Protein&lt;/h2>
 
 
                     { realInventory1.map( (item) =>
                     (
-                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                        &lt;Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                         onClick= { () => { pushInv(item[1], item[0], 1)  }}>
-                        {item[0]}</Button>
+                        {item[0]}&lt;/Button>
                     ) )}
-                </div>
+                &lt;/div>
                 )}
 
-                {cat2click && (
+                {cat2click &amp;&amp; (
 
-                <div class="buttons toppings">
-                <h2> Toppings</h2>
+                &lt;div class="buttons toppings">
+                &lt;h2> Toppings&lt;/h2>
                     { realInventory2.map( (item) =>
                     (
-                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                        &lt;Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                         onClick= { () => { pushInv(item[1], item[0], 2)  }}>
-                        {item[0]}</Button>
+                        {item[0]}&lt;/Button>
                     ) )}
-                </div>
+                &lt;/div>
                 )}
 
-                {cat3click && (
+                {cat3click &amp;&amp; (
 
-                <div class="buttons dressing">
-                    <h2> Dressing</h2>
+                &lt;div class="buttons dressing">
+                    &lt;h2> Dressing&lt;/h2>
                     { realInventory3.map( (item) =>
                     (
-                        <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                        &lt;Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                         onClick= { () => { pushInv(item[1], item[0], 3)  }}>
-                        {item[0]}</Button>
+                        {item[0]}&lt;/Button>
                     )  )}
-                </div>
+                &lt;/div>
                 )}
 
-                <br>
-                </br>
-                <Button variant="contained" sx={{ backgroundColor:"black", width:150, height:50, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
+                &lt;br>
+                &lt;/br>
+                &lt;Button variant="contained" sx={{ backgroundColor:"black", width:150, height:50, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                 onClick= { () => { addItem() } } >
-                Finish Item Customization</Button>
+                Finish Item Customization&lt;/Button>
 
-             </div>
+             &lt;/div>
             )}
 
 
-            </ThemeProvider>
-            <div class="addItems">
+            &lt;/ThemeProvider>
+            &lt;div class="addItems">
 
 
 
 
 
 
-            </div>
+            &lt;/div>
 
 
-        </div>
+        &lt;/div>
 
 
-        <div class="cashier__currentOrder">
-                <br />
-                <h1> Current Order</h1>
+        &lt;div class="cashier__currentOrder">
+                &lt;br />
+                &lt;h1> Current Order&lt;/h1>
 
-                <br />
-                <table>
-                    <tr>
-                    <th class="item">Item</th>
-                    <th class="price">Price</th>
-                    <th class="delete">Delete Item</th>
-                    </tr>
+                &lt;br />
+                &lt;table>
+                    &lt;tr>
+                    &lt;th class="item">Item&lt;/th>
+                    &lt;th class="price">Price&lt;/th>
+                    &lt;th class="delete">Delete Item&lt;/th>
+                    &lt;/tr>
 
-                </table>
-                <table>
+                &lt;/table>
+                &lt;table>
 
                 { listOrderedNames.map( (item) =>
-                    <tr>
-                        <td class="item">{item[0]} </td>
-                        <td class="price"> ${item[1]} </td>
-                        <td class="delete">
-                            <Button  variant="contained" sx={{color:'red', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => {deleteItem(item)} } >
+                    &lt;tr>
+                        &lt;td class="item">{item[0]} &lt;/td>
+                        &lt;td class="price"> ${item[1]} &lt;/td>
+                        &lt;td class="delete">
+                            &lt;Button  variant="contained" sx={{color:'red', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => {deleteItem(item)} } >
                         X
-                        </Button>
-                        </td>
+                        &lt;/Button>
+                        &lt;/td>
 
-                    </tr>
+                    &lt;/tr>
 
 
 
@@ -897,19 +924,19 @@ function Cashier (props) {
 
                 )}
 
-                </table>
+                &lt;/table>
 
-            <br></br>
-            <br></br>
-            <br></br>
-
-
+            &lt;br>&lt;/br>
+            &lt;br>&lt;/br>
+            &lt;br>&lt;/br>
 
 
-                <h1> Subtotal: ${totalCost} </h1>
 
-                <Stack spacing = {2}>
-                    <Link to="/cashier_checkout"
+
+                &lt;h1> Subtotal: ${totalCost} &lt;/h1>
+
+                &lt;Stack spacing = {2}>
+                    &lt;Link to="/cashier_checkout"
                     state= {{
                         orderid : orderid,
                         totalCost : totalCost,
@@ -920,25 +947,48 @@ function Cashier (props) {
                     >
 
 
-                    <Button variant="contained" size="large" sx={{mt: 3, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick= { (openprofile) => {sendtoDb()}}>Submit Order</Button>
+                    &lt;Button variant="contained" size="large" sx={{mt: 3, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick= { (openprofile) => {sendtoDb()}}>Submit Order&lt;/Button>
 
 
-                        </Link>
-                        <Link>
-                        <Button variant="contained" size="large" sx={{ mb:2, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick= { () => {clearOrder()}}>Clear Order</Button>
-                        </Link>
-
-
-
-                    </Stack>
-
-
-        </div>
+                        &lt;/Link>
+                        &lt;Link>
+                        &lt;Button variant="contained" size="large" sx={{ mb:2, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick= { () => {clearOrder()}}>Clear Order&lt;/Button>
+                        &lt;/Link>
 
 
 
-        </div>
+                    &lt;/Stack>
+
+
+        &lt;/div>
+
+
+
+        &lt;/div>
     );
 };
 
 export default Cashier;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cashier.html">Cashier</a></li><li><a href="Employee.html">Employee</a></li><li><a href="Inventory.html">Inventory</a></li><li><a href="Login.html">Login</a></li><li><a href="Menu.html">Menu</a></li><li><a href="Order.html">Order</a></li><li><a href="module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Home">Home</a></li><li><a href="global.html#rounding">rounding</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 22:12:34 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

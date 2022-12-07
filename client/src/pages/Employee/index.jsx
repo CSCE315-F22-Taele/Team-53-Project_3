@@ -160,7 +160,6 @@ function Employee (props) {
 
     /**
      * handle new name input
-     * @param  {[type]}  e     event
      */
     const handleName = async (e) => {
         setName(e.target.value);
@@ -168,7 +167,6 @@ function Employee (props) {
 
     /**
      * set the new salary input
-     * @param  {[type]}  e               event
      */
     const handleSalary = async (e) => {
         setSalary(e.target.value);
@@ -176,7 +174,6 @@ function Employee (props) {
 
     /**
      * set the new manager input
-     * @param  {[type]}  e               event
      */
     const handleManager = async(event) =>{
         setismanager(!ismanager);
