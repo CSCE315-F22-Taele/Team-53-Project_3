@@ -448,12 +448,10 @@ function Login () {
                 <br />
                 <form >
                 <TextField id="outlined-basic" label="Email" fullWidth="true" variant="outlined" onChange={handleEmail} />
-                {/* <input type="text" value={email} onChange={handleEmail} /> */}
-                {/* <TextField id="email" label="Email" variant="outlined" required fullWidth value = { email } onChange = { handleEmail }/> */}
                 <br class="spacing"/>
                 <br class="spacing"/>
                 <TextField id="outlined-basic" label="Pasword" fullWidth="true" type="password"variant="outlined" onChange={handlePassword} />
-                {/* <TextField id="password" label="Password" variant="outlined" required fullWidth value = { password } onChange = { handlePassword }/> */}
+                
                 <Stack>
 
 
