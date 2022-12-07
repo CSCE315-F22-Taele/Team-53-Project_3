@@ -9,15 +9,13 @@ import { Link } from 'react-router-dom';
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
+/**
+ * This function will display the home page.
+ */
 const Home = () => {
     const name = "Pom & Honey at Texas A&M MSC";
     const center = useMemo(() => ({ lat:  30.610656, lng:-96.342429 }), []);
 
-    // useEffect( () => {
-    //     useLoadScript({googleMapsApiKey: ""});
-        
-    // });
-    
     const [clicked, setClicked] = useState(false);
 
     const containerStyle = {
@@ -32,6 +30,10 @@ const Home = () => {
         setClicked(val);
     };
 
+    /**
+     * This function will get the Google Map API key
+     * @return {Promise} [Google Map API key]
+     */
     const getGoogleMapKey = async () => {
         try {
             const response = await fetch(conn + "api/login/getGoogleMapsKey");
@@ -61,7 +63,7 @@ const Home = () => {
             </div>
         </div>
 
-        
+
         <br />
 
         <table class="center">
@@ -88,7 +90,7 @@ const Home = () => {
                     <span> Hello.</span>
                 </InfoWindow>
                 )}
-            
+
             </Marker>
         </GoogleMap>
       </LoadScript>
@@ -97,7 +99,7 @@ const Home = () => {
       <br/>
       <br/>
       </div>
-        
+
         </th>
         <th>
 
@@ -131,9 +133,9 @@ const Home = () => {
                 <th> Sunday</th>
                 <th> Closed</th>
             </tr>
-            
+
         </table>
-        
+
         <br></br>
         <br></br>
         <h5> Contact us</h5>

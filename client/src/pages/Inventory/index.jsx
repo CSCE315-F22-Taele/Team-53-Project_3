@@ -25,12 +25,16 @@ import { Hint } from 'react-autocomplete-hint';
 import { format } from 'date-fns'
 import { border, fontWeight, style } from '@mui/system';
 import { Link } from 'react-router-dom';
- 
+
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
- 
+
+/**
+ * Display the inventory page.
+ * @constructor
+ */
 function Inventory(){
- 
+
    const theme = createTheme({
        palette: {
            primary: {
@@ -45,7 +49,7 @@ function Inventory(){
             fontSize: 16,
        },
    });
- 
+
    const deactivate_theme = createTheme({
        palette: {
            primary: {
@@ -59,7 +63,7 @@ function Inventory(){
             fontSize: 16,
        },
    });
- 
+
    const increaseSize = createTheme({
        typography: {
             fontSize: 16,
@@ -71,19 +75,19 @@ function Inventory(){
    const [inventory2, setInventory2] = useState([]);
    const [inventory3, setInventory3] = useState([]);
    const [inventory4, setInventory4] = useState([]);
- 
+
    const [deac_inventory0, set_deac_Inventory0] = useState([]);
    const [deac_inventory1, set_deac_Inventory1] = useState([]);
    const [deac_inventory2, set_deac_Inventory2] = useState([]);
    const [deac_inventory3, set_deac_Inventory3] = useState([]);
    const [deac_inventory4, set_deac_Inventory4] = useState([]);
- 
+
    const [restock, set_restock] = useState([]);
- 
- 
- 
+
+
+
    const [inventory, setInventory] = useState([]);
- 
+
    const [name_display, set_nameDisplay] = useState('');
    const [amount_display, set_amountDisplay] = useState('');
    const [cost_display, set_costDisplay] = useState('');
@@ -92,17 +96,20 @@ function Inventory(){
    const [id, setId] = useState('');
    const [classify_display, set_classifyDisplay] = useState('');
    const [update_status, set_update_status] = useState(true);
- 
+
    const inputName = useRef('');
- 
+
    const name_input = useRef('');
    const amount_input = useRef('');
    const cost_input = useRef('');
    const date_input = useRef('');
    const vendor_input = useRef('');
    const classify_input = useRef('');
-  
-   // This will fetch entire inventory table. Need to parse through to determine specific information.
+
+   /**
+    * This function will fetch entire inventory table information.
+    * @return {Promise} Inventory table.
+    */
    const getInventory = async () => {
        try {
            const response = await fetch(conn + "api/inventory/get");
@@ -113,7 +120,7 @@ function Inventory(){
                let inventoryToppings = [];
                let inventoryDressings = [];
                let inventoryMisc = [];
- 
+
                let deac_inventoryBase = [];
                let deac_inventoryProteins = [];
                let deac_inventoryToppings = [];
@@ -121,7 +128,7 @@ function Inventory(){
                let deac_inventoryMisc = [];
                let inv = [];
                let list = invName;
- 
+
                if(data[key].is_using){
                    if (data[key].classify === 0){
                        inventoryBase.push(data[key].itemname);
@@ -132,11 +139,11 @@ function Inventory(){
                        inventoryBase.push(data[key].classify);
                        inventoryBase.push(data[key].itemid);
                        inventoryBase.push(data[key].is_using);
- 
+
                        let inventoryVals = inventory0;
                        inventoryVals.push(inventoryBase);
-  
-                       setInventory0(inventoryVals); 
+
+                       setInventory0(inventoryVals);
                    }
                    else if(data[key].classify === 1){
                        inventoryProteins.push(data[key].itemname);
@@ -147,10 +154,10 @@ function Inventory(){
                        inventoryProteins.push(data[key].classify);
                        inventoryProteins.push(data[key].itemid);
                        inventoryProteins.push(data[key].is_using);
- 
+
                        let inventoryVals = inventory1;
                        inventoryVals.push(inventoryProteins);
-  
+
                        setInventory1(inventoryVals);
                    }
                    else if(data[key].classify === 2){
@@ -162,12 +169,12 @@ function Inventory(){
                        inventoryToppings.push(data[key].classify);
                        inventoryToppings.push(data[key].itemid);
                        inventoryToppings.push(data[key].is_using);
- 
- 
- 
+
+
+
                        let inventoryVals = inventory2;
                        inventoryVals.push(inventoryToppings);
-  
+
                        setInventory2(inventoryVals);
                    }
                    else if(data[key].classify === 3){
@@ -179,11 +186,11 @@ function Inventory(){
                        inventoryDressings.push(data[key].classify);
                        inventoryDressings.push(data[key].itemid);
                        inventoryDressings.push(data[key].is_using);
- 
- 
+
+
                        let inventoryVals = inventory3;
                        inventoryVals.push(inventoryDressings);
-  
+
                        setInventory3(inventoryVals);
                    }
                    else if(data[key].classify === 4){
@@ -195,11 +202,11 @@ function Inventory(){
                        inventoryMisc.push(data[key].classify);
                        inventoryMisc.push(data[key].itemid);
                        inventoryMisc.push(data[key].is_using);
- 
- 
+
+
                        let inventoryVals = inventory4;
                        inventoryVals.push(inventoryMisc);
-  
+
                        setInventory4(inventoryVals);
                    }
                } else {
@@ -212,11 +219,11 @@ function Inventory(){
                        deac_inventoryBase.push(data[key].classify);
                        deac_inventoryBase.push(data[key].itemid);
                        deac_inventoryBase.push(data[key].is_using);
- 
+
                        let inventoryVals = deac_inventory0;
                        inventoryVals.push(deac_inventoryBase);
-  
-                       set_deac_Inventory0(inventoryVals); 
+
+                       set_deac_Inventory0(inventoryVals);
                    }
                    else if(data[key].classify === 1){
                        deac_inventoryProteins.push(data[key].itemname);
@@ -227,10 +234,10 @@ function Inventory(){
                        deac_inventoryProteins.push(data[key].classify);
                        deac_inventoryProteins.push(data[key].itemid);
                        deac_inventoryProteins.push(data[key].is_using);
- 
+
                        let inventoryVals = deac_inventory1;
                        inventoryVals.push(deac_inventoryProteins);
-  
+
                        set_deac_Inventory1(inventoryVals);
                    }
                    else if(data[key].classify === 2){
@@ -242,12 +249,12 @@ function Inventory(){
                        deac_inventoryToppings.push(data[key].classify);
                        deac_inventoryToppings.push(data[key].itemid);
                        deac_inventoryToppings.push(data[key].is_using);
- 
- 
- 
+
+
+
                        let inventoryVals = deac_inventory2;
                        inventoryVals.push(deac_inventoryToppings);
-  
+
                        set_deac_Inventory2(inventoryVals);
                    }
                    else if(data[key].classify === 3){
@@ -259,11 +266,11 @@ function Inventory(){
                        deac_inventoryDressings.push(data[key].classify);
                        deac_inventoryDressings.push(data[key].itemid);
                        deac_inventoryDressings.push(data[key].is_using);
- 
- 
+
+
                        let inventoryVals = deac_inventory3;
                        inventoryVals.push(deac_inventoryDressings);
-  
+
                        set_deac_Inventory3(inventoryVals);
                    }
                    else if(data[key].classify === 4){
@@ -275,11 +282,11 @@ function Inventory(){
                        deac_inventoryMisc.push(data[key].classify);
                        deac_inventoryMisc.push(data[key].itemid);
                        deac_inventoryMisc.push(data[key].is_using);
- 
- 
+
+
                        let inventoryVals = deac_inventory4;
                        inventoryVals.push(deac_inventoryMisc);
-  
+
                        set_deac_Inventory4(inventoryVals);
                    }
                }
@@ -294,17 +301,27 @@ function Inventory(){
                let inventoryVals = inventory;
                inventoryVals.push(inv);
                list.push(data[key].itemname);
- 
+
                setInventory(inventoryVals);
                set_invName(list);
            }
- 
+
        } catch (err) {
            console.error(err.message);
        }
    }
- 
-   // Will update current inventory item.
+
+   /**
+    * This function will update current inventory item.
+    * @param  {String} _itemname                      name of item
+    * @param  {Number} _amount                        amount of item
+    * @param  {Float} _cost                           cost of item
+    * @param  {Date} _expirationdate                  expiration date of item
+    * @param  {String} _vendor                        vendor of item
+    * @param  {Number} _classify                      classification of item
+    * @param  {Number} _id                            item id
+    * @param  {Boolean} _useChecking                  activated/deactivated state of item
+    */
    const updateInventory =(_itemname, _amount, _cost, _expirationdate, _vendor,_classify, _id, _useChecking) => {
        try {
            // Need to update w/ input before inserting.
@@ -316,7 +333,7 @@ function Inventory(){
            var is_using = _useChecking;
            var classify = _classify;
            var itemid = _id;
- 
+
            const body = {itemname,
                amount,
                cost,
@@ -336,11 +353,18 @@ function Inventory(){
            console.error(err.message);
        }
    }
-  
-   // Will insert a new item into inventory.
+
+   /**
+    * This function will insert a new item into inventory.
+    * @param  {String} _itemname                      name of item
+    * @param  {Number} _amount                        amount of item
+    * @param  {Float} _cost                           cost of item
+    * @param  {Date} _expirationdate                  expiration date of item
+    * @param  {String} _vendor                        vendor of item
+    * @param  {Number} _classify                      classification of item
+    */
    const insertInventory = (_itemname, _amount, _cost, _expirationdate, _vendor,_classify) => {
        try {
-           // Need to update w/ input before inserting.
            var itemname = _itemname.toLowerCase();
            var amount = _amount;
            var cost = _cost;
@@ -362,24 +386,27 @@ function Inventory(){
                    body: JSON.stringify(body)
                }
            )
-          
+
            var tmp_arr = [];
            console.log(menu[0][1]);
            for (let key in menu) {
- 
+
                tmp_arr = menu[key][1];
                tmp_arr.push(0);
                console.log(tmp_arr);
                updateMenu(menu[key][0], tmp_arr);
            }
-          
+
        } catch (err) {
            console.error(err.message);
        }
- 
+
    }
- 
-   // Will get restock item names & amounts to be displayed
+
+   /**
+    * This function will get items needing restock.
+    * @return {Promise} Item names & amounts that meet restock requirements.
+    */
    const getRestock = async () => {
        try {
            const response = await fetch(conn + "api/inventory/getRestock");
@@ -398,9 +425,12 @@ function Inventory(){
            console.error(err.message);
        }
    }
- 
+
    const [menu, set_menu] = useState([]);
- 
+   /**
+    * This function will get the menu information.
+    * @return {Promise} menu id and default inventory
+    */
    const getMenu = async () => {
        try {
            const response = await fetch(conn + "api/inventory/getMenu");
@@ -419,7 +449,12 @@ function Inventory(){
            console.error(err.message);
        }
    }
- 
+
+   /**
+    * This function will resize the default inventory array in menu when inserting a new menu item.
+    * @param  {Number} _id                             menu item id
+    * @param  {Array} _default_inventory               menu item default inventory
+    */
    const updateMenu = (_id, _default_inventory) => {
        try {
            var id = _id;
@@ -432,12 +467,17 @@ function Inventory(){
                    body: JSON.stringify(body)
                }
            )
-          
+
        } catch (err) {
            console.error(err.message);
        }
    }
- 
+
+   /**
+    * Check if inventory item is to be displayed.
+    * @param  {Boolean} c               check if valid inventory item request
+    * @return set specific inventory item information to be displayed
+    */
    const sendValue = (c) => {
        set_nameDisplay("");
        set_amountDisplay("");
@@ -454,10 +494,8 @@ function Inventory(){
            n = inputName.current;
        }
 
-       
- 
        n = n.toLowerCase();
-       
+
        for(let key in inventory){
            let invName = inventory[key][0];
            invName = invName.toLowerCase();
@@ -465,20 +503,20 @@ function Inventory(){
            if((invName === n && !inventory[key][7] && open_name_activate ) ||
             (invName === n && inventory[key][7] && open_name_deactivate) ||
             (invName === n && open_name_update) || (invName === n && !c) ){
-                
+
             set_nameDisplay(inventory[key][0]);
             set_amountDisplay(inventory[key][1]);
             set_costDisplay(inventory[key][2]);
             let dateArr = inventory[key][3].split('T');
-            set_dateDisplay(dateArr[0]);           
+            set_dateDisplay(dateArr[0]);
             set_vendorDisplay(inventory[key][4]);
             set_classifyDisplay(inventory[key][5]);
             setId(inventory[key][6]);
             check = true;
             break;
            }
-       } 
- 
+       }
+
        if(check){
            if(open_name_update){
                handleClickOpen_update();
@@ -489,7 +527,7 @@ function Inventory(){
            } else if(open_name_activate){
                handleClickOpen_activate();
                handleClose_name_activate();
-           }           
+           }
        } else {
            if(open_name_update){
                handleClickOpen_name_update();
@@ -502,12 +540,8 @@ function Inventory(){
                alert("The item doesn't exist or is currently activated!");
            }
        }
- 
- 
- 
-      
    }
- 
+
    const [welcome_open, set_welcome] = useState(true);
    const [open_add, set_add] = useState(false);
    const [open_update, set_update] = useState(false);
@@ -516,17 +550,17 @@ function Inventory(){
    const [open_name_update, set_name_update] = useState(false);
    const [open_name_deactivate, set_name_deactivate] = useState(false);
    const [open_name_activate, set_name_activate] = useState(false);
- 
+
    const [open_deactivate, set_deactivate] = useState(false);
    const [open_activate, set_activate] = useState(false);
- 
+
    const handleClickOpen_add = () => {
        set_add(true);
    };
    const handleClickOpen_update = () => {
        set_update(true);
    };
- 
+
    const handleClickOpen_name_update = () => {
        set_name_update(true);
    };
@@ -542,7 +576,10 @@ function Inventory(){
    const handleClickOpen_activate = () => {
        set_activate(true);
    };
- 
+
+   /**
+    * This function will reset values if cancel is selected.
+    */
    const handleClose_add_cancel = () => {
        name_input.current.value = '';
        amount_input.current.value = '';
@@ -552,16 +589,19 @@ function Inventory(){
        classify_input.current.value = '';
        set_add(false);
    }
- 
+
+   /**
+    * This function will insert inputed information to inventory table in db.
+    */
    const handleClose_add = () => {
        if (/^[A-Za-z\s]*$/.test(name_input.current.value)) {
            if (/^\d+$/.test(amount_input.current.value)) {
- 
+
                const today_date = new Date();
                const input_date = new Date (date_input.current.value);
- 
+
                if (/^\d+\.\d{0,2}$/.test(cost_input.current.value)) {
- 
+
                    if (/^\d{4}-\d{2}-\d{2}$/.test(date_input.current.value) &&
                    today_date < input_date
                     ) {
@@ -596,22 +636,26 @@ function Inventory(){
        else {
            alert("Invalid inventory name. Please retry.");
        }
- 
+
    };
- 
+
    const handleClose_update_cancel = () => {
        set_update(false);
    }
+
+   /**
+    * This function will error check values inputted and update inventory item in db.
+    */
    const handleClose_update = () => {
- 
+
        if (/^[A-Za-z\s]*$/.test(name_input.current.value)) {
            if (/^\d+$/.test(amount_input.current.value)) {
- 
+
                const today_date = new Date();
                const input_date = new Date (date_input.current.value);
- 
+
                if (/^\d+\.\d{0,2}$/.test(cost_input.current.value)) {
- 
+
                    if (/^\d{4}-\d{2}-\d{2}$/.test(date_input.current.value) &&
                    today_date < input_date
                     ) {
@@ -646,7 +690,7 @@ function Inventory(){
            alert("Invalid inventory name. Please retry.");
        }
    };
- 
+
    const handleClose_name_update = () => {
        set_name_update(false);
    };
@@ -656,41 +700,41 @@ function Inventory(){
    const handleClose_name_activate = () => {
        set_name_activate(false);
    };
- 
- 
+
+
    const handleClose_deactivate = () => {
        set_deactivate(false);
    };
    const handleClose_activate = () => {
        set_activate(false);
    };
-  
+
    const handleClose_welcome = () => {
        set_welcome(false);
    };
- 
+
    const [classifications, setClass] = React.useState('');
- 
+
    const handleChange_class = (event) => {
        set_classifyDisplay(event.target.value);
        setClass(event.target.value);
    };
- 
+
    const handleClickOpen_restock = () => {
        set_openRestock(true);
    }
- 
+
    const handleClose_restock = () => {
        set_openRestock(false);
    }
- 
+
    useEffect( () => {
        getInventory();
        getRestock();
        getMenu();
        console.log(open_deac_base);
    }, [])
- 
+
     function refreshPage() {
         window.location.reload(false);
     }
@@ -718,17 +762,17 @@ function Inventory(){
 
    return (
        <div className="inventory_page">
- 
+
            <Dialog open={welcome_open} onClose={handleClose_welcome}>
                <DialogTitle>Welcome to the Inventory page.</DialogTitle>
- 
+
                <DialogActions>
                    <Button
                    style={{fontSize: '20px'}}
                     onClick={() => {
                        handleClose_welcome();
                    }}>Start</Button>
-               </DialogActions>                               
+               </DialogActions>
            </Dialog>
            <ThemeProvider theme={increaseSize}>
            <div className="inventory_receipt-section">
@@ -737,18 +781,18 @@ function Inventory(){
                     <Button type="submit" size="small" variant="contained" className="inventory_back-btn" >Back</Button>
                </span>
                </Link>
-          
+
                <span className='edit-btn' >
-                   
+
                    <Stack
                        direction="row"
                        spacing={5}
                    >
-                  
+
                    <Button size="small" variant="contained"  className="inventory_add-btn"
                        onClick={() => {
                            handleClickOpen_add();
- 
+
                            set_nameDisplay('');
                            set_amountDisplay('');
                            set_costDisplay('');
@@ -756,11 +800,11 @@ function Inventory(){
                            set_vendorDisplay('');
                            set_classifyDisplay('');
                        }}>Add Item</Button>
- 
+
                        <Dialog open={open_add} onClose={handleClose_add}>
                            <DialogTitle fontSize={25}>Add New Item</DialogTitle>
                            <DialogContent>
- 
+
                                <TextField
                                    required
                                    margin="dense"
@@ -780,8 +824,8 @@ function Inventory(){
                                    helperText="Quantity"
                                    type="text"
                                    fullWidth
-                                   variant="standard"  
-                                   inputRef={amount_input}                       
+                                   variant="standard"
+                                   inputRef={amount_input}
                                />
                                <TextField
                                    required
@@ -794,7 +838,7 @@ function Inventory(){
                                    variant="standard"
                                    inputRef={cost_input}
                                />
- 
+
                                <TextField
                                    required
                                    margin="dense"
@@ -806,7 +850,7 @@ function Inventory(){
                                    variant="standard"
                                    inputRef={date_input}
                                />
- 
+
                                <TextField
                                    required
                                    margin="dense"
@@ -834,9 +878,9 @@ function Inventory(){
                                        <MenuItem value={4}>Miscellaneous</MenuItem>
                                        </Select>
                                </FormControl>
- 
+
                            </DialogContent>
-      
+
                            <DialogActions>
                            <Button onClick={handleClose_add_cancel}>Cancel</Button>
                            <Button onClick={() => {
@@ -844,34 +888,34 @@ function Inventory(){
                            }}>Add</Button>
                            </DialogActions>
                        </Dialog>
- 
+
                    <Button size="small" variant="contained" className="back1-btn" onClick={handleClickOpen_name_update}>Update</Button>
-                      
+
                        <Dialog open={open_name_update} onClose={handleClose_name_update}>
                            <DialogTitle>Enter item name:</DialogTitle>
                            <DialogContent>
-                               <Hint options={invName} allowTabFill>           
-                              
+                               <Hint options={invName} allowTabFill>
+
                                    <input className='input'
                                        style={{ width: "500px" }}
                                        ref={inputName}
                                    />
-                               </Hint>  
+                               </Hint>
                            </DialogContent>
-      
+
                            <DialogActions>
                                <Button onClick={handleClose_name_update}>Cancel</Button>
                                <Button onClick={() => {
                                    sendValue(true);
- 
+
                                }}>Search</Button>
-                           </DialogActions>                               
+                           </DialogActions>
                        </Dialog>
-                      
+
                        <Dialog open={open_update} onClose={handleClose_update}>
                        <DialogTitle fontSize={25}>Update Item</DialogTitle>
                        <DialogContent>
- 
+
                            <TextField
                                required
                                margin="dense"
@@ -891,8 +935,8 @@ function Inventory(){
                                helperText="Quantity"
                                type="text"
                                fullWidth
-                               variant="standard"  
-                               inputRef={amount_input}                       
+                               variant="standard"
+                               inputRef={amount_input}
                            />
                            <TextField
                                required
@@ -905,7 +949,7 @@ function Inventory(){
                                variant="standard"
                                inputRef={cost_input}
                            />
- 
+
                            <TextField
                                required
                                margin="dense"
@@ -917,7 +961,7 @@ function Inventory(){
                                variant="standard"
                                inputRef={date_input}
                            />
- 
+
                            <TextField
                                required
                                margin="dense"
@@ -929,7 +973,7 @@ function Inventory(){
                                variant="standard"
                                inputRef={vendor_input}
                            />
- 
+
                            <FormControl fullWidth>
                                <Select
                                    labelId="demo-simple-select-label"
@@ -945,33 +989,33 @@ function Inventory(){
                                    <MenuItem value={4}>Miscellaneous</MenuItem>
                                </Select>
                            </FormControl>
- 
+
                        </DialogContent>
- 
+
                        <DialogActions>
                        <Button onClick={handleClose_update_cancel}>Cancel</Button>
                        <Button onClick={() => {
                            handleClose_update();
                        }}>Update</Button>
                        </DialogActions>
-                       </Dialog> 
- 
-                   <ThemeProvider theme={deactivate_theme}>                   
+                       </Dialog>
+
+                   <ThemeProvider theme={deactivate_theme}>
                    <Button color="primary" size="small" variant="contained" className="back1-btn" onClick={handleClickOpen_name_deactivate} >Deactivate</Button>
                    </ThemeProvider>
- 
+
                        <Dialog open={open_name_deactivate} onClose={handleClose_name_deactivate}>
                            <DialogTitle fontSize={25}>Enter item name:</DialogTitle>
                            <DialogContent>
-                               <Hint options={invName} allowTabFill>           
-                              
+                               <Hint options={invName} allowTabFill>
+
                                    <input className='input'
                                        style={{ width: "500px" }}
                                        ref={inputName}
                                    />
-                               </Hint>  
+                               </Hint>
                            </DialogContent>
-              
+
                            <DialogActions>
                                <Button onClick={handleClose_name_deactivate}>Cancel</Button>
                                <Button onClick={() => {
@@ -980,8 +1024,8 @@ function Inventory(){
                                }}>Search</Button>
                            </DialogActions>
                        </Dialog>
-  
-                       <Dialog PaperProps={{      
+
+                       <Dialog PaperProps={{
                            style: {
                                backgroundColor: "#cf8f8f",
                            },}}
@@ -1007,7 +1051,7 @@ function Inventory(){
                                    helperText="Quantity"
                                    type="text"
                                    fullWidth
-                                   variant="standard"                          
+                                   variant="standard"
                                />
                                <TextField
                                    inputProps={{ readOnly: true }}
@@ -1019,7 +1063,7 @@ function Inventory(){
                                    fullWidth
                                    variant="standard"
                                />
- 
+
                                <TextField
                                    inputProps={{ readOnly: true }}
                                    margin="dense"
@@ -1030,7 +1074,7 @@ function Inventory(){
                                    fullWidth
                                    variant="standard"
                                />
- 
+
                                <TextField
                                    inputProps={{ readOnly: true }}
                                    margin="dense"
@@ -1040,7 +1084,7 @@ function Inventory(){
                                    type="text"
                                    fullWidth
                                    variant="standard"
-                               />   
+                               />
                                <FormControl fullWidth>
                                    <Select
                                        inputProps={{ readOnly: true }}
@@ -1056,9 +1100,9 @@ function Inventory(){
                                        <MenuItem value={3}>Dressing</MenuItem>
                                        <MenuItem value={4}>Miscellaneous</MenuItem>
                                    </Select>
-                               </FormControl>          
+                               </FormControl>
                            </DialogContent>
-              
+
                            <DialogActions>
                                <Button onClick={handleClose_deactivate}>Cancel</Button>
                                <Button onClick={() => {
@@ -1067,44 +1111,44 @@ function Inventory(){
                                             classify_display, id, false);
                                        handleClose_deactivate();
                                        refreshPage();
-                                       
+
                                }}>Deactivate</Button>
                            </DialogActions>
                        </Dialog>
- 
+
                    <Button size="small" variant="contained" className="back1-btn" onClick={handleClickOpen_name_activate} >Activate</Button>
                        <Dialog open={open_name_activate} onClose={handleClose_name_activate}>
                            <DialogTitle fontSize={25}>Enter item name:</DialogTitle>
                            <DialogContent>
-                               <Hint options={invName} allowTabFill>           
-                              
+                               <Hint options={invName} allowTabFill>
+
                                    <input className='input'
                                        style={{ width: "500px" }}
                                        ref={inputName}
                                    />
-                               </Hint>  
+                               </Hint>
                            </DialogContent>
-      
+
                            <DialogActions>
                                <Button onClick={handleClose_name_activate}>Cancel</Button>
                                <Button onClick={() => {
                                        sendValue(true);
- 
+
                                }}>Search</Button>
                            </DialogActions>
                        </Dialog>
- 
+
                    <Dialog
-                       PaperProps={{      
+                       PaperProps={{
                        style: {
                            backgroundColor: "#82cdad",
-                       },}} 
+                       },}}
                        open={open_activate}
                        onClose={handleClose_activate}>
-                      
+
                        <DialogTitle fontSize={25}>Do you want to reactivate item?</DialogTitle>
                        <DialogContentText>This will activate an inventory item for current use.</DialogContentText>
- 
+
                        <DialogContent>
                            <TextField
                                inputProps={{ readOnly: true }}
@@ -1124,7 +1168,7 @@ function Inventory(){
                                helperText="Quantity"
                                type="text"
                                fullWidth
-                               variant="standard"                          
+                               variant="standard"
                            />
                            <TextField
                                inputProps={{ readOnly: true }}
@@ -1136,7 +1180,7 @@ function Inventory(){
                                fullWidth
                                variant="standard"
                            />
- 
+
                            <TextField
                                inputProps={{ readOnly: true }}
                                margin="dense"
@@ -1147,7 +1191,7 @@ function Inventory(){
                                fullWidth
                                variant="standard"
                            />
- 
+
                            <TextField
                                inputProps={{ readOnly: true }}
                                margin="dense"
@@ -1157,7 +1201,7 @@ function Inventory(){
                                type="text"
                                fullWidth
                                variant="standard"
-                           />   
+                           />
                            <FormControl fullWidth>
                                <Select
                                    inputProps={{ readOnly: true }}
@@ -1175,7 +1219,7 @@ function Inventory(){
                                </Select>
                            </FormControl>
                        </DialogContent>
-          
+
                        <DialogActions>
                            <Button onClick={handleClose_activate}>Cancel</Button>
                            <Button onClick={() => {
@@ -1187,20 +1231,20 @@ function Inventory(){
                                refreshPage();
                            }}>Activate</Button>
                        </DialogActions>
-                      
+
                    </Dialog>
- 
+
                    <Button size="small" variant="contained" className="back1-btn" onClick={handleClickOpen_restock} >Restock</Button>
                    <Dialog open={open_restock} onClose={handleClose_restock}>
                    <DialogContentText style={{color: 'red'}}>Please reorder items:</DialogContentText>
- 
+
                        <TableContainer component={Paper}>
                        <Table sx={{ width: "max-content"}}  aria-label="simple table">
                            <TableHead>
                            <TableRow>
                                <TableCell>Item Name</TableCell>
                                <TableCell align="right">Amount</TableCell>
- 
+
                            </TableRow>
                            </TableHead>
                            <TableBody>
@@ -1226,7 +1270,7 @@ function Inventory(){
                    </Stack>
                </span>
            </div>
- 
+
            <div className='inventory_deactivate-section'>
                <h1>Deactivated Items</h1>
 
@@ -1240,27 +1284,27 @@ function Inventory(){
 
                    <div className="base">
                        {deac_inventory0.map((item) =>
-                             
-                               (                                              
-                                open_deac_base &&    <Button className='inventory_item-btn' 
-                                   inventory_item-btn variant="contained" 
+
+                               (
+                                open_deac_base &&    <Button className='inventory_item-btn'
+                                   inventory_item-btn variant="contained"
                                    sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                                   onClick= { () => 
+                                   onClick= { () =>
                                     {
                                         set_update_status(false);
                                         inputName.current = item[0];
-                                        sendValue(false); 
+                                        sendValue(false);
                                         handleClickOpen_update();
-                                        
+
                                     }}
-                                    
+
                                     >
                                    {item[0]}</Button>
-                                  
-                               )                                 
+
+                               )
                            )
                        }
-                      
+
                    </div>
 
                     <h2 className='cat' onClick={()=>{
@@ -1269,22 +1313,22 @@ function Inventory(){
                         style={{fontWeight: active7 ? 600 : 400}}
                         >Protein</h2>
                     <div className="protein">
-                       
+
                        {deac_inventory1.map( (item) =>
-                               (    
-                                open_deac_pro &&    <Button  
-                                   onClick= { () => 
+                               (
+                                open_deac_pro &&    <Button
+                                   onClick= { () =>
                                     {
                                         set_update_status(false);
                                         inputName.current = item[0];
-                                        sendValue(false); 
+                                        sendValue(false);
                                         handleClickOpen_update();
 
                                     }}
 
                                    className='inventory_item-btn' variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}>
                                    {item[0]}</Button>
-                               )                                 
+                               )
                            )
                        }
                    </div>
@@ -1299,11 +1343,11 @@ function Inventory(){
                        {deac_inventory2.map( (item) =>
                                (
                                 open_deac_top &&    <Button
-                                   onClick= { () => 
+                                   onClick= { () =>
                                     {
                                         set_update_status(false);
                                         inputName.current = item[0];
-                                        sendValue(false); 
+                                        sendValue(false);
                                         handleClickOpen_update();
 
                                     }}
@@ -1313,7 +1357,7 @@ function Inventory(){
                                )
                            )
                        }
- 
+
                    </div>
 
                    <h2 className='cat' onClick={()=>{
@@ -1324,12 +1368,12 @@ function Inventory(){
                    <div className="dressing">
                        {deac_inventory3.map( (item) =>
                                (
-                                open_deac_dress &&    <Button 
-                                   onClick= { () => 
+                                open_deac_dress &&    <Button
+                                   onClick= { () =>
                                     {
                                         set_update_status(false);
                                         inputName.current = item[0];
-                                        sendValue(false); 
+                                        sendValue(false);
                                         handleClickOpen_update();
 
                                     }}
@@ -1339,7 +1383,7 @@ function Inventory(){
                                )
                            )
                        }
- 
+
                    </div>
 
                    <h2 className='cat' onClick={()=>{
@@ -1350,12 +1394,12 @@ function Inventory(){
                    <div className="misc">
                        {open_deac_misc && deac_inventory4.map( (item) =>
                                (
-                                   <Button 
-                                   onClick= { () => 
+                                   <Button
+                                   onClick= { () =>
                                     {
                                         set_update_status(false);
                                         inputName.current = item[0];
-                                        sendValue(false); 
+                                        sendValue(false);
                                         handleClickOpen_update();
 
                                     }}
@@ -1367,11 +1411,11 @@ function Inventory(){
                        }
                    </div>
                    </ThemeProvider>
-                                  
-           </div>        
- 
+
+           </div>
+
            <div className="inventory_activate-section">
-               
+
                 <h1>Inventory Items</h1>
 
                 <div className="inventory-btn">
@@ -1382,29 +1426,29 @@ function Inventory(){
                     style={{fontWeight: active1 ? 600 : 400}}
                     >Base</h2>
                    <div  className="base" >
-                      
+
                        {inventory0.map((item) =>
-                             
-                               (                                              
+
+                               (
                                 open_base &&  <Button
-                                 onClick= { () => 
+                                 onClick= { () =>
                                     {
                                         set_update_status(true);
                                         inputName.current = item[0];
-                                        sendValue(false); 
+                                        sendValue(false);
                                         handleClickOpen_update();
 
                                     }}
-                                 className="inventory_item-btn" 
+                                 className="inventory_item-btn"
                                  variant="contained"
                                   sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                                   >
                                    {item[0]}</Button>
-                                  
-                               )                                 
+
+                               )
                            )
                        }
-                      
+
                    </div>
                 <h2 className='cat' onClick={()=>{
                     set_pro(!open_pro)
@@ -1412,24 +1456,24 @@ function Inventory(){
                     style={{fontWeight: active2 ? 600 : 400}}
                     >Protein</h2>
                    <div className="protein">
-                       
+
                        { inventory1.map( (item) =>
-                               (    
-                                open_pro &&  <Button 
-                                onClick= { () => 
+                               (
+                                open_pro &&  <Button
+                                onClick= { () =>
                                     {
                                         set_update_status(true);
 
                                         inputName.current = item[0];
-                                        sendValue(false); 
+                                        sendValue(false);
                                         handleClickOpen_update();
 
                                     }}
-                                className="inventory_item-btn" variant="contained" 
+                                className="inventory_item-btn" variant="contained"
                                 sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                                 >
                                    {item[0]}</Button>
-                               )                                 
+                               )
                            )
                        }
                    </div>
@@ -1444,16 +1488,16 @@ function Inventory(){
                        { inventory2.map( (item) =>
                                (
                                 open_top && <Button
-                                onClick= { () => 
+                                onClick= { () =>
                                     {
                                         set_update_status(true);
 
                                         inputName.current = item[0];
-                                        sendValue(false); 
+                                        sendValue(false);
                                         handleClickOpen_update();
 
                                     }}
-                                className="inventory_item-btn"  
+                                className="inventory_item-btn"
                                 variant="contained"
                                  sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                                  >
@@ -1461,13 +1505,13 @@ function Inventory(){
                                )
                            )
                        }
- 
+
                    </div>
 
                    <h2 className='cat' onClick={()=>
                     {set_dress(!open_dress);
                     setActive4(!active4);
-                    
+
                     }}
                     style={{fontWeight: active4 ? 600 : 400}}
                     >Dressing</h2>
@@ -1475,28 +1519,28 @@ function Inventory(){
                        { inventory3.map( (item) =>
                                (
                                 open_dress && <Button
-                                onClick= { () => 
+                                onClick= { () =>
                                     {
                                         set_update_status(true);
 
                                         inputName.current = item[0];
-                                        sendValue(false); 
+                                        sendValue(false);
                                         handleClickOpen_update();
 
                                     }}
-                                className="inventory_item-btn" variant="contained" 
+                                className="inventory_item-btn" variant="contained"
                                 sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                                
+
                                 >
                                    {item[0]}</Button>
                                )
                            )
                        }
- 
+
                    </div>
 
                    <h2 className='cat'onClick={()=>{
-                    set_misc(!open_misc);    
+                    set_misc(!open_misc);
                     setActive5(!active5);
                     }}
                     style={{fontWeight: active5 ? 600 : 400}}
@@ -1505,15 +1549,15 @@ function Inventory(){
                    <div className="misc">
                        { inventory4.map( (item) =>
                                (
-                                open_misc && <Button className="inventory_item-btn" 
-                                variant="contained" 
+                                open_misc && <Button className="inventory_item-btn"
+                                variant="contained"
                                 sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
-                                onClick= { () => 
+                                onClick= { () =>
                                     {
                                         set_update_status(true);
 
                                         inputName.current = item[0];
-                                        sendValue(false); 
+                                        sendValue(false);
                                         handleClickOpen_update();
 
                                     }}>
@@ -1523,15 +1567,14 @@ function Inventory(){
                        }
                    </div>
                    </ThemeProvider>
- 
+
                </div>
- 
+
            </div>
        </ThemeProvider>
        </div>
-     
+
    );
 }
- 
-export default Inventory;
 
+export default Inventory;
