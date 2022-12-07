@@ -634,8 +634,7 @@ function Cashier (props) {
         window.location.reload();
     }
 
-  
-
+   
         
     
 
@@ -663,8 +662,8 @@ function Cashier (props) {
                     (
                 <tr>
 
-                    <td class="orderid">
-                        <Button onClick={() => setClickedInfo(true)}>{item.orderid} </Button>
+                    <td class="orderid"> {item.orderid}
+                        {/* <Button onClick={() => setClickedInfo(true)}> </Button>
 
                         <Dialog open={clicked} onClose={() => setClickedInfo(false)}>
                             <DialogTitle>Order {item.orderid} Information</DialogTitle>
@@ -672,7 +671,7 @@ function Cashier (props) {
                             
                                
                            </DialogContent>
-                        </Dialog>
+                        </Dialog> */}
 
                     </td>
                     <td class="costCol"> {item.amount}</td>
