@@ -25,11 +25,20 @@ const theme = createTheme({
     },
 });
 
+/**
+ * Function to display customer checkout page.
+ * @param       {Props} props  Information passed from customer checkout page
+ * @constructor
+ */
+
 export default function Order_Status(props){
 
     const [orderstatus, setStatus] = useState(null);
     const location = useLocation();
 
+    /*
+    *   gets an number of 1, 2, or 3 representing order status
+    */
     const orderStatusGet = async () => {
         
         const id = location.state.orderIDStatus;
@@ -54,6 +63,9 @@ export default function Order_Status(props){
         }
     };
 
+    /*
+    *   Google translate api call
+    */
 
     const googleTranslateElementInit = () => {
         new window.google.translate.TranslateElement(

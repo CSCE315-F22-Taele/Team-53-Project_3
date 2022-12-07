@@ -2,9 +2,11 @@ const express = require("express");
 const app = express.Router();
 const db = require("../db");
 
-/* Get orderid for a new order 
-To call in frontend: http://localhost:3500/api/order/getOrderId
-*/
+
+/**
+ * This API call will create a new orderid for each order
+ * @type {HTTP GET Request}
+ */
 app.get("/getOrderId", async (req, res) => {
     try {
         // Determine orderid based on current date
@@ -37,16 +39,16 @@ app.get("/getOrderId", async (req, res) => {
             currOrderId = date_int;
         }
 
-        // console.log(currOrderId);
         res.json(currOrderId);
     } catch (err) {
         console.error(err.message);
     }
 });
 
-/* Get inventory table
-To call in frontend: http://localhost:3500/api/order/getInventory
-*/
+/**
+ * This API call will get the inventory table
+ * @type {HTTP GET Request}
+ */
 app.get("/getInventory", async (req, res) => {
     try {
         const todo = await db.query("SELECT * FROM inventory ORDER BY itemid");
@@ -57,9 +59,10 @@ app.get("/getInventory", async (req, res) => {
     }
 });
 
-/* Get menucost table
-To call in frontend: http://localhost:3500/api/order/getMenu
-*/
+/**
+ * This API call will get the menu table
+ * @type {HTTP GET Request}
+ */
 app.get("/getMenu", async (req, res) => {
     try {
         const todo = await db.query("SELECT * FROM menucost ORDER BY id");
@@ -70,11 +73,10 @@ app.get("/getMenu", async (req, res) => {
     }
 });
 
-/* Submit order to ordering table 
-To call: http://localhost:3500/api/order/postOrder
-
-Note: Make sure variables in req.body is the same as the ones passed in!
-*/
+/**
+ * This API call will insert an order into the ordering table
+ * @type {HTTP POST Request}
+ */
 app.post("/postOrder", async (req, res) => {
     try {
         const {
@@ -104,6 +106,10 @@ app.post("/postOrder", async (req, res) => {
     }
 });
 
+/**
+ * This API call will update the mobile order status of an order
+ * @type {HTTP POST Request}
+ */
 app.post("/updateOrder", async (req, res) => {
     try {
         const { orderid, mobile_order } = req.body;
@@ -119,6 +125,10 @@ app.post("/updateOrder", async (req, res) => {
     }
 });
 
+/**
+ * This API call will get the order that needs to be completed or waiting for pickup
+ * @type {HTTP GET Request}
+ */
 app.get("/getOrderStatus", async (req, res) => {
     try {
         const todo = await db.query(
@@ -131,9 +141,13 @@ app.get("/getOrderStatus", async (req, res) => {
     }
 });
 
+/**
+ * This API call will get the orders based on their order status
+ * @type {HTTP GET Request}
+ */
 app.get("/getNewOrders/:mobile_order", async (req, res) => {
     try {
-        
+
         const mobile_order = req.params.mobile_order;
         console.log(req.params.mobile_order);
         console.log(mobile_order);
@@ -148,6 +162,10 @@ app.get("/getNewOrders/:mobile_order", async (req, res) => {
     }
 });
 
+/**
+ * This API call will get the status of an order
+ * @type {HTTP GET Request}
+ */
 app.get("/getCurrentOrderStatus/:orderid", async (req, res) => {
     try {
         const orderid = req.params.orderid;
