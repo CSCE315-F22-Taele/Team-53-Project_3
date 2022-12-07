@@ -29,7 +29,10 @@ const theme = createTheme({
         secondary: indigo,
     },
 });
-
+/**
+ * Function to display the employee controls page
+ * @constructor
+ */
 function Employee (props) {
     const location = useLocation();
 
@@ -43,7 +46,9 @@ function Employee (props) {
     const [salary, setSalary] = useState("");
     const [ismanager, setismanager] = useState(false);
 
-
+    /**
+     * get the active and inactive employees
+     */
     const getEmployees = async () => {
         setWorking([]);
         setNotWorking([]);
@@ -51,26 +56,26 @@ function Employee (props) {
         const response = await fetch(conn + "api/employee/get");
 
         const jsonVals = await response.json();
-        
-        for( var key in jsonVals) { 
+
+        for( var key in jsonVals) {
             if (jsonVals[key].is_working === true){
-                
+
                var workingNames = [];
                workingNames.push( jsonVals[key].employeeid);
                workingNames.push( jsonVals[key].salary);
                workingNames.push( jsonVals[key].employeename);
-            
+
                workingNames.push( jsonVals[key].ismanager);
-            
-               
+
+
                var namesWorking = workingEmployees;
                namesWorking.push(workingNames);
-               
+
                setWorking(namesWorking);
-            
+
             }
             else {
-            
+
                 var workingNames = [];
                 workingNames.push( jsonVals[key].employeeid);
                 workingNames.push( jsonVals[key].salary);
@@ -80,14 +85,19 @@ function Employee (props) {
                 var namesWorking = notworkingEmployees;
                 namesWorking.push(workingNames);
                 setNotWorking(namesWorking);
-            
+
              }
 
         }
     };
 
+    /**
+     * update database to set an employee as active or not
+     * @param  {Number} employeeid the employee id
+     * @param  {Boolean} is_working boolean if it is working
+     */
     const handleIsworking = async(employeeid, is_working)=> {
-        
+
         try {
             // console.log(val);
             // const employeeid = val[0];
@@ -99,8 +109,8 @@ function Employee (props) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
               }
-              
-           
+
+
           );
           window.location.reload();
         } catch (err) {
@@ -109,9 +119,12 @@ function Employee (props) {
 
     }
 
+    /**
+     * Add new employee to the database
+     */
     const addEmployee = async()=> {
-        
-        
+
+
         try {
 
             const body = {salary,employeename, ismanager };
@@ -126,7 +139,7 @@ function Employee (props) {
 
             );
             setClickedInfo(false);
-          
+
         } catch (err) {
             alert("additon failed");
             console.error(err.message);
@@ -135,24 +148,40 @@ function Employee (props) {
 
           window.location.reload();
 
-        
+
     }
 
-    useEffect( () => {  
+    /**
+     * Setup the connections to the datbase to use to render the page.
+     */
+    useEffect( () => {
       getEmployees();
     }, [])
 
+    /**
+     * handle new name input
+     * @param  {[type]}  e     event
+     */
     const handleName = async (e) => {
         setName(e.target.value);
     }
 
+    /**
+     * set the new salary input
+     * @param  {[type]}  e               event
+     */
     const handleSalary = async (e) => {
         setSalary(e.target.value);
     }
-    
+
+    /**
+     * set the new manager input
+     * @param  {[type]}  e               event
+     */
     const handleManager = async(event) =>{
         setismanager(!ismanager);
     }
+    
     return (
         <div>
             <br />
@@ -164,41 +193,41 @@ function Employee (props) {
             <h2> Working Employees</h2>
             <br />
 
-            <table> 
+            <table>
                 <tr>
                     <th>Employee ID</th>
                     <th> Name</th>
                     <th> Salary</th>
                     <th> Manager</th>
                 </tr>
-                
-               
+
+
                 { workingEmployees.map( (item, index) =>
                     <tr>
-                        <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => handleIsworking(item[0], false)} > 
+                        <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => handleIsworking(item[0], false)} >
                         {/* () => setClickedInfo(true) */}
                         <td> {item[0]} </td>
                         </Button>
-{/* 
+{/*
                         <Dialog open={clicked} onClose={() => setClickedInfo(false)}>
                             <DialogTitle>Employee Information</DialogTitle>
                             <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => handleIsworking(item[0], false)}>
                                  Disable Employee </Button>
                         </Dialog> */}
-                        
+
                     <td> {item[2]} </td>
-                    
+
                     <td> {item[1]} </td>
                     <td> {item[3].toString()} </td>
                     </tr>
                 )}
-           
+
             </table>
-            
+
             <br />
 
             <Button variant="contained"  size="large" sx={{  width:200, height:50,color:'black', backgroundColor:'#283593', mt: 3 , mb:2  }} onClick={() => setClickedInfo(true)}> ADD EMPLOYEE </Button>
-            
+
             <Dialog fullWidth={true} open={clicked} onClose={() => setClickedInfo(false)} >
                             <DialogTitle>Employee Information</DialogTitle>
                             <br />
@@ -212,37 +241,37 @@ function Employee (props) {
 
                             <Button variant="contained" onClick={() => addEmployee()} size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white',ml:2, mr:2, mt: 3 , mb:2 }}>
                                  Submit </Button>
-             </Dialog> 
-                     
+             </Dialog>
+
 
             <br />
             <br />
             <h2> Disabled Employees</h2>
             <br />
 
-            <table> 
+            <table>
                 <tr>
                     <th>Employee ID</th>
                     <th> Name</th>
                     <th> Salary</th>
                     <th> Manager</th>
                 </tr>
-                
-               
+
+
                 { notworkingEmployees.map( (item, index) =>
                     <tr>
-                        
+
                     <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => handleIsworking(item[0], true)} >
                     <td> {item[0]} </td>
                     </Button>
 
                     <td> {item[2]} </td>
-                    
+
                     <td> {item[1]} </td>
                     <td> {item[3].toString()} </td>
                     </tr>
                 )}
-           
+
             </table>
 
             <br />
@@ -254,7 +283,3 @@ function Employee (props) {
 }
 
 export default Employee;
-
-
-
-
