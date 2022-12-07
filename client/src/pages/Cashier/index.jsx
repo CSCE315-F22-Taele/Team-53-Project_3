@@ -280,11 +280,10 @@ function Cashier (props) {
     /**
      * This function will display all menu items currently sold.
      * @param  {Number} index                            menu item id
-     * @param  {String} val                              name of menu item
+     * @param  {string} val                              name of menu item
      * @param  {Float} cost                              cost of menu item
      * @param  {Array} inventory_default                 inventory used for menu item
      * @param  {Boolean} custom                          menu item is able to be customized
-     * @return {Array}                   store all menu items to be displayed
      */
     const pushItem = (index, val, cost, inventory_default, custom) => {
 
@@ -321,10 +320,9 @@ function Cashier (props) {
 
     /**
      * This function will display inventory for customizable menu items.
-     * @param  {String} index                  item name
+     * @param  {string} index                  item name
      * @param  {Number} val                    item id
      * @param  {Number} category               Classification of inventory item
-     * @return {[type]}          store all inventory items to be displayed
      */
     const pushInv = (index, val, category) => {
         let namesCart = listOrderedInv;
@@ -409,7 +407,6 @@ function Cashier (props) {
 
     /**
      * This function will clear out entire order cart.
-     * @return Set all order lists to default.
      */
     const clearOrder = () => {
         setOrderid(0);
@@ -444,7 +441,6 @@ function Cashier (props) {
     /**
      * Remove an item from order cart.
      * @param  {Number} item               order item
-     * @return {Array}      updated menu cart array
      */
     const deleteItem = (item) => {
         let namesCart = listOrderedNames;
@@ -495,7 +491,6 @@ function Cashier (props) {
     /**
      * This function will remove an inventory item from customization.
      * @param  {Number} item               inventory item
-     * @return {Array}      Updated inventory used array.
      */
     const deleteCustom = (item) => {
 

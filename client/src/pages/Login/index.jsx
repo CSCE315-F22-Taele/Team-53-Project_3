@@ -51,7 +51,7 @@ function Login () {
 
     /**
      * This function determines if a valid employee via Google OAuth.
-     * @param  {String}  sub               Google OAuth login key
+     * @param  {string}  sub               Google OAuth login key
      * @return {Promise}     if valid employee
      */
     const isEmployeeGoogleOauth= async (sub) => {
@@ -96,8 +96,8 @@ function Login () {
 
     /**
      * Function that determines if valid employee login.
-     * @param  {String}  email                  employee email
-     * @param  {String}  password               employee password
+     * @param  {string}  email                  employee email
+     * @param  {string}  password               employee password
      * @return {Promise}          if valid employee
      */
     const employeeLogin= async (email, password) => {
@@ -133,7 +133,7 @@ function Login () {
 
     /**
      * Function to check if employee has a manager role
-     * @param  {String}  employeename               name of employee
+     * @param  {string}  employeename               name of employee
      * @return {Promise}              if employee is manager
      */
     const managerCheck = async (employeename) => {

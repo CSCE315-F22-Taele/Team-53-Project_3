@@ -78,10 +78,9 @@ function Menu() {
 
     /**
      * This function will alter the text when clicked on
-     * @param  {[type]} item                   an item
-     * @param  {Array} itemName                inventory item list
+     * @param  {string} item                   an item
+     * @param  {Array<string>} itemName        inventory item list
      * @param  {createTheme} theme             theme (font/size)
-     * @return {[type]}          Resize the font/size of text
      */
     function getStyles(item, itemName, theme) {
         return {
@@ -146,7 +145,6 @@ function Menu() {
     /**
      * This function will get the inventory entity used information for a menu item
      * @param  {Number} default_inventory               menu item id
-     * @return {Array}                   Populate inventory information in array
      */
     const get_default_inventory = (default_inventory) => {
         let list = [];
@@ -165,8 +163,7 @@ function Menu() {
 
     /**
      * Find the indexes of the default inventory items
-     * @param  {Array} itemlist               inventory items array
-     * @return {Array}          default inventory items used in a menu item
+     * @param  {Array<string>} itemlist               inventory items array
      */
     function findIndex(itemlist){
         var list = updateInv;
@@ -189,7 +186,6 @@ function Menu() {
 
     /**
      * Update the default inventory used in menu item
-     * @return {Array} default inventory used
      */
     const update_default_inventory = () => {
 
@@ -232,8 +228,7 @@ function Menu() {
 
     /**
      * This function alters the base inventory items of a menu item.
-     * @param  {String} event               inventory item name
-     * @return {Array}       set base inventory items in default inventory of menu
+     * @param  {string} event               inventory item name
      */
     const handleChange_base = (event) => {
         const {
@@ -247,8 +242,7 @@ function Menu() {
 
     /**
      * This function alters the protein inventory items of a menu item.
-     * @param  {String} event               inventory item name
-     * @return {Array}       set protein inventory items in default inventory of menu
+     * @param  {string} event               inventory item name
      */
     const handleChange_pro = (event) => {
         const {
@@ -262,8 +256,7 @@ function Menu() {
 
     /**
      * This function alters the topping inventory items of a menu item.
-     * @param  {String} event               inventory item name
-     * @return {Array}       set topping inventory items in default inventory of menu
+     * @param  {string} event               inventory item name
      */
     const handleChange_top = (event) => {
         const {
@@ -277,8 +270,7 @@ function Menu() {
 
     /**
      * This function alters the dressing inventory items of a menu item.
-     * @param  {String} event               inventory item name
-     * @return {Array}       set dressing inventory items in default inventory of menu
+     * @param  {string} event               inventory item name
      */
     const handleChange_dress = (event) => {
         const {
@@ -292,8 +284,7 @@ function Menu() {
 
     /**
      * This function alters the misc. inventory items of a menu item.
-     * @param  {String} event               inventory item name
-     * @return {Array}       set misc. inventory items in default inventory of menu
+     * @param  {string} event               inventory item name
      */
     const handleChange_misc = (event) => {
         const {
@@ -307,7 +298,6 @@ function Menu() {
 
     /**
      * Get selected inventory items for default array
-     * @return {Array} default inventory items Array for menu item
      */
     const getSelectItem = () => {
         let itemList = select_item;
@@ -410,7 +400,6 @@ function Menu() {
     /**
      * Check if menu item is to be displayed.
      * @param  {Boolean} c               check if valid menu item request
-     * @return set specific menu item information to be displayed
      */
     const sendValue = (c) => {
         set_nameDisplay("");
@@ -517,7 +506,6 @@ function Menu() {
 
     /**
      * Function to populate inventory separated by classification.
-     * @type {Array}
      */
     const getEachinv = async() => {
         let list_base = [];
@@ -665,7 +653,7 @@ function Menu() {
 
     /**
      * Function to update menu item in menucost table.
-     * @param  {String}  _menuitem                        menu item name
+     * @param  {string}  _menuitem                        menu item name
      * @param  {Float}  _cost                             menu item cost
      * @param  {Boolean} _is_selling                      menu item deactivate/activated
      * @param  {Boolean} _is_customize                    menu item is customizable
@@ -695,7 +683,7 @@ function Menu() {
 
     /**
      * Function will insert a new menu item into menu.
-     * @param  {String}  _menuitem                       name of menu item
+     * @param  {string}  _menuitem                       name of menu item
      * @param  {Float}  _cost                            cost of menu item
      * @param  {Boolean} _is_customize                   allow for customization
      * @param  {Array}  _default_inventory               inventory used for menu item
