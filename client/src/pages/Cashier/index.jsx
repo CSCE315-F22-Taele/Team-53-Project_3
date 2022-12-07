@@ -10,6 +10,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { WindPower } from "@mui/icons-material";
 
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
@@ -40,7 +41,7 @@ function rounding(number, precision){
  */
 function Cashier (props) {
     const location = useLocation();
-    const nameCashier = location.state.userName;
+    const nameCashier = window.localStorage.getItem('user');
 
     const [orderid, setOrderid] = useState(0);
     const [menuNamesCustom, setMenuNamesCustom] = useState([]);
@@ -409,20 +410,22 @@ function Cashier (props) {
      * This function will clear out entire order cart.
      */
     const clearOrder = () => {
-        setOrderid(0);
+        // setOrderid(0);
 
-        setListOrdered([]);
-        setListOrderedNames([]);
-        setlistOrderedInv([]);
-        setInventoryUsed([]);
-        setIsShown(false);
-        setCost(0);
-        setCount(0);
-        setAllowClickCat0(true);
-        setAllowClickCat1(true);
-        setAllowClickCat2(true);
-        setAllowClickCat3(true);
-        setCountToppings(0);
+        // setListOrdered([]);
+        // setListOrderedNames([]);
+        // setlistOrderedInv([]);
+        // setInventoryUsed([]);
+        // setIsShown(false);
+        // setCost(0);
+        // setCount(0);
+        // setAllowClickCat0(true);
+        // setAllowClickCat1(true);
+        // setAllowClickCat2(true);
+        // setAllowClickCat3(true);
+        // setCountToppings(0);
+        window.location.reload()
+        // location.state.userName
         window.localStorage.setItem('userName', location.state.userName);
     }
 
@@ -631,16 +634,10 @@ function Cashier (props) {
         window.location.reload();
     }
 
-    //FIX ME PREKSHA
-    const getOrderInfo = (orderedList) => {
-        // listNamesOrdered =
-        // menuNames.includes()
-        // menuNamesCustom.includes()
-        // for( var i=0; i< inv.length; i++){
+  
 
-        // }
-        console.log(orderedList);
-    }
+        
+    
 
     return (
 
@@ -672,12 +669,8 @@ function Cashier (props) {
                         <Dialog open={clicked} onClose={() => setClickedInfo(false)}>
                             <DialogTitle>Order {item.orderid} Information</DialogTitle>
                             <DialogContent>
-                            { item.ordereditems.map( (val) =>
-                            (
-                            <DialogContentText>
-                                {val}
-                            </DialogContentText>
-                            ))  }
+                            
+                               
                            </DialogContent>
                         </Dialog>
 

@@ -31,7 +31,7 @@ const theme = createTheme({
  */
 function Login () {
     window.localStorage.setItem('manager', window.localStorage.getItem('manager' ));
-    const [userName, setUserName] = useState(window.localStorage.getItem('user'));
+    const [userName, setUserName] = useState(  );
     const [isEmployee,setIsEmployee ] = useState(false);
     const [isManager,setIsManager ] = useState( false );
     const [email, setEmail] = useState("");
