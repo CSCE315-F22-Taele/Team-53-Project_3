@@ -11,7 +11,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { TextField } from '@mui/material';
+import { TextField, Checkbox} from '@mui/material';
+import Switch from '@mui/material/Switch';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import e from "cors";
 
 // For local testing: (comment out)
 const conn = "http://localhost:3500/";
@@ -35,6 +38,11 @@ function Employee (props) {
     const [notworkingEmployees, setNotWorking] = useState([]);
     const [clicked, setClickedInfo] = useState(false);
     const [isworking, setIsWorking] = useState(null);
+    const [disabled, setClickeddisabledInfo] = useState(null);
+    const [employeename, setName] = useState("");
+    const [salary, setSalary] = useState("");
+    const [ismanager, setismanager] = useState(false);
+
 
     const getEmployees = async () => {
         setWorking([]);
@@ -78,23 +86,84 @@ function Employee (props) {
         }
     };
 
-    const handleIsworking = async (e) => {
-        setIsWorking(e.target.value);
+    const handleIsworking = async(employeeid, is_working)=> {
+        
+        try {
+            // console.log(val);
+            // const employeeid = val[0];
+            const body = {is_working, employeeid };
+            console.log(body);
+            fetch (conn + "api/employee/update_working",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+              }
+              
+           
+          );
+          window.location.reload();
+        } catch (err) {
+            console.error(err.message);
+          }
+
     }
+
+    const addEmployee = async()=> {
+        
+        
+        try {
+
+            const body = {salary,employeename, ismanager };
+
+            console.log(body);
+            fetch (conn + "api/employee/add",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+              }
+
+            );
+            setClickedInfo(false);
+          
+        } catch (err) {
+            alert("additon failed");
+            console.error(err.message);
+
+          }
+
+          window.location.reload();
+
+        
+    }
+
     useEffect( () => {  
       getEmployees();
     }, [])
 
+    const handleName = async (e) => {
+        setName(e.target.value);
+    }
+
+    const handleSalary = async (e) => {
+        setSalary(e.target.value);
+    }
     
-    
+    const handleManager = async(event) =>{
+        setismanager(!ismanager);
+    }
     return (
         <div>
             <br />
             <h1> Employee Control Center</h1>
+            <p> Enable or disable the employees by clicking on their employee id.</p>
             <br />
+
             <br />
             <h2> Working Employees</h2>
             <br />
+
             <table> 
                 <tr>
                     <th>Employee ID</th>
@@ -104,28 +173,18 @@ function Employee (props) {
                 </tr>
                 
                
-                { workingEmployees.map( (item) =>
+                { workingEmployees.map( (item, index) =>
                     <tr>
-                        <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => setClickedInfo(true)} >
+                        <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => handleIsworking(item[0], false)} > 
+                        {/* () => setClickedInfo(true) */}
                         <td> {item[0]} </td>
                         </Button>
-
+{/* 
                         <Dialog open={clicked} onClose={() => setClickedInfo(false)}>
                             <DialogTitle>Employee Information</DialogTitle>
-                            <DialogContent>
-                                <TextField
-                                required
-                                margin="dense"
-                                id="outlined-required"
-                                label="true/false"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                value = { isworking }
-                                onChange = { handleIsworking }
-                                />
-                           </DialogContent>
-                        </Dialog>
+                            <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => handleIsworking(item[0], false)}>
+                                 Disable Employee </Button>
+                        </Dialog> */}
                         
                     <td> {item[2]} </td>
                     
@@ -135,10 +194,32 @@ function Employee (props) {
                 )}
            
             </table>
+            
             <br />
 
+            <Button variant="contained"  size="large" sx={{  width:200, height:50,color:'black', backgroundColor:'#283593', mt: 3 , mb:2  }} onClick={() => setClickedInfo(true)}> ADD EMPLOYEE </Button>
+            
+            <Dialog fullWidth={true} open={clicked} onClose={() => setClickedInfo(false)} >
+                            <DialogTitle>Employee Information</DialogTitle>
+                            <br />
+                            <TextField id="outlined-basic" label="Employee Name" variant="outlined" onChange={handleName} />
+                            <br />
+                            <TextField id="outlined-basic" label="Salary" variant="outlined" onChange={handleSalary} />
+                            <br />
+                            <DialogContentText> Is this Employee a manager?</DialogContentText>
+                            <br />
+                            <FormControlLabel control={<Checkbox defaultChecked checked={ismanager} onChange={handleManager}/>} label="Check if Manager"  class="manager"/>
+
+                            <Button variant="contained" onClick={() => addEmployee()} size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white',ml:2, mr:2, mt: 3 , mb:2 }}>
+                                 Submit </Button>
+             </Dialog> 
+                     
+
+            <br />
+            <br />
             <h2> Disabled Employees</h2>
             <br />
+
             <table> 
                 <tr>
                     <th>Employee ID</th>
@@ -148,18 +229,12 @@ function Employee (props) {
                 </tr>
                 
                
-                { notworkingEmployees.map( (item) =>
+                { notworkingEmployees.map( (item, index) =>
                     <tr>
-                        <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => setClickedInfo(true)} >
-                        <td> {item[0]} </td>
-                        </Button>
-
-                        <Dialog open={clicked} onClose={() => setClickedInfo(false)}>
-                            <DialogTitle>Employee Information</DialogTitle>
-                            <DialogContent>
-                                
-                           </DialogContent>
-                        </Dialog>
+                        
+                    <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => handleIsworking(item[0], true)} >
+                    <td> {item[0]} </td>
+                    </Button>
 
                     <td> {item[2]} </td>
                     
@@ -169,6 +244,7 @@ function Employee (props) {
                 )}
            
             </table>
+
             <br />
             <br />
 
