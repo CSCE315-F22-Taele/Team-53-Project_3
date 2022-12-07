@@ -30,7 +30,7 @@ const theme = createTheme({
  * @constructor
  */
 function Login () {
-    window.localStorage.setItem('manager', false);
+    window.localStorage.setItem('manager', window.localStorage.getItem('manager' ));
     const [userName, setUserName] = useState(window.localStorage.getItem('user'));
     const [isEmployee,setIsEmployee ] = useState(false);
     const [isManager,setIsManager ] = useState( false );

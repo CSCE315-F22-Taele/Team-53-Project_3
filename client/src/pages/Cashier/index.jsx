@@ -426,6 +426,7 @@ function Cashier (props) {
         setAllowClickCat2(true);
         setAllowClickCat3(true);
         setCountToppings(0);
+        window.localStorage.setItem('userName', location.state.userName);
     }
 
     /**
@@ -612,8 +613,8 @@ function Cashier (props) {
     }
 
     /**
-     * This function will set the mobile order to be ready for pick up.
-     * @param {Number} orderid       order id
+     * This function will set the mobile order to be ready for piick up.
+     * @param {Number} orderid       order d
      * @param {Number} mobile_order  current order status
      * @param {Number} index         size of array of online order ready for pick up
      */
