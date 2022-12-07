@@ -20,7 +20,6 @@ const theme = createTheme({
     },
 });
 
-
 /**
  * This function will round a number to a given precision
  * @param  {Number} number                  A number
@@ -73,7 +72,6 @@ function Order () {
 
     /**
      * This function will get the orderid of order
-     * @return {Promise} orderid Number (YYMMDDXXX)
      */
     const orderIdVal = async () => {
         try {
@@ -88,7 +86,6 @@ function Order () {
 
     /**
      * This function will get the menu table
-     * @return {Promise} menucost table attributes
      */
     const menuGet = async () => {
 
@@ -351,8 +348,6 @@ function Order () {
             inv[index-1] += 1;
             setInventoryUsed(inv);
 
-
-
             let countVal = count;
             countVal +=1;
             setCount(countVal);
@@ -395,7 +390,7 @@ function Order () {
 
     /**
      * This function will clear out entire order cart.
-     * @return {[type]} Set all order lists to default.
+     * @return Set all order lists to default.
      */
     const clearOrder = () => {
         setOrderid(0);
@@ -430,7 +425,7 @@ function Order () {
 
     /**
      * Remove an item from order cart.
-     * @param  {Array} item               order item
+     * @param  {Number} item               order item
      * @return {Array}      updated menu cart array
      */
     const deleteItem = (item) => {
@@ -480,13 +475,13 @@ function Order () {
 
     /**
      * This function will remove an inventory item from customization.
-     * @param  {Array} item               inventory item
+     * @param  {Number} item               inventory item
      * @return {Array}      Updated inventory used array.
      */
     const deleteCustom = (item) => {
 
         let currInv = listOrderedInv;
-        let x= currInv.indexOf(item);
+        let x = currInv.indexOf(item);
         currInv.splice(x, 1);
 
         setlistOrderedInv(currInv);
