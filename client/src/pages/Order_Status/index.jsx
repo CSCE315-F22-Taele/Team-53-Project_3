@@ -12,10 +12,9 @@ import DoneIcon from '@mui/icons-material/Done';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBox from '@mui/icons-material/CheckBox';
 
-// For local testing: (comment out)
-const conn = "http://localhost:3500/";
-// For production:
-// const conn = "https://pom-and-honey-bhf5.onrender.com/";
+// const conn = "http://localhost:3500/";
+const conn = "https://pom-and-honey-bhf5.onrender.com/";
+
 const theme = createTheme({
     palette: {
         primary: {

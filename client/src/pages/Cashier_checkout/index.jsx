@@ -12,8 +12,8 @@ import { TextField } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import {BrowserRouter as  Routes,Link, useLocation} from 'react-router-dom';
 
-const conn = "http://localhost:3500/";
-// const conn = "https://pom-and-honey-bhf5.onrender.com/";
+// const conn = "http://localhost:3500/";
+const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
 /**
  * Function to display customer checkout page.

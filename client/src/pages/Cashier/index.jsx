@@ -12,8 +12,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { WindPower } from "@mui/icons-material";
 
-const conn = "http://localhost:3500/";
-// const conn = "https://pom-and-honey-bhf5.onrender.com/";
+// const conn = "http://localhost:3500/";
+const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
 const theme = createTheme({
     palette: {
