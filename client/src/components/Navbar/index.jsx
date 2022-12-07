@@ -7,11 +7,38 @@ import {
     // Route,
     // Router,
     Link,
+    useNavigate
 } from "react-router-dom";
+import { useState, useEffect } from "react";
 // import Order from "../../pages/Order";
 // import Home from "../../pages/Home";
 
 export default function Navbar() {
+
+
+
+const [nameExists, setNameExists] = useState(false);
+
+useEffect( () => {  
+    const name = localStorage.getItem("user");
+    if( name !== "" && name !== null){
+        setNameExists(true);
+    }
+})
+
+const navigate  = useNavigate();
+
+const logout =() => {
+    localStorage.clear();
+    setNameExists(false);
+    
+    //window.location.reload(false);
+    // console.log(localStorage);
+    // navigate("/login");
+}
+
+    // console.log(nameExists);
+    // console.log(localStorage.getItem("user"));
     return (
         <nav className="navBar">
             <Link to="/" className="home">
@@ -31,12 +58,32 @@ export default function Navbar() {
                         Order Now
                     </Link>
                 </li>
+
+                { nameExists ? 
+                <>
                 <li>
                     <Link class="nav__link" to="/login">
-                        {" "}
-                        Login
+                        Tools
                     </Link>
                 </li>
+                
+                <li>
+                    <Link class="nav__link" onClick={logout} to="/">
+                        Logout
+                    </Link>
+                </li>
+                
+
+                </>
+                
+                : 
+                <li>
+                <Link class="nav__link" to="/login">
+                    {" "}
+                    Login
+                </Link>
+                </li>
+                }
                 
 
             </ul>

@@ -4,10 +4,10 @@ import "./index.css";
 // import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { indigo, white } from "@mui/material/colors";
+import { indigo } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
 import e from "cors";
-import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
+import {BrowserRouter as Router, Link, useNavigate, useLocation, json} from 'react-router-dom';
 // import { json } from "express";
 
 // For local testing: (comment out)
@@ -93,8 +93,8 @@ function Order () {
             
             for( var key in jsonVals) { 
                  
-                if (jsonVals[key].is_selling == true){
-                    if (jsonVals[key].is_customize == true){
+                if (jsonVals[key].is_selling === true){
+                    if (jsonVals[key].is_customize === true){
                        var menuCustom = [];
                        menuCustom.push( jsonVals[key].menuitem);
                        menuCustom.push( jsonVals[key].cost);
@@ -333,7 +333,7 @@ function Order () {
 
             }
 
-            if (localTrue==true){
+            if (localTrue === true){
                 x=true;
                 indexNames=i;
             }
@@ -538,11 +538,8 @@ function Order () {
         <div class="order__orderingSection">
             <br></br>
 
-            <h1 class="order__orderingTitle">  Ordering from Pom and Honey at Texas A&M MSC </h1>
+            <h1 class="order__orderingTitle"> Pom & Honey Menu </h1>
             <br></br>
-            <br></br>
-            <br></br>
-            <h2> Item</h2>
             <ThemeProvider theme={theme}>
             <div class="order__buttons">
             { menuNamesCustom.map( (item) =>
@@ -671,7 +668,7 @@ function Order () {
            
         <div class="order__currentOrder">
                 <br />
-                <h1> Current Order</h1>
+                <h1> My Order</h1>
                 
                 <br />
                 <table>
@@ -708,11 +705,8 @@ function Order () {
             <br></br>
             <br></br>
             <br></br>
-
-             
             
-
-                <h1> Cost: ${totalCost} </h1>
+                <h2> Subtotal: ${totalCost} </h2>
               
                 <Stack spacing = {2}>
                     <Link to="/checkout" 

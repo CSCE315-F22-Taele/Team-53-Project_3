@@ -1,14 +1,11 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
 import "./index.css";
 // import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { indigo } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import e from "cors";
+
 import {BrowserRouter as Router, Link, useNavigate, useLocation} from 'react-router-dom';
 
 

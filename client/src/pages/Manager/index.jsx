@@ -2,13 +2,6 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 import "./index.css";
 // import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { indigo } from "@mui/material/colors";
-import Stack from '@mui/material/Stack';
-import e from "cors";
-import TextField from '@mui/material/TextField';
-import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
