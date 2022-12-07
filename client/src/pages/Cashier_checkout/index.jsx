@@ -10,7 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { TextField } from '@mui/material';
 import Stack from '@mui/material/Stack';
-import {BrowserRouter as   Routes, Link, useLocation} from 'react-router-dom';
+import {BrowserRouter as  Routes,Link, useLocation} from 'react-router-dom';
 
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
@@ -20,7 +20,7 @@ const conn = "http://localhost:3500/";
  * @param       {Props} props  Information passed from customer ordering page.
  * @constructor
  */
-export default function CheckoutPage(props) {
+export default function Cashier_CheckoutPage(props) {
 
   const theme = createTheme({
     palette: {
@@ -48,8 +48,8 @@ export default function CheckoutPage(props) {
   };
 
   /**
-   * Error check credit card information input if click submit.
-   */
+  * Error check credit card information input if click submit.
+  */
   const handleClose_Card_Submitted = () => {
     if (1000000000000000 < parseInt(creditCardNumber) && 9999999999999999 >= parseInt(creditCardNumber) &&
         /^[A-Za-z\s]*$/.test(creditName) &&
@@ -75,7 +75,6 @@ export default function CheckoutPage(props) {
   const handleClickOpen_UIN_MealSwipe = () => {
     setUIN(true);
     setPaymentMethod(1);
-
   };
 
   const handleClose_UIN = () => {
@@ -96,7 +95,7 @@ export default function CheckoutPage(props) {
    */
   const selectCash = async () => {
     setPaymentMethod(3);
-    alert("Please submit order and head to the cashier to make payment.");
+    alert("Take cash with register.");
     setCreditCardNumber("");
     setCreditName("");
     setCreditExpirationDate("");
@@ -128,7 +127,7 @@ export default function CheckoutPage(props) {
                     body: JSON.stringify(body)
                 }
             )
-      alert("Please wait for your order to be called: " + orderid);
+      // alert("Please wait for your order to be called: " + orderid);
     } catch (err) {
       console.error(err.message);
     }
@@ -206,9 +205,6 @@ export default function CheckoutPage(props) {
     setCreditName(e.target.value);
   }
 
-  /**
-   * Function to get the current inventory amounts (used to decrement inventory used in order).
-   */
   const getInventory = async () => {
     setInventory([]);
     try {
@@ -363,7 +359,7 @@ export default function CheckoutPage(props) {
                     </tr>
                 )}
 
-                </table>
+            </table>
             <div>
 
             <br></br>
@@ -373,10 +369,16 @@ export default function CheckoutPage(props) {
             <h2> Cost: ${location.state.totalCost} </h2>
                 <Stack spacing = {0}>
                     <br></br>
-                    <Link to="/">
+                    <Link to="/cashier"
+                    state= {{
+                      userName : location.state.userName
+                    }}>
                       <Button  variant="contained" size="large" sx={{mt: 3, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick={() => submitCheckout()}>Check out</Button>
                     </Link>
-                    <Link to="/">
+                    <Link to="/cashier"
+                    state= {{
+                      userName : location.state.userName
+                    }}>
                       <Button  variant="contained" size="large" sx={{mt: 3, backgroundColor:"#9d222e", color:"white" }} fullWidth={true}>Cancel Order</Button>
                     </Link>
                 </Stack>

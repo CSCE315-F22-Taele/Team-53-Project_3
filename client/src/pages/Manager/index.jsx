@@ -14,14 +14,18 @@ import Paper from '@mui/material/Paper';
 // import Stack from "@mui/material/Stack";
 //import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 
+const conn = "http://localhost:3500/";
+// const conn = "https://pom-and-honey-bhf5.onrender.com/";
+
 /**
  * Function to display sales report and excess report.
  * @constructor
  */
-
 export default function Manager() {
-
     const [dates, setDates] = useState({start:-2, end:-2}); // default start
+    const [startDate, setStartDate] = useState((0));
+    const [endDate, setEndDate] = useState((0));
+    const [dates, setDates] = useState({start:-2, end:-2});
     const [salesReport, setSalesReport] = useState([]);
     const [salesShown, setSalesShown] = useState(false); // show text after submit
     const [excessReport, setExcessReport] = useState([]);
@@ -32,14 +36,10 @@ export default function Manager() {
 
     const [display_start, setDisplayStart] = useState("");
     const [display_end, setDisplayEnd] = useState("");
-    
-
-    const conn = "http://localhost:3500/"; // for testing
 
     /**
    * Styling for reports display
    */
-
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
           backgroundColor: theme.palette.common.black,
@@ -61,10 +61,9 @@ export default function Manager() {
       }));
 
 
-      /**
+   /**
    * Returns an array containing sales report data: data.name, data.sold
    */
-
     const salesGet = async () => {
         
         try {

@@ -2,18 +2,43 @@
     height: 100%;
 }
 
-.menu_item-section{
+.menu_activate-section{
     height: 100%;
-    width: 75%;
-    background: #e7e3fc;
+    width: 50%;
     float: left;
+    border-left: 2px solid black;
+
+}
+.menu_deactivate-section{
+    height: 100%;
+    width: 50%;
+    float: left;
+}
+.menu_receipt-section{
+    width: 100%;
+    height: 80px;
+    vertical-align: middle;
+    border-bottom: 2px solid black;
 }
 
-.menu_receipt-section{
-    background-color: #b3aed4;
+.menu_back-btn{
+    display: flex;
+    align-items:center;
     float: left;
-    width: 25%;
+    vertical-align: middle;
+    margin-top: 25px;
+    margin-left: 20px;
 }
+
+.menu_edit-btn{
+    display: flex;
+    align-items:center;
+    float: right;
+    vertical-align: middle;
+    margin-top: 25px;
+    margin-right: 20px;
+}
+
 
 .menu-btn{
     padding: 2%;
