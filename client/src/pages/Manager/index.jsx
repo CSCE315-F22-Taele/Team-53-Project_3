@@ -25,7 +25,7 @@ export default function Manager() {
     const [dates, setDates] = useState({start:-2, end:-2}); // default start
     const [startDate, setStartDate] = useState((0));
     const [endDate, setEndDate] = useState((0));
-    const [dates, setDates] = useState({start:-2, end:-2});
+    //const [dates, setDates] = useState({start:-2, end:-2});
     const [salesReport, setSalesReport] = useState([]);
     const [salesShown, setSalesShown] = useState(false); // show text after submit
     const [excessReport, setExcessReport] = useState([]);
