@@ -4,7 +4,6 @@ const db = require("../db");
 
 /**
  * This API call will get the menu table
- * @type {HTTP GET Request}
  */
 app.get("/getMenu", async (req, res) => {
     try {
@@ -19,7 +18,6 @@ app.get("/getMenu", async (req, res) => {
 
 /**
  * This API call will insert into the checkout table
- * @type {HTTP POST Request}
  */
 app.post("/postCheckout", async (req, res) => {
     try {
@@ -38,7 +36,6 @@ app.post("/postCheckout", async (req, res) => {
 
 /**
  * This API call will get current amount of all inventory items to decrement
- * @type {HTTP GET Request}
  */
 app.get("/getInventory", async (req, res) => {
     try {
@@ -54,7 +51,6 @@ app.get("/getInventory", async (req, res) => {
 
 /**
  * This API call will update the inventory item amounts based on order
- * @type {HTTP POST Request}
  */
 app.post("/postInventory", async (req, res) => {
     try {

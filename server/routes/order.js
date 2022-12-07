@@ -5,7 +5,6 @@ const db = require("../db");
 
 /**
  * This API call will create a new orderid for each order
- * @type {HTTP GET Request}
  */
 app.get("/getOrderId", async (req, res) => {
     try {
@@ -47,7 +46,6 @@ app.get("/getOrderId", async (req, res) => {
 
 /**
  * This API call will get the inventory table
- * @type {HTTP GET Request}
  */
 app.get("/getInventory", async (req, res) => {
     try {
@@ -61,7 +59,6 @@ app.get("/getInventory", async (req, res) => {
 
 /**
  * This API call will get the menu table
- * @type {HTTP GET Request}
  */
 app.get("/getMenu", async (req, res) => {
     try {
@@ -75,7 +72,6 @@ app.get("/getMenu", async (req, res) => {
 
 /**
  * This API call will insert an order into the ordering table
- * @type {HTTP POST Request}
  */
 app.post("/postOrder", async (req, res) => {
     try {
@@ -108,7 +104,6 @@ app.post("/postOrder", async (req, res) => {
 
 /**
  * This API call will update the mobile order status of an order
- * @type {HTTP POST Request}
  */
 app.post("/updateOrder", async (req, res) => {
     try {
@@ -127,7 +122,6 @@ app.post("/updateOrder", async (req, res) => {
 
 /**
  * This API call will get the order that needs to be completed or waiting for pickup
- * @type {HTTP GET Request}
  */
 app.get("/getOrderStatus", async (req, res) => {
     try {
@@ -143,7 +137,6 @@ app.get("/getOrderStatus", async (req, res) => {
 
 /**
  * This API call will get the orders based on their order status
- * @type {HTTP GET Request}
  */
 app.get("/getNewOrders/:mobile_order", async (req, res) => {
     try {
@@ -164,7 +157,6 @@ app.get("/getNewOrders/:mobile_order", async (req, res) => {
 
 /**
  * This API call will get the status of an order
- * @type {HTTP GET Request}
  */
 app.get("/getCurrentOrderStatus/:orderid", async (req, res) => {
     try {

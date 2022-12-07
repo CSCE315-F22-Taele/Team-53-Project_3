@@ -4,7 +4,6 @@ const db = require("../db");
 
 /**
  * [employeename is the name of the employee passed in]
- * @type {HTTP GET request}
  */
 app.get("/isEmployee/:employeename", async (req, res) => {
     try {
@@ -32,7 +31,6 @@ app.get("/isEmployee/:employeename", async (req, res) => {
 
 /**
  * [sub is the OAuth Key that is generated when a user creates a new account using OAuth]
- * @type {HTTP GET Request}
  */
 app.get("/isEmployeeGoogleOauth/:sub", async (req, res) => {
     try {
@@ -64,7 +62,6 @@ app.get("/isEmployeeGoogleOauth/:sub", async (req, res) => {
 
 /**
  * [sub is the OAuth Key that is generated when a user creates a new account using OAuth]
- * @type {HTTP GET Request}
  */
 app.get("/isManagerGoogleOauth/:sub", async (req, res) => {
     try {
@@ -88,7 +85,6 @@ app.get("/isManagerGoogleOauth/:sub", async (req, res) => {
 
 /**
  * [employeename is the first and last name of the employee passed in]
- * @type {HTTP GET Request}
  */
 app.get("/isManager/:employeename", async (req, res) => {
     try {
@@ -111,7 +107,6 @@ app.get("/isManager/:employeename", async (req, res) => {
 
 /**
  * [This API call will update the the sub attribute with the unique key for an employee's OAuth login]
- * @type {HTTP POST Request}
  */
 app.post("/insertGoogleOauth/:sub/:employeename", async (req, res) => {
     try {
@@ -130,7 +125,6 @@ app.post("/insertGoogleOauth/:sub/:employeename", async (req, res) => {
 
 /**
  * This API call will insert a new employee into the employee table
- * @type {HTTP POST Request}
  */
 app.post("/insert", async (req, res) => {
     try {
@@ -151,7 +145,6 @@ app.post("/insert", async (req, res) => {
 
 /**
  * This API call will update an emplyoee's email & password based on their id
- * @type {HTTP POST Request}
  */
 app.post("/updateBasedInsert", async (req, res) => {
     try {
@@ -170,7 +163,6 @@ app.post("/updateBasedInsert", async (req, res) => {
 
 /**
  * This API call will get the name of employee given an employeeid
- * @type {HTTP GET Request}
  */
 app.get("/getName/:employeeid", async (req, res) => {
     try {
@@ -203,7 +195,6 @@ app.get("/getName/:employeeid", async (req, res) => {
 
 /**
  * This API call will check if an employee is working given an employeeid
- * @type {HTTP GET Request}
  */
 app.get("/getInfo/:employeeid", async (req, res) => {
     try {
@@ -235,7 +226,6 @@ app.get("/getInfo/:employeeid", async (req, res) => {
 
 /**
  * This API call will allow an employee to login if provided a correct login & is currently working
- * @type {HTTP Get Request}
  */
 app.get("/isValidEmployee/:email/:password", async (req, res) => {
     try {
@@ -270,7 +260,6 @@ app.get("/isValidEmployee/:email/:password", async (req, res) => {
 
 /**
  * This call will get the OAuth API key
- * @type {HTTP GET Request}
  */
 app.get("/getGoogleClientKey", async (req, res) => {
     res.json(process.env.GOOGLE_CLIENT_ID);
@@ -278,7 +267,6 @@ app.get("/getGoogleClientKey", async (req, res) => {
 
 /**
  * This call will get the Google Map API key
- * @type {HTTP Get Request}
  */
 app.get("/getGoogleMapsKey", async (req, res) => {
     res.json(process.env.GOOGLE_MAPS_API_KEY);

@@ -4,7 +4,6 @@ const db = require("../db");
 
 /**
  * This API call will get the employee table
- * @type {HTTP GET Request}
  */
 app.get("/get", async (req, res) => {
     try {
@@ -18,9 +17,9 @@ app.get("/get", async (req, res) => {
     }
 });
 
-/*
-Update employee information.
-*/
+/**
+ * Update employee information.
+ */
 app.post("/add", async (req, res) => {
     try {
         const {
@@ -42,8 +41,11 @@ app.post("/add", async (req, res) => {
     }
 });
 
+/**
+ * Select employeeid given employee information.
+ */
 app.get("/getID", async (req, res) => {
-    
+
     try {
         const todo = await db.query(
             "SELECT employeeid FROM employee WHERE employeename=($1), salary=($2), ismanager=($3)"
@@ -55,7 +57,9 @@ app.get("/getID", async (req, res) => {
     }
 });
 
-
+/**
+ * Update employee working status.
+ */
 app.post("/update_working", async (req, res) => {
     try {
         const { is_working, employeeid } = req.body;
