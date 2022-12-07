@@ -14,7 +14,12 @@ import Paper from '@mui/material/Paper';
 // import Stack from "@mui/material/Stack";
 //import {BrowserRouter as Router, Link, useNavigate} from 'react-router-dom';
 
-export default function Manager(props) {
+/**
+ * Function to display sales report and excess report.
+ * @constructor
+ */
+
+export default function Manager() {
 
     const [dates, setDates] = useState({start:-2, end:-2}); // default start
     const [salesReport, setSalesReport] = useState([]);
@@ -30,6 +35,10 @@ export default function Manager(props) {
     
 
     const conn = "http://localhost:3500/"; // for testing
+
+    /**
+   * Styling for reports display
+   */
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
@@ -50,6 +59,11 @@ export default function Manager(props) {
           border: 0,
         },
       }));
+
+
+      /**
+   * Returns an array containing sales report data: data.name, data.sold
+   */
 
     const salesGet = async () => {
         
@@ -80,6 +94,10 @@ export default function Manager(props) {
 
     };
 
+    /**
+   * Returns an array containing excess report data: data.name, data.amount
+   */
+
     const excessGet = async () => {
         try {
             setExcessReport([]);
@@ -104,7 +122,10 @@ export default function Manager(props) {
         }
     };
 
-    // set start date and end date from text entry
+    
+    /** 
+    *   sets start date and end date for sales api call 
+    */
     const handleSaleSubmit = event => {
 
         setSalesReport([]); // clear sales report between each request
@@ -141,7 +162,10 @@ export default function Manager(props) {
         }
     };
 
-    // set parameters for excess report
+
+    /** 
+    *   sets params for excess api call
+    */
     const handleExcessSubmit = event => {
         setExcessReport([]);
 
@@ -200,6 +224,8 @@ export default function Manager(props) {
         setSalesShown(false);
     }
 
+
+    // handling to ensure correct display
 
     useEffect( () => {
         if (dates.start > 0 && dates.end > 0){
