@@ -54,8 +54,7 @@ function Login () {
         try {
 
             
-            // const employeename = userName;
-            // console.log(employeename);
+            
             const response = await fetch (conn + `api/login/isEmployeeGoogleOauth/${sub}`, 
             {
                     method: "GET",
@@ -63,21 +62,20 @@ function Login () {
                 }
             );
         
-            console.log(sub);
+            
             const jsonVals = await response.json();
             
             if( jsonVals.isEmployee === true){
                 window.localStorage.setItem('user', jsonVals.employeename);
                 
                 setIsEmployee(jsonVals.isEmployee);
-                //fix me: 
-                console.log("DOne");
+                
                 const response2 = await fetch (conn + `api/login/isManagerGoogleOauth/${sub}`, 
                 {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
                 });
-                console.log("DOne");
+             
                 const jsonVals2 = await response2.json();
                 
                 
@@ -96,7 +94,7 @@ function Login () {
             
             console.error(err.message);
         }
-        //console.log(sub)
+        
         
     }
     
@@ -115,21 +113,16 @@ function Login () {
         
     
             const jsonVals = await response.json();
-            // console.log("employeeLogin:", jsonVals);
+        
             
             
             if( jsonVals.isEmployee === true){
+                
                 window.localStorage.setItem('user', jsonVals.employeename);
                 
                 setIsEmployee(jsonVals.isEmployee);
                 setUserName(jsonVals.employeename);
                 managerCheck(jsonVals.employeename);
-                // console.log(isManager);
-                // console.log("isEmployee login:", jsonVals.ismanager);
-                //window.localStorage.setItem('manager', isManager);
-                //console.log("after set", isManager);
-                //window.location.reload();
-                
             }
             else{
                 alert("Invalid email or password. Try again or sign in with Google. ");
@@ -144,7 +137,7 @@ function Login () {
     }
     
     const managerCheck = async (employeename) => {
-        // console.log(jsonVals.employeename);
+        
         const response2 = await fetch (conn + `api/login/isManager/${employeename}`, 
         {   
                 method: "GET",
@@ -168,7 +161,7 @@ function Login () {
                     }
                 })
 
-                //console.log(res.data);
+                
                 
             const employeename = res.data.name; 
             const sub = res.data.sub;
@@ -192,8 +185,7 @@ function Login () {
             
         
             const jsonVals = await response.json();
-            console.log(jsonVals);
-            
+      
             if( jsonVals.isEmployee === true && jsonVals.is_working === true){
                     window.localStorage.setItem('user', employeename);
                     
@@ -231,8 +223,7 @@ function Login () {
         if( password !== "" && employeeid !== "" && email !== ""){
         
         const body = {employeeid, email, password};
-        console.log(employeeid, email, password);
-        console.log(newEmployeeId);
+        
         fetch (conn + "api/login/updateBasedInsert",
             {
                 method: "POST",
@@ -250,7 +241,7 @@ function Login () {
         
     
         const jsonVals = await response.json();
-        console.log(jsonVals);
+       
         
         if( jsonVals.isEmployee === true && jsonVals.is_working === true){
                 window.localStorage.setItem('user', jsonVals.employeename);
@@ -347,12 +338,11 @@ function Login () {
 
 
     useEffect( () => {  
-        // console.log("user", window.localStorage.getItem('user') );
+        ;
         const auth = window.localStorage.getItem('user');
-        // console.log("auth:", auth);
+       
         if (auth) {
             setUserName(window.localStorage.getItem('user'));
-            // setIsManager(window.localStorage.getItem('manager'));
             setIsEmployee(true);
 
             if (managerCheck(auth) === 'true') {
@@ -362,17 +352,10 @@ function Login () {
             
         }
 
-        // const managerOrnot = window.localStorage.getItem('manager');
-        // if(managerOrnot){
-        //     setIsManager(window.localStorage.getItem('manager'));
-        // }
-        // console.log("manager", window.localStorage.getItem('manager') );
-        
 
     }, [userName,isManager])
 
-    // window.localStorage.setItem('manager', isManager);
-    // console.log("before login", window.localStorage.getItem('manager'));
+
     
     const login = useGoogleLogin({
         onSuccess: async respose => {
@@ -383,7 +366,7 @@ function Login () {
                     }
                 })
 
-                //console.log(res.data);
+            
                 
                 
                 setUserName(res.data.name);
@@ -402,7 +385,7 @@ function Login () {
 
     });
 
-    //console.log("USER",localStorage.getItem('user'));
+
     return (
     <div>
         {!isEmployee && (<br></br>)}
