@@ -10,8 +10,9 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { TextField } from '@mui/material';
 import Stack from '@mui/material/Stack';
-import {BrowserRouter as   Routes, Link, useLocation} from 'react-router-dom';
-
+import Hidden from '@mui/material/Hidden';
+import {BrowserRouter as Routes, Link, useLocation, useNavigate} from 'react-router-dom';
+ 
 const conn = "http://localhost:3500/";
 // const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
@@ -104,6 +105,8 @@ export default function CheckoutPage(props) {
     setCardNumber("");
   }
 
+  const[orderIDStatus, setOrderIDStatus] = useState(0); // for order status page
+
   /**
    * Function that inserts checkout information into checkout table.
    */
@@ -119,6 +122,8 @@ export default function CheckoutPage(props) {
       const paymentmethod = paymentMethod;
       const amount = location.state.totalCost;
       const orderid = location.state.orderid;
+
+      setOrderIDStatus(orderid);
 
       const body = {paymentmethod, amount, cardnumber, orderid};
             fetch (conn + "api/checkout/postCheckout",
@@ -162,6 +167,7 @@ export default function CheckoutPage(props) {
       }
     }
   }
+
 
   const submitCheckout = async () => {
     postCheckout();
@@ -373,7 +379,7 @@ export default function CheckoutPage(props) {
             <h2> Cost: ${location.state.totalCost} </h2>
                 <Stack spacing = {0}>
                     <br></br>
-                    <Link to="/">
+                    <Link to="/Order_Status" state={{orderIDStatus : location.state.orderid}}>
                       <Button  variant="contained" size="large" sx={{mt: 3, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick={() => submitCheckout()}>Check out</Button>
                     </Link>
                     <Link to="/">
@@ -383,4 +389,5 @@ export default function CheckoutPage(props) {
         </div>
       </div>
   );
+
 }
