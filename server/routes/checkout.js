@@ -2,9 +2,9 @@ const express = require("express");
 const app = express.Router();
 const db = require("../db");
 
-/* Get menucost table
-To call in frontend: http://localhost:3500/api/checkout/getMenu
-*/
+/**
+ * This API call will get the menu table
+ */
 app.get("/getMenu", async (req, res) => {
     try {
         const todo = await db.query("SELECT * FROM menucost ORDER BY id");
@@ -15,10 +15,9 @@ app.get("/getMenu", async (req, res) => {
     }
 });
 
-/*
-Insert checkout information for specific order 
-To call: http://localhost:3500/api/checkout/postCheckout
-*/
+/**
+ * This API call will insert into the checkout table
+ */
 app.post("/postCheckout", async (req, res) => {
     try {
         const { paymentmethod, amount, cardnumber, orderid } = req.body;
@@ -29,15 +28,14 @@ app.post("/postCheckout", async (req, res) => {
         );
 
         console.log(todo.rows);
-        // res.json(todo.rows);
     } catch (err) {
         console.error(err.message);
     }
 });
 
-/*
-Get current invetory amount to decrement
-*/
+/**
+ * This API call will get current amount of all inventory items to decrement
+ */
 app.get("/getInventory", async (req, res) => {
     try {
         const todo = await db.query(
@@ -50,9 +48,9 @@ app.get("/getInventory", async (req, res) => {
     }
 });
 
-/*
-Update inventory amount accordingly
-*/
+/**
+ * This API call will update the inventory item amounts based on order
+ */
 app.post("/postInventory", async (req, res) => {
     try {
         const { amount, itemid } = req.body;

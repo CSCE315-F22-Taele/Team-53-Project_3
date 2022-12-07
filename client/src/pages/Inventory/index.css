@@ -1,53 +1,60 @@
-.inventory_page{
+.inventory_page {
     height: 100%;
 }
 
-.inventory_activate-section{
+.inventory_activate-section {
     height: 100%;
     width: 50%;
     float: left;
     border-left: 2px solid black;
 }
 
-.inventory_deactivate-section{
+.inventory_deactivate-section {
     height: 100%;
     width: 50%;
     float: left;
 }
 
-.back-btn{
+.back-btn {
     display: flex;
-    align-items:center;
+    align-items: center;
     float: left;
     vertical-align: middle;
     margin-top: 25px;
     margin-left: 20px;
 }
 
-.edit-btn{
+.edit-btn {
     display: flex;
-    align-items:center;
+    align-items: center;
     float: right;
     vertical-align: middle;
     margin-top: 25px;
     margin-right: 20px;
 }
 
-
-.inventory_item-btn{
-    pointer-events: none;
+.cat {
+    border: none;
+    background-color: rgb(245, 245, 245);
+    color: black;
+    border-radius: 4px;
+    font-size: 40px;
+    cursor: pointer;
+    outline: none;
+    font-weight: 400;
+    /* color:rgb(88, 90, 156); */
+}
+.cat:focus {
+    outline: none;
 }
 
-.inventory_receipt-section{
+.inventory_receipt-section {
     width: 100%;
     height: 80px;
     vertical-align: middle;
     border-bottom: 2px solid black;
 }
 
-.inventory-btn{
+.inventory-btn {
     padding: 2%;
 }
-
-
-

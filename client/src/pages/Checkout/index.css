@@ -1,75 +1,54 @@
-
-* {
-    box-sizing: border-box;
-  }
-  
-  body{
-    background-color: whitesmoke;
-    color:black;
-    justify-content: center;
-    text-align: center;
-  }
-
-  div{
-    font-family: 'Montserrat', sans-serif;
-  }
-  
-  .backButtons{
-    position:absolute;
-    bottom: 5%;
-    left: 2.5%;
-  }
-  
-  .imgLogo{
-    display:contents;
-  }
-
-.container {
-    display: grid;
-    grid-template-columns: auto 290px;
-    height: 100%;
-}
-
-.pay-method{
-    display: grid;
-    grid-template-columns: auto auto;
-    margin-left: 5vh;
-    margin-right: 5vh;
-    justify-items: center;
+div {
+    font-family: "Montserrat", sans-serif;
 }
 
 .btn {
-    height: 20vh;
-    width: 50vh;
-    font-size: large;
-    background-color: #52588b;
-    color:rgb(204, 203, 208);
-    font-size: larger;
-}
-
-.receipt{
-    background-color: #7c76c3;    
-    text-align: center;
-    margin-left: 6px;
-    position: relative;
-    /* background-color: #b3aed4; */
-    float: left;
-    /* display: flex; */
-
-}
-
-.cancel-btn{
-    position:absolute;
-} 
-
-.checkoutBtn{
-    position:absolute;
-    bottom: 3vh;
-    left: 13vh;
-    height: 40px;
-    width: 100px;
+    height: 150px;
+    width: 400px;
     background-color: #283593;
-    color:rgb(204, 203, 208);
-    border-radius: 8px;
-    border: none;
-  }
+    color: white;
+    font-size: larger;
+    margin-left: 5vh;
+    margin-right: 5vh;
+    margin-top: 3vh;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background-color: #4752a7;
+}
+
+.checkout__pageCheckout {
+    height: 100%;
+    /* background: whitesmoke; */
+    background: #faf7ef;
+}
+
+.checkout__receipt {
+    /* background-color: whitesmoke; */
+    background-color: #faf7ef;
+    float: right;
+    width: 25%;
+    height: 100%;
+}
+
+.checkout__options {
+    width: 75%;
+    /* background: whitesmoke; */
+    background-color: #faf7ef;
+    float: left;
+    height: 100%;
+    border-right: 2px solid black;
+}
+
+.checkout__buttons {
+    padding: 2%;
+}
+
+.item {
+    width: 45%;
+}
+
+.price {
+    width: 20%;
+}

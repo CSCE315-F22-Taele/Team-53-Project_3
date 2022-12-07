@@ -1,0 +1,51 @@
+div {
+    font-family: "Montserrat", sans-serif;
+}
+
+.btn {
+    height: 150px;
+    width: 400px;
+    background-color: #283593;
+    color: white;
+    font-size: larger;
+    margin-left: 5vh;
+    margin-right: 5vh;
+    margin-top: 3vh;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background-color: #4752a7;
+}
+
+.checkout__pageCheckout {
+    height: 100%;
+    background: #faf7ef;
+}
+
+.checkout__receipt {
+    background-color: #faf7ef;
+    float: right;
+    width: 25%;
+    height: 100%;
+}
+
+.checkout__options {
+    width: 75%;
+    background: #faf7ef;
+    float: left;
+    height: 100%;
+    border-right: 2px solid black;
+}
+
+.checkout__buttons {
+    padding: 2%;
+}
+
+.item {
+    width: 45%;
+}
+
+.price {
+    width: 20%;
+}

@@ -5,12 +5,15 @@ import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { indigo } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
-import {BrowserRouter as Router, Link, useNavigate, useLocation} from 'react-router-dom';
+import {BrowserRouter as Router, Link, useNavigate, useLocation, json} from 'react-router-dom';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { WindPower } from "@mui/icons-material";
 
-// For local testing: (comment out)
-// const conn = "http://localhost:3500/";
-// For production:
- const conn = "https://pom-and-honey-bhf5.onrender.com/";
+const conn = "http://localhost:3500/";
+// const conn = "https://pom-and-honey-bhf5.onrender.com/";
 
 const theme = createTheme({
     palette: {
@@ -21,21 +24,29 @@ const theme = createTheme({
     },
 });
 
-
-
+/**
+ * This function will round a number to a given precision
+ * @param  {Number} number                  A number
+ * @param  {Number} precision               A precision to round number to
+ * @return {Number}           Given number rounded to set precision
+ */
 function rounding(number, precision){
     var newnumber = new Number(number+'').toFixed(parseInt(precision));
-    return parseFloat(newnumber); 
+    return parseFloat(newnumber);
 }
 
+/**
+ * This function will display the cashier order page.
+ * @constructor
+ */
 function Cashier (props) {
     const location = useLocation();
-    const nameCashier = location.state.userName;
+    const nameCashier = window.localStorage.getItem('user');
 
     const [orderid, setOrderid] = useState(0);
     const [menuNamesCustom, setMenuNamesCustom] = useState([]);
     const [menuNames, setMenuNames] = useState([]);
-    
+
     const [realInventory0, setInventory0] = useState([]);
     const [realInventory1, setInventory1] = useState([]);
     const [realInventory2, setInventory2] = useState([]);
@@ -45,10 +56,10 @@ function Cashier (props) {
 
     const [listOrdered, setListOrdered] = useState([]); //push to db
     const [listOrderedNames, setListOrderedNames] = useState([]);
-    
-    const [listOrderedInv, setlistOrderedInv] = useState([]);  
+
+    const [listOrderedInv, setlistOrderedInv] = useState([]);
     const [inventoryUsed, setInventoryUsed]= useState([]); //global amount of inventory used (push to db)
-    const [showCustom, setIsShown] = useState(false); 
+    const [showCustom, setIsShown] = useState(false);
     const [totalCost, setCost] = useState(0);
     const [count, setCount] = useState(0);
 
@@ -57,44 +68,53 @@ function Cashier (props) {
     const [ cat2click, setAllowClickCat2] = useState(true);
     const [ cat3click, setAllowClickCat3] = useState(true);
     const [countToppings, setCountToppings] = useState(0);
-    
+    // const [awaitPickup,setAwaitPickup]= useState(false);
+    // const [awaitPickup2,setAwaitPickup2]= useState(false);
+    // const [orderNew,setOrderNew]= useState(false);
+    // const [newAwait, setNewAwait]= useState(false);
+    const [clicked, setClickedInfo] = useState(false);
+    // const name = "Pom and Honey at Texas A&M MSC";
 
-    const name = "Pom and Honey at Texas A&M MSC";
-   
+    const [newOrders, setNewOrders] = useState([]);
+    const [pickupOrder, setpickupOrders] = useState([]);
 
-    const handleClick = () => {
-        setIsShown((current) => !current);
-    }; 
 
+
+    // const handleClick = () => {
+    //     setIsShown((current) => !current);
+    // };
+
+    /**
+     * This function will get the orderid of order
+     */
     const orderIdVal = async () => {
-        
+
         try {
             const response = await fetch(conn + "api/order/getOrderid");
-    
             const data = await response.json();
             setOrderid(data);
-           
-            
         } catch (err) {
-    
             console.error(err.message);
         }
 
     };
 
+    /**
+     * This function will get the menu table
+     */
     const menuGet = async () => {
 
         setMenuNames([]);
         setMenuNamesCustom([]);
         try {
-    
+
             const response = await fetch(conn + "api/order/getMenu");
             const jsonVals = await response.json();
-            
-            for( var key in jsonVals) { 
-                 
-                if (jsonVals[key].is_selling == true){
-                    if (jsonVals[key].is_customize == true){
+
+            for( var key in jsonVals) {
+
+                if (jsonVals[key].is_selling === true){
+                    if (jsonVals[key].is_customize === true){
                        var menuCustom = [];
                        menuCustom.push( jsonVals[key].menuitem);
                        menuCustom.push( jsonVals[key].cost);
@@ -102,9 +122,9 @@ function Cashier (props) {
                        menuCustom.push( jsonVals[key].default_inventory);
                        var menuVals = menuNamesCustom;
                        menuVals.push(menuCustom);
-                     
+
                        setMenuNamesCustom(menuVals);
-                    
+
                     }
 
                     else{
@@ -113,64 +133,56 @@ function Cashier (props) {
                          menu.push( jsonVals[key].cost);
                          menu.push( jsonVals[key].id);
                          menu.push( jsonVals[key].default_inventory);
-                        
-                         var menuVals = menuNames;
-                         menuVals.push(menu);
-                        
-             
-                         
-                         setMenuNames(menuVals);
+
+                         var menuVals2 = menuNames;
+                         menuVals2.push(menu);
+
+
+
+                         setMenuNames(menuVals2);
                     }
                 }
             }
-            
-           
+
+
             var length = menuNames.length + menuNamesCustom.length;
             var value = [];
             for( let i =0; i< length; i++){
                 value.push(0);
             }
-            
+
             setListOrdered(value);
-            
-            
+
+
         } catch (err) {
             console.error(err.message);
         }
-
-      
-       
-        
     };
-    
+
+    /**
+     * This function will get the inventory table
+     */
     const inventoryGet = async () => {
-        
-        
         try {
-    
+
             const response = await fetch(conn + "api/order/getInventory");
             const jsonVals = await response.json();
 
-            
             for( var key in jsonVals){
-                
                 let inventoryCat0 = [];
                 let inventoryCat1 = [];
                 let inventoryCat2 = [];
                 let inventoryCat3 = [];
                 let inventoryCat4 = [];
 
- 
-
                 // if (jsonVals[key] == true){
                 if (jsonVals[key].classify === 0){
                     inventoryCat0.push(jsonVals[key].itemname);
                     inventoryCat0.push(jsonVals[key].itemid);
-                    
 
                     let inventory0 = realInventory0;
                     inventory0.push(inventoryCat0);
-                 
+
                     setInventory0(inventory0);
                 }
                 else if (jsonVals[key].classify === 1){
@@ -179,7 +191,7 @@ function Cashier (props) {
 
                     let inventory = realInventory1;
                     inventory.push(inventoryCat1);
-                  
+
                     setInventory1(inventory);
                 }
                 else if (jsonVals[key].classify === 2){
@@ -188,7 +200,7 @@ function Cashier (props) {
 
                     let inventory = realInventory2;
                     inventory.push(inventoryCat2);
-                  
+
                     setInventory2(inventory);
                 }
                 else if (jsonVals[key].classify === 3){
@@ -197,7 +209,7 @@ function Cashier (props) {
 
                     let inventory = realInventory3;
                     inventory.push(inventoryCat3);
-                  
+
                     setInventory3(inventory);
                 }
                 else if (jsonVals[key].classify === 4){
@@ -206,33 +218,31 @@ function Cashier (props) {
 
                     let inventory = realInventory4;
                     inventory.push(inventoryCat4);
-                  
+
                     setInventory4(inventory);
                 }
-                
-               
 
-            
             }
-            var length = realInventory0.length + realInventory1.length +  realInventory2.length + realInventory3.length + realInventory4.length; 
+            var length = realInventory0.length + realInventory1.length +  realInventory2.length + realInventory3.length + realInventory4.length;
             var value = [];
-            
+
             for( let i =0; i< length; i++){
                 value.push(0);
             }
-            
+
             setInventoryUsed(value);
-            
-            
-           
+
         } catch (err) {
-            
+
             console.error(err.message);
         }
     };
 
+    /**
+     * This function will send the order to ordering table in db.
+     * @return {Promise} Send entity into db
+     */
     const sendtoDb = async () => {
-        
         try {
             var date=new Date();
             var current = date.getHours() + ':';
@@ -243,20 +253,19 @@ function Cashier (props) {
             else {
                 current += date.getMinutes();
             }
-            
+
             current += ':' + date.getSeconds() + "." + date.getMilliseconds();
 
-            const body = {orderid, current, totalCost, listOrdered, inventoryUsed};
-            const response = fetch (conn + "api/order/postOrder", 
+            // If cashier, order is not online.
+            var mobile_order = 0;
+            const body = {orderid, current, totalCost, listOrdered, inventoryUsed, mobile_order};
+            const response = fetch (conn + "api/order/postOrder",
             {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body)
                 }
             );
-
-           
-
         } catch (err) {
             console.error(err.message);
         }
@@ -266,53 +275,61 @@ function Cashier (props) {
         orderIdVal();
         menuGet();
         inventoryGet();
-    }, [])
+        getOrders();
+    },[])
 
+    /**
+     * This function will display all menu items currently sold.
+     * @param  {Number} index                            menu item id
+     * @param  {string} val                              name of menu item
+     * @param  {Float} cost                              cost of menu item
+     * @param  {Array} inventory_default                 inventory used for menu item
+     * @param  {Boolean} custom                          menu item is able to be customized
+     */
     const pushItem = (index, val, cost, inventory_default, custom) => {
-        
-        setlistOrderedInv([]);
 
+        setlistOrderedInv([]);
         let newCart = listOrdered;
         newCart[index-1] += 1;
         setListOrdered(newCart);
-     
 
         if( custom === true){
             setIsShown(showCustom => true);
         }
-        
+
         let inv = inventoryUsed;
-        
+
         for( var i=0; i< inv.length; i++){
             inv[i] += inventory_default[i];
         }
-        
+
         setInventoryUsed(inv);
         // console.log(inv);
 
         let namesCart = listOrderedNames;
         namesCart.push([val, cost, index, inventory_default, custom]);
         setListOrderedNames(namesCart);
-        
-        
+
         let costCurr = totalCost;
         costCurr = rounding(costCurr + parseFloat(cost), 2);
         setCost(costCurr);
 
         console.log(listOrdered);
         console.log(inventoryUsed);
-       
+
     }
 
+    /**
+     * This function will display inventory for customizable menu items.
+     * @param  {string} index                  item name
+     * @param  {Number} val                    item id
+     * @param  {Number} category               Classification of inventory item
+     */
     const pushInv = (index, val, category) => {
-
-        
-        
         let namesCart = listOrderedInv;
         let x = false;
-        
+
         let addition = [val, index, category];
-        
 
         if ( namesCart.length === 0){
             x=false;
@@ -320,26 +337,26 @@ function Cashier (props) {
 
         let indexNames=-1;
         for (var i = 0; i < namesCart.length; ++i) {
-           
+
 
             var localTrue = true;
             for (var j = 0; j < namesCart[i].length; ++j) {
-                
+
                 if( addition[j] !== namesCart[i][j]){
-                    
+
                     localTrue = false;
                 }
 
             }
 
-            if (localTrue==true){
+            if (localTrue===true){
                 x=true;
                 indexNames=i;
             }
         }
-        
 
-        
+
+
         if( x === false){
             namesCart.push([val, index, category]);
             setlistOrderedInv(namesCart);
@@ -347,16 +364,16 @@ function Cashier (props) {
             let inv = inventoryUsed;
             inv[index-1] += 1;
             setInventoryUsed(inv);
-    
-            
-    
+
+
+
             let countVal = count;
             countVal +=1;
             setCount(countVal);
             console.log("added",countVal);
 
             if (countToppings < 10 && category === 2){
-                let countCurr = countToppings +1; 
+                let countCurr = countToppings +1;
                 console.log("COUNT updated: ",countToppings);
                 setCountToppings(countCurr);
             }
@@ -366,18 +383,14 @@ function Cashier (props) {
             namesCart.splice(indexNames, 1);
             setlistOrderedInv(namesCart);
 
-            
-            let countCurr = countToppings -1; 
+            let countCurr = countToppings -1;
             setCountToppings(countCurr);
-            
 
             let inv = inventoryUsed;
             inv[index-1] -= 1;
             setInventoryUsed(inv);
-
         }
-
-        console.log("countToppings", countToppings);
+        // console.log("countToppings", countToppings);
         if (category === 0){
             setAllowClickCat0(false);
         }
@@ -390,31 +403,35 @@ function Cashier (props) {
         else if (category === 3){
             setAllowClickCat3(false);
         }
-
-      
-        console.log(inventoryUsed);
-
-        
-
+        // console.log(inventoryUsed);
     }
 
+    /**
+     * This function will clear out entire order cart.
+     */
     const clearOrder = () => {
-        setOrderid(0);
-    
-        setListOrdered([]);
-        setListOrderedNames([]);
-        setlistOrderedInv([]);
-        setInventoryUsed([]);
-        setIsShown(false);
-        setCost(0);
-        setCount(0);
-        setAllowClickCat0(true);
-        setAllowClickCat1(true);
-        setAllowClickCat2(true);
-        setAllowClickCat3(true);
-        setCountToppings(0);
+        // setOrderid(0);
+
+        // setListOrdered([]);
+        // setListOrderedNames([]);
+        // setlistOrderedInv([]);
+        // setInventoryUsed([]);
+        // setIsShown(false);
+        // setCost(0);
+        // setCount(0);
+        // setAllowClickCat0(true);
+        // setAllowClickCat1(true);
+        // setAllowClickCat2(true);
+        // setAllowClickCat3(true);
+        // setCountToppings(0);
+        window.location.reload()
+        // location.state.userName
+        window.localStorage.setItem('userName', location.state.userName);
     }
-    
+
+    /**
+     * This function will clear inventory display after finish customization.
+     */
     const addItem = () => {
         setIsShown(showCustom => false);
         setAllowClickCat0(true);
@@ -423,21 +440,22 @@ function Cashier (props) {
         setAllowClickCat3(true);
         setCountToppings(0);
         setCountToppings([]);
-        
     }
 
+    /**
+     * Remove an item from order cart.
+     * @param  {Number} item               order item
+     */
     const deleteItem = (item) => {
-        
         let namesCart = listOrderedNames;
-       
+
         let x= namesCart.indexOf(item);
         namesCart.splice(x, 1);
 
         setListOrderedNames(namesCart);
-        
-    
+
         let newCart = listOrdered;
-       
+
         newCart[item[2]-1] -= 1;
         setListOrdered(newCart);
 
@@ -451,37 +469,37 @@ function Cashier (props) {
             setAllowClickCat2(true);
             setAllowClickCat3(true);
 
-            
             let inv = inventoryUsed;
 
             for( var i=0; i< listOrderedInv.length; i++){
                 inv[listOrderedInv[i][1] -1] -= 1;
             }
-            
+
             setInventoryUsed(inv);
 
             setlistOrderedInv([]);
         }
-
 
         for( var i=0; i< inv.length; i++){
             inv[i] -= listItems[i];
         }
         setInventoryUsed(inv);
 
-        
         let newCost = rounding(totalCost - item[1], 2);
         newCost.toFixed(2);
         setCost(newCost);
 
-        console.log(inventoryUsed);
-        
+        // console.log(inventoryUsed);
     }
 
+    /**
+     * This function will remove an inventory item from customization.
+     * @param  {Number} item               inventory item
+     */
     const deleteCustom = (item) => {
 
         let currInv = listOrderedInv;
-        let x= currInv.indexOf(item);
+        let x = currInv.indexOf(item);
         currInv.splice(x, 1);
 
         setlistOrderedInv(currInv);
@@ -490,7 +508,6 @@ function Cashier (props) {
         let inv = inventoryUsed;
         inv[item[1]-1] -= 1;
         setInventoryUsed(inv);
-        
 
         let category = item[2];
 
@@ -501,7 +518,7 @@ function Cashier (props) {
             setAllowClickCat1(true);
         }
         else if (countToppings <= 10){
-            let countCurr = countToppings -1; 
+            let countCurr = countToppings -1;
             setCountToppings(countCurr);
             console.log("delete button: ",countCurr);
         }
@@ -517,46 +534,201 @@ function Cashier (props) {
         setCost(newCost);
 
     }
-    
+
     const Peoplestates = () => {
         const navigate = useNavigate();
         const openprofile = (totalCost) => {
-            navigate ("/checkout", {
+            navigate ("/cashier_checkout", {
                 state: {
                     totalCost: totalCost
-                    
+
                 }
             });
         }
     }
+
+    /**
+     * This function will get mobile orders if need to be made or ready for pick up.
+     */
+    const getOrders = async () => {
+
+        try {
+            const newOrderId=1;
+            const response = await fetch (conn + `api/order/getNewOrders/${newOrderId}`,
+            {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
+            const jsonVals = await response.json();
+
+            setNewOrders(jsonVals);
+
+            const waitingOrder =2;
+            const response2 = await fetch (conn + `api/order/getNewOrders/${waitingOrder}`,
+            {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
+            const jsonVals2 = await response2.json();
+
+            setpickupOrders(jsonVals2);
+
+            // console.log(jsonVals);
+            // console.log(jsonVals2);
+
+        } catch (err) {
+
+            console.error(err.message);
+        }
+
+    }
+
+    /**
+     * This function will update the order status of order.
+     * @param {Number} orderid       order id
+     * @param {Number} mobile_order  current order status
+     * @param {Number} index         size of array of online order placed
+     */
+    const setNewOrder = (orderid, mobile_order, index) => {
+        //post changes
+        const body = {orderid, mobile_order};
+
+        newOrders.splice(index, 1);
+
+        setNewOrders(newOrders);
+
+        fetch (conn + "api/order/updateOrder",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            }
+        )
+        getOrders();
+        window.location.reload();
+    }
+
+    /**
+     * This function will set the mobile order to be ready for piick up.
+     * @param {Number} orderid       order d
+     * @param {Number} mobile_order  current order status
+     * @param {Number} index         size of array of online order ready for pick up
+     */
+    const setPickedup = (orderid, mobile_order, index) => {
+        //post changes
+        const body = {orderid, mobile_order};
+
+        pickupOrder.splice(index, 1);
+
+        fetch (conn + "api/order/updateOrder",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            }
+        )
+
+        getOrders();
+        window.location.reload();
+    }
+
+   
+        
     
 
     return (
-
-        
 
         <div class="cashier__pageOrder">
             <h4> Cashier: {nameCashier} </h4>
         <div class="cashier__mobileorders">
             <br />
             <h1>Mobile Orders</h1>
+
+
             <br />
             <h3> New Orders</h3>
+            <table>
+
+                <div>
+                <tr>
+                    <th class="orderid"> Order Id</th>
+                    <th class="costCol"> Cost </th>
+                    <th class="buttonDone"> Done </th>
+                </tr>
+
+                { newOrders.map( (item, index) =>
+                    (
+                <tr>
+
+                    <td class="orderid"> {item.orderid}
+                        {/* <Button onClick={() => setClickedInfo(true)}> </Button>
+
+                        <Dialog open={clicked} onClose={() => setClickedInfo(false)}>
+                            <DialogTitle>Order {item.orderid} Information</DialogTitle>
+                            <DialogContent>
+                            
+                               
+                           </DialogContent>
+                        </Dialog> */}
+
+                    </td>
+                    <td class="costCol"> {item.amount}</td>
+                    <td class="buttonDone">
+                        <Button  variant="contained" sx={{color:'green', backgroundColor:'white', mt: 3 , mb:2 }} onClick= {() => setNewOrder(item.orderid, 2, index)} >
+                            X
+                        </Button>
+                    </td>
+                </tr>
+                ))}
+
+                <br />
+                </div>
+
+
+            </table>
             <br />
             <h3> Awaiting Pickup</h3>
 
-            
+            <table>
+
+            <div>
+                <tr>
+                    <th> Order Id</th>
+                    <th class="costCol"> Cost </th>
+                    <th class="buttonDone"> Done </th>
+                </tr>
+
+
+                { pickupOrder.map( (item, index) =>
+                    (
+                <tr>
+
+                    <td class="orderid">
+                     {item.orderid} </td>
+                    <td class="costCol"> {item.amount}</td>
+                    <td class="buttonDone">
+                        <Button  variant="contained" sx={{color:'green', backgroundColor:'white', mt: 3 , mb:2 }} onClick= {() => setPickedup(item.orderid, 3, index)} >
+                            X
+                        </Button>
+                    </td>
+                </tr>
+                ))}
+
+                <br />
+                </div>
+            </table>
+
+
 
         </div>
 
         <div class="cashier__orderingSection">
             <br></br>
 
-            <h1 class="order__orderingTitle">  Ordering from Pom and Honey at Texas A&M MSC </h1>
+            <h1 class="order__orderingTitle"> Pom & Honey Menu </h1>
             <br></br>
-            <br></br>
-            <br></br>
-            <h2> Item</h2>
             <ThemeProvider theme={theme}>
             <div class="order__buttons">
             { menuNamesCustom.map( (item) =>
@@ -564,35 +736,35 @@ function Cashier (props) {
                 <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                 onClick= { () => { pushItem(item[2], item[0], item[1],item[3], true)  }}>
                 {item[0]}</Button>
-            ) )}     
+            ) )}
             { menuNames.map( (item) =>
             (
                 <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                 onClick= { () => { pushItem(item[2], item[0], item[1],item[3], false) }}>
                 {item[0]}</Button>
-            ) )}     
-            
+            ) )}
 
-            
-            
+
+
+
 
             </div>
 
             {showCustom && (
                 <div>
-                
-                
+
+
 
                     {cat0click && (
                     <div class="buttons base">
                     <h2> Base</h2>
                     { realInventory0.map( (item) =>
-                    (   
+                    (
                         <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                         onClick= { () => { pushInv(item[1], item[0], 0)  }}>
                         {item[0]}</Button>
-                    ) )}  
-                    </div>   
+                    ) )}
+                    </div>
                     )
                     }
                     { (!cat0click) &&
@@ -603,13 +775,13 @@ function Cashier (props) {
                         { listOrderedInv.map( (item) =>
                         <tr>
                             <td> {item[0]}</td>
-                            <td> 
-                                <Button  variant="contained" sx={{color:'red', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => {deleteCustom(item)} } > 
+                            <td>
+                                <Button  variant="contained" sx={{color:'red', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => {deleteCustom(item)} } >
                                 X
-                                </Button> 
+                                </Button>
                             </td>
                         </tr>
-                        )}   
+                        )}
                         </table>
 
                     <br></br>
@@ -618,23 +790,23 @@ function Cashier (props) {
                     </div>
                         )
                     }
-                
+
                 {cat1click && (
                  <div class="buttons protein">
                 <h2> Protein</h2>
 
-               
+
                     { realInventory1.map( (item) =>
                     (
                         <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                         onClick= { () => { pushInv(item[1], item[0], 1)  }}>
                         {item[0]}</Button>
-                    ) )}                                  
+                    ) )}
                 </div>
                 )}
 
                 {cat2click && (
-                
+
                 <div class="buttons toppings">
                 <h2> Toppings</h2>
                     { realInventory2.map( (item) =>
@@ -642,12 +814,12 @@ function Cashier (props) {
                         <Button  variant="contained" sx={{ width:200, height:150, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                         onClick= { () => { pushInv(item[1], item[0], 2)  }}>
                         {item[0]}</Button>
-                    ) )}                 
+                    ) )}
                 </div>
                 )}
-                
+
                 {cat3click && (
-                
+
                 <div class="buttons dressing">
                     <h2> Dressing</h2>
                     { realInventory3.map( (item) =>
@@ -663,30 +835,30 @@ function Cashier (props) {
                 </br>
                 <Button variant="contained" sx={{ backgroundColor:"black", width:150, height:50, padding: 4, marginleft: 2, marginRight:2, marginBottom:2 }}
                 onClick= { () => { addItem() } } >
-                Finish Item Customization</Button>   
+                Finish Item Customization</Button>
 
              </div>
             )}
 
-            
+
             </ThemeProvider>
             <div class="addItems">
 
 
-                
 
-                        
-           
+
+
+
             </div>
 
-            
+
         </div>
 
-           
+
         <div class="cashier__currentOrder">
                 <br />
                 <h1> Current Order</h1>
-                
+
                 <br />
                 <table>
                     <tr>
@@ -694,28 +866,28 @@ function Cashier (props) {
                     <th class="price">Price</th>
                     <th class="delete">Delete Item</th>
                     </tr>
-                
+
                 </table>
-                <table> 
+                <table>
 
                 { listOrderedNames.map( (item) =>
-                    <tr> 
-                        <td class="item">{item[0]} </td> 
+                    <tr>
+                        <td class="item">{item[0]} </td>
                         <td class="price"> ${item[1]} </td>
-                        <td class="delete">  
-                            <Button  variant="contained" sx={{color:'red', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => {deleteItem(item)} } > 
+                        <td class="delete">
+                            <Button  variant="contained" sx={{color:'red', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => {deleteItem(item)} } >
                         X
-                        </Button> 
-                        </td> 
-                     
+                        </Button>
+                        </td>
+
                     </tr>
-                    
-                        
 
-                    
 
-                    
-                )}   
+
+
+
+
+                )}
 
                 </table>
 
@@ -723,41 +895,42 @@ function Cashier (props) {
             <br></br>
             <br></br>
 
-             
-            
 
-                <h1> Cost: ${totalCost} </h1>
-              
+
+
+                <h1> Subtotal: ${totalCost} </h1>
+
                 <Stack spacing = {2}>
-                    <Link to="/checkout" 
+                    <Link to="/cashier_checkout"
                     state= {{
                         orderid : orderid,
                         totalCost : totalCost,
-                        listOrdered : listOrdered
+                        inventoryUsed : inventoryUsed,
+                        listOrderedNames : listOrderedNames,
+                        userName: nameCashier
                     }}
                     >
 
-                  
+
                     <Button variant="contained" size="large" sx={{mt: 3, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick= { (openprofile) => {sendtoDb()}}>Submit Order</Button>
-                        
-                    
+
+
                         </Link>
                         <Link>
                         <Button variant="contained" size="large" sx={{ mb:2, backgroundColor:"#283593", color:"white" }} fullWidth={true} onClick= { () => {clearOrder()}}>Clear Order</Button>
                         </Link>
-                        
-                    
-                    
+
+
+
                     </Stack>
 
 
         </div>
 
-        
+
 
         </div>
     );
 };
 
 export default Cashier;
-

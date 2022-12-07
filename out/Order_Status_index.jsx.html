@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Order_Status/index.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Order_Status/index.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as React from "react";
+import { useState, useEffect } from "react";
+import "./index.css";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { indigo, white } from "@mui/material/colors";
+import {BrowserRouter as Router, Link, useLocation, useNavigate} from 'react-router-dom';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckoutPage from '../Checkout/index';
+import DoneIcon from '@mui/icons-material/Done';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBox from '@mui/icons-material/CheckBox';
+
+// For local testing: (comment out)
+const conn = "http://localhost:3500/";
+// For production:
+// const conn = "https://pom-and-honey-bhf5.onrender.com/";
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: '#283593',
+        },
+        secondary: indigo,
+    },
+});
+
+/**
+ * Function to display customer checkout page.
+ * @param       {Props} props  Information passed from customer checkout page
+ * @constructor
+ */
+
+export default function Order_Status(props){
+
+    const [orderstatus, setStatus] = useState(null);
+    const location = useLocation();
+
+    /*
+    *   gets an number of 1, 2, or 3 representing order status
+    */
+    const orderStatusGet = async () => {
+        
+        const id = location.state.orderIDStatus;
+        console.log(id);
+
+        try {
+            const response = await fetch(conn + `api/order/getCurrentOrderStatus/${id}`,
+                {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
+            const jsonVals = await response.json();
+            console.log("response: ", jsonVals);
+            
+            setStatus(jsonVals[0].mobile_order);
+            
+        }
+        catch (err) {
+            console.log("no api");
+            console.error(err.message);
+        }
+    };
+
+    /*
+    *   Google translate api call
+    */
+
+    const googleTranslateElementInit = () => {
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            autoDisplay: false
+          },
+          "google_translate_element"
+        );
+    };
+
+    useEffect(() => {
+        var addScript = document.createElement("script");
+        addScript.setAttribute(
+          "src",
+          "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+        );
+        document.body.appendChild(addScript);
+        window.googleTranslateElementInit = googleTranslateElementInit;
+    }, []);
+
+ 
+    useEffect( () => {
+        orderStatusGet();
+    },[])
+
+    return (
+        &lt;div>
+            &lt;div id="google_translate_element">&lt;/div>
+            &lt;br />
+            &lt;h1>Thank you for your order!&lt;/h1>
+            &lt;h3>Your order number is {location.state.orderIDStatus}&lt;/h3>
+            &lt;br />
+            &lt;br />
+
+            &lt;Stack direction="row" spacing={10} size="600px"  justifyContent="center">
+                &lt;h2>Order Received&lt;/h2>
+                &lt;h2>Order in Progress&lt;/h2>
+                &lt;h2>Order Complete&lt;/h2>
+            &lt;/Stack>
+            &lt;br />
+
+            {
+
+                orderstatus === 3?
+
+                &lt;Stack direction="row" spacing={35} size="600px"  justifyContent="center">
+                    &lt;CheckBox fontSize="large"/>
+                    &lt;CheckBox fontSize="large"/>
+                    &lt;CheckBox fontSize="large"/>
+                &lt;/Stack>
+
+                :
+
+                orderstatus === 2?
+
+                &lt;Stack direction="row" spacing={35} size="600px"  justifyContent="center">
+                    &lt;CheckBox fontSize="large"/>
+                    &lt;CheckBox fontSize="large"/>
+                    &lt;CheckBoxOutlineBlankIcon fontSize="large"/>
+                &lt;/Stack>
+
+                :
+
+                orderstatus === 1?
+
+                &lt;Stack direction="row" spacing={35} size="600px"  justifyContent="center">
+                    &lt;CheckBox fontSize="large"/>
+                    &lt;CheckBoxOutlineBlankIcon fontSize="large"/>
+                    &lt;CheckBoxOutlineBlankIcon fontSize="large"/>
+                &lt;/Stack>
+
+                :
+
+                &lt;Stack direction="row" spacing={35} size="600px"  justifyContent="center">
+                    &lt;CheckBoxOutlineBlankIcon fontSize="large"/>
+                    &lt;CheckBoxOutlineBlankIcon fontSize="large"/>
+                    &lt;CheckBoxOutlineBlankIcon fontSize="large"/>
+                &lt;/Stack>
+                
+            }
+       &lt;/div>
+    );
+};
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cashier.html">Cashier</a></li><li><a href="Employee.html">Employee</a></li><li><a href="Inventory.html">Inventory</a></li><li><a href="Login.html">Login</a></li><li><a href="Menu.html">Menu</a></li><li><a href="Order.html">Order</a></li><li><a href="module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Home">Home</a></li><li><a href="global.html#rounding">rounding</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 22:12:34 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

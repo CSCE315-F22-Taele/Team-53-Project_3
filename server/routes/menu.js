@@ -2,6 +2,9 @@ const express = require("express");
 const app = express.Router();
 const db = require("../db");
 
+/**
+ * This API call will get the entire menu table
+ */
 app.get("/get", async (req, res) => {
     try {
         const todo = await db.query("SELECT * FROM menucost ORDER BY id");
@@ -12,6 +15,9 @@ app.get("/get", async (req, res) => {
     }
 });
 
+/**
+ * This API call will update a menu item in menucost table
+ */
 app.post("/update", async (req, res) => {
     try {
         const {
@@ -34,6 +40,9 @@ app.post("/update", async (req, res) => {
     }
 });
 
+/**
+ * This API call will insert a new menu item into menucost
+ */
 app.post("/insert", async (req, res) => {
     try {
         const {
@@ -55,6 +64,9 @@ app.post("/insert", async (req, res) => {
     }
 });
 
+/**
+ * This API call will get the inventory name and classifcation from the inventory
+ */
 app.get("/getInventory", async (req, res) => {
     try {
         const todo = await db.query(

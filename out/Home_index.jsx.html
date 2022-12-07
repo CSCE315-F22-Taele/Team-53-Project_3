@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Home/index.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Home/index.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import * as React from "react";
+import { useState } from "react";
+import "./index.css";
+import { useMemo } from "react";
+import { GoogleMap, LoadScript, Marker, InfoWindow} from "@react-google-maps/api";
+import Button from "@mui/material/Button";
+import { Link } from 'react-router-dom';
+
+const conn = "http://localhost:3500/";
+// const conn = "https://pom-and-honey-bhf5.onrender.com/";
+
+/**
+ * This function will display the home page.
+ */
+const Home = () => {
+    const name = "Pom &amp; Honey at Texas A&amp;M MSC";
+    const center = useMemo(() => ({ lat:  30.610656, lng:-96.342429 }), []);
+
+    const [clicked, setClicked] = useState(false);
+
+    const containerStyle = {
+        width: '400px',
+        height: '400px',
+        margin: 'auto'
+
+    };
+
+    const handleClick = (val)  => {
+        console.log('clicked');
+        setClicked(val);
+    };
+
+    /**
+     * This function will get the Google Map API key
+     * @return {Promise} [Google Map API key]
+     */
+    const getGoogleMapKey = async () => {
+        try {
+            const response = await fetch(conn + "api/login/getGoogleMapsKey");
+            var jsonVals = await response.json();
+            localStorage.setItem("googleMapAPIKey", jsonVals);
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
+    getGoogleMapKey();
+
+    return (
+        &lt;div>
+        &lt;div class="home__header">
+            &lt;div class="home__title">{name}&lt;/div>
+            &lt;div class="home__subtitle">
+                &lt;h2>
+                    {" "}
+                    We offer one of a kind Mediterranean food for all visitors
+                    of Texas A&amp;M University.{" "}
+                &lt;/h2>
+                &lt;br>&lt;/br>
+                &lt;Link to="/order">{" "}
+                    &lt;Button variant="contained" sx={{ width:300, height:50, padding: 4, marginleft: 2, marginRight:2, marginBottom:2, color: "black", borderRadius:10, border:1}} style={{backgroundColor: "#f3d03e",}}>Try us today.&lt;/Button>
+                &lt;/Link>
+            &lt;/div>
+        &lt;/div>
+
+
+        &lt;br />
+
+        &lt;table class="center">
+            &lt;tr>
+            &lt;th>
+            &lt;h5>
+            Location
+        &lt;/h5>
+        &lt;div class= "maps">
+        &lt;LoadScript
+        googleMapsApiKey={localStorage.getItem("googleMapAPIKey")}
+      >
+        &lt;GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={14}
+          class="googlemaps"
+          onChildClick={() => handleClick(true)}
+        >
+           &lt;Marker onclick={() => handleClick(true)} position={{ lat: 30.612255, lng: -96.341286 }} >
+
+          {clicked &amp;&amp; (
+                &lt;InfoWindow onCloseClick={() => {setClicked(false) }} >
+                    &lt;span> Hello.&lt;/span>
+                &lt;/InfoWindow>
+                )}
+
+            &lt;/Marker>
+        &lt;/GoogleMap>
+      &lt;/LoadScript>
+      &lt;br/>
+      &lt;h6>&lt;b> 275 Joe Routt Tamu Blvd, College Station, TX 77840&lt;/b>&lt;/h6>
+      &lt;br/>
+      &lt;br/>
+      &lt;/div>
+
+        &lt;/th>
+        &lt;th>
+
+        &lt;h5> Hours of Operation&lt;/h5>
+        &lt;table class="hours">
+            &lt;tr>
+                &lt;th> Monday&lt;/th>
+                &lt;th> 10 AM - 3 PM&lt;/th>
+            &lt;/tr>
+            &lt;tr>
+                &lt;th> Tuesday&lt;/th>
+                &lt;th> 10 AM - 3 PM&lt;/th>
+            &lt;/tr>
+            &lt;tr>
+                &lt;th> Wednesday&lt;/th>
+                &lt;th> 10 AM - 3 PM&lt;/th>
+            &lt;/tr>
+            &lt;tr>
+                &lt;th> Thursday&lt;/th>
+                &lt;th> 10 AM - 3 PM&lt;/th>
+            &lt;/tr>
+            &lt;tr>
+                &lt;th> Friday&lt;/th>
+                &lt;th> 10 AM - 3 PM&lt;/th>
+            &lt;/tr>
+            &lt;tr>
+                &lt;th> Saturday&lt;/th>
+                &lt;th> Closed&lt;/th>
+            &lt;/tr>
+            &lt;tr>
+                &lt;th> Sunday&lt;/th>
+                &lt;th> Closed&lt;/th>
+            &lt;/tr>
+
+        &lt;/table>
+
+        &lt;br>&lt;/br>
+        &lt;br>&lt;/br>
+        &lt;h5> Contact us&lt;/h5>
+        &lt;p>Call:  (210) 741-9309&lt;/p>
+        &lt;p>Email:&lt;a href="mailto:dining@tamu.edu">dining@tamu.edu&lt;/a>&lt;/p>
+        &lt;br />
+        &lt;h6> Leave us feedback!&lt;/h6>
+        &lt;br />
+
+
+      &lt;/th>
+      &lt;/tr>
+      &lt;/table>
+
+      &lt;div class="footer">
+            &lt;br>&lt;/br>
+            &lt;span class="home__footer_text">
+                &lt;p>Made by Team 53: Preksha Vaghela, Victoria Pham, Annie Ren, Hexin Hu&lt;/p>
+            &lt;/span>
+      &lt;/div>
+        &lt;/div>
+    );
+};
+
+export default Home;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Cashier.html">Cashier</a></li><li><a href="Employee.html">Employee</a></li><li><a href="Inventory.html">Inventory</a></li><li><a href="Login.html">Login</a></li><li><a href="Menu.html">Menu</a></li><li><a href="Order.html">Order</a></li><li><a href="module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#Home">Home</a></li><li><a href="global.html#rounding">rounding</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Tue Dec 06 2022 22:12:34 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
