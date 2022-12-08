@@ -441,7 +441,7 @@ function Login () {
                 <TextField id="outlined-basic" label="Email" fullWidth="true" variant="outlined" onChange={handleEmail} />
                 <br class="spacing"/>
                 <br class="spacing"/>
-                <TextField id="outlined-basic" label="Pasword" fullWidth="true" type="password"variant="outlined" onChange={handlePassword} />
+                <TextField id="outlined-basic" label="Password" fullWidth="true" type="password"variant="outlined" onChange={handlePassword} />
                 
                 <Stack>
 
