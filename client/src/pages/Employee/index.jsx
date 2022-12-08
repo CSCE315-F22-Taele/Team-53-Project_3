@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useRef } from 'react'
 import { useState, useEffect } from "react";
 import "./index.css";
 import Button from "@mui/material/Button";
@@ -15,6 +15,8 @@ import { TextField, Checkbox} from '@mui/material';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import e from "cors";
+import DialogActions from '@mui/material/DialogActions';
+
 
 // const conn = "http://localhost:3500/";
 const conn = "https://pom-and-honey-bhf5.onrender.com/";
@@ -43,6 +45,21 @@ function Employee (props) {
     const [employeename, setName] = useState("");
     const [salary, setSalary] = useState("");
     const [ismanager, setismanager] = useState(false);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [id, setId] = useState(0);
+
+    // Update
+    const [open_name_update, set_name_update] = useState(false);
+    const [open_update_select, set_open_update_select] = useState(false);
+    const [isworking_, setIsWorking_] = useState(false);
+    const name_input = useRef('');
+    const salary_input = useRef('');
+    const email_input = useRef('');
+    const password_input = useRef('');
+    const isworking__input = useRef(0);
+    const ismanager_input = useRef(0);
+    const [ismanager_, setismanager_] = useState(false);
 
     /**
      * get the active and inactive employees
@@ -97,10 +114,8 @@ function Employee (props) {
     const handleIsworking = async(employeeid, is_working)=> {
 
         try {
-            // console.log(val);
             // const employeeid = val[0];
             const body = {is_working, employeeid };
-            console.log(body);
             fetch (conn + "api/employee/update_working",
               {
                 method: "POST",
@@ -108,45 +123,105 @@ function Employee (props) {
                 body: JSON.stringify(body)
               }
 
-
           );
           window.location.reload();
         } catch (err) {
             console.error(err.message);
           }
+    }
 
+    const updateEmployee = async() => {
+        try {
+            if (/^[A-Za-z\s]*$/.test(name_input.current.value) && name_input.current.value !== "") {
+                if (/^\d+$/.test(salary_input.current.value)) {
+                    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email_input.current.value) || email_input.current.value === "") {
+                        
+                        var salary = salary_input.current.value;
+                        var employeename = name_input.current.value;
+                        // var ismanager = ismanager_input.current.value;
+                        var email = email_input.current.value;
+                        var password = password_input.current.value;
+                        var is_working = isworking_;
+                        console.log("In update manager", ismanager);
+                        console.log("In update active", is_working);
+
+                        const body = { salary, employeename, ismanager, email, password, is_working, id }
+
+                        fetch (conn + "api/employee/update",
+                          {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(body)
+                          }
+                        );
+
+                        set_open_update_select(false);
+                        setName("");
+                        setSalary("");
+                        setismanager(false);
+                        setEmail("");
+                        setPassword("");
+                        window.location.reload();
+                    }
+                    else {
+                        alert("Invalid email. Please retry.");
+                    }
+                }
+                else {
+                    alert("Invalid salary. Please enter a digit.")
+                }
+            }
+            else {
+                alert("Invalid employee name. Please retry.");
+            }
+        } catch (err) {
+            console.error(err.message);
+        }
     }
 
     /**
      * Add new employee to the database
      */
-    const addEmployee = async()=> {
-
-
+    const addEmployee = async() => {
         try {
+            if (/^[A-Za-z\s]*$/.test(employeename) && employeename !== "") {
+                if (/^\d+$/.test(salary)) {
+                    if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email) || email === "") {
+                        const body = { salary, employeename, ismanager, email, password };
 
-            const body = {salary,employeename, ismanager };
+                        fetch (conn + "api/employee/add",
+                          {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(body)
+                          }
+                        );
 
-            console.log(body);
-            fetch (conn + "api/employee/add",
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(body)
-              }
+                        setClickedInfo(false);
+                        window.location.reload();
 
-            );
-            setClickedInfo(false);
+                        setName("");
+                        setSalary("");
+                        setismanager(false);
+                        setEmail("");
+                        setPassword("");
+
+                    }
+                    else {
+                        alert("Invalid email. Please retry.");
+                    }
+                }
+                else {
+                    alert("Invalid salary. Please enter a digit.");
+                }
+            }
+            else {
+                alert("Invalid employee name. Please retry.");
+            }
 
         } catch (err) {
-            alert("additon failed");
             console.error(err.message);
-
           }
-
-          window.location.reload();
-
-
     }
 
     /**
@@ -176,29 +251,242 @@ function Employee (props) {
     const handleManager = async(event) =>{
         setismanager(!ismanager);
     }
+
+    /**
+     * set the new email input
+     */
+    const handleEmail = async(e) => {
+        setEmail(e.target.value);
+    }
+
+    /**
+     * set the new password input
+     */
+    const handlePassword = async(e) => {
+        setPassword(e.target.value);
+    }
+
+    /**
+     * Open search for employee.
+     */
+    const handleOpen_update = async(e) => {
+        set_name_update(true);
+    }
+
+    /**
+     * Close update for employee.
+     */
+    const handleClose_update = async(e) => {
+        set_name_update(false);
+    }
+
+    /**
+     * Set employee id being searched.
+     */
+    const handleId = async(e) => {
+        setId(e.target.value);
+    }
+
+    /**
+     * 
+     */
+    const handleOpen_update_success = async() => {
+
+    }
+
+    /**
+     * Check if employee is working in update.
+     * @param {*} e 
+     */
+    const handleIsworking_ = async(e) => {
+        console.log("In handleIsworking", isworking_);
+        setIsWorking_(!isworking_);
+        console.log("In handleIsworking", isworking_);
+    }
+
+    /**
+     * Check if employee is a manager in update.
+     * @param {*} event 
+     */
+    const handleManager_ = async(event) =>{
+        setismanager_(!ismanager_);
+    }
+
+    const is_valid_employee = async() => {
+        try {
+            const response = await fetch (conn + `api/employee/isValidEmployee/${id}`, 
+                {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                }
+            );
+            const data = await response.json();
+
+            if (data && id !== 0) {
+                const response = await fetch (conn + `api/employee/getEmployee/${id}`, 
+                    {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                    }
+                );
+                const data = await response.json();
+
+                setName(data.employeename);
+                // console.log(data.employeename);
+                setSalary(data.salary);
+                setEmail(data.email);
+                setPassword(data.password);
+                setismanager(data.ismanager);
+                setIsWorking_(data.is_working);
+                set_open_update_select(true);
+                handleClose_update();
+
+                console.log(data.ismanager);
+            }    
+            else {
+                alert("Invalid employee ID. Please retry.");
+            }
+
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
     
     return (
         <div>
             <br />
             <h1> Employee Control Center</h1>
             <p> Enable or disable the employees by clicking on their employee id.</p>
-            <br />
 
+            <Button variant="contained"  size="large" sx={{  width:200, height:50,color:'white', backgroundColor:'#283593', mt: 3 , mb:2  }} onClick={() => setClickedInfo(true)}> ADD EMPLOYEE </Button>
+
+            {/* <Dialog fullWidth={true} open={clicked} onClose={() => setClickedInfo(false)} > */}
+            <Dialog open={clicked} onClose={() => setClickedInfo(false)} >
+                <DialogTitle fontSize={25}>New Employee Information</DialogTitle>
+                    <DialogContent>
+                            <TextField 
+                            required 
+                            margin="dense" 
+                            id="outlined-required" 
+                            variant="standard"
+                            helperText="Employee Name*"
+                            fullWidth
+                            onChange={handleName} />
+                            
+                            <TextField required margin="dense" id="outlined-required" helperText="Salary* (eg. 10)" variant="standard" 
+                            fullWidth onChange={handleSalary} />
+                            <TextField required margin="dense" id="outlined-required" helperText="Email (if applicable)" variant="standard" 
+                            fullWidth onChange={handleEmail} />
+                            <TextField required margin="dense" id="outlined-required" helperText="Password (if applicable)" variant="standard"  fullWidth onChange={handlePassword} />
+                            <DialogContentText> Is this Employee a manager?</DialogContentText>
+                            <FormControlLabel control={<Checkbox defaultChecked checked={ismanager} onChange={handleManager}/>} label="Check if manager."  class="manager"/>
+
+                            <DialogActions>
+                                <Button onClick={() => setClickedInfo(false)}>
+                                    Cancel </Button>
+                                <Button onClick={() => addEmployee()}>
+                                    Submit </Button>
+                            </DialogActions>
+                    </DialogContent>
+             </Dialog>
+
+
+            <Button variant="contained"  size="large" sx={{  width:200, height:50,color:'white', backgroundColor:'#283593', mt: 3 , mb:2, ml:2 }} onClick={handleOpen_update}> UPDATE EMPLOYEE </Button>
+
+            <Dialog open={open_name_update} onClose={handleClose_update}>
+                           <DialogTitle>Enter Employee ID:</DialogTitle>
+                           <DialogContent>
+                            <TextField 
+                                required 
+                                margin="dense" 
+                                id="outlined-required" 
+                                variant="standard"
+                                helperText="Employee ID*"
+                                style={{ width: "250px"}}
+                                onChange={handleId} />
+                           </DialogContent>
+
+                           <DialogActions>
+                               <Button onClick={handleClose_update}>Cancel</Button>
+                               <Button onClick={is_valid_employee}>Search</Button>
+                           </DialogActions>
+            </Dialog>
+
+            <Dialog open={open_update_select} onClose={() => set_open_update_select(false)}>
+                <DialogTitle>Employee Information</DialogTitle>
+                <DialogContent>
+                           <TextField
+                               margin="dense"
+                               id="outlined-required"
+                               defaultValue={employeename}
+                               helperText="Employee name*"
+                               type="text"
+                               fullWidth
+                               variant="standard"
+                               inputRef={name_input}
+                           />
+                           <TextField
+                               margin="dense"
+                               id="outlined-required"
+                               defaultValue={salary}
+                               helperText="Salary*"
+                               type="text"
+                               fullWidth
+                               variant="standard"
+                               inputRef={salary_input}
+                           />
+                           <TextField
+                               margin="dense"
+                               id="outlined-required"
+                               defaultValue={email}
+                               helperText="Email*"
+                               type="text"
+                               fullWidth
+                               variant="standard"
+                               inputRef={email_input}
+                           />
+                           <TextField
+                               margin="dense"
+                               id="outlined-required"
+                               defaultValue={password}
+                               helperText="Password*"
+                               type="password"
+                               fullWidth
+                               variant="standard"
+                               inputRef={password_input}
+                           />
+
+                            <FormControlLabel 
+                                control={<Checkbox defaultChecked={isworking_} value={isworking_} onChange={handleIsworking_}/>} label="Active Employee"  class="manager"/>
+
+                            <FormControlLabel 
+                                control={<Checkbox defaultChecked={ismanager} value={ismanager_} onChange={handleManager_}/>} label="Manager"  class="manager"/>
+                            
+                            <DialogActions>
+                                <Button onClick={() => set_open_update_select(false)}>
+                                    Cancel </Button>
+                                <Button onClick={() => updateEmployee()}>
+                                    Update </Button>
+                            </DialogActions>
+                </DialogContent>
+            </Dialog>
+
+            <br />
             <br />
             <h2> Working Employees</h2>
             <br />
 
-            <table>
-                <tr>
+            <table class="employee__head">
+                <tr class="employee__table">
                     <th>Employee ID</th>
-                    <th> Name</th>
-                    <th> Salary</th>
+                    <th> Full Name</th>
+                    <th> Salary ($/hr)</th>
                     <th> Manager</th>
                 </tr>
 
 
                 { workingEmployees.map( (item, index) =>
-                    <tr>
+                    <tr class="employee__table">
                         <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => handleIsworking(item[0], false)} >
                         {/* () => setClickedInfo(true) */}
                         <td> {item[0]} </td>
@@ -211,7 +499,6 @@ function Employee (props) {
                         </Dialog> */}
 
                     <td> {item[2]} </td>
-
                     <td> {item[1]} </td>
                     <td> {item[3].toString()} </td>
                     </tr>
@@ -221,40 +508,22 @@ function Employee (props) {
 
             <br />
 
-            <Button variant="contained"  size="large" sx={{  width:200, height:50,color:'black', backgroundColor:'#283593', mt: 3 , mb:2  }} onClick={() => setClickedInfo(true)}> ADD EMPLOYEE </Button>
-
-            <Dialog fullWidth={true} open={clicked} onClose={() => setClickedInfo(false)} >
-                            <DialogTitle>Employee Information</DialogTitle>
-                            <br />
-                            <TextField id="outlined-basic" label="Employee Name" variant="outlined" onChange={handleName} />
-                            <br />
-                            <TextField id="outlined-basic" label="Salary" variant="outlined" onChange={handleSalary} />
-                            <br />
-                            <DialogContentText> Is this Employee a manager?</DialogContentText>
-                            <br />
-                            <FormControlLabel control={<Checkbox defaultChecked checked={ismanager} onChange={handleManager}/>} label="Check if Manager"  class="manager"/>
-
-                            <Button variant="contained" onClick={() => addEmployee()} size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white',ml:2, mr:2, mt: 3 , mb:2 }}>
-                                 Submit </Button>
-             </Dialog>
-
-
             <br />
             <br />
             <h2> Disabled Employees</h2>
             <br />
 
-            <table>
-                <tr>
+            <table class="employee__head">
+                <tr class="employee__table">
                     <th>Employee ID</th>
-                    <th> Name</th>
-                    <th> Salary</th>
+                    <th> Full Name</th>
+                    <th> Salary ($/hr)</th>
                     <th> Manager</th>
                 </tr>
 
 
                 { notworkingEmployees.map( (item, index) =>
-                    <tr>
+                    <tr class="employee__table">
 
                     <Button variant="contained"  size="large" sx={{  width:100, height:50,color:'black', backgroundColor:'white', mt: 3 , mb:2 }} onClick={() => handleIsworking(item[0], true)} >
                     <td> {item[0]} </td>

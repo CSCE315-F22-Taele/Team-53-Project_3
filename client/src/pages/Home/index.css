@@ -55,12 +55,16 @@ div {
 }
 
 .hours {
-    width: 100%;
+    width: 75%;
     justify-content: center;
     margin: auto;
 }
 
-.marker {
+.left_align {
+    text-align: left;
+}
+
+​ .marker {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -81,7 +85,7 @@ div {
     table-layout: fixed;
     margin-left: auto;
     margin-right: auto;
-    width: 60%;
+    width: 62%;
 }
 
 td {
@@ -107,11 +111,12 @@ p {
     left: 0;
     bottom: 0;
     right: 0;
-    padding-bottom: 10px;
+    padding-bottom: 0px;
     background-color: #f3d03e;
 }
 
 .home__footer_text {
-    text-transform: capitalize;
+    position: relative;
+    top: -10px;
     color: white;
 }

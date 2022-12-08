@@ -69,9 +69,7 @@ const Home = () => {
         <table class="center">
             <tr>
             <th>
-            <h5>
-            Location
-        </h5>
+            <h5>Location</h5>
         <div class= "maps">
         <LoadScript
         googleMapsApiKey={localStorage.getItem("googleMapAPIKey")}
@@ -95,7 +93,7 @@ const Home = () => {
         </GoogleMap>
       </LoadScript>
       <br/>
-      <h6><b> 275 Joe Routt Tamu Blvd, College Station, TX 77840</b></h6>
+      <p><b> 275 Joe Routt Tamu Blvd, College Station, TX 77840</b></p>
       <br/>
       <br/>
       </div>
@@ -106,31 +104,31 @@ const Home = () => {
         <h5> Hours of Operation</h5>
         <table class="hours">
             <tr>
-                <th> Monday</th>
+                <th class="left_align"> Monday</th>
                 <th> 10 AM - 3 PM</th>
             </tr>
             <tr>
-                <th> Tuesday</th>
+                <th class="left_align"> Tuesday</th>
                 <th> 10 AM - 3 PM</th>
             </tr>
             <tr>
-                <th> Wednesday</th>
+                <th class="left_align"> Wednesday</th>
                 <th> 10 AM - 3 PM</th>
             </tr>
             <tr>
-                <th> Thursday</th>
+                <th class="left_align"> Thursday</th>
                 <th> 10 AM - 3 PM</th>
             </tr>
             <tr>
-                <th> Friday</th>
+                <th class="left_align"> Friday</th>
                 <th> 10 AM - 3 PM</th>
             </tr>
             <tr>
-                <th> Saturday</th>
+                <th class="left_align"> Saturday</th>
                 <th> Closed</th>
             </tr>
             <tr>
-                <th> Sunday</th>
+                <th class="left_align"> Sunday</th>
                 <th> Closed</th>
             </tr>
 
@@ -142,7 +140,7 @@ const Home = () => {
         <p>Call:  (210) 741-9309</p>
         <p>Email:<a href="mailto:dining@tamu.edu">dining@tamu.edu</a></p>
         <br />
-        <h6> Leave us feedback!</h6>
+        <p> Leave us feedback!</p>
         <br />
 
 
@@ -153,7 +151,7 @@ const Home = () => {
       <div class="footer">
             <br></br>
             <span class="home__footer_text">
-                <p>Made by Team 53: Preksha Vaghela, Victoria Pham, Annie Ren, Hexin Hu</p>
+                <p>Made by Team 53: Preksha Vaghela, Victoria Pham, Annie Ren, Hexin Hu.</p>
             </span>
       </div>
         </div>
