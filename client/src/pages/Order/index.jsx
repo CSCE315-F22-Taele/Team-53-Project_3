@@ -569,7 +569,7 @@ function Order () {
                     { (!cat0click) &&
                         (
                         <div>
-                        <h5>Added Items to Gyro/Bowl:</h5>
+                        <h3>Added Items to Gyro/Bowl:</h3>
                         <table>
                         { listOrderedInv.map( (item) =>
                         <tr>

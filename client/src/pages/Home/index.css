@@ -105,6 +105,7 @@ a:hover {
 
 p {
     margin: 0;
+    font-weight: 800;
 }
 
 .footer {
@@ -118,5 +119,6 @@ p {
 .home__footer_text {
     position: relative;
     top: -10px;
-    color: white;
+    color: rgb(0, 0, 0);
+    text-transform: uppercase;
 }

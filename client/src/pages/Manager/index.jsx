@@ -282,7 +282,7 @@ export default function Manager() {
                         <br />
                         <br />
 
-                        {salesShown && <h5>Sales from {display_start} to {display_end}:</h5>}
+                        {salesShown && <h3>Sales from {display_start} to {display_end}:</h3>}
 
                     </form>
 

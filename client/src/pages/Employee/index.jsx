@@ -287,12 +287,12 @@ function Employee (props) {
         setId(e.target.value);
     }
 
-    /**
-     * 
-     */
-    const handleOpen_update_success = async() => {
+    // /**
+    //  * 
+    //  */
+    // const handleOpen_update_success = async() => {
 
-    }
+    // }
 
     /**
      * Check if employee is working in update.

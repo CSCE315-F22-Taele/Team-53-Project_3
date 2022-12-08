@@ -69,7 +69,7 @@ const Home = () => {
         <table class="center">
             <tr>
             <th>
-            <h5>Location</h5>
+            <h3>Location</h3>
         <div class= "maps">
         <LoadScript
         googleMapsApiKey={localStorage.getItem("googleMapAPIKey")}
@@ -101,7 +101,7 @@ const Home = () => {
         </th>
         <th>
 
-        <h5> Hours of Operation</h5>
+        <h3> Hours of Operation</h3>
         <table class="hours">
             <tr>
                 <th class="left_align"> Monday</th>
@@ -136,7 +136,7 @@ const Home = () => {
 
         <br></br>
         <br></br>
-        <h5> Contact us</h5>
+        <h3> Contact us</h3>
         <p>Call:  (210) 741-9309</p>
         <p>Email:<a href="mailto:dining@tamu.edu">dining@tamu.edu</a></p>
         <br />
