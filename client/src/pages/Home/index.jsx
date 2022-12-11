@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./index.css";
 import { useMemo } from "react";
 import { GoogleMap, LoadScript, Marker, InfoWindow} from "@react-google-maps/api";
@@ -45,6 +45,30 @@ const Home = () => {
     };
 
     getGoogleMapKey();
+
+    /*
+    *   Google translate api call
+    */
+    const googleTranslateElementInit = () => {
+        new window.google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            autoDisplay: false
+          },
+          "google_translate_element"
+        );
+    };
+
+    useEffect(() => {
+        var addScript = document.createElement("script");
+        addScript.setAttribute(
+          "src",
+          "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+        );
+        document.body.appendChild(addScript);
+        window.googleTranslateElementInit = googleTranslateElementInit;
+    }, []);
+
 
     return (
         <div>
@@ -151,7 +175,7 @@ const Home = () => {
       <div class="footer">
             <br></br>
             <span class="home__footer_text">
-                <p>Made by Team 53: Preksha Vaghela, Victoria Pham, Annie Ren, Hexin Hu.</p>
+                <p id="google_translate_element">Made by Team 53: Preksha Vaghela, Victoria Pham, Annie Ren, Hexin Hu.</p>
             </span>
       </div>
         </div>
