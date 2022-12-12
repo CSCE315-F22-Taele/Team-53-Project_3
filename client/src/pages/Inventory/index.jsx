@@ -611,7 +611,7 @@ function Inventory(){
                                insertInventory(name_input.current.value.toLowerCase(), amount_input.current.value,
                                    cost_input.current.value, date_input.current.value, vendor_input.current.value,
                                    classify_input.current.value);
-                               refreshPage();
+                                window.location.reload(false);
                            }
                            else {
                                alert("Please select a classification.");
@@ -668,7 +668,7 @@ function Inventory(){
                            updateInventory(name_input.current.value.toLowerCase(), amount_input.current.value,
                                    cost_input.current.value, date_input.current.value, vendor_input.current.value,
                                    classify_input.current.value, id, check);
-                           refreshPage();
+                            window.location.reload(false);
                        }
                        else {
                            alert("Invalid vendor. Please enter a vendor name.")
@@ -1110,7 +1110,7 @@ function Inventory(){
                                         updateInventory(name_display, amount_display, cost_display, expirationdate_display, vendor_display,
                                             classify_display, id, false);
                                        handleClose_deactivate();
-                                       refreshPage();
+                                       window.location.reload(false);
 
                                }}>Deactivate</Button>
                            </DialogActions>
@@ -1228,7 +1228,7 @@ function Inventory(){
                             console.log(expirationdate_display);
                                handleClose_name_activate();
                                handleClose_activate();
-                               refreshPage();
+                               window.location.reload(false);
                            }}>Activate</Button>
                        </DialogActions>
 

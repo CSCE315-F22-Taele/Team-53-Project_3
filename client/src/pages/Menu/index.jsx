@@ -709,7 +709,7 @@ function Menu() {
                             }
                         )
                         reset();
-                        refreshPage();
+                        window.location.reload(false);
                     }
                     else {
                         alert("Invalid: Inventory cannot be empty. Please select inventory used for this menu item.");
@@ -1233,7 +1233,7 @@ function Menu() {
                                     updateMenu(name_input.current.value, cost_input.current.value, isSelling, isCustomize, updateInv,
                                         id);
                                     reset();
-                                    refreshPage();
+                                    window.location.reload(false);
                                 }}>Update</Button>
                                 </DialogActions>
                         </Dialog>
@@ -1463,7 +1463,7 @@ function Menu() {
                                     update_default_inventory();
                                     var list = find_di(activate_menu, name_display);
                                     updateMenu(name_display, cost_display, false, isCustomize, list, id);
-                                    refreshPage();
+                                    window.location.reload(false);
                             }}>Deactivate</Button>
 
                         </DialogActions>
@@ -1704,7 +1704,7 @@ function Menu() {
                                     handleClose_activate();
                                     var list = find_di(deactivate_menu, name_display);
                                     updateMenu(name_display, cost_display, true, isCustomize, list, id);
-                                    refreshPage();
+                                    window.location.reload(false);
                             }}>Activate</Button>
 
                         </DialogActions>
