@@ -75,6 +75,7 @@ const Home = () => {
         googleMapsApiKey={localStorage.getItem("googleMapAPIKey")}
       >
         <GoogleMap
+         alt={"Google Maps location of Pom and Honey"}
           mapContainerStyle={containerStyle}
           center={center}
           zoom={14}
