@@ -668,7 +668,8 @@ function Inventory(){
                            updateInventory(name_input.current.value.toLowerCase(), amount_input.current.value,
                                    cost_input.current.value, date_input.current.value, vendor_input.current.value,
                                    classify_input.current.value, id, check);
-                           refreshPage();
+                           //refreshPage();
+                           window.location.reload();
                        }
                        else {
                            alert("Invalid vendor. Please enter a vendor name.")
